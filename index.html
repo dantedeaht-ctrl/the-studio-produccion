@@ -2,49 +2,62 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The Studio</title>
-
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f4f6f8;color:#202733;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-header{background:#101a2b;color:white;padding:22px 18px 18px}
+header{background:#101a2b;color:#fff;padding:22px 18px 18px}
 header h1{margin:0;font-size:27px;font-weight:900}
-header p{margin:8px 0 0;color:#cbd5e1;font-size:14px}
-nav{display:flex;gap:8px;background:#fff;padding:10px;overflow:auto;position:sticky;top:0;z-index:5}
-nav button{border:0;border-radius:12px;padding:12px 16px;background:#edf2f7;font-weight:800;white-space:nowrap}
+header p{margin:8px 0 0;color:#cbd5e1;font-size:14px;line-height:1.5}
+nav{display:flex;gap:8px;background:#fff;padding:10px;overflow-x:auto;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:5}
+nav button{border:0;border-radius:12px;padding:12px 16px;background:#edf2f7;color:#354052;font-weight:800;font-size:15px;white-space:nowrap}
 nav button.active{background:#1769ff;color:#fff}
-main{max-width:1150px;margin:auto;padding:14px}
-.page{display:none}.page.active{display:block}
+main{max-width:1200px;margin:auto;padding:14px}
+.page{display:none}
+.page.active{display:block}
 .card{background:#fff;border:1px solid #e0e4e9;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
 h2{font-size:20px;margin:0 0 12px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.field label{display:block;font-weight:800;color:#555f6d;font-size:13px;margin-bottom:6px}
-.field input,.field select{width:100%;height:48px;border:2px solid #d6dbe2;border-radius:11px;padding:0 13px;background:#fff;font:inherit}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
-button.action{border:0;border-radius:10px;padding:12px 17px;font-weight:800;cursor:pointer}
-.primary{background:#1769ff;color:#fff}.secondary{background:#e9edf2;color:#26313d}
-.danger{background:#ffe5e5;color:#a32222}.success{background:#18a566;color:#fff}
+h3{margin:0 0 8px}
 .note{background:#eef5ff;border-left:5px solid #1769ff;padding:13px;border-radius:9px;line-height:1.45;margin-bottom:14px}
-.successNote{background:#eaf8f0;border-left:5px solid #18a566;padding:13px;border-radius:9px}
+.successNote{background:#eaf8f0;border-left:5px solid #18a566;padding:13px;border-radius:9px;line-height:1.45}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.field label{display:block;font-weight:800;color:#555f6d;font-size:13px;margin:0 0 6px}
+.field input,.field select{width:100%;height:48px;border:2px solid #d6dbe2;border-radius:11px;padding:0 13px;background:#fff;font:inherit;color:#202733}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+button.action{border:0;border-radius:10px;padding:12px 17px;font-weight:800;font-size:14px;cursor:pointer}
+.primary{background:#1769ff;color:#fff}
+.secondary{background:#e9edf2;color:#26313d}
+.danger{background:#ffe5e5;color:#a32222}
+.success{background:#18a566;color:#fff}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
 .kpi{background:#fff;border:1px solid #e0e4e9;border-radius:13px;padding:14px}
-.kpi small{color:#707986}.kpi strong{display:block;font-size:23px;margin-top:4px}
+.kpi small{color:#707986}
+.kpi strong{display:block;font-size:23px;margin-top:4px}
 .moneygrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 .moneybox{padding:15px;border:2px solid #dce3ec;border-radius:13px;background:#fff}
-.moneybox h3{margin:0 0 5px;font-size:14px}.money{font-size:24px;font-weight:900}
+.moneybox h3{margin:0 0 5px;font-size:14px}
+.money{font-size:24px;font-weight:900}
 .tablewrap{overflow:auto}
 table{width:100%;border-collapse:collapse;font-size:12px}
 th,td{padding:9px 8px;border-bottom:1px solid #e2e5e9;text-align:left;white-space:nowrap}
 th{background:#f7f8fa;color:#5b6470}
-.pill,.processPill{font-size:11px;font-weight:800;padding:5px 9px;border-radius:99px}
-.pill.a{background:#eaf0ff;color:#1769ff}.pill.b{background:#e8f8ef;color:#138a55}
-.processPill{background:#f1f3f6;color:#344054}
-.advanceBox{border:2px solid #e2e7ee;border-radius:14px;padding:14px;margin-bottom:12px}
-.otTitle{font-size:18px;font-weight:900}.muted{color:#6b7280;font-size:13px}
+.pill{font-size:11px;font-weight:800;padding:4px 8px;border-radius:99px}
+.a{background:#eaf0ff;color:#1769ff}
+.b{background:#e8f8ef;color:#138a55}
+.processPill{background:#f1f3f6;color:#344054;font-weight:800;padding:5px 9px;border-radius:99px;font-size:11px}
+.otBox{border:2px solid #e2e7ee;border-radius:14px;padding:14px;margin-bottom:12px}
+.otTitle{font-size:18px;font-weight:900}
+.muted{color:#6b7280;font-size:13px}
 .lead{font-weight:900;color:#1769ff}
 .detailBox{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin-top:10px}
-@media(max-width:700px){.grid,.moneygrid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}}
+.effBox{padding:18px;border:2px solid #dce3ec;border-radius:14px;background:#fff;text-align:center}
+.eff{font-size:36px;font-weight:900;color:#1769ff}
+@media(max-width:700px){
+.grid,.moneygrid{grid-template-columns:1fr}
+.kpis{grid-template-columns:1fr 1fr}
+main{padding:10px}
+}
 </style>
 </head>
 
@@ -52,20 +65,19 @@ th{background:#f7f8fa;color:#5b6470}
 
 <header>
 <h1>THE STUDIO · CONTROL DE PRODUCCIÓN</h1>
-<p>OT · Programación · Avances · Salidas · Destajo · Lead Time · Cierre semanal lunes–sábado</p>
+<p>OT · Programación · Avances · Work Shop · Destajo · Eficiencia · Lead Time · Cierre lunes–sábado</p>
 </header>
 
 <nav>
 <button class="tab active" data-target="captura">➕ Captura</button>
 <button class="tab" data-target="avances">🔄 Avances OT</button>
+<button class="tab" data-target="workshop">🏭 Work Shop</button>
 <button class="tab" data-target="resumen">📊 Resumen</button>
 <button class="tab" data-target="costos">💰 Costos</button>
 <button class="tab" data-target="historial">📅 Historial</button>
 </nav>
 
 <main>
-
-<!-- CAPTURA -->
 
 <section id="captura" class="page active">
 
@@ -74,7 +86,8 @@ th{background:#f7f8fa;color:#5b6470}
 <h2>Registrar nueva OT</h2>
 
 <div class="note">
-Registra aquí solamente las <b>OT nuevas</b>. Para continuar una OT existente utiliza
+<b>La captura solo da de alta una OT nueva.</b>
+Los movimientos posteriores se registran desde
 <b>🔄 Avances OT</b>.
 </div>
 
@@ -88,8 +101,8 @@ Registra aquí solamente las <b>OT nuevas</b>. Para continuar una OT existente u
 <div class="field">
 <label>Línea</label>
 <select id="linea">
-<option value="Línea A">Línea A</option>
-<option value="Línea B">Línea B</option>
+<option>Línea A</option>
+<option>Línea B</option>
 </select>
 </div>
 
@@ -109,31 +122,6 @@ Registra aquí solamente las <b>OT nuevas</b>. Para continuar una OT existente u
 </div>
 
 <div class="field">
-<label>En proceso inicial</label>
-<input id="proceso" type="number" min="0" value="0">
-</div>
-
-<div class="field">
-<label>Salida inicial</label>
-<input id="salida" type="number" min="0" value="0">
-</div>
-
-<div class="field">
-<label>Clasificación</label>
-<input id="clasificacion" type="number" min="0" value="0">
-</div>
-
-<div class="field">
-<label>Empaque</label>
-<input id="empaque" type="number" min="0" value="0">
-</div>
-
-<div class="field">
-<label>Auditada</label>
-<input id="auditada" type="number" min="0" value="0">
-</div>
-
-<div class="field">
 <label>Observaciones</label>
 <input id="obs" placeholder="Opcional">
 </div>
@@ -141,7 +129,7 @@ Registra aquí solamente las <b>OT nuevas</b>. Para continuar una OT existente u
 </div>
 
 <div class="actions">
-<button id="guardar" class="action primary">Guardar producción</button>
+<button id="guardar" class="action primary">Guardar OT</button>
 <button id="limpiar" class="action secondary">Limpiar</button>
 </div>
 
@@ -149,34 +137,32 @@ Registra aquí solamente las <b>OT nuevas</b>. Para continuar una OT existente u
 
 <div class="card">
 
-<h2>Registros</h2>
+<h2>OT registradas</h2>
 
 <div class="tablewrap">
+
 <table>
+
 <thead>
 <tr>
 <th>Fecha</th>
 <th>Línea</th>
 <th>OT</th>
 <th>Modelo</th>
-<th>Prog.</th>
-<th>Proc.</th>
-<th>Salida</th>
-<th>Pespunte</th>
-<th>Preliminar</th>
+<th>Programado</th>
 <th></th>
 </tr>
 </thead>
-<tbody id="tablaCaptura"></tbody>
-</table>
-</div>
 
+<tbody id="tablaCaptura"></tbody>
+
+</table>
+
+</div>
 </div>
 
 </section>
 
-
-<!-- AVANCES -->
 
 <section id="avances" class="page">
 
@@ -185,9 +171,14 @@ Registra aquí solamente las <b>OT nuevas</b>. Para continuar una OT existente u
 <h2>Avance de OT</h2>
 
 <div class="note">
-Aquí podrás seleccionar una OT que ya existe. No necesitas volver a escribir
-la OT, modelo, línea ni programación. El sistema los cargará automáticamente.
-Solo selecciona el siguiente proceso y las piezas que avanzaron.
+Selecciona una OT y registra solamente
+<b>cuántas piezas avanzan</b>.
+El sistema controla automáticamente el inventario.
+
+<br><br>
+
+Flujo:
+<b>Programado → Armado → Salida pespunte → Clasificación → Empaque → Auditoría</b>
 </div>
 
 <div id="listaOT"></div>
@@ -201,10 +192,8 @@ Solo selecciona el siguiente proceso y las piezas que avanzaron.
 
 <div class="successNote">
 OT: <b id="avOT"></b>
-&nbsp; · &nbsp;
-Modelo: <b id="avModelo"></b>
-&nbsp; · &nbsp;
-Línea: <b id="avLinea"></b>
+· Modelo: <b id="avModelo"></b>
+· Línea: <b id="avLinea"></b>
 </div>
 
 <br>
@@ -213,30 +202,17 @@ Línea: <b id="avLinea"></b>
 
 <div class="field">
 <label>Proceso actual</label>
-<input id="avProcesoActual" readonly>
+<input id="avActual" readonly>
 </div>
 
 <div class="field">
-<label>Fecha y hora</label>
-<input id="avFechaHora" type="datetime-local">
+<label>Disponible en proceso actual</label>
+<input id="avDisponible" readonly>
 </div>
 
 <div class="field">
 <label>Siguiente proceso</label>
-<select id="avSiguiente">
-<option value="">Selecciona proceso</option>
-<option value="Corte">Corte</option>
-<option value="Coordinado">Coordinado</option>
-<option value="Pespunte">Pespunte</option>
-<option value="Preliminar">Preliminar</option>
-<option value="Tejida">Tejida</option>
-<option value="Montado">Montado</option>
-<option value="Adorno">Adorno</option>
-<option value="Embarque">Embarque</option>
-<option value="Clasificación">Clasificación</option>
-<option value="Empaque">Empaque</option>
-<option value="Auditada">Auditada</option>
-</select>
+<input id="avSiguiente" readonly>
 </div>
 
 <div class="field">
@@ -244,11 +220,21 @@ Línea: <b id="avLinea"></b>
 <input id="avPiezas" type="number" min="0" value="0">
 </div>
 
+<div class="field">
+<label>Fecha y hora</label>
+<input id="avFechaHora" type="datetime-local">
+</div>
+
 </div>
 
 <div class="actions">
-<button id="guardarAvance" class="action success">Registrar avance</button>
-<button id="cancelarAvance" class="action secondary">Cancelar</button>
+<button id="guardarAvance" class="action success">
+Registrar avance
+</button>
+
+<button id="cancelarAvance" class="action secondary">
+Cancelar
+</button>
 </div>
 
 </div>
@@ -256,11 +242,12 @@ Línea: <b id="avLinea"></b>
 
 <div class="card">
 
-<h2>Lead Time de OTs</h2>
+<h2>Lead Time por OT</h2>
 
 <div class="tablewrap">
 
 <table>
+
 <thead>
 <tr>
 <th>OT</th>
@@ -294,7 +281,114 @@ Línea: <b id="avLinea"></b>
 </section>
 
 
-<!-- RESUMEN -->
+<section id="workshop" class="page">
+
+<div class="card">
+
+<h2>🏭 Work Shop · Inventario de línea</h2>
+
+<div class="note">
+Muestra las piezas que actualmente tiene la línea en cada proceso.
+Los movimientos se descuentan del proceso anterior y se suman al siguiente.
+</div>
+
+<div class="grid">
+
+<div class="field">
+<label>Fecha de referencia</label>
+<input id="wsFecha" type="date">
+</div>
+
+<div class="field">
+<label>Línea</label>
+
+<select id="wsLinea">
+
+<option value="Todas">Todas</option>
+<option value="Línea A">Línea A</option>
+<option value="Línea B">Línea B</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="actions">
+<button id="actualizarWS" class="action secondary">
+Actualizar Work Shop
+</button>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Inventario actual</h2>
+
+<div class="tablewrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Línea</th>
+<th>Programado</th>
+<th>Armado</th>
+<th>Salida pespunte</th>
+<th>Clasificación</th>
+<th>Empaque</th>
+<th>Auditoría</th>
+<th>Total en proceso</th>
+</tr>
+
+</thead>
+
+<tbody id="tablaWS"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Detalle por OT</h2>
+
+<div class="tablewrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>OT</th>
+<th>Línea</th>
+<th>Modelo</th>
+<th>Programado</th>
+<th>Armado</th>
+<th>Salida pespunte</th>
+<th>Clasificación</th>
+<th>Empaque</th>
+<th>Auditoría</th>
+</tr>
+
+</thead>
+
+<tbody id="tablaWSOT"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
 
 <section id="resumen" class="page">
 
@@ -309,10 +403,17 @@ Línea: <b id="avLinea"></b>
 <input id="refSemana" type="date">
 </div>
 
-<div class="actions">
-<button id="actualizar" class="action secondary">Actualizar</button>
-<button id="exportar" class="action secondary">Exportar CSV</button>
 </div>
+
+<div class="actions">
+
+<button id="actualizar" class="action secondary">
+Actualizar
+</button>
+
+<button id="exportar" class="action secondary">
+Exportar CSV
+</button>
 
 </div>
 
@@ -327,18 +428,37 @@ Línea: <b id="avLinea"></b>
 </div>
 
 <div class="kpi">
-<small>En proceso</small>
-<strong id="kProc">0</strong>
+<small>Empaque</small>
+<strong id="kEmp">0</strong>
 </div>
 
 <div class="kpi">
-<small>Salida</small>
-<strong id="kSal">0</strong>
+<small>Auditoría</small>
+<strong id="kAud">0</strong>
 </div>
 
 <div class="kpi">
-<small>Registros</small>
+<small>OTs</small>
 <strong id="kReg">0</strong>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>📈 Eficiencia Programado vs Empaque</h2>
+
+<div class="effBox">
+
+<div class="eff" id="eficiencia">
+0%
+</div>
+
+<div>
+Empaque ÷ Programado × 100
+</div>
+
 </div>
 
 </div>
@@ -347,21 +467,38 @@ Línea: <b id="avLinea"></b>
 <div class="moneygrid">
 
 <div class="moneybox">
-<h3>💰 Destajo Pespunte · acumulado</h3>
-<div class="money" id="dPes">$0.00</div>
-<small>
-Línea A: <b id="dPesA">$0.00</b>
-· Línea B: <b id="dPesB">$0.00</b>
-</small>
+
+<h3>💰 Destajo Pespunte · Empaque</h3>
+
+<div class="money" id="dPes">
+$0.00
 </div>
 
-<div class="moneybox">
-<h3>💰 Destajo Preliminar · acumulado</h3>
-<div class="money" id="dPre">$0.00</div>
 <small>
-Línea A: <b id="dPreA">$0.00</b>
-· Línea B: <b id="dPreB">$0.00</b>
+Línea A:
+<b id="dPesA">$0.00</b>
+· Línea B:
+<b id="dPesB">$0.00</b>
 </small>
+
+</div>
+
+
+<div class="moneybox">
+
+<h3>💰 Destajo Preliminar · Empaque</h3>
+
+<div class="money" id="dPre">
+$0.00
+</div>
+
+<small>
+Línea A:
+<b id="dPreA">$0.00</b>
+· Línea B:
+<b id="dPreB">$0.00</b>
+</small>
+
 </div>
 
 </div>
@@ -374,15 +511,19 @@ Línea A: <b id="dPreA">$0.00</b>
 <div class="tablewrap">
 
 <table>
+
 <thead>
+
 <tr>
 <th>Línea</th>
 <th>Programado</th>
-<th>Proceso</th>
-<th>Salida</th>
+<th>Empaque</th>
+<th>Auditoría</th>
+<th>Eficiencia</th>
 <th>Destajo Pespunte</th>
 <th>Destajo Preliminar</th>
 </tr>
+
 </thead>
 
 <tbody id="tablaLineas"></tbody>
@@ -390,6 +531,7 @@ Línea A: <b id="dPreA">$0.00</b>
 </table>
 
 </div>
+
 </div>
 
 
@@ -400,17 +542,20 @@ Línea A: <b id="dPreA">$0.00</b>
 <div class="tablewrap">
 
 <table>
+
 <thead>
+
 <tr>
 <th>OT</th>
 <th>Línea</th>
 <th>Modelo</th>
 <th>Programado</th>
-<th>Proceso</th>
-<th>Salida</th>
+<th>Empaque</th>
+<th>Eficiencia</th>
 <th>Pespunte</th>
 <th>Preliminar</th>
 </tr>
+
 </thead>
 
 <tbody id="tablaOT"></tbody>
@@ -424,8 +569,6 @@ Línea A: <b id="dPreA">$0.00</b>
 </section>
 
 
-<!-- COSTOS -->
-
 <section id="costos" class="page">
 
 <div class="card">
@@ -433,7 +576,8 @@ Línea A: <b id="dPreA">$0.00</b>
 <h2>Costos por modelo</h2>
 
 <div class="note">
-Cada modelo tiene dos costos independientes.
+Los costos se calculan sobre las
+<b>piezas que entran a Empaque</b>.
 </div>
 
 <div class="grid">
@@ -456,7 +600,11 @@ Cada modelo tiene dos costos independientes.
 </div>
 
 <div class="actions">
-<button id="guardarCosto" class="action primary">Guardar costo</button>
+
+<button id="guardarCosto" class="action primary">
+Guardar costo
+</button>
+
 </div>
 
 </div>
@@ -467,13 +615,16 @@ Cada modelo tiene dos costos independientes.
 <div class="tablewrap">
 
 <table>
+
 <thead>
+
 <tr>
 <th>Modelo</th>
 <th>Costo pieza pespunte</th>
 <th>Costo pieza preliminar</th>
 <th></th>
 </tr>
+
 </thead>
 
 <tbody id="tablaCostos"></tbody>
@@ -487,8 +638,6 @@ Cada modelo tiene dos costos independientes.
 </section>
 
 
-<!-- HISTORIAL -->
-
 <section id="historial" class="page">
 
 <div class="card">
@@ -497,13 +646,22 @@ Cada modelo tiene dos costos independientes.
 
 <div class="note">
 La nómina es de <b>lunes a sábado</b>.
-El sábado es el cierre.
 El domingo queda fuera.
+
+El destajo semanal se calcula con las piezas que
+<b>entraron a Empaque</b> durante la semana.
 </div>
 
 <div class="actions">
-<button id="cerrarSemana" class="action primary">Cerrar semana actual</button>
-<button id="borrarHistorial" class="action danger">Borrar historial</button>
+
+<button id="cerrarSemana" class="action primary">
+Cerrar semana actual
+</button>
+
+<button id="borrarHistorial" class="action danger">
+Borrar historial
+</button>
+
 </div>
 
 </div>
@@ -514,16 +672,19 @@ El domingo queda fuera.
 <div class="tablewrap">
 
 <table>
+
 <thead>
+
 <tr>
 <th>Cierre</th>
 <th>Programado</th>
-<th>Salida</th>
+<th>Empaque</th>
 <th>Pespunte</th>
 <th>Preliminar</th>
 <th>Destajo A</th>
 <th>Destajo B</th>
 </tr>
+
 </thead>
 
 <tbody id="tablaHistorial"></tbody>
@@ -551,40 +712,42 @@ var KHIST="theStudioHistorial_v4";
 var KADV="theStudioAvances_v4";
 
 function $(id){
-return document.getElementById(id);
+return document.getElementById(id)
 }
 
 function N(v){
 var n=Number(v);
-return isFinite(n)?n:0;
+return isFinite(n)?n:0
 }
 
 function M(v){
 return N(v).toLocaleString("es-MX",{
 style:"currency",
 currency:"MXN"
-});
+})
 }
 
 function esc(v){
 return String(v==null?"":v).replace(/[&<>"']/g,function(c){
-return {
+return{
 "&":"&amp;",
 "<":"&lt;",
 ">":"&gt;",
 '"':"&quot;",
 "'":"&#39;"
-}[c];
-});
+}[c]
+})
 }
 
 function today(){
 
 var d=new Date();
 
-d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
+d.setMinutes(
+d.getMinutes()-d.getTimezoneOffset()
+);
 
-return d.toISOString().slice(0,10);
+return d.toISOString().slice(0,10)
 
 }
 
@@ -592,9 +755,11 @@ function nowLocal(){
 
 var d=new Date();
 
-d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
+d.setMinutes(
+d.getMinutes()-d.getTimezoneOffset()
+);
 
-return d.toISOString().slice(0,16);
+return d.toISOString().slice(0,16)
 
 }
 
@@ -602,15 +767,41 @@ function load(k,def){
 
 try{
 
-var x=JSON.parse(localStorage.getItem(k));
+var x=JSON.parse(
+localStorage.getItem(k)
+);
 
-return x==null?def:x;
+return x==null?def:x
 
 }catch(e){
 
-return def;
+return def
 
 }
+
+}
+
+function save(){
+
+localStorage.setItem(
+KPROD,
+JSON.stringify(prod)
+);
+
+localStorage.setItem(
+KCOST,
+JSON.stringify(cost)
+);
+
+localStorage.setItem(
+KHIST,
+JSON.stringify(hist)
+);
+
+localStorage.setItem(
+KADV,
+JSON.stringify(avances)
+)
 
 }
 
@@ -618,64 +809,73 @@ var prod=load(KPROD,[]);
 var cost=load(KCOST,{});
 var hist=load(KHIST,[]);
 var avances=load(KADV,[]);
+var selectedOT=null;
 
-
-function save(){
-
-localStorage.setItem(KPROD,JSON.stringify(prod));
-localStorage.setItem(KCOST,JSON.stringify(cost));
-localStorage.setItem(KHIST,JSON.stringify(hist));
-localStorage.setItem(KADV,JSON.stringify(avances));
-
-}
+var FLOW=[
+"Programado",
+"Armado",
+"Salida pespunte",
+"Clasificación",
+"Empaque",
+"Auditoría"
+];
 
 
 function range(ref){
 
-var d=new Date((ref||today())+"T12:00:00");
+var d=new Date(
+(ref||today())+"T12:00:00"
+);
 
 var day=d.getDay();
 
-var diff=day===0?-6:1-day;
+var diff=
+day===0
+?-6
+:1-day;
 
 var mon=new Date(d);
 
-mon.setDate(d.getDate()+diff);
+mon.setDate(
+d.getDate()+diff
+);
 
 var sat=new Date(mon);
 
-sat.setDate(mon.getDate()+5);
+sat.setDate(
+mon.getDate()+5
+);
 
 function iso(x){
 
-x.setMinutes(x.getMinutes()-x.getTimezoneOffset());
+x.setMinutes(
+x.getMinutes()-x.getTimezoneOffset()
+);
 
-return x.toISOString().slice(0,10);
-
-}
-
-return [iso(new Date(mon)),iso(new Date(sat))];
+return x.toISOString().slice(0,10)
 
 }
 
+return[
+iso(new Date(mon)),
+iso(new Date(sat))
+]
 
-function inWeek(r,ref){
+}
+
+
+function inWeekDate(date,ref){
 
 var x=range(ref);
 
-return r.fecha>=x[0]&&r.fecha<=x[1];
+return date>=x[0]&&date<=x[1]
 
 }
 
 
-function rc(r){
+function inWeekAdvance(a,ref){
 
-var c=cost[r.modelo]||{};
-
-return {
-pes:N(r.salida)*N(c.pes),
-pre:N(r.salida)*N(c.pre)
-};
+return inWeekDate(a.fecha,ref)
 
 }
 
@@ -694,9 +894,10 @@ var first=document.createElement("option");
 
 first.value="";
 
-first.textContent=names.length?
-"Selecciona modelo":
-"Primero agrega un modelo en Costos";
+first.textContent=
+names.length
+?"Selecciona modelo"
+:"Primero agrega un modelo en Costos";
 
 s.appendChild(first);
 
@@ -707,79 +908,18 @@ var o=document.createElement("option");
 o.value=m;
 o.textContent=m;
 
-s.appendChild(o);
+s.appendChild(o)
 
 });
 
-if(old&&cost[old])s.value=old;
+if(old&&cost[old]){
+
+s.value=old
 
 }
 
-
-/* =========================
-   CAPTURA
-========================= */
-
-function renderCapture(){
-
-var tb=$("tablaCaptura");
-
-var rows=prod.slice().sort(function(a,b){
-return String(b.fecha).localeCompare(String(a.fecha));
-});
-
-if(!rows.length){
-
-tb.innerHTML='<tr><td colspan="10">Sin registros.</td></tr>';
-
-return;
-
 }
 
-tb.innerHTML=rows.map(function(r){
-
-var c=rc(r);
-
-return "<tr>"+
-"<td>"+esc(r.fecha)+"</td>"+
-"<td><span class='pill "+(r.linea==="Línea A"?"a":"b")+"'>"+esc(r.linea)+"</span></td>"+
-"<td><b>"+esc(r.ot)+"</b></td>"+
-"<td>"+esc(r.modelo)+"</td>"+
-"<td>"+N(r.programado)+"</td>"+
-"<td>"+N(r.proceso)+"</td>"+
-"<td>"+N(r.salida)+"</td>"+
-"<td>"+M(c.pes)+"</td>"+
-"<td>"+M(c.pre)+"</td>"+
-"<td><button class='action danger' data-del='"+esc(r.id)+"'>Eliminar</button></td>"+
-"</tr>";
-
-}).join("");
-
-tb.querySelectorAll("[data-del]").forEach(function(b){
-
-b.onclick=function(){
-
-if(confirm("¿Eliminar este registro?")){
-
-prod=prod.filter(function(r){
-return String(r.id)!==String(b.getAttribute("data-del"));
-});
-
-save();
-render();
-
-}
-
-};
-
-});
-
-}
-
-
-/* =========================
-   OTS
-========================= */
 
 function getOTs(){
 
@@ -798,24 +938,23 @@ ot:key,
 linea:r.linea,
 modelo:r.modelo,
 programado:0,
-proceso:0,
-salida:0,
-fechaInicio:r.fecha
+fecha:r.fecha,
+obs:r.obs||""
 };
 
 }
 
 map[key].programado+=N(r.programado);
-map[key].proceso=N(r.proceso);
-map[key].salida+=N(r.salida);
 
-if(r.fecha<map[key].fechaInicio){
-map[key].fechaInicio=r.fecha;
+if(r.fecha<map[key].fecha){
+
+map[key].fecha=r.fecha
+
 }
 
 });
 
-return map;
+return map
 
 }
 
@@ -824,42 +963,360 @@ function getAdvancesOT(ot){
 
 return avances.filter(function(a){
 
-return String(a.ot)===String(ot);
+return String(a.ot)===String(ot)
 
 }).sort(function(a,b){
 
-return String(a.fechaHora).localeCompare(String(b.fechaHora));
+return String(a.fechaHora)
+.localeCompare(String(b.fechaHora))
 
-});
+})
 
 }
 
 
-function getCurrentProcess(ot){
+function inventoryOT(ot){
+
+var map={};
+
+FLOW.forEach(function(p){
+
+map[p]=0
+
+});
+
+var o=getOTs()[ot];
+
+if(!o)return map;
+
+map["Programado"]=o.programado;
+
+getAdvancesOT(ot).forEach(function(a){
+
+var from=a.procesoAnterior;
+var to=a.siguienteProceso;
+var q=N(a.piezas);
+
+if(map[from]!=null){
+
+map[from]-=q
+
+}
+
+if(map[to]!=null){
+
+map[to]+=q
+
+}
+
+});
+
+FLOW.forEach(function(p){
+
+if(map[p]<0){
+
+map[p]=0
+
+}
+
+});
+
+return map
+
+}
+
+
+function currentIndex(ot){
+
+var inv=inventoryOT(ot);
+
+for(
+var i=FLOW.length-1;
+i>=0;
+i--
+){
+
+if(inv[FLOW[i]]>0){
+
+return i
+
+}
+
+}
 
 var arr=getAdvancesOT(ot);
 
-if(!arr.length)return "Programación";
+if(arr.length){
 
-return arr[arr.length-1].siguienteProceso;
+return FLOW.indexOf(
+arr[arr.length-1].siguienteProceso
+)
+
+}
+
+return 0
+
+}
+
+
+function currentProcess(ot){
+
+var i=currentIndex(ot);
+
+return FLOW[i]||"Programado"
+
+}
+
+
+function nextProcess(ot){
+
+var i=currentIndex(ot);
+
+return i<FLOW.length-1
+?FLOW[i+1]
+:""
+
+}
+
+
+function availableCurrent(ot){
+
+return inventoryOT(ot)[currentProcess(ot)]||0
 
 }
 
 
 function getLastAdvance(ot){
 
-var arr=getAdvancesOT(ot);
+var a=getAdvancesOT(ot);
 
-if(!arr.length)return null;
-
-return arr[arr.length-1];
+return a.length
+?a[a.length-1]
+:null
 
 }
 
 
-/* =========================
-   AVANCES
-========================= */
+function formatDateTime(v){
+
+if(!v)return"";
+
+var d=new Date(v);
+
+if(isNaN(d.getTime()))return v;
+
+return d.toLocaleString(
+"es-MX",
+{
+dateStyle:"short",
+timeStyle:"short"
+}
+)
+
+}
+
+
+function diffMs(a,b){
+
+return new Date(b)-new Date(a)
+
+}
+
+
+function formatDuration(ms){
+
+if(!isFinite(ms)||ms<0){
+
+return"0h 0m"
+
+}
+
+var min=Math.floor(ms/60000);
+
+var days=Math.floor(min/1440);
+
+min%=1440;
+
+var h=Math.floor(min/60);
+
+min%=60;
+
+return days>0
+?days+"d "+h+"h "+min+"m"
+:h+"h "+min+"m"
+
+}
+
+
+function getStartDateTime(ot){
+
+var o=getOTs()[ot];
+
+if(!o)return null;
+
+return o.fecha+"T08:00"
+
+}
+
+
+function totalLeadTime(ot){
+
+var s=getStartDateTime(ot);
+
+var l=getLastAdvance(ot);
+
+return s&&l
+?formatDuration(
+diffMs(s,l.fechaHora)
+)
+:"0h 0m"
+
+}
+
+
+function empacadoEnSemana(ot,ref){
+
+return getAdvancesOT(ot)
+
+.filter(function(a){
+
+return a.siguienteProceso==="Empaque"
+&&
+inWeekAdvance(a,ref)
+
+})
+
+.reduce(function(t,a){
+
+return t+N(a.piezas)
+
+},0)
+
+}
+
+
+function empacadoTotal(ot){
+
+return getAdvancesOT(ot)
+
+.filter(function(a){
+
+return a.siguienteProceso==="Empaque"
+
+})
+
+.reduce(function(t,a){
+
+return t+N(a.piezas)
+
+},0)
+
+}
+
+
+function destajoOTSemana(ot,ref){
+
+var o=getOTs()[ot];
+
+var c=cost[o?o.modelo:""]||{};
+
+var q=empacadoEnSemana(ot,ref);
+
+return{
+pes:q*N(c.pes),
+pre:q*N(c.pre),
+q:q
+}
+
+}
+
+
+function renderCapture(){
+
+var tb=$("tablaCaptura");
+
+var rows=prod.slice().sort(
+function(a,b){
+
+return String(b.fecha)
+.localeCompare(
+String(a.fecha)
+)
+
+}
+);
+
+if(!rows.length){
+
+tb.innerHTML=
+'<tr><td colspan="6">Sin registros.</td></tr>';
+
+return
+
+}
+
+tb.innerHTML=rows.map(
+function(r){
+
+return"<tr>"+
+"<td>"+esc(r.fecha)+"</td>"+
+"<td><span class='pill "+
+(r.linea==="Línea A"?"a":"b")+
+"'>"+
+esc(r.linea)+
+"</span></td>"+
+"<td><b>"+
+esc(r.ot)+
+"</b></td>"+
+"<td>"+
+esc(r.modelo)+
+"</td>"+
+"<td>"+
+N(r.programado)+
+"</td>"+
+"<td><button class='action danger' data-del='"+
+esc(r.id)+
+"'>Eliminar</button></td>"+
+"</tr>"
+
+}
+).join("");
+
+tb.querySelectorAll("[data-del]")
+.forEach(function(b){
+
+b.onclick=function(){
+
+if(confirm("¿Eliminar esta OT?")){
+
+var id=b.getAttribute("data-del");
+
+prod=prod.filter(function(r){
+
+return String(r.id)!==String(id)
+
+});
+
+avances=avances.filter(function(a){
+
+return String(a.ot)!==String(id)
+&&
+String(a.ot)!==String("")
+
+});
+
+save();
+
+render()
+
+}
+
+}
+
+})
+
+}
+
 
 function renderAdvanceList(){
 
@@ -871,94 +1328,119 @@ var names=Object.keys(map).sort();
 
 if(!names.length){
 
-box.innerHTML='<div class="note">No hay OTs registradas todavía.</div>';
+box.innerHTML=
+'<div class="note">No hay OTs registradas todavía.</div>';
 
 renderLead();
 
-return;
+return
 
 }
 
-box.innerHTML=names.map(function(key){
+box.innerHTML=names.map(function(k){
 
-var o=map[key];
+var o=map[k];
 
-var current=getCurrentProcess(o.ot);
+var cur=currentProcess(o.ot);
+
+var avail=availableCurrent(o.ot);
+
+var next=nextProcess(o.ot);
 
 var last=getLastAdvance(o.ot);
 
-return '<div class="advanceBox">'+
+return'<div class="otBox">'+
 
-'<div class="otTitle">OT '+esc(o.ot)+'</div>'+
+'<div class="otTitle">OT '+
+esc(o.ot)+
+'</div>'+
 
-'<div class="muted">Modelo: <b>'+esc(o.modelo)+'</b> · '+esc(o.linea)+'</div>'+
+'<div class="muted">Modelo: <b>'+
+esc(o.modelo)+
+'</b> · '+
+esc(o.linea)+
+'</div>'+
 
 '<div class="muted" style="margin-top:6px">'+
-'Programado: <b>'+N(o.programado).toLocaleString()+'</b>'+
-' · Proceso actual: <span class="processPill">'+esc(current)+'</span>'+
-'</div>'+
+'Programado: <b>'+
+N(o.programado).toLocaleString()+
+'</b> · Inventario actual en '+
+'<span class="processPill">'+
+esc(cur)+
+'</span>: <b>'+
+avail.toLocaleString()+
+'</b></div>'+
+
+(next?
+'<div class="muted" style="margin-top:5px">'+
+'Siguiente proceso: <b>'+
+esc(next)+
+'</b></div>'
+:
+'<div class="muted" style="margin-top:5px">'+
+'OT completada en Auditoría.'+
+'</div>')+
 
 (last?
 '<div class="muted" style="margin-top:5px">'+
-'Último avance: '+esc(formatDateTime(last.fechaHora))+
-' · Piezas: '+N(last.piezas)+
-'</div>':"")+
+'Último movimiento: '+
+esc(formatDateTime(last.fechaHora))+
+'</div>'
+:
+'')+
 
 '<div class="actions">'+
 
-'<button class="action primary" data-advance="'+esc(o.ot)+'">Avanzar OT</button>'+
+'<button class="action primary" data-advance="'+
+esc(o.ot)+
+'" '+
+(!next||avail<=0?"disabled":"")+
+'>Avanzar OT</button>'+
 
-'<button class="action secondary" data-detail="'+esc(o.ot)+'">Ver Lead Time</button>'+
+'<button class="action secondary" data-detail="'+
+esc(o.ot)+
+'">Ver Lead Time</button>'+
 
-'</div>'+
-
-'</div>';
+'</div></div>'
 
 }).join("");
 
-
-box.querySelectorAll("[data-advance]").forEach(function(b){
-
-b.onclick=function(){
-
-selectOT(b.getAttribute("data-advance"));
-
-};
-
-});
-
-
-box.querySelectorAll("[data-detail]").forEach(function(b){
+box.querySelectorAll("[data-advance]")
+.forEach(function(b){
 
 b.onclick=function(){
 
-showLeadDetail(b.getAttribute("data-detail"));
-
-};
-
-});
-
-renderLead();
+selectOT(
+b.getAttribute("data-advance")
+)
 
 }
 
+});
 
-var selectedOT=null;
+box.querySelectorAll("[data-detail]")
+.forEach(function(b){
+
+b.onclick=function(){
+
+showLeadDetail(
+b.getAttribute("data-detail")
+)
+
+}
+
+});
+
+renderLead()
+
+}
 
 
 function selectOT(ot){
 
-var map=getOTs();
+var o=getOTs()[ot];
 
-var o=map[ot];
-
-if(!o){
-
-alert("No se encontró la OT.");
-
-return;
-
-}
+if(!o)return;
 
 selectedOT=ot;
 
@@ -970,75 +1452,88 @@ $("avModelo").textContent=o.modelo;
 
 $("avLinea").textContent=o.linea;
 
-$("avProcesoActual").value=getCurrentProcess(ot);
+$("avActual").value=
+currentProcess(ot);
 
-$("avFechaHora").value=nowLocal();
+$("avDisponible").value=
+availableCurrent(ot);
 
-$("avSiguiente").value="";
+$("avSiguiente").value=
+nextProcess(ot)||"OT terminada";
 
 $("avPiezas").value=0;
+
+$("avPiezas").max=
+availableCurrent(ot);
+
+$("avFechaHora").value=
+nowLocal();
 
 $("panelAvance").scrollIntoView({
 behavior:"smooth",
 block:"start"
-});
+})
 
 }
 
 
-$("guardarAvance").addEventListener("click",function(){
+$("guardarAvance").addEventListener(
+"click",
+function(){
 
 if(!selectedOT){
 
-alert("Selecciona una OT.");
-
-return;
+return alert("Selecciona una OT.")
 
 }
 
-var siguiente=$("avSiguiente").value;
+var actual=
+currentProcess(selectedOT);
 
-var piezas=N($("avPiezas").value);
+var siguiente=
+nextProcess(selectedOT);
+
+var disp=
+availableCurrent(selectedOT);
+
+var q=
+N($("avPiezas").value);
 
 if(!siguiente){
 
-alert("Selecciona el siguiente proceso.");
-
-return;
-
-}
-
-if(piezas<=0){
-
-alert("Escribe las piezas que avanzaron.");
-
-return;
+return alert(
+"Esta OT ya llegó a Auditoría."
+)
 
 }
 
-var map=getOTs();
+if(q<=0){
 
-var o=map[selectedOT];
-
-if(!o){
-
-alert("La OT ya no existe.");
-
-return;
+return alert(
+"Escribe las piezas que avanzan."
+)
 
 }
 
-var current=getCurrentProcess(selectedOT);
+if(q>disp){
 
-if(current===siguiente){
-
-alert("La OT ya se encuentra en "+siguiente+".");
-
-return;
+return alert(
+"No puedes avanzar "+
+q+
+" piezas. Solo hay "+
+disp+
+" piezas disponibles en "+
+actual+
+"."
+)
 
 }
 
-var fechaHora=$("avFechaHora").value||nowLocal();
+var o=getOTs()[selectedOT];
+
+var fh=
+$("avFechaHora").value||
+nowLocal();
 
 avances.push({
 
@@ -1050,124 +1545,52 @@ linea:o.linea,
 
 modelo:o.modelo,
 
-procesoAnterior:current,
+procesoAnterior:actual,
 
 siguienteProceso:siguiente,
 
-piezas:piezas,
+piezas:q,
 
-fechaHora:fechaHora,
+fechaHora:fh,
 
-fecha:fechaHora.slice(0,10)
+fecha:fh.slice(0,10)
 
 });
 
 save();
 
 alert(
-"Avance registrado correctamente.\n\n"+
+"Avance registrado.\n\n"+
 "OT: "+o.ot+
-"\nProceso: "+siguiente+
-"\nPiezas: "+piezas+
-"\nFecha y hora: "+formatDateTime(fechaHora)
+"\n"+
+actual+
+" → "+
+siguiente+
+"\n"+
+"Piezas: "+q+
+"\n"+
+"Fecha: "+
+formatDateTime(fh)
 );
 
 selectedOT=null;
 
 $("panelAvance").style.display="none";
 
-render();
+render()
 
 });
 
 
-$("cancelarAvance").addEventListener("click",function(){
+$("cancelarAvance").addEventListener(
+"click",
+function(){
 
 selectedOT=null;
 
-$("panelAvance").style.display="none";
+$("panelAvance").style.display="none"
 
 });
-
-
-function formatDateTime(value){
-
-if(!value)return "";
-
-var d=new Date(value);
-
-if(isNaN(d.getTime()))return value;
-
-return d.toLocaleString("es-MX",{
-dateStyle:"short",
-timeStyle:"short"
-});
-
-}
-
-
-/* =========================
-   LEAD TIME
-========================= */
-
-function diffMs(a,b){
-
-return new Date(b)-new Date(a);
-
-}
-
-
-function formatDuration(ms){
-
-if(!isFinite(ms)||ms<0)return "0h 0m";
-
-var minutes=Math.floor(ms/60000);
-
-var days=Math.floor(minutes/1440);
-
-minutes%=1440;
-
-var hours=Math.floor(minutes/60);
-
-minutes%=60;
-
-if(days>0)return days+"d "+hours+"h "+minutes+"m";
-
-return hours+"h "+minutes+"m";
-
-}
-
-
-function getStartDateTime(ot){
-
-var arr=prod.filter(function(r){
-
-return String(r.ot)===String(ot);
-
-}).sort(function(a,b){
-
-return String(a.fecha).localeCompare(String(b.fecha));
-
-});
-
-if(!arr.length)return null;
-
-return arr[0].fecha+"T08:00";
-
-}
-
-
-function totalLeadTime(ot){
-
-var start=getStartDateTime(ot);
-
-var last=getLastAdvance(ot);
-
-if(!start||!last)return "0h 0m";
-
-return formatDuration(diffMs(start,last.fechaHora));
-
-}
 
 
 function renderLead(){
@@ -1180,105 +1603,112 @@ var names=Object.keys(map).sort();
 
 if(!names.length){
 
-tb.innerHTML='<tr><td colspan="8">Sin OTs registradas.</td></tr>';
+tb.innerHTML=
+'<tr><td colspan="8">Sin OTs registradas.</td></tr>';
 
-return;
+return
 
 }
 
-tb.innerHTML=names.map(function(key){
+tb.innerHTML=names.map(function(k){
 
-var o=map[key];
+var o=map[k];
 
 var last=getLastAdvance(o.ot);
 
-return "<tr>"+
-
-"<td><b>"+esc(o.ot)+"</b></td>"+
-
-"<td>"+esc(o.linea)+"</td>"+
-
-"<td>"+esc(o.modelo)+"</td>"+
-
-"<td>"+N(o.programado)+"</td>"+
-
-"<td><span class='processPill'>"+
-esc(getCurrentProcess(o.ot))+
-"</span></td>"+
-
+return"<tr>"+
+"<td><b>"+
+esc(o.ot)+
+"</b></td>"+
 "<td>"+
-(last?formatDateTime(last.fechaHora):"Sin avance")+
+esc(o.linea)+
 "</td>"+
-
+"<td>"+
+esc(o.modelo)+
+"</td>"+
+"<td>"+
+o.programado+
+"</td>"+
+"<td><span class='processPill'>"+
+esc(currentProcess(o.ot))+
+"</span></td>"+
+"<td>"+
+(last
+?formatDateTime(last.fechaHora)
+:"Sin avance")+
+"</td>"+
 "<td class='lead'>"+
 totalLeadTime(o.ot)+
 "</td>"+
-
-"<td>"+
-'<button class="action secondary" data-lead="'+esc(o.ot)+'">Ver detalle</button>'+
-"</td>"+
-
-"</tr>";
+"<td><button class='action secondary' data-lead='"+
+esc(o.ot)+
+"'>Ver detalle</button></td>"+
+"</tr>"
 
 }).join("");
 
-tb.querySelectorAll("[data-lead]").forEach(function(b){
+tb.querySelectorAll("[data-lead]")
+.forEach(function(b){
 
 b.onclick=function(){
 
-showLeadDetail(b.getAttribute("data-lead"));
+showLeadDetail(
+b.getAttribute("data-lead")
+)
 
-};
+}
 
-});
+})
 
 }
 
 
 function showLeadDetail(ot){
 
-var map=getOTs();
-
-var o=map[ot];
+var o=getOTs()[ot];
 
 if(!o)return;
 
 var arr=getAdvancesOT(ot);
 
-$("detalleLead").style.display="block";
-
 var html=
 '<div class="detailBox">'+
-'<h3>OT '+esc(o.ot)+'</h3>'+
+'<h3>OT '+
+esc(o.ot)+
+'</h3>'+
 '<div class="muted">'+
-'Modelo: <b>'+esc(o.modelo)+'</b>'+
-' · Línea: <b>'+esc(o.linea)+'</b>'+
-' · Programado: <b>'+N(o.programado)+'</b>'+
-'</div>'+
+'Modelo: <b>'+
+esc(o.modelo)+
+'</b> · Línea: <b>'+
+esc(o.linea)+
+'</b> · Programado: <b>'+
+o.programado+
+'</b></div>'+
 '<div style="margin-top:6px">'+
-'Lead Time total: <span class="lead">'+totalLeadTime(ot)+'</span>'+
+'Lead Time total: <span class="lead">'+
+totalLeadTime(ot)+
+'</span>'+
 '</div>'+
 '</div>';
 
 if(!arr.length){
 
-html+='<div class="note" style="margin-top:12px">Esta OT todavía no tiene avances registrados.</div>';
+html+=
+'<div class="note" style="margin-top:12px">'+
+'Esta OT todavía no tiene movimientos.'+
+'</div>';
 
-$("detalleOT").innerHTML=html;
+}else{
 
-return;
-
-}
-
-var previous=getStartDateTime(ot);
+var prev=getStartDateTime(ot);
 
 html+=
 '<div class="tablewrap" style="margin-top:12px">'+
 '<table>'+
 '<thead>'+
 '<tr>'+
-'<th>Proceso anterior</th>'+
-'<th>Siguiente proceso</th>'+
+'<th>Anterior</th>'+
+'<th>Siguiente</th>'+
 '<th>Piezas</th>'+
 '<th>Fecha / hora</th>'+
 '<th>Tiempo</th>'+
@@ -1288,339 +1718,624 @@ html+=
 
 arr.forEach(function(a){
 
-var duration=diffMs(previous,a.fechaHora);
-
 html+=
 "<tr>"+
-"<td>"+esc(a.procesoAnterior)+"</td>"+
-"<td><span class='processPill'>"+esc(a.siguienteProceso)+"</span></td>"+
-"<td>"+N(a.piezas)+"</td>"+
-"<td>"+formatDateTime(a.fechaHora)+"</td>"+
-"<td class='lead'>"+formatDuration(duration)+"</td>"+
+"<td>"+
+esc(a.procesoAnterior)+
+"</td>"+
+"<td><span class='processPill'>"+
+esc(a.siguienteProceso)+
+"</span></td>"+
+"<td>"+
+a.piezas+
+"</td>"+
+"<td>"+
+formatDateTime(a.fechaHora)+
+"</td>"+
+"<td class='lead'>"+
+formatDuration(
+diffMs(prev,a.fechaHora)
+)+
+"</td>"+
 "</tr>";
 
-previous=a.fechaHora;
+prev=a.fechaHora
 
 });
 
-html+='</tbody></table></div>';
+html+=
+"</tbody></table></div>"
+
+}
+
+$("detalleLead").style.display="block";
 
 $("detalleOT").innerHTML=html;
 
 $("detalleLead").scrollIntoView({
 behavior:"smooth",
 block:"start"
-});
+})
 
 }
 
 
-/* =========================
-   RESUMEN
-========================= */
+function renderWorkshop(){
 
-function renderResumen(){
+var ref=
+$("wsFecha").value||today();
 
-var ref=$("refSemana").value||today();
+var linea=
+$("wsLinea").value;
 
-var arr=prod.filter(function(r){
-return inWeek(r,ref);
-});
+var map=getOTs();
 
-var A=arr.filter(function(r){
-return r.linea==="Línea A";
-});
+var byLine={};
 
-var B=arr.filter(function(r){
-return r.linea==="Línea B";
-});
+Object.keys(map).forEach(function(k){
 
+var o=map[k];
 
-function sums(a){
+if(
+linea!=="Todas"
+&&
+o.linea!==linea
+)return;
 
-return a.reduce(function(z,r){
+var inv=inventoryOT(k);
 
-var c=rc(r);
+if(!byLine[o.linea]){
 
-z.p+=N(r.programado);
-z.q+=N(r.proceso);
-z.s+=N(r.salida);
-z.dp+=c.pes;
-z.dr+=c.pre;
-
-return z;
-
-},{
-p:0,
-q:0,
-s:0,
-dp:0,
-dr:0
-});
-
-}
-
-var a=sums(A);
-var b=sums(B);
-var t=sums(arr);
-
-$("kProg").textContent=t.p.toLocaleString();
-$("kProc").textContent=t.q.toLocaleString();
-$("kSal").textContent=t.s.toLocaleString();
-$("kReg").textContent=arr.length;
-
-$("dPes").textContent=M(t.dp);
-$("dPre").textContent=M(t.dr);
-
-$("dPesA").textContent=M(a.dp);
-$("dPesB").textContent=M(b.dp);
-
-$("dPreA").textContent=M(a.dr);
-$("dPreB").textContent=M(b.dr);
-
-$("tablaLineas").innerHTML=
-"<tr>"+
-"<td>Línea A</td>"+
-"<td>"+a.p.toLocaleString()+"</td>"+
-"<td>"+a.q.toLocaleString()+"</td>"+
-"<td>"+a.s.toLocaleString()+"</td>"+
-"<td>"+M(a.dp)+"</td>"+
-"<td>"+M(a.dr)+"</td>"+
-"</tr>"+
-
-"<tr>"+
-"<td>Línea B</td>"+
-"<td>"+b.p.toLocaleString()+"</td>"+
-"<td>"+b.q.toLocaleString()+"</td>"+
-"<td>"+b.s.toLocaleString()+"</td>"+
-"<td>"+M(b.dp)+"</td>"+
-"<td>"+M(b.dr)+"</td>"+
-"</tr>";
-
-var groups={};
-
-arr.forEach(function(r){
-
-var key=(r.ot||"")+"|"+(r.linea||"")+"|"+(r.modelo||"");
-
-if(!groups[key]){
-
-groups[key]={
-ot:r.ot,
-linea:r.linea,
-modelo:r.modelo,
-p:0,
-q:0,
-s:0,
-dp:0,
-dr:0
+byLine[o.linea]={
+programado:0,
+Armado:0,
+"Salida pespunte":0,
+"Clasificación":0,
+Empaque:0,
+"Auditoría":0
 };
 
 }
 
-var g=groups[key];
+var z=byLine[o.linea];
 
-var c=rc(r);
+z.programado+=o.programado;
 
-g.p+=N(r.programado);
-g.q+=N(r.proceso);
-g.s+=N(r.salida);
-g.dp+=c.pes;
-g.dr+=c.pre;
+FLOW.slice(1).forEach(function(p){
+
+z[p]+=inv[p]
+
+})
 
 });
 
-var vals=Object.keys(groups).map(function(k){
-return groups[k];
+var tb=$("tablaWS");
+
+var lines=Object.keys(byLine);
+
+tb.innerHTML=lines.length
+?lines.map(function(l){
+
+var z=byLine[l];
+
+var tot=
+z.Armado+
+z["Salida pespunte"]+
+z.Clasificación+
+z.Empaque+
+z["Auditoría"];
+
+return"<tr>"+
+"<td>"+
+esc(l)+
+"</td>"+
+"<td>"+
+z.programado+
+"</td>"+
+"<td>"+
+z.Armado+
+"</td>"+
+"<td>"+
+z["Salida pespunte"]+
+"</td>"+
+"<td>"+
+z.Clasificación+
+"</td>"+
+"<td>"+
+z.Empaque+
+"</td>"+
+"<td>"+
+z["Auditoría"]+
+"</td>"+
+"<td><b>"+
+tot+
+"</b></td>"+
+"</tr>"
+
+}).join("")
+:
+'<tr><td colspan="8">Sin inventario.</td></tr>';
+
+var otb=$("tablaWSOT");
+
+var names=Object.keys(map).sort();
+
+otb.innerHTML=
+names
+.filter(function(k){
+
+return linea==="Todas"
+||
+map[k].linea===linea
+
+})
+.map(function(k){
+
+var o=map[k];
+
+var inv=inventoryOT(k);
+
+return"<tr>"+
+"<td><b>"+
+esc(o.ot)+
+"</b></td>"+
+"<td>"+
+esc(o.linea)+
+"</td>"+
+"<td>"+
+esc(o.modelo)+
+"</td>"+
+"<td>"+
+o.programado+
+"</td>"+
+"<td>"+
+inv.Armado+
+"</td>"+
+"<td>"+
+inv["Salida pespunte"]+
+"</td>"+
+"<td>"+
+inv.Clasificación+
+"</td>"+
+"<td>"+
+inv.Empaque+
+"</td>"+
+"<td>"+
+inv["Auditoría"]+
+"</td>"+
+"</tr>"
+
+}).join("")
+||
+'<tr><td colspan="9">Sin OTs.</td></tr>';
+
+}
+
+
+function renderResumen(){
+
+var ref=
+$("refSemana").value||today();
+
+var map=getOTs();
+
+var names=Object.keys(map);
+
+var weekOTs=
+names.filter(function(k){
+
+return inWeekDate(
+map[k].fecha,
+ref
+)
+
 });
 
-$("tablaOT").innerHTML=vals.length?
+var totalProg=0;
+var totalEmp=0;
+var totalAud=0;
+var dp=0;
+var dr=0;
 
-vals.map(function(g){
+var la={
+p:0,
+e:0,
+a:0,
+dp:0,
+dr:0
+};
 
-return "<tr>"+
-"<td>"+esc(g.ot)+"</td>"+
-"<td>"+esc(g.linea)+"</td>"+
-"<td>"+esc(g.modelo)+"</td>"+
-"<td>"+g.p+"</td>"+
-"<td>"+g.q+"</td>"+
-"<td>"+g.s+"</td>"+
-"<td>"+M(g.dp)+"</td>"+
-"<td>"+M(g.dr)+"</td>"+
-"</tr>";
+var lb={
+p:0,
+e:0,
+a:0,
+dp:0,
+dr:0
+};
 
-}).join(""):
+var groups=[];
 
+weekOTs.forEach(function(k){
+
+var o=map[k];
+
+var q=
+empacadoEnSemana(k,ref);
+
+var aud=
+getAdvancesOT(k)
+
+.filter(function(a){
+
+return a.siguienteProceso==="Auditoría"
+&&
+inWeekAdvance(a,ref)
+
+})
+
+.reduce(function(t,a){
+
+return t+a.piezas
+
+},0);
+
+var c=
+cost[o.modelo]||{};
+
+var p=
+q*N(c.pes);
+
+var r=
+q*N(c.pre);
+
+totalProg+=o.programado;
+
+totalEmp+=q;
+
+totalAud+=aud;
+
+dp+=p;
+
+dr+=r;
+
+var z=
+o.linea==="Línea A"
+?la
+:lb;
+
+z.p+=o.programado;
+
+z.e+=q;
+
+z.a+=aud;
+
+z.dp+=p;
+
+z.dr+=r;
+
+groups.push({
+
+ot:k,
+linea:o.linea,
+modelo:o.modelo,
+p:o.programado,
+e:q,
+dp:p,
+dr:r
+
+})
+
+});
+
+$("kProg").textContent=
+totalProg.toLocaleString();
+
+$("kEmp").textContent=
+totalEmp.toLocaleString();
+
+$("kAud").textContent=
+totalAud.toLocaleString();
+
+$("kReg").textContent=
+weekOTs.length;
+
+$("eficiencia").textContent=
+(
+totalProg
+?
+(
+totalEmp/totalProg*100
+).toFixed(1)
+:"0"
+)+"%";
+
+$("dPes").textContent=M(dp);
+
+$("dPre").textContent=M(dr);
+
+$("dPesA").textContent=M(la.dp);
+
+$("dPesB").textContent=M(lb.dp);
+
+$("dPreA").textContent=M(la.dr);
+
+$("dPreB").textContent=M(lb.dr);
+
+
+function lineRow(name,z){
+
+var ef=
+z.p
+?(z.e/z.p*100).toFixed(1)
+:"0.0";
+
+return"<tr>"+
+"<td>"+
+name+
+"</td>"+
+"<td>"+
+z.p+
+"</td>"+
+"<td>"+
+z.e+
+"</td>"+
+"<td>"+
+z.a+
+"</td>"+
+"<td>"+
+ef+
+"%</td>"+
+"<td>"+
+M(z.dp)+
+"</td>"+
+"<td>"+
+M(z.dr)+
+"</td>"+
+"</tr>"
+
+}
+
+$("tablaLineas").innerHTML=
+lineRow("Línea A",la)+
+lineRow("Línea B",lb);
+
+$("tablaOT").innerHTML=
+groups.length
+?
+groups.map(function(g){
+
+return"<tr>"+
+"<td>"+
+esc(g.ot)+
+"</td>"+
+"<td>"+
+esc(g.linea)+
+"</td>"+
+"<td>"+
+esc(g.modelo)+
+"</td>"+
+"<td>"+
+g.p+
+"</td>"+
+"<td>"+
+g.e+
+"</td>"+
+"<td>"+
+(
+g.p
+?(g.e/g.p*100).toFixed(1)
+:"0.0"
+)+
+"%</td>"+
+"<td>"+
+M(g.dp)+
+"</td>"+
+"<td>"+
+M(g.dr)+
+"</td>"+
+"</tr>"
+
+}).join("")
+:
 '<tr><td colspan="8">Sin datos para esta semana.</td></tr>';
 
 }
 
 
-/* =========================
-   COSTOS
-========================= */
-
 function renderCosts(){
 
 var tb=$("tablaCostos");
 
-var names=Object.keys(cost).sort();
+var names=
+Object.keys(cost).sort();
 
-tb.innerHTML=names.length?
-
+tb.innerHTML=
+names.length
+?
 names.map(function(m){
 
-return "<tr>"+
-"<td>"+esc(m)+"</td>"+
-"<td>"+M(cost[m].pes)+"</td>"+
-"<td>"+M(cost[m].pre)+"</td>"+
-"<td><button class='action danger' data-cost='"+esc(m)+"'>Eliminar</button></td>"+
-"</tr>";
+return"<tr>"+
+"<td>"+
+esc(m)+
+"</td>"+
+"<td>"+
+M(cost[m].pes)+
+"</td>"+
+"<td>"+
+M(cost[m].pre)+
+"</td>"+
+"<td><button class='action danger' data-cost='"+
+esc(m)+
+"'>Eliminar</button></td>"+
+"</tr>"
 
-}).join(""):
-
+}).join("")
+:
 '<tr><td colspan="4">Sin modelos.</td></tr>';
 
-tb.querySelectorAll("[data-cost]").forEach(function(b){
+tb.querySelectorAll("[data-cost]")
+.forEach(function(b){
 
 b.onclick=function(){
 
-var m=b.getAttribute("data-cost");
+var m=
+b.getAttribute("data-cost");
 
-if(confirm("¿Eliminar el costo de "+m+"?")){
+if(confirm(
+"¿Eliminar el costo de "+m+"?"
+)){
 
 delete cost[m];
 
 save();
 
-render();
+render()
 
 }
 
-};
+}
 
-});
+})
 
 }
 
-
-/* =========================
-   HISTORIAL
-========================= */
 
 function renderHistory(){
 
 var tb=$("tablaHistorial");
 
-tb.innerHTML=hist.length?
+tb.innerHTML=
+hist.length
+?
+hist.slice().reverse().map(
+function(h){
 
-hist.slice().reverse().map(function(h){
+return"<tr>"+
+"<td>"+
+esc(h.cierre)+
+"</td>"+
+"<td>"+
+h.programado+
+"</td>"+
+"<td>"+
+h.empaque+
+"</td>"+
+"<td>"+
+M(h.pes)+
+"</td>"+
+"<td>"+
+M(h.pre)+
+"</td>"+
+"<td>"+
+M(h.a)+
+"</td>"+
+"<td>"+
+M(h.b)+
+"</td>"+
+"</tr>"
 
-return "<tr>"+
-"<td>"+esc(h.cierre)+"</td>"+
-"<td>"+N(h.programado)+"</td>"+
-"<td>"+N(h.salida)+"</td>"+
-"<td>"+M(h.pes)+"</td>"+
-"<td>"+M(h.pre)+"</td>"+
-"<td>"+M(h.a)+"</td>"+
-"<td>"+M(h.b)+"</td>"+
-"</tr>";
-
-}).join(""):
-
-'<tr><td colspan="7">Sin cierres.</td></tr>';
+}
+).join("")
+:
+'<tr><td colspan="7">Sin cierres.</td></tr>'
 
 }
 
-
-/* =========================
-   LIMPIAR
-========================= */
 
 function clearForm(){
 
-["ot","obs"].forEach(function(i){
-$(i).value="";
-});
+$("ot").value="";
 
-[
-"programado",
-"proceso",
-"salida",
-"clasificacion",
-"empaque",
-"auditada"
-].forEach(function(i){
-$(i).value=0;
-});
+$("obs").value="";
 
-$("fecha").value=today();
+$("programado").value=0;
+
+$("fecha").value=today()
 
 }
 
-
-/* =========================
-   RENDER
-========================= */
 
 function render(){
 
 fillModels();
+
 renderCapture();
+
 renderAdvanceList();
+
+renderWorkshop();
+
 renderResumen();
+
 renderCosts();
-renderHistory();
+
+renderHistory()
 
 }
 
 
-/* =========================
-   INICIO
-========================= */
-
 $("fecha").value=today();
+
 $("refSemana").value=today();
 
+$("wsFecha").value=today();
 
-document.querySelectorAll(".tab").forEach(function(btn){
 
-btn.addEventListener("click",function(){
+document.querySelectorAll(".tab")
+.forEach(function(btn){
 
-document.querySelectorAll(".tab").forEach(function(x){
-x.classList.remove("active");
+btn.addEventListener(
+"click",
+function(){
+
+document.querySelectorAll(".tab")
+.forEach(function(x){
+
+x.classList.remove("active")
+
 });
 
-document.querySelectorAll(".page").forEach(function(x){
-x.classList.remove("active");
+document.querySelectorAll(".page")
+.forEach(function(x){
+
+x.classList.remove("active")
+
 });
 
 btn.classList.add("active");
 
-$(btn.getAttribute("data-target")).classList.add("active");
+$(
+btn.getAttribute("data-target")
+)
+.classList.add("active");
 
-render();
+render()
+
+}
+)
 
 });
 
-});
 
+$("guardarCosto")
+.addEventListener(
+"click",
+function(){
 
-/* =========================
-   GUARDAR COSTO
-========================= */
+var m=
+$("cModelo").value.trim();
 
-$("guardarCosto").addEventListener("click",function(){
+var p=
+N($("cPes").value);
 
-var m=$("cModelo").value.trim();
-var p=N($("cPes").value);
-var r=N($("cPre").value);
+var r=
+N($("cPre").value);
 
 if(!m){
 
-alert("Escribe el modelo.");
-
-return;
+return alert(
+"Escribe el modelo."
+)
 
 }
 
@@ -1632,55 +2347,74 @@ pre:r
 save();
 
 $("cModelo").value="";
+
 $("cPes").value="";
+
 $("cPre").value="";
 
 render();
 
-alert("Costo guardado.");
+alert(
+"Costo guardado."
+)
 
-});
+}
+);
 
 
-/* =========================
-   GUARDAR OT
-========================= */
+$("guardar")
+.addEventListener(
+"click",
+function(){
 
-$("guardar").addEventListener("click",function(){
+var m=
+$("modelo").value;
 
-var m=$("modelo").value;
-var ot=$("ot").value.trim();
+var ot=
+$("ot").value.trim();
+
+var p=
+N($("programado").value);
 
 if(!ot){
 
-alert("Escribe la OT.");
-
-return;
+return alert(
+"Escribe la OT."
+)
 
 }
 
 if(!m){
 
-alert("Selecciona un modelo en Costos.");
-
-return;
+return alert(
+"Selecciona un modelo en Costos."
+)
 
 }
 
-var existe=prod.some(function(r){
+if(p<=0){
 
-return String(r.ot).trim().toLowerCase()===ot.toLowerCase();
+return alert(
+"Escribe los pares programados."
+)
 
-});
+}
 
-if(existe){
+if(
+prod.some(function(r){
 
-alert(
-"Esta OT ya está registrada.\n\n"+
-"Para darle avance utiliza la pestaña 🔄 Avances OT."
-);
+return String(r.ot)
+.trim()
+.toLowerCase()
+===
+ot.toLowerCase()
 
-return;
+})
+){
+
+return alert(
+"Esta OT ya está registrada. Usa Avances OT."
+)
 
 }
 
@@ -1688,27 +2422,20 @@ prod.push({
 
 id:String(Date.now()),
 
-fecha:$("fecha").value||today(),
+fecha:
+$("fecha").value||today(),
 
-linea:$("linea").value,
+linea:
+$("linea").value,
 
 ot:ot,
 
 modelo:m,
 
-programado:N($("programado").value),
+programado:p,
 
-proceso:N($("proceso").value),
-
-salida:N($("salida").value),
-
-clasificacion:N($("clasificacion").value),
-
-empaque:N($("empaque").value),
-
-auditada:N($("auditada").value),
-
-obs:$("obs").value.trim()
+obs:
+$("obs").value.trim()
 
 });
 
@@ -1718,83 +2445,161 @@ clearForm();
 
 render();
 
-alert("OT registrada correctamente.");
-
-});
-
-
-$("limpiar").addEventListener("click",clearForm);
-
-$("actualizar").addEventListener("click",renderResumen);
-
-$("refSemana").addEventListener("change",renderResumen);
-
-
-/* =========================
-   CIERRE
-========================= */
-
-$("cerrarSemana").addEventListener("click",function(){
-
-var ref=$("refSemana").value||today();
-
-var arr=prod.filter(function(r){
-return inWeek(r,ref);
-});
-
-if(!arr.length){
-
-alert("No hay producción en la semana seleccionada.");
-
-return;
+alert(
+"OT registrada correctamente."
+)
 
 }
-
-var A=arr.filter(function(r){
-return r.linea==="Línea A";
-});
-
-var B=arr.filter(function(r){
-return r.linea==="Línea B";
-});
+);
 
 
-function total(a){
+$("limpiar")
+.addEventListener(
+"click",
+clearForm
+);
 
-return a.reduce(function(z,r){
 
-var c=rc(r);
+$("actualizar")
+.addEventListener(
+"click",
+renderResumen
+);
 
-return{
-pes:z.pes+c.pes,
-pre:z.pre+c.pre,
-prog:z.prog+N(r.programado),
-sal:z.sal+N(r.salida)
+
+$("refSemana")
+.addEventListener(
+"change",
+renderResumen
+);
+
+
+$("actualizarWS")
+.addEventListener(
+"click",
+renderWorkshop
+);
+
+
+$("wsFecha")
+.addEventListener(
+"change",
+renderWorkshop
+);
+
+
+$("wsLinea")
+.addEventListener(
+"change",
+renderWorkshop
+);
+
+
+$("cerrarSemana")
+.addEventListener(
+"click",
+function(){
+
+var ref=
+$("refSemana").value||today();
+
+var map=getOTs();
+
+var a={
+programado:0,
+empaque:0,
+pes:0,
+pre:0
 };
 
-},{
+var la={
 pes:0,
-pre:0,
-prog:0,
-sal:0
-});
+pre:0
+};
+
+var lb={
+pes:0,
+pre:0
+};
+
+Object.keys(map).forEach(function(k){
+
+var o=map[k];
+
+if(
+!inWeekDate(
+o.fecha,
+ref
+)
+)return;
+
+var q=
+empacadoEnSemana(k,ref);
+
+var c=
+cost[o.modelo]||{};
+
+var p=
+q*N(c.pes);
+
+var r=
+q*N(c.pre);
+
+a.programado+=
+o.programado;
+
+a.empaque+=q;
+
+a.pes+=p;
+
+a.pre+=r;
+
+if(
+o.linea==="Línea A"
+){
+
+la.pes+=p;
+
+la.pre+=r
+
+}else{
+
+lb.pes+=p;
+
+lb.pre+=r
 
 }
 
-var a=total(A);
-var b=total(B);
-var t=total(arr);
-var sat=range(ref)[1];
+});
+
+if(
+!a.programado&&!a.empaque
+){
+
+return alert(
+"No hay producción en la semana seleccionada."
+)
+
+}
+
+var sat=
+range(ref)[1];
 
 hist.push({
 
 cierre:sat,
-programado:t.prog,
-salida:t.sal,
-pes:t.pes,
-pre:t.pre,
-a:a.pes+a.pre,
-b:b.pes+b.pre
+
+programado:a.programado,
+
+empaque:a.empaque,
+
+pes:a.pes,
+
+pre:a.pre,
+
+a:la.pes+la.pre,
+
+b:lb.pes+lb.pre
 
 });
 
@@ -1802,114 +2607,143 @@ save();
 
 render();
 
-alert("Semana cerrada y guardada en historial.");
+alert(
+"Semana cerrada. El destajo se calculó con las piezas empacadas."
+)
 
-});
+}
+);
 
 
-$("borrarHistorial").addEventListener("click",function(){
+$("borrarHistorial")
+.addEventListener(
+"click",
+function(){
 
-if(confirm("¿Borrar todo el historial?")){
+if(
+confirm(
+"¿Borrar todo el historial?"
+)
+){
 
 hist=[];
 
 save();
 
-render();
+render()
 
 }
 
-});
-
-
-/* =========================
-   EXPORTAR
-========================= */
-
-$("exportar").addEventListener("click",function(){
-
-var arr=prod.filter(function(r){
-
-return inWeek(
-r,
-$("refSemana").value||today()
+}
 );
 
-});
 
-var head=[
-"Fecha",
-"Linea",
+$("exportar")
+.addEventListener(
+"click",
+function(){
+
+var ref=
+$("refSemana").value||today();
+
+var map=getOTs();
+
+var rows=[
+[
 "OT",
+"Linea",
 "Modelo",
 "Programado",
-"Proceso",
-"Salida",
-"Clasificacion",
 "Empaque",
-"Auditada",
+"Eficiencia",
 "Destajo Pespunte",
 "Destajo Preliminar"
+]
 ];
 
-var csv=[head].concat(
+Object.keys(map)
+.forEach(function(k){
 
-arr.map(function(r){
+var o=map[k];
 
-var c=rc(r);
+if(
+!inWeekDate(
+o.fecha,
+ref
+)
+)return;
 
-return[
-r.fecha,
-r.linea,
-r.ot,
-r.modelo,
-r.programado,
-r.proceso,
-r.salida,
-r.clasificacion,
-r.empaque,
-r.auditada,
-c.pes.toFixed(2),
-c.pre.toFixed(2)
-];
+var q=
+empacadoEnSemana(k,ref);
 
-})
+var c=
+cost[o.modelo]||{};
 
-).map(function(row){
+rows.push([
+o.ot,
+o.linea,
+o.modelo,
+o.programado,
+q,
+(
+o.programado
+?q/o.programado*100
+:0
+).toFixed(1)+"%",
+(
+q*N(c.pes)
+).toFixed(2),
+(
+q*N(c.pre)
+).toFixed(2)
+])
+
+});
+
+var csv=
+rows.map(function(row){
 
 return row.map(function(v){
 
-return '"'+
+return'"'+
 String(v==null?"":v)
 .replace(/"/g,'""')+
-'"';
+'"'
 
-}).join(",");
+}).join(",")
 
 }).join("\n");
 
-var a=document.createElement("a");
+var a=
+document.createElement("a");
 
-a.href=URL.createObjectURL(
-new Blob([csv],{
+a.href=
+URL.createObjectURL(
+new Blob(
+[csv],
+{
 type:"text/csv;charset=utf-8"
-})
+}
+)
 );
 
-a.download="The_Studio_produccion.csv";
+a.download=
+"The_Studio_resumen.csv";
 
 document.body.appendChild(a);
 
 a.click();
 
-a.remove();
+a.remove()
 
-});
+}
+);
 
 
 render();
 
 })();
+
 </script>
 
 </body>
