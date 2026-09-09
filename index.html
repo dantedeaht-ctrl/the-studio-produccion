@@ -2,51 +2,49 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Studio</title>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f4f6f8;color:#202733;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
 header{background:#101a2b;color:white;padding:22px 18px 18px}
 header h1{margin:0;font-size:27px;font-weight:900}
-header p{margin:8px 0 0;color:#cbd5e1;font-size:14px;line-height:1.5}
-nav{display:flex;gap:8px;background:white;padding:10px;overflow-x:auto;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:5}
-nav button{border:0;border-radius:12px;padding:12px 16px;background:#edf2f7;color:#354052;font-weight:800;font-size:15px;white-space:nowrap}
+header p{margin:8px 0 0;color:#cbd5e1;font-size:14px}
+nav{display:flex;gap:8px;background:#fff;padding:10px;overflow:auto;position:sticky;top:0;z-index:5}
+nav button{border:0;border-radius:12px;padding:12px 16px;background:#edf2f7;font-weight:800;white-space:nowrap}
 nav button.active{background:#1769ff;color:#fff}
-main{max-width:1100px;margin:auto;padding:14px}
-.page{display:none}
-.page.active{display:block}
+main{max-width:1150px;margin:auto;padding:14px}
+.page{display:none}.page.active{display:block}
 .card{background:#fff;border:1px solid #e0e4e9;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
 h2{font-size:20px;margin:0 0 12px}
-.note{background:#eef5ff;border-left:5px solid #1769ff;padding:13px;border-radius:9px;line-height:1.45;margin-bottom:14px}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.field label{display:block;font-weight:800;color:#555f6d;font-size:13px;margin:0 0 6px}
-.field input,.field select{width:100%;height:48px;border:2px solid #d6dbe2;border-radius:11px;padding:0 13px;background:white;font:inherit;color:#202733}
+.field label{display:block;font-weight:800;color:#555f6d;font-size:13px;margin-bottom:6px}
+.field input,.field select{width:100%;height:48px;border:2px solid #d6dbe2;border-radius:11px;padding:0 13px;background:#fff;font:inherit}
 .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
-button.action{border:0;border-radius:10px;padding:12px 17px;font-weight:800;font-size:14px}
-.primary{background:#1769ff;color:#fff}
-.secondary{background:#e9edf2;color:#26313d}
-.danger{background:#ffe5e5;color:#a32222}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+button.action{border:0;border-radius:10px;padding:12px 17px;font-weight:800;cursor:pointer}
+.primary{background:#1769ff;color:#fff}.secondary{background:#e9edf2;color:#26313d}
+.danger{background:#ffe5e5;color:#a32222}.success{background:#18a566;color:#fff}
+.note{background:#eef5ff;border-left:5px solid #1769ff;padding:13px;border-radius:9px;line-height:1.45;margin-bottom:14px}
+.successNote{background:#eaf8f0;border-left:5px solid #18a566;padding:13px;border-radius:9px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
 .kpi{background:#fff;border:1px solid #e0e4e9;border-radius:13px;padding:14px}
-.kpi small{color:#707986}
-.kpi strong{display:block;font-size:23px;margin-top:4px}
-.moneygrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.moneybox{padding:15px;border:2px solid #dce3ec;border-radius:13px}
-.moneybox h3{margin:0 0 5px;font-size:14px}
-.money{font-size:24px;font-weight:900}
+.kpi small{color:#707986}.kpi strong{display:block;font-size:23px;margin-top:4px}
+.moneygrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.moneybox{padding:15px;border:2px solid #dce3ec;border-radius:13px;background:#fff}
+.moneybox h3{margin:0 0 5px;font-size:14px}.money{font-size:24px;font-weight:900}
 .tablewrap{overflow:auto}
 table{width:100%;border-collapse:collapse;font-size:12px}
 th,td{padding:9px 8px;border-bottom:1px solid #e2e5e9;text-align:left;white-space:nowrap}
 th{background:#f7f8fa;color:#5b6470}
-.pill{font-size:11px;font-weight:800;padding:4px 8px;border-radius:99px}
-.a{background:#eaf0ff;color:#1769ff}
-.b{background:#e8f8ef;color:#138a55}
-@media(max-width:700px){
-.grid,.moneygrid{grid-template-columns:1fr}
-.kpis{grid-template-columns:1fr 1fr}
-main{padding:10px}
-}
+.pill,.processPill{font-size:11px;font-weight:800;padding:5px 9px;border-radius:99px}
+.pill.a{background:#eaf0ff;color:#1769ff}.pill.b{background:#e8f8ef;color:#138a55}
+.processPill{background:#f1f3f6;color:#344054}
+.advanceBox{border:2px solid #e2e7ee;border-radius:14px;padding:14px;margin-bottom:12px}
+.otTitle{font-size:18px;font-weight:900}.muted{color:#6b7280;font-size:13px}
+.lead{font-weight:900;color:#1769ff}
+.detailBox{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin-top:10px}
+@media(max-width:700px){.grid,.moneygrid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 
@@ -54,11 +52,12 @@ main{padding:10px}
 
 <header>
 <h1>THE STUDIO · CONTROL DE PRODUCCIÓN</h1>
-<p>OT · Programación · Salidas · Destajo · Cierre semanal lunes–sábado</p>
+<p>OT · Programación · Avances · Salidas · Destajo · Lead Time · Cierre semanal lunes–sábado</p>
 </header>
 
 <nav>
 <button class="tab active" data-target="captura">➕ Captura</button>
+<button class="tab" data-target="avances">🔄 Avances OT</button>
 <button class="tab" data-target="resumen">📊 Resumen</button>
 <button class="tab" data-target="costos">💰 Costos</button>
 <button class="tab" data-target="historial">📅 Historial</button>
@@ -66,15 +65,17 @@ main{padding:10px}
 
 <main>
 
+<!-- CAPTURA -->
+
 <section id="captura" class="page active">
 
 <div class="card">
 
-<h2>Registrar producción</h2>
+<h2>Registrar nueva OT</h2>
 
 <div class="note">
-<b>Registra cada OT y el sistema calculará por separado el Destajo Pespunte y el Destajo Preliminar</b>
-de acuerdo con el modelo y los pares que tengan salida.
+Registra aquí solamente las <b>OT nuevas</b>. Para continuar una OT existente utiliza
+<b>🔄 Avances OT</b>.
 </div>
 
 <div class="grid">
@@ -99,14 +100,7 @@ de acuerdo con el modelo y los pares que tengan salida.
 
 <div class="field">
 <label>Modelo</label>
-<select id="modelo">
-<option value="">Primero agrega un modelo en Costos</option>
-</select>
-</div>
-
-<div class="field">
-<label>Lote</label>
-<input id="lote" placeholder="Ej. 001">
+<select id="modelo"></select>
 </div>
 
 <div class="field">
@@ -115,12 +109,12 @@ de acuerdo con el modelo y los pares que tengan salida.
 </div>
 
 <div class="field">
-<label>En proceso</label>
+<label>En proceso inicial</label>
 <input id="proceso" type="number" min="0" value="0">
 </div>
 
 <div class="field">
-<label>Salida</label>
+<label>Salida inicial</label>
 <input id="salida" type="number" min="0" value="0">
 </div>
 
@@ -158,16 +152,13 @@ de acuerdo con el modelo y los pares que tengan salida.
 <h2>Registros</h2>
 
 <div class="tablewrap">
-
 <table>
-
 <thead>
 <tr>
 <th>Fecha</th>
 <th>Línea</th>
 <th>OT</th>
 <th>Modelo</th>
-<th>Lote</th>
 <th>Prog.</th>
 <th>Proc.</th>
 <th>Salida</th>
@@ -176,16 +167,134 @@ de acuerdo con el modelo y los pares que tengan salida.
 <th></th>
 </tr>
 </thead>
-
 <tbody id="tablaCaptura"></tbody>
-
 </table>
-
 </div>
+
 </div>
 
 </section>
 
+
+<!-- AVANCES -->
+
+<section id="avances" class="page">
+
+<div class="card">
+
+<h2>Avance de OT</h2>
+
+<div class="note">
+Aquí podrás seleccionar una OT que ya existe. No necesitas volver a escribir
+la OT, modelo, línea ni programación. El sistema los cargará automáticamente.
+Solo selecciona el siguiente proceso y las piezas que avanzaron.
+</div>
+
+<div id="listaOT"></div>
+
+</div>
+
+
+<div class="card" id="panelAvance" style="display:none">
+
+<h2>Registrar avance</h2>
+
+<div class="successNote">
+OT: <b id="avOT"></b>
+&nbsp; · &nbsp;
+Modelo: <b id="avModelo"></b>
+&nbsp; · &nbsp;
+Línea: <b id="avLinea"></b>
+</div>
+
+<br>
+
+<div class="grid">
+
+<div class="field">
+<label>Proceso actual</label>
+<input id="avProcesoActual" readonly>
+</div>
+
+<div class="field">
+<label>Fecha y hora</label>
+<input id="avFechaHora" type="datetime-local">
+</div>
+
+<div class="field">
+<label>Siguiente proceso</label>
+<select id="avSiguiente">
+<option value="">Selecciona proceso</option>
+<option value="Corte">Corte</option>
+<option value="Coordinado">Coordinado</option>
+<option value="Pespunte">Pespunte</option>
+<option value="Preliminar">Preliminar</option>
+<option value="Tejida">Tejida</option>
+<option value="Montado">Montado</option>
+<option value="Adorno">Adorno</option>
+<option value="Embarque">Embarque</option>
+<option value="Clasificación">Clasificación</option>
+<option value="Empaque">Empaque</option>
+<option value="Auditada">Auditada</option>
+</select>
+</div>
+
+<div class="field">
+<label>Piezas que avanzan</label>
+<input id="avPiezas" type="number" min="0" value="0">
+</div>
+
+</div>
+
+<div class="actions">
+<button id="guardarAvance" class="action success">Registrar avance</button>
+<button id="cancelarAvance" class="action secondary">Cancelar</button>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Lead Time de OTs</h2>
+
+<div class="tablewrap">
+
+<table>
+<thead>
+<tr>
+<th>OT</th>
+<th>Línea</th>
+<th>Modelo</th>
+<th>Programado</th>
+<th>Proceso actual</th>
+<th>Último avance</th>
+<th>Lead Time</th>
+<th></th>
+</tr>
+</thead>
+
+<tbody id="tablaLead"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<div class="card" id="detalleLead" style="display:none">
+
+<h2>Historial de procesos de la OT</h2>
+
+<div id="detalleOT"></div>
+
+</div>
+
+</section>
+
+
+<!-- RESUMEN -->
 
 <section id="resumen" class="page">
 
@@ -206,6 +315,7 @@ de acuerdo con el modelo y los pares que tengan salida.
 </div>
 
 </div>
+
 </div>
 
 
@@ -237,30 +347,21 @@ de acuerdo con el modelo y los pares que tengan salida.
 <div class="moneygrid">
 
 <div class="moneybox">
-
 <h3>💰 Destajo Pespunte · acumulado</h3>
-
 <div class="money" id="dPes">$0.00</div>
-
 <small>
 Línea A: <b id="dPesA">$0.00</b>
 · Línea B: <b id="dPesB">$0.00</b>
 </small>
-
 </div>
 
-
 <div class="moneybox">
-
 <h3>💰 Destajo Preliminar · acumulado</h3>
-
 <div class="money" id="dPre">$0.00</div>
-
 <small>
 Línea A: <b id="dPreA">$0.00</b>
 · Línea B: <b id="dPreB">$0.00</b>
 </small>
-
 </div>
 
 </div>
@@ -273,7 +374,6 @@ Línea A: <b id="dPreA">$0.00</b>
 <div class="tablewrap">
 
 <table>
-
 <thead>
 <tr>
 <th>Línea</th>
@@ -300,7 +400,6 @@ Línea A: <b id="dPreA">$0.00</b>
 <div class="tablewrap">
 
 <table>
-
 <thead>
 <tr>
 <th>OT</th>
@@ -319,10 +418,13 @@ Línea A: <b id="dPreA">$0.00</b>
 </table>
 
 </div>
+
 </div>
 
 </section>
 
+
+<!-- COSTOS -->
 
 <section id="costos" class="page">
 
@@ -331,8 +433,7 @@ Línea A: <b id="dPreA">$0.00</b>
 <h2>Costos por modelo</h2>
 
 <div class="note">
-Cada modelo tiene <b>dos costos independientes</b>:
-uno para Pespunte y otro para Preliminar.
+Cada modelo tiene dos costos independientes.
 </div>
 
 <div class="grid">
@@ -343,12 +444,12 @@ uno para Pespunte y otro para Preliminar.
 </div>
 
 <div class="field">
-<label>Costo Pespunte por par</label>
+<label>Costo pieza pespunte</label>
 <input id="cPes" type="number" min="0" step="0.01" placeholder="12.00">
 </div>
 
 <div class="field">
-<label>Costo Preliminar por par</label>
+<label>Costo pieza preliminar</label>
 <input id="cPre" type="number" min="0" step="0.01" placeholder="8.00">
 </div>
 
@@ -366,12 +467,11 @@ uno para Pespunte y otro para Preliminar.
 <div class="tablewrap">
 
 <table>
-
 <thead>
 <tr>
 <th>Modelo</th>
-<th>Costo Pespunte</th>
-<th>Costo Preliminar</th>
+<th>Costo pieza pespunte</th>
+<th>Costo pieza preliminar</th>
 <th></th>
 </tr>
 </thead>
@@ -381,10 +481,13 @@ uno para Pespunte y otro para Preliminar.
 </table>
 
 </div>
+
 </div>
 
 </section>
 
+
+<!-- HISTORIAL -->
 
 <section id="historial" class="page">
 
@@ -396,19 +499,11 @@ uno para Pespunte y otro para Preliminar.
 La nómina es de <b>lunes a sábado</b>.
 El sábado es el cierre.
 El domingo queda fuera.
-El historial se conserva.
 </div>
 
 <div class="actions">
-
-<button id="cerrarSemana" class="action primary">
-Cerrar semana actual
-</button>
-
-<button id="borrarHistorial" class="action danger">
-Borrar historial
-</button>
-
+<button id="cerrarSemana" class="action primary">Cerrar semana actual</button>
+<button id="borrarHistorial" class="action danger">Borrar historial</button>
 </div>
 
 </div>
@@ -419,7 +514,6 @@ Borrar historial
 <div class="tablewrap">
 
 <table>
-
 <thead>
 <tr>
 <th>Cierre</th>
@@ -437,6 +531,7 @@ Borrar historial
 </table>
 
 </div>
+
 </div>
 
 </section>
@@ -450,9 +545,10 @@ Borrar historial
 
 "use strict";
 
-var KPROD="theStudioProduccion_v3";
-var KCOST="theStudioCostos_v3";
-var KHIST="theStudioHistorial_v3";
+var KPROD="theStudioProduccion_v4";
+var KCOST="theStudioCostos_v4";
+var KHIST="theStudioHistorial_v4";
+var KADV="theStudioAvances_v4";
 
 function $(id){
 return document.getElementById(id);
@@ -486,11 +582,19 @@ function today(){
 
 var d=new Date();
 
-d.setMinutes(
-d.getMinutes()-d.getTimezoneOffset()
-);
+d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
 
 return d.toISOString().slice(0,10);
+
+}
+
+function nowLocal(){
+
+var d=new Date();
+
+d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
+
+return d.toISOString().slice(0,16);
 
 }
 
@@ -498,9 +602,7 @@ function load(k,def){
 
 try{
 
-var x=JSON.parse(
-localStorage.getItem(k)
-);
+var x=JSON.parse(localStorage.getItem(k));
 
 return x==null?def:x;
 
@@ -515,67 +617,44 @@ return def;
 var prod=load(KPROD,[]);
 var cost=load(KCOST,{});
 var hist=load(KHIST,[]);
+var avances=load(KADV,[]);
 
 
 function save(){
 
-localStorage.setItem(
-KPROD,
-JSON.stringify(prod)
-);
-
-localStorage.setItem(
-KCOST,
-JSON.stringify(cost)
-);
-
-localStorage.setItem(
-KHIST,
-JSON.stringify(hist)
-);
+localStorage.setItem(KPROD,JSON.stringify(prod));
+localStorage.setItem(KCOST,JSON.stringify(cost));
+localStorage.setItem(KHIST,JSON.stringify(hist));
+localStorage.setItem(KADV,JSON.stringify(avances));
 
 }
 
 
 function range(ref){
 
-var d=new Date(
-(ref||today())+"T12:00:00"
-);
+var d=new Date((ref||today())+"T12:00:00");
 
 var day=d.getDay();
 
-var diff=
-day===0
-?-6
-:1-day;
+var diff=day===0?-6:1-day;
 
 var mon=new Date(d);
 
-mon.setDate(
-d.getDate()+diff
-);
+mon.setDate(d.getDate()+diff);
 
 var sat=new Date(mon);
 
-sat.setDate(
-mon.getDate()+5
-);
+sat.setDate(mon.getDate()+5);
 
 function iso(x){
 
-x.setMinutes(
-x.getMinutes()-x.getTimezoneOffset()
-);
+x.setMinutes(x.getMinutes()-x.getTimezoneOffset());
 
 return x.toISOString().slice(0,10);
 
 }
 
-return [
-iso(new Date(mon)),
-iso(new Date(sat))
-];
+return [iso(new Date(mon)),iso(new Date(sat))];
 
 }
 
@@ -584,8 +663,7 @@ function inWeek(r,ref){
 
 var x=range(ref);
 
-return r.fecha>=x[0] &&
-r.fecha<=x[1];
+return r.fecha>=x[0]&&r.fecha<=x[1];
 
 }
 
@@ -595,11 +673,8 @@ function rc(r){
 var c=cost[r.modelo]||{};
 
 return {
-
 pes:N(r.salida)*N(c.pes),
-
 pre:N(r.salida)*N(c.pre)
-
 };
 
 }
@@ -619,10 +694,9 @@ var first=document.createElement("option");
 
 first.value="";
 
-first.textContent=
-names.length
-?"Selecciona modelo"
-:"Primero agrega un modelo en Costos";
+first.textContent=names.length?
+"Selecciona modelo":
+"Primero agrega un modelo en Costos";
 
 s.appendChild(first);
 
@@ -631,124 +705,640 @@ names.forEach(function(m){
 var o=document.createElement("option");
 
 o.value=m;
-
 o.textContent=m;
 
 s.appendChild(o);
 
 });
 
-if(old&&cost[old]){
-
-s.value=old;
+if(old&&cost[old])s.value=old;
 
 }
 
-}
 
+/* =========================
+   CAPTURA
+========================= */
 
 function renderCapture(){
 
 var tb=$("tablaCaptura");
 
-var rows=prod.slice().sort(
-function(a,b){
-return String(b.fecha)
-.localeCompare(String(a.fecha));
-}
-);
+var rows=prod.slice().sort(function(a,b){
+return String(b.fecha).localeCompare(String(a.fecha));
+});
 
 if(!rows.length){
 
-tb.innerHTML=
-'<tr><td colspan="11">Sin registros.</td></tr>';
+tb.innerHTML='<tr><td colspan="10">Sin registros.</td></tr>';
 
 return;
 
 }
 
-tb.innerHTML=rows.map(
-function(r){
+tb.innerHTML=rows.map(function(r){
 
 var c=rc(r);
 
 return "<tr>"+
 "<td>"+esc(r.fecha)+"</td>"+
-"<td><span class=\"pill "+
-(r.linea==="Línea A"?"a":"b")+
-"\">"+esc(r.linea)+"</span></td>"+
-"<td>"+esc(r.ot)+"</td>"+
+"<td><span class='pill "+(r.linea==="Línea A"?"a":"b")+"'>"+esc(r.linea)+"</span></td>"+
+"<td><b>"+esc(r.ot)+"</b></td>"+
 "<td>"+esc(r.modelo)+"</td>"+
-"<td>"+esc(r.lote)+"</td>"+
 "<td>"+N(r.programado)+"</td>"+
 "<td>"+N(r.proceso)+"</td>"+
 "<td>"+N(r.salida)+"</td>"+
 "<td>"+M(c.pes)+"</td>"+
 "<td>"+M(c.pre)+"</td>"+
-"<td><button class=\"action danger\" data-del=\""+
-esc(r.id)+"\">Eliminar</button></td>"+
+"<td><button class='action danger' data-del='"+esc(r.id)+"'>Eliminar</button></td>"+
 "</tr>";
 
-}
-).join("");
+}).join("");
 
-
-tb.querySelectorAll("[data-del]").forEach(
-function(b){
+tb.querySelectorAll("[data-del]").forEach(function(b){
 
 b.onclick=function(){
 
 if(confirm("¿Eliminar este registro?")){
 
-prod=prod.filter(
-function(r){
-return String(r.id)!==
-String(b.getAttribute("data-del"));
-}
-);
+prod=prod.filter(function(r){
+return String(r.id)!==String(b.getAttribute("data-del"));
+});
 
 save();
-
 render();
 
 }
 
 };
 
+});
+
 }
+
+
+/* =========================
+   OTS
+========================= */
+
+function getOTs(){
+
+var map={};
+
+prod.forEach(function(r){
+
+var key=String(r.ot||"").trim();
+
+if(!key)return;
+
+if(!map[key]){
+
+map[key]={
+ot:key,
+linea:r.linea,
+modelo:r.modelo,
+programado:0,
+proceso:0,
+salida:0,
+fechaInicio:r.fecha
+};
+
+}
+
+map[key].programado+=N(r.programado);
+map[key].proceso=N(r.proceso);
+map[key].salida+=N(r.salida);
+
+if(r.fecha<map[key].fechaInicio){
+map[key].fechaInicio=r.fecha;
+}
+
+});
+
+return map;
+
+}
+
+
+function getAdvancesOT(ot){
+
+return avances.filter(function(a){
+
+return String(a.ot)===String(ot);
+
+}).sort(function(a,b){
+
+return String(a.fechaHora).localeCompare(String(b.fechaHora));
+
+});
+
+}
+
+
+function getCurrentProcess(ot){
+
+var arr=getAdvancesOT(ot);
+
+if(!arr.length)return "Programación";
+
+return arr[arr.length-1].siguienteProceso;
+
+}
+
+
+function getLastAdvance(ot){
+
+var arr=getAdvancesOT(ot);
+
+if(!arr.length)return null;
+
+return arr[arr.length-1];
+
+}
+
+
+/* =========================
+   AVANCES
+========================= */
+
+function renderAdvanceList(){
+
+var box=$("listaOT");
+
+var map=getOTs();
+
+var names=Object.keys(map).sort();
+
+if(!names.length){
+
+box.innerHTML='<div class="note">No hay OTs registradas todavía.</div>';
+
+renderLead();
+
+return;
+
+}
+
+box.innerHTML=names.map(function(key){
+
+var o=map[key];
+
+var current=getCurrentProcess(o.ot);
+
+var last=getLastAdvance(o.ot);
+
+return '<div class="advanceBox">'+
+
+'<div class="otTitle">OT '+esc(o.ot)+'</div>'+
+
+'<div class="muted">Modelo: <b>'+esc(o.modelo)+'</b> · '+esc(o.linea)+'</div>'+
+
+'<div class="muted" style="margin-top:6px">'+
+'Programado: <b>'+N(o.programado).toLocaleString()+'</b>'+
+' · Proceso actual: <span class="processPill">'+esc(current)+'</span>'+
+'</div>'+
+
+(last?
+'<div class="muted" style="margin-top:5px">'+
+'Último avance: '+esc(formatDateTime(last.fechaHora))+
+' · Piezas: '+N(last.piezas)+
+'</div>':"")+
+
+'<div class="actions">'+
+
+'<button class="action primary" data-advance="'+esc(o.ot)+'">Avanzar OT</button>'+
+
+'<button class="action secondary" data-detail="'+esc(o.ot)+'">Ver Lead Time</button>'+
+
+'</div>'+
+
+'</div>';
+
+}).join("");
+
+
+box.querySelectorAll("[data-advance]").forEach(function(b){
+
+b.onclick=function(){
+
+selectOT(b.getAttribute("data-advance"));
+
+};
+
+});
+
+
+box.querySelectorAll("[data-detail]").forEach(function(b){
+
+b.onclick=function(){
+
+showLeadDetail(b.getAttribute("data-detail"));
+
+};
+
+});
+
+renderLead();
+
+}
+
+
+var selectedOT=null;
+
+
+function selectOT(ot){
+
+var map=getOTs();
+
+var o=map[ot];
+
+if(!o){
+
+alert("No se encontró la OT.");
+
+return;
+
+}
+
+selectedOT=ot;
+
+$("panelAvance").style.display="block";
+
+$("avOT").textContent=o.ot;
+
+$("avModelo").textContent=o.modelo;
+
+$("avLinea").textContent=o.linea;
+
+$("avProcesoActual").value=getCurrentProcess(ot);
+
+$("avFechaHora").value=nowLocal();
+
+$("avSiguiente").value="";
+
+$("avPiezas").value=0;
+
+$("panelAvance").scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
+
+
+$("guardarAvance").addEventListener("click",function(){
+
+if(!selectedOT){
+
+alert("Selecciona una OT.");
+
+return;
+
+}
+
+var siguiente=$("avSiguiente").value;
+
+var piezas=N($("avPiezas").value);
+
+if(!siguiente){
+
+alert("Selecciona el siguiente proceso.");
+
+return;
+
+}
+
+if(piezas<=0){
+
+alert("Escribe las piezas que avanzaron.");
+
+return;
+
+}
+
+var map=getOTs();
+
+var o=map[selectedOT];
+
+if(!o){
+
+alert("La OT ya no existe.");
+
+return;
+
+}
+
+var current=getCurrentProcess(selectedOT);
+
+if(current===siguiente){
+
+alert("La OT ya se encuentra en "+siguiente+".");
+
+return;
+
+}
+
+var fechaHora=$("avFechaHora").value||nowLocal();
+
+avances.push({
+
+id:String(Date.now()),
+
+ot:o.ot,
+
+linea:o.linea,
+
+modelo:o.modelo,
+
+procesoAnterior:current,
+
+siguienteProceso:siguiente,
+
+piezas:piezas,
+
+fechaHora:fechaHora,
+
+fecha:fechaHora.slice(0,10)
+
+});
+
+save();
+
+alert(
+"Avance registrado correctamente.\n\n"+
+"OT: "+o.ot+
+"\nProceso: "+siguiente+
+"\nPiezas: "+piezas+
+"\nFecha y hora: "+formatDateTime(fechaHora)
 );
 
+selectedOT=null;
+
+$("panelAvance").style.display="none";
+
+render();
+
+});
+
+
+$("cancelarAvance").addEventListener("click",function(){
+
+selectedOT=null;
+
+$("panelAvance").style.display="none";
+
+});
+
+
+function formatDateTime(value){
+
+if(!value)return "";
+
+var d=new Date(value);
+
+if(isNaN(d.getTime()))return value;
+
+return d.toLocaleString("es-MX",{
+dateStyle:"short",
+timeStyle:"short"
+});
+
 }
 
+
+/* =========================
+   LEAD TIME
+========================= */
+
+function diffMs(a,b){
+
+return new Date(b)-new Date(a);
+
+}
+
+
+function formatDuration(ms){
+
+if(!isFinite(ms)||ms<0)return "0h 0m";
+
+var minutes=Math.floor(ms/60000);
+
+var days=Math.floor(minutes/1440);
+
+minutes%=1440;
+
+var hours=Math.floor(minutes/60);
+
+minutes%=60;
+
+if(days>0)return days+"d "+hours+"h "+minutes+"m";
+
+return hours+"h "+minutes+"m";
+
+}
+
+
+function getStartDateTime(ot){
+
+var arr=prod.filter(function(r){
+
+return String(r.ot)===String(ot);
+
+}).sort(function(a,b){
+
+return String(a.fecha).localeCompare(String(b.fecha));
+
+});
+
+if(!arr.length)return null;
+
+return arr[0].fecha+"T08:00";
+
+}
+
+
+function totalLeadTime(ot){
+
+var start=getStartDateTime(ot);
+
+var last=getLastAdvance(ot);
+
+if(!start||!last)return "0h 0m";
+
+return formatDuration(diffMs(start,last.fechaHora));
+
+}
+
+
+function renderLead(){
+
+var tb=$("tablaLead");
+
+var map=getOTs();
+
+var names=Object.keys(map).sort();
+
+if(!names.length){
+
+tb.innerHTML='<tr><td colspan="8">Sin OTs registradas.</td></tr>';
+
+return;
+
+}
+
+tb.innerHTML=names.map(function(key){
+
+var o=map[key];
+
+var last=getLastAdvance(o.ot);
+
+return "<tr>"+
+
+"<td><b>"+esc(o.ot)+"</b></td>"+
+
+"<td>"+esc(o.linea)+"</td>"+
+
+"<td>"+esc(o.modelo)+"</td>"+
+
+"<td>"+N(o.programado)+"</td>"+
+
+"<td><span class='processPill'>"+
+esc(getCurrentProcess(o.ot))+
+"</span></td>"+
+
+"<td>"+
+(last?formatDateTime(last.fechaHora):"Sin avance")+
+"</td>"+
+
+"<td class='lead'>"+
+totalLeadTime(o.ot)+
+"</td>"+
+
+"<td>"+
+'<button class="action secondary" data-lead="'+esc(o.ot)+'">Ver detalle</button>'+
+"</td>"+
+
+"</tr>";
+
+}).join("");
+
+tb.querySelectorAll("[data-lead]").forEach(function(b){
+
+b.onclick=function(){
+
+showLeadDetail(b.getAttribute("data-lead"));
+
+};
+
+});
+
+}
+
+
+function showLeadDetail(ot){
+
+var map=getOTs();
+
+var o=map[ot];
+
+if(!o)return;
+
+var arr=getAdvancesOT(ot);
+
+$("detalleLead").style.display="block";
+
+var html=
+'<div class="detailBox">'+
+'<h3>OT '+esc(o.ot)+'</h3>'+
+'<div class="muted">'+
+'Modelo: <b>'+esc(o.modelo)+'</b>'+
+' · Línea: <b>'+esc(o.linea)+'</b>'+
+' · Programado: <b>'+N(o.programado)+'</b>'+
+'</div>'+
+'<div style="margin-top:6px">'+
+'Lead Time total: <span class="lead">'+totalLeadTime(ot)+'</span>'+
+'</div>'+
+'</div>';
+
+if(!arr.length){
+
+html+='<div class="note" style="margin-top:12px">Esta OT todavía no tiene avances registrados.</div>';
+
+$("detalleOT").innerHTML=html;
+
+return;
+
+}
+
+var previous=getStartDateTime(ot);
+
+html+=
+'<div class="tablewrap" style="margin-top:12px">'+
+'<table>'+
+'<thead>'+
+'<tr>'+
+'<th>Proceso anterior</th>'+
+'<th>Siguiente proceso</th>'+
+'<th>Piezas</th>'+
+'<th>Fecha / hora</th>'+
+'<th>Tiempo</th>'+
+'</tr>'+
+'</thead>'+
+'<tbody>';
+
+arr.forEach(function(a){
+
+var duration=diffMs(previous,a.fechaHora);
+
+html+=
+"<tr>"+
+"<td>"+esc(a.procesoAnterior)+"</td>"+
+"<td><span class='processPill'>"+esc(a.siguienteProceso)+"</span></td>"+
+"<td>"+N(a.piezas)+"</td>"+
+"<td>"+formatDateTime(a.fechaHora)+"</td>"+
+"<td class='lead'>"+formatDuration(duration)+"</td>"+
+"</tr>";
+
+previous=a.fechaHora;
+
+});
+
+html+='</tbody></table></div>';
+
+$("detalleOT").innerHTML=html;
+
+$("detalleLead").scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
+
+
+/* =========================
+   RESUMEN
+========================= */
 
 function renderResumen(){
 
-var ref=
-$("refSemana").value||today();
+var ref=$("refSemana").value||today();
 
-var arr=prod.filter(
-function(r){
+var arr=prod.filter(function(r){
 return inWeek(r,ref);
-}
-);
+});
 
-var A=arr.filter(
-function(r){
+var A=arr.filter(function(r){
 return r.linea==="Línea A";
-}
-);
+});
 
-var B=arr.filter(
-function(r){
+var B=arr.filter(function(r){
 return r.linea==="Línea B";
-}
-);
+});
 
 
 function sums(a){
 
-return a.reduce(
-function(z,r){
+return a.reduce(function(z,r){
 
 var c=rc(r);
 
@@ -760,58 +1350,35 @@ z.dr+=c.pre;
 
 return z;
 
-},
-{
+},{
 p:0,
 q:0,
 s:0,
 dp:0,
 dr:0
-}
-);
+});
 
 }
-
 
 var a=sums(A);
 var b=sums(B);
 var t=sums(arr);
 
+$("kProg").textContent=t.p.toLocaleString();
+$("kProc").textContent=t.q.toLocaleString();
+$("kSal").textContent=t.s.toLocaleString();
+$("kReg").textContent=arr.length;
 
-$("kProg").textContent=
-t.p.toLocaleString();
+$("dPes").textContent=M(t.dp);
+$("dPre").textContent=M(t.dr);
 
-$("kProc").textContent=
-t.q.toLocaleString();
+$("dPesA").textContent=M(a.dp);
+$("dPesB").textContent=M(b.dp);
 
-$("kSal").textContent=
-t.s.toLocaleString();
-
-$("kReg").textContent=
-arr.length;
-
-
-$("dPes").textContent=
-M(t.dp);
-
-$("dPre").textContent=
-M(t.dr);
-
-$("dPesA").textContent=
-M(a.dp);
-
-$("dPesB").textContent=
-M(b.dp);
-
-$("dPreA").textContent=
-M(a.dr);
-
-$("dPreB").textContent=
-M(b.dr);
-
+$("dPreA").textContent=M(a.dr);
+$("dPreB").textContent=M(b.dr);
 
 $("tablaLineas").innerHTML=
-
 "<tr>"+
 "<td>Línea A</td>"+
 "<td>"+a.p.toLocaleString()+"</td>"+
@@ -830,16 +1397,11 @@ $("tablaLineas").innerHTML=
 "<td>"+M(b.dr)+"</td>"+
 "</tr>";
 
-
 var groups={};
-
 
 arr.forEach(function(r){
 
-var key=
-(r.ot||"")+"|"+
-(r.linea||"")+"|"+
-(r.modelo||"");
+var key=(r.ot||"")+"|"+(r.linea||"")+"|"+(r.modelo||"");
 
 if(!groups[key]){
 
@@ -868,17 +1430,11 @@ g.dr+=c.pre;
 
 });
 
-
-var vals=Object.keys(groups).map(
-function(k){
+var vals=Object.keys(groups).map(function(k){
 return groups[k];
-}
-);
+});
 
-
-$("tablaOT").innerHTML=
-
-vals.length?
+$("tablaOT").innerHTML=vals.length?
 
 vals.map(function(g){
 
@@ -900,15 +1456,17 @@ return "<tr>"+
 }
 
 
+/* =========================
+   COSTOS
+========================= */
+
 function renderCosts(){
 
 var tb=$("tablaCostos");
 
 var names=Object.keys(cost).sort();
 
-tb.innerHTML=
-
-names.length?
+tb.innerHTML=names.length?
 
 names.map(function(m){
 
@@ -916,25 +1474,20 @@ return "<tr>"+
 "<td>"+esc(m)+"</td>"+
 "<td>"+M(cost[m].pes)+"</td>"+
 "<td>"+M(cost[m].pre)+"</td>"+
-"<td><button class=\"action danger\" data-cost=\""+
-esc(m)+"\">Eliminar</button></td>"+
+"<td><button class='action danger' data-cost='"+esc(m)+"'>Eliminar</button></td>"+
 "</tr>";
 
 }).join(""):
 
 '<tr><td colspan="4">Sin modelos.</td></tr>';
 
-
-tb.querySelectorAll("[data-cost]").forEach(
-function(b){
+tb.querySelectorAll("[data-cost]").forEach(function(b){
 
 b.onclick=function(){
 
 var m=b.getAttribute("data-cost");
 
-if(confirm(
-"¿Eliminar el costo de "+m+"?"
-)){
+if(confirm("¿Eliminar el costo de "+m+"?")){
 
 delete cost[m];
 
@@ -946,22 +1499,22 @@ render();
 
 };
 
-}
-);
+});
 
 }
 
+
+/* =========================
+   HISTORIAL
+========================= */
 
 function renderHistory(){
 
 var tb=$("tablaHistorial");
 
-tb.innerHTML=
+tb.innerHTML=hist.length?
 
-hist.length?
-
-hist.slice().reverse().map(
-function(h){
+hist.slice().reverse().map(function(h){
 
 return "<tr>"+
 "<td>"+esc(h.cierre)+"</td>"+
@@ -973,21 +1526,22 @@ return "<tr>"+
 "<td>"+M(h.b)+"</td>"+
 "</tr>";
 
-}
-).join(""):
+}).join(""):
 
 '<tr><td colspan="7">Sin cierres.</td></tr>';
 
 }
 
 
+/* =========================
+   LIMPIAR
+========================= */
+
 function clearForm(){
 
-["ot","lote","obs"].forEach(
-function(i){
+["ot","obs"].forEach(function(i){
 $(i).value="";
-}
-);
+});
 
 [
 "programado",
@@ -996,82 +1550,70 @@ $(i).value="";
 "clasificacion",
 "empaque",
 "auditada"
-].forEach(
-function(i){
+].forEach(function(i){
 $(i).value=0;
-}
-);
+});
 
 $("fecha").value=today();
 
 }
 
 
+/* =========================
+   RENDER
+========================= */
+
 function render(){
 
 fillModels();
-
 renderCapture();
-
+renderAdvanceList();
 renderResumen();
-
 renderCosts();
-
 renderHistory();
 
 }
 
 
-$("fecha").value=today();
+/* =========================
+   INICIO
+========================= */
 
+$("fecha").value=today();
 $("refSemana").value=today();
 
 
-document.querySelectorAll(".tab").forEach(
-function(btn){
+document.querySelectorAll(".tab").forEach(function(btn){
 
-btn.addEventListener(
-"click",
-function(){
+btn.addEventListener("click",function(){
 
-document.querySelectorAll(".tab")
-.forEach(
-function(x){
+document.querySelectorAll(".tab").forEach(function(x){
 x.classList.remove("active");
-}
-);
+});
 
-document.querySelectorAll(".page")
-.forEach(
-function(x){
+document.querySelectorAll(".page").forEach(function(x){
 x.classList.remove("active");
-}
-);
+});
 
 btn.classList.add("active");
 
-$(
-btn.getAttribute("data-target")
-)
-.classList.add("active");
+$(btn.getAttribute("data-target")).classList.add("active");
 
 render();
 
-}
-);
+});
 
-}
-);
+});
 
 
-$("guardarCosto").addEventListener(
-"click",
-function(){
+/* =========================
+   GUARDAR COSTO
+========================= */
+
+$("guardarCosto").addEventListener("click",function(){
 
 var m=$("cModelo").value.trim();
-
 var p=N($("cPes").value);
-
 var r=N($("cPre").value);
 
 if(!m){
@@ -1097,19 +1639,46 @@ render();
 
 alert("Costo guardado.");
 
-}
-);
+});
 
 
-$("guardar").addEventListener(
-"click",
-function(){
+/* =========================
+   GUARDAR OT
+========================= */
+
+$("guardar").addEventListener("click",function(){
 
 var m=$("modelo").value;
+var ot=$("ot").value.trim();
+
+if(!ot){
+
+alert("Escribe la OT.");
+
+return;
+
+}
 
 if(!m){
 
 alert("Selecciona un modelo en Costos.");
+
+return;
+
+}
+
+var existe=prod.some(function(r){
+
+return String(r.ot).trim().toLowerCase()===ot.toLowerCase();
+
+});
+
+if(existe){
+
+alert(
+"Esta OT ya está registrada.\n\n"+
+"Para darle avance utiliza la pestaña 🔄 Avances OT."
+);
 
 return;
 
@@ -1123,11 +1692,9 @@ fecha:$("fecha").value||today(),
 
 linea:$("linea").value,
 
-ot:$("ot").value.trim(),
+ot:ot,
 
 modelo:m,
-
-lote:$("lote").value.trim(),
 
 programado:N($("programado").value),
 
@@ -1135,14 +1702,11 @@ proceso:N($("proceso").value),
 
 salida:N($("salida").value),
 
-clasificacion:
-N($("clasificacion").value),
+clasificacion:N($("clasificacion").value),
 
-empaque:
-N($("empaque").value),
+empaque:N($("empaque").value),
 
-auditada:
-N($("auditada").value),
+auditada:N($("auditada").value),
 
 obs:$("obs").value.trim()
 
@@ -1154,143 +1718,98 @@ clearForm();
 
 render();
 
-alert("Producción guardada.");
+alert("OT registrada correctamente.");
 
-}
-);
-
-
-$("limpiar").addEventListener(
-"click",
-clearForm
-);
-
-$("actualizar").addEventListener(
-"click",
-renderResumen
-);
-
-$("refSemana").addEventListener(
-"change",
-renderResumen
-);
+});
 
 
-$("cerrarSemana").addEventListener(
-"click",
-function(){
+$("limpiar").addEventListener("click",clearForm);
 
-var ref=
-$("refSemana").value||today();
+$("actualizar").addEventListener("click",renderResumen);
 
-var arr=prod.filter(
-function(r){
+$("refSemana").addEventListener("change",renderResumen);
+
+
+/* =========================
+   CIERRE
+========================= */
+
+$("cerrarSemana").addEventListener("click",function(){
+
+var ref=$("refSemana").value||today();
+
+var arr=prod.filter(function(r){
 return inWeek(r,ref);
-}
-);
+});
 
 if(!arr.length){
 
-alert(
-"No hay producción en la semana seleccionada."
-);
+alert("No hay producción en la semana seleccionada.");
 
 return;
 
 }
 
-
-var A=arr.filter(
-function(r){
+var A=arr.filter(function(r){
 return r.linea==="Línea A";
-}
-);
+});
 
-var B=arr.filter(
-function(r){
+var B=arr.filter(function(r){
 return r.linea==="Línea B";
-}
-);
+});
 
 
 function total(a){
 
-return a.reduce(
-function(z,r){
+return a.reduce(function(z,r){
 
 var c=rc(r);
 
 return{
-
 pes:z.pes+c.pes,
-
 pre:z.pre+c.pre,
-
 prog:z.prog+N(r.programado),
-
 sal:z.sal+N(r.salida)
-
 };
 
-},
-{
+},{
 pes:0,
 pre:0,
 prog:0,
 sal:0
-}
-);
+});
 
 }
-
 
 var a=total(A);
-
 var b=total(B);
-
 var t=total(arr);
-
 var sat=range(ref)[1];
-
 
 hist.push({
 
 cierre:sat,
-
 programado:t.prog,
-
 salida:t.sal,
-
 pes:t.pes,
-
 pre:t.pre,
-
 a:a.pes+a.pre,
-
 b:b.pes+b.pre
 
 });
-
 
 save();
 
 render();
 
-alert(
-"Semana cerrada y guardada en historial."
-);
+alert("Semana cerrada y guardada en historial.");
 
-}
-);
+});
 
 
-$("borrarHistorial").addEventListener(
-"click",
-function(){
+$("borrarHistorial").addEventListener("click",function(){
 
-if(confirm(
-"¿Borrar todo el historial?"
-)){
+if(confirm("¿Borrar todo el historial?")){
 
 hist=[];
 
@@ -1300,29 +1819,29 @@ render();
 
 }
 
-}
-);
+});
 
 
-$("exportar").addEventListener(
-"click",
-function(){
+/* =========================
+   EXPORTAR
+========================= */
 
-var arr=prod.filter(
-function(r){
+$("exportar").addEventListener("click",function(){
+
+var arr=prod.filter(function(r){
+
 return inWeek(
 r,
 $("refSemana").value||today()
 );
-}
-);
+
+});
 
 var head=[
 "Fecha",
 "Linea",
 "OT",
 "Modelo",
-"Lote",
 "Programado",
 "Proceso",
 "Salida",
@@ -1333,10 +1852,9 @@ var head=[
 "Destajo Preliminar"
 ];
 
-
 var csv=[head].concat(
-arr.map(
-function(r){
+
+arr.map(function(r){
 
 var c=rc(r);
 
@@ -1345,7 +1863,6 @@ r.fecha,
 r.linea,
 r.ot,
 r.modelo,
-r.lote,
 r.programado,
 r.proceso,
 r.salida,
@@ -1356,39 +1873,30 @@ c.pes.toFixed(2),
 c.pre.toFixed(2)
 ];
 
-}
-)
-).map(
-function(row){
+})
 
-return row.map(
-function(v){
+).map(function(row){
+
+return row.map(function(v){
 
 return '"'+
 String(v==null?"":v)
 .replace(/"/g,'""')+
 '"';
 
-}
-).join(",");
+}).join(",");
 
-}
-).join("\n");
-
+}).join("\n");
 
 var a=document.createElement("a");
 
 a.href=URL.createObjectURL(
-new Blob(
-[csv],
-{
+new Blob([csv],{
 type:"text/csv;charset=utf-8"
-}
-)
+})
 );
 
-a.download=
-"The_Studio_produccion.csv";
+a.download="The_Studio_produccion.csv";
 
 document.body.appendChild(a);
 
@@ -1396,14 +1904,12 @@ a.click();
 
 a.remove();
 
-}
-);
+});
 
 
 render();
 
 })();
-
 </script>
 
 </body>
