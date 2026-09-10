@@ -4,59 +4,445 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The Studio</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f4f6f8;color:#202733;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-header{background:#101a2b;color:#fff;padding:22px 18px 18px}
-header h1{margin:0;font-size:27px;font-weight:900}
-header p{margin:8px 0 0;color:#cbd5e1;font-size:14px;line-height:1.5}
-nav{display:flex;gap:8px;background:#fff;padding:10px;overflow-x:auto;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:5}
-nav button{border:0;border-radius:12px;padding:12px 16px;background:#edf2f7;color:#354052;font-weight:800;font-size:15px;white-space:nowrap}
-nav button.active{background:#1769ff;color:#fff}
-main{max-width:1200px;margin:auto;padding:14px}
+
+body{
+margin:0;
+background:#f4f6f8;
+color:#202733;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
+}
+
+header{
+background:#101a2b;
+color:#fff;
+padding:22px 18px 18px
+}
+
+header h1{
+margin:0;
+font-size:27px;
+font-weight:900
+}
+
+header p{
+margin:8px 0 0;
+color:#cbd5e1;
+font-size:14px;
+line-height:1.5
+}
+
+nav{
+display:flex;
+gap:8px;
+background:#fff;
+padding:10px;
+overflow-x:auto;
+border-bottom:1px solid #ddd;
+position:sticky;
+top:0;
+z-index:5
+}
+
+nav button{
+border:0;
+border-radius:12px;
+padding:12px 16px;
+background:#edf2f7;
+color:#354052;
+font-weight:800;
+font-size:15px;
+white-space:nowrap
+}
+
+nav button.active{
+background:#1769ff;
+color:#fff
+}
+
+main{
+max-width:1200px;
+margin:auto;
+padding:14px
+}
+
 .page{display:none}
 .page.active{display:block}
-.card{background:#fff;border:1px solid #e0e4e9;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
-h2{font-size:20px;margin:0 0 12px}
-h3{margin:0 0 8px}
-.note{background:#eef5ff;border-left:5px solid #1769ff;padding:13px;border-radius:9px;line-height:1.45;margin-bottom:14px}
-.successNote{background:#eaf8f0;border-left:5px solid #18a566;padding:13px;border-radius:9px;line-height:1.45}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.field label{display:block;font-weight:800;color:#555f6d;font-size:13px;margin:0 0 6px}
-.field input,.field select{width:100%;height:48px;border:2px solid #d6dbe2;border-radius:11px;padding:0 13px;background:#fff;font:inherit;color:#202733}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
-button.action{border:0;border-radius:10px;padding:12px 17px;font-weight:800;font-size:14px;cursor:pointer}
-.primary{background:#1769ff;color:#fff}
-.secondary{background:#e9edf2;color:#26313d}
-.danger{background:#ffe5e5;color:#a32222}
-.success{background:#18a566;color:#fff}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-.kpi{background:#fff;border:1px solid #e0e4e9;border-radius:13px;padding:14px}
+
+.card{
+background:#fff;
+border:1px solid #e0e4e9;
+border-radius:16px;
+padding:16px;
+margin-bottom:14px;
+box-shadow:0 3px 12px rgba(0,0,0,.04)
+}
+
+h2{
+font-size:20px;
+margin:0 0 12px
+}
+
+h3{
+margin:0 0 8px
+}
+
+.note{
+background:#eef5ff;
+border-left:5px solid #1769ff;
+padding:13px;
+border-radius:9px;
+line-height:1.45;
+margin-bottom:14px
+}
+
+.successNote{
+background:#eaf8f0;
+border-left:5px solid #18a566;
+padding:13px;
+border-radius:9px;
+line-height:1.45
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px
+}
+
+.field label{
+display:block;
+font-weight:800;
+color:#555f6d;
+font-size:13px;
+margin:0 0 6px
+}
+
+.field input,
+.field select{
+width:100%;
+height:48px;
+border:2px solid #d6dbe2;
+border-radius:11px;
+padding:0 13px;
+background:#fff;
+font:inherit;
+color:#202733
+}
+
+.field input:focus,
+.field select:focus{
+outline:none;
+border-color:#1769ff
+}
+
+.actions{
+display:flex;
+gap:9px;
+flex-wrap:wrap;
+margin-top:14px
+}
+
+button.action{
+border:0;
+border-radius:10px;
+padding:12px 17px;
+font-weight:800;
+font-size:14px;
+cursor:pointer
+}
+
+button.action:disabled{
+opacity:.45;
+cursor:not-allowed
+}
+
+.primary{
+background:#1769ff;
+color:#fff
+}
+
+.secondary{
+background:#e9edf2;
+color:#26313d
+}
+
+.danger{
+background:#ffe5e5;
+color:#a32222
+}
+
+.success{
+background:#18a566;
+color:#fff
+}
+
+.kpis{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin-bottom:14px
+}
+
+.kpi{
+background:#fff;
+border:1px solid #e0e4e9;
+border-radius:13px;
+padding:14px
+}
+
 .kpi small{color:#707986}
-.kpi strong{display:block;font-size:23px;margin-top:4px}
-.moneygrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-.moneybox{padding:15px;border:2px solid #dce3ec;border-radius:13px;background:#fff}
-.moneybox h3{margin:0 0 5px;font-size:14px}
-.money{font-size:24px;font-weight:900}
-.tablewrap{overflow:auto}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th,td{padding:9px 8px;border-bottom:1px solid #e2e5e9;text-align:left;white-space:nowrap}
-th{background:#f7f8fa;color:#5b6470}
-.pill{font-size:11px;font-weight:800;padding:4px 8px;border-radius:99px}
-.a{background:#eaf0ff;color:#1769ff}
-.b{background:#e8f8ef;color:#138a55}
-.processPill{background:#f1f3f6;color:#344054;font-weight:800;padding:5px 9px;border-radius:99px;font-size:11px}
-.otBox{border:2px solid #e2e7ee;border-radius:14px;padding:14px;margin-bottom:12px}
-.otTitle{font-size:18px;font-weight:900}
-.muted{color:#6b7280;font-size:13px}
-.lead{font-weight:900;color:#1769ff}
-.detailBox{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin-top:10px}
-.effBox{padding:18px;border:2px solid #dce3ec;border-radius:14px;background:#fff;text-align:center}
-.eff{font-size:36px;font-weight:900;color:#1769ff}
+
+.kpi strong{
+display:block;
+font-size:23px;
+margin-top:4px
+}
+
+.moneygrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-bottom:14px
+}
+
+.moneybox{
+padding:15px;
+border:2px solid #dce3ec;
+border-radius:13px;
+background:#fff
+}
+
+.moneybox h3{
+margin:0 0 5px;
+font-size:14px
+}
+
+.money{
+font-size:24px;
+font-weight:900
+}
+
+.tablewrap{
+overflow:auto
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+font-size:12px
+}
+
+th,td{
+padding:9px 8px;
+border-bottom:1px solid #e2e5e9;
+text-align:left;
+white-space:nowrap
+}
+
+th{
+background:#f7f8fa;
+color:#5b6470
+}
+
+.pill{
+font-size:11px;
+font-weight:800;
+padding:4px 8px;
+border-radius:99px
+}
+
+.a{
+background:#eaf0ff;
+color:#1769ff
+}
+
+.b{
+background:#e8f8ef;
+color:#138a55
+}
+
+.processPill{
+background:#f1f3f6;
+color:#344054;
+font-weight:800;
+padding:5px 9px;
+border-radius:99px;
+font-size:11px
+}
+
+.otBox{
+border:2px solid #e2e7ee;
+border-radius:14px;
+padding:14px;
+margin-bottom:12px
+}
+
+.otTitle{
+font-size:18px;
+font-weight:900
+}
+
+.muted{
+color:#6b7280;
+font-size:13px
+}
+
+.lead{
+font-weight:900;
+color:#1769ff
+}
+
+.detailBox{
+background:#f8fafc;
+border:1px solid #e2e8f0;
+border-radius:12px;
+padding:12px;
+margin-top:10px
+}
+
+.effBox{
+padding:18px;
+border:2px solid #dce3ec;
+border-radius:14px;
+background:#fff;
+text-align:center
+}
+
+.eff{
+font-size:36px;
+font-weight:900;
+color:#1769ff
+}
+
+/* NUEVA CAPTURA RÁPIDA */
+
+.quickSearch{
+background:#f8fafc;
+border:2px solid #dce3ec;
+border-radius:14px;
+padding:14px;
+margin-bottom:14px
+}
+
+.quickSearch label{
+display:block;
+font-weight:900;
+font-size:13px;
+margin-bottom:6px;
+color:#475467
+}
+
+.quickSearch input{
+width:100%;
+height:54px;
+border:2px solid #1769ff;
+border-radius:12px;
+padding:0 14px;
+font-size:18px;
+font-weight:800;
+background:#fff
+}
+
+.searchResult{
+margin-top:10px
+}
+
+.searchResult button{
+width:100%;
+text-align:left;
+border:1px solid #dce3ec;
+background:#fff;
+border-radius:11px;
+padding:12px;
+margin-top:6px;
+cursor:pointer
+}
+
+.searchResult button:hover{
+border-color:#1769ff;
+background:#f5f9ff
+}
+
+.quickSelected{
+display:none;
+background:#eef5ff;
+border:2px solid #1769ff;
+border-radius:14px;
+padding:14px;
+margin-bottom:14px
+}
+
+.quickSelected.show{
+display:block
+}
+
+.quickOT{
+font-size:22px;
+font-weight:900;
+color:#1769ff
+}
+
+.moveBox{
+display:none;
+border:2px solid #dce3ec;
+border-radius:14px;
+padding:14px;
+background:#fff
+}
+
+.moveBox.show{
+display:block
+}
+
+.moveArrow{
+font-size:28px;
+font-weight:900;
+text-align:center;
+color:#1769ff;
+padding-top:30px
+}
+
+.availableBox{
+background:#f8fafc;
+border-radius:11px;
+padding:10px;
+margin-top:8px;
+font-size:13px
+}
+
+.availableBox b{
+font-size:18px
+}
+
+.bigButton{
+width:100%;
+height:54px;
+font-size:16px!important
+}
+
 @media(max-width:700px){
-.grid,.moneygrid{grid-template-columns:1fr}
-.kpis{grid-template-columns:1fr 1fr}
-main{padding:10px}
+
+.grid,
+.moneygrid{
+grid-template-columns:1fr
+}
+
+.kpis{
+grid-template-columns:1fr 1fr
+}
+
+main{
+padding:10px
+}
+
+.moveArrow{
+padding:0;
+transform:rotate(90deg)
+}
+
 }
 </style>
 </head>
@@ -78,6 +464,8 @@ main{padding:10px}
 </nav>
 
 <main>
+
+<!-- ================= CAPTURA ================= -->
 
 <section id="captura" class="page active">
 
@@ -164,81 +552,144 @@ Los movimientos posteriores se registran desde
 </section>
 
 
+<!-- ================= AVANCES ================= -->
+
 <section id="avances" class="page">
 
 <div class="card">
 
-<h2>Avance de OT</h2>
+<h2>🔄 Captura rápida de avance</h2>
 
 <div class="note">
-Selecciona una OT y registra solamente
-<b>cuántas piezas avanzan</b>.
-El sistema controla automáticamente el inventario.
+<b>Ya no necesitas buscar la OT en una lista.</b>
 
 <br><br>
 
-Flujo:
-<b>Programado → Armado → Salida pespunte → Clasificación → Empaque → Auditoría</b>
+Escribe el número de OT, selecciónala y después indica
+<b>desde qué proceso hasta qué proceso</b> quieres mover las piezas.
+
+<br><br>
+
+Ejemplo:
+<b>Armado → Empaque = 120 pares</b>.
+El sistema registra automáticamente los procesos intermedios.
 </div>
 
-<div id="listaOT"></div>
+
+<div class="quickSearch">
+
+<label>🔎 Escribe la OT</label>
+
+<input
+id="buscarOT"
+type="text"
+autocomplete="off"
+placeholder="Teclea la OT, por ejemplo 20-A">
+
+<div id="resultadosOT" class="searchResult"></div>
 
 </div>
 
 
-<div class="card" id="panelAvance" style="display:none">
+<div id="quickSelected" class="quickSelected">
 
-<h2>Registrar avance</h2>
+<div class="quickOT" id="quickOT"></div>
 
-<div class="successNote">
-OT: <b id="avOT"></b>
-· Modelo: <b id="avModelo"></b>
-· Línea: <b id="avLinea"></b>
+<div class="muted" style="margin-top:5px">
+Modelo: <b id="quickModelo"></b>
+· Línea: <b id="quickLinea"></b>
+· Programado: <b id="quickProgramado"></b>
 </div>
 
-<br>
+</div>
+
+
+<div id="moveBox" class="moveBox">
+
+<h3>Movimiento de piezas</h3>
 
 <div class="grid">
 
 <div class="field">
-<label>Proceso actual</label>
-<input id="avActual" readonly>
+
+<label>Desde proceso</label>
+
+<select id="desdeProceso"></select>
+
+<div class="availableBox">
+Disponible:
+<b id="disponibleDesde">0</b> piezas
 </div>
 
-<div class="field">
-<label>Disponible en proceso actual</label>
-<input id="avDisponible" readonly>
 </div>
 
-<div class="field">
-<label>Siguiente proceso</label>
-<input id="avSiguiente" readonly>
+
+<div class="moveArrow">
+→
 </div>
 
+
 <div class="field">
+
+<label>Hasta proceso</label>
+
+<select id="hastaProceso"></select>
+
+</div>
+
+
+<div class="field">
+
 <label>Piezas que avanzan</label>
-<input id="avPiezas" type="number" min="0" value="0">
+
+<input
+id="piezasMovimiento"
+type="number"
+min="0"
+value="0"
+placeholder="Ej. 120">
+
 </div>
 
 <div class="field">
+
 <label>Fecha y hora</label>
-<input id="avFechaHora" type="datetime-local">
+
+<input
+id="fechaMovimiento"
+type="datetime-local">
+
 </div>
 
 </div>
+
 
 <div class="actions">
-<button id="guardarAvance" class="action success">
-Registrar avance
+
+<button
+id="registrarMovimiento"
+class="action success bigButton">
+
+REGISTRAR AVANCE
+
 </button>
 
-<button id="cancelarAvance" class="action secondary">
+<button
+id="cancelarMovimiento"
+class="action secondary">
+
 Cancelar
+
 </button>
+
+</div>
+
 </div>
 
 </div>
 
+
+<!-- Historial / Lead Time -->
 
 <div class="card">
 
@@ -270,6 +721,15 @@ Cancelar
 </div>
 
 
+<div class="card">
+
+<h2>Historial de movimientos</h2>
+
+<div id="listaOT"></div>
+
+</div>
+
+
 <div class="card" id="detalleLead" style="display:none">
 
 <h2>Historial de procesos de la OT</h2>
@@ -280,6 +740,8 @@ Cancelar
 
 </section>
 
+
+<!-- ================= WORKSHOP ================= -->
 
 <section id="workshop" class="page">
 
@@ -315,9 +777,11 @@ Los movimientos se descuentan del proceso anterior y se suman al siguiente.
 </div>
 
 <div class="actions">
+
 <button id="actualizarWS" class="action secondary">
 Actualizar Work Shop
 </button>
+
 </div>
 
 </div>
@@ -389,6 +853,8 @@ Actualizar Work Shop
 
 </section>
 
+
+<!-- ================= RESUMEN ================= -->
 
 <section id="resumen" class="page">
 
@@ -569,6 +1035,8 @@ Línea A:
 </section>
 
 
+<!-- ================= COSTOS ================= -->
+
 <section id="costos" class="page">
 
 <div class="card">
@@ -638,6 +1106,8 @@ Guardar costo
 </section>
 
 
+<!-- ================= HISTORIAL ================= -->
+
 <section id="historial" class="page">
 
 <div class="card">
@@ -706,29 +1176,57 @@ Borrar historial
 
 "use strict";
 
+
+/*
+====================================================
+NO CAMBIAR ESTAS CLAVES
+====================================================
+
+Se mantienen exactamente las mismas claves de tu
+versión anterior para conservar la información local.
+*/
+
 var KPROD="theStudioProduccion_v4";
 var KCOST="theStudioCostos_v4";
 var KHIST="theStudioHistorial_v4";
 var KADV="theStudioAvances_v4";
 
+
 function $(id){
 return document.getElementById(id)
 }
 
+
 function N(v){
+
 var n=Number(v);
+
 return isFinite(n)?n:0
+
 }
+
 
 function M(v){
-return N(v).toLocaleString("es-MX",{
+
+return N(v).toLocaleString(
+"es-MX",
+{
 style:"currency",
 currency:"MXN"
-})
+}
+)
+
 }
 
+
 function esc(v){
-return String(v==null?"":v).replace(/[&<>"']/g,function(c){
+
+return String(
+v==null?"":v
+).replace(
+/[&<>"']/g,
+function(c){
+
 return{
 "&":"&amp;",
 "<":"&lt;",
@@ -736,8 +1234,12 @@ return{
 '"':"&quot;",
 "'":"&#39;"
 }[c]
-})
+
 }
+)
+
+}
+
 
 function today(){
 
@@ -751,6 +1253,7 @@ return d.toISOString().slice(0,10)
 
 }
 
+
 function nowLocal(){
 
 var d=new Date();
@@ -762,6 +1265,7 @@ d.getMinutes()-d.getTimezoneOffset()
 return d.toISOString().slice(0,16)
 
 }
+
 
 function load(k,def){
 
@@ -780,6 +1284,7 @@ return def
 }
 
 }
+
 
 function save(){
 
@@ -805,11 +1310,14 @@ JSON.stringify(avances)
 
 }
 
+
 var prod=load(KPROD,[]);
 var cost=load(KCOST,{});
 var hist=load(KHIST,[]);
 var avances=load(KADV,[]);
+
 var selectedOT=null;
+
 
 var FLOW=[
 "Programado",
@@ -820,6 +1328,10 @@ var FLOW=[
 "Auditoría"
 ];
 
+
+/* ==================================================
+   SEMANA
+================================================== */
 
 function range(ref){
 
@@ -846,6 +1358,7 @@ sat.setDate(
 mon.getDate()+5
 );
 
+
 function iso(x){
 
 x.setMinutes(
@@ -855,6 +1368,7 @@ x.getMinutes()-x.getTimezoneOffset()
 return x.toISOString().slice(0,10)
 
 }
+
 
 return[
 iso(new Date(mon)),
@@ -875,10 +1389,17 @@ return date>=x[0]&&date<=x[1]
 
 function inWeekAdvance(a,ref){
 
-return inWeekDate(a.fecha,ref)
+return inWeekDate(
+a.fecha,
+ref
+)
 
 }
 
+
+/* ==================================================
+   MODELOS
+================================================== */
 
 function fillModels(){
 
@@ -886,11 +1407,13 @@ var s=$("modelo");
 
 var old=s.value;
 
-var names=Object.keys(cost).sort();
+var names=
+Object.keys(cost).sort();
 
 s.innerHTML="";
 
-var first=document.createElement("option");
+var first=
+document.createElement("option");
 
 first.value="";
 
@@ -903,7 +1426,8 @@ s.appendChild(first);
 
 names.forEach(function(m){
 
-var o=document.createElement("option");
+var o=
+document.createElement("option");
 
 o.value=m;
 o.textContent=m;
@@ -921,13 +1445,18 @@ s.value=old
 }
 
 
+/* ==================================================
+   OTs
+================================================== */
+
 function getOTs(){
 
 var map={};
 
 prod.forEach(function(r){
 
-var key=String(r.ot||"").trim();
+var key=
+String(r.ot||"").trim();
 
 if(!key)return;
 
@@ -944,7 +1473,8 @@ obs:r.obs||""
 
 }
 
-map[key].programado+=N(r.programado);
+map[key].programado+=
+N(r.programado);
 
 if(r.fecha<map[key].fecha){
 
@@ -959,21 +1489,38 @@ return map
 }
 
 
+/* ==================================================
+   AVANCES
+================================================== */
+
 function getAdvancesOT(ot){
 
-return avances.filter(function(a){
+return avances
+.filter(function(a){
 
 return String(a.ot)===String(ot)
 
-}).sort(function(a,b){
+})
+.sort(function(a,b){
 
 return String(a.fechaHora)
-.localeCompare(String(b.fechaHora))
+.localeCompare(
+String(b.fechaHora)
+)
 
 })
 
 }
 
+
+/*
+Inventario actual de una OT.
+
+IMPORTANTE:
+Esta función mantiene el mismo sistema que tu app
+anterior para que los avances existentes sigan
+funcionando.
+*/
 
 function inventoryOT(ot){
 
@@ -989,13 +1536,21 @@ var o=getOTs()[ot];
 
 if(!o)return map;
 
-map["Programado"]=o.programado;
+map["Programado"]=
+o.programado;
 
-getAdvancesOT(ot).forEach(function(a){
 
-var from=a.procesoAnterior;
-var to=a.siguienteProceso;
-var q=N(a.piezas);
+getAdvancesOT(ot)
+.forEach(function(a){
+
+var from=
+a.procesoAnterior;
+
+var to=
+a.siguienteProceso;
+
+var q=
+N(a.piezas);
 
 if(map[from]!=null){
 
@@ -1010,6 +1565,7 @@ map[to]+=q
 }
 
 });
+
 
 FLOW.forEach(function(p){
 
@@ -1026,9 +1582,14 @@ return map
 }
 
 
+/*
+Proceso actual = último proceso que tiene inventario.
+*/
+
 function currentIndex(ot){
 
-var inv=inventoryOT(ot);
+var inv=
+inventoryOT(ot);
 
 for(
 var i=FLOW.length-1;
@@ -1036,7 +1597,9 @@ i>=0;
 i--
 ){
 
-if(inv[FLOW[i]]>0){
+if(
+inv[FLOW[i]]>0
+){
 
 return i
 
@@ -1044,7 +1607,9 @@ return i
 
 }
 
-var arr=getAdvancesOT(ot);
+
+var arr=
+getAdvancesOT(ot);
 
 if(arr.length){
 
@@ -1061,7 +1626,8 @@ return 0
 
 function currentProcess(ot){
 
-var i=currentIndex(ot);
+var i=
+currentIndex(ot);
 
 return FLOW[i]||"Programado"
 
@@ -1070,7 +1636,8 @@ return FLOW[i]||"Programado"
 
 function nextProcess(ot){
 
-var i=currentIndex(ot);
+var i=
+currentIndex(ot);
 
 return i<FLOW.length-1
 ?FLOW[i+1]
@@ -1081,14 +1648,17 @@ return i<FLOW.length-1
 
 function availableCurrent(ot){
 
-return inventoryOT(ot)[currentProcess(ot)]||0
+return inventoryOT(ot)[
+currentProcess(ot)
+]||0
 
 }
 
 
 function getLastAdvance(ot){
 
-var a=getAdvancesOT(ot);
+var a=
+getAdvancesOT(ot);
 
 return a.length
 ?a[a.length-1]
@@ -1096,6 +1666,10 @@ return a.length
 
 }
 
+
+/* ==================================================
+   FECHAS / LEAD TIME
+================================================== */
 
 function formatDateTime(v){
 
@@ -1125,19 +1699,25 @@ return new Date(b)-new Date(a)
 
 function formatDuration(ms){
 
-if(!isFinite(ms)||ms<0){
+if(
+!isFinite(ms)||
+ms<0
+){
 
 return"0h 0m"
 
 }
 
-var min=Math.floor(ms/60000);
+var min=
+Math.floor(ms/60000);
 
-var days=Math.floor(min/1440);
+var days=
+Math.floor(min/1440);
 
 min%=1440;
 
-var h=Math.floor(min/60);
+var h=
+Math.floor(min/60);
 
 min%=60;
 
@@ -1161,18 +1741,27 @@ return o.fecha+"T08:00"
 
 function totalLeadTime(ot){
 
-var s=getStartDateTime(ot);
+var s=
+getStartDateTime(ot);
 
-var l=getLastAdvance(ot);
+var l=
+getLastAdvance(ot);
 
 return s&&l
 ?formatDuration(
-diffMs(s,l.fechaHora)
+diffMs(
+s,
+l.fechaHora
+)
 )
 :"0h 0m"
 
 }
 
+
+/* ==================================================
+   EMPAQUE / DESTAJO
+================================================== */
 
 function empacadoEnSemana(ot,ref){
 
@@ -1216,26 +1805,42 @@ return t+N(a.piezas)
 
 function destajoOTSemana(ot,ref){
 
-var o=getOTs()[ot];
+var o=
+getOTs()[ot];
 
-var c=cost[o?o.modelo:""]||{};
+var c=
+cost[o?o.modelo:""]||{};
 
-var q=empacadoEnSemana(ot,ref);
+var q=
+empacadoEnSemana(
+ot,
+ref
+);
 
 return{
+
 pes:q*N(c.pes),
+
 pre:q*N(c.pre),
+
 q:q
-}
 
 }
 
+}
+
+
+/* ==================================================
+   CAPTURA
+================================================== */
 
 function renderCapture(){
 
-var tb=$("tablaCaptura");
+var tb=
+$("tablaCaptura");
 
-var rows=prod.slice().sort(
+var rows=
+prod.slice().sort(
 function(a,b){
 
 return String(b.fecha)
@@ -1255,13 +1860,19 @@ return
 
 }
 
-tb.innerHTML=rows.map(
-function(r){
+tb.innerHTML=
+rows.map(function(r){
 
 return"<tr>"+
-"<td>"+esc(r.fecha)+"</td>"+
+"<td>"+
+esc(r.fecha)+
+"</td>"+
 "<td><span class='pill "+
-(r.linea==="Línea A"?"a":"b")+
+(
+r.linea==="Línea A"
+?"a"
+:"b"
+)+
 "'>"+
 esc(r.linea)+
 "</span></td>"+
@@ -1279,31 +1890,71 @@ esc(r.id)+
 "'>Eliminar</button></td>"+
 "</tr>"
 
-}
-).join("");
+}).join("");
+
 
 tb.querySelectorAll("[data-del]")
 .forEach(function(b){
 
 b.onclick=function(){
 
-if(confirm("¿Eliminar esta OT?")){
+if(
+confirm(
+"¿Eliminar esta OT?\n\n"+
+"Esta acción también eliminará sus avances."
+)
+){
 
-var id=b.getAttribute("data-del");
+var id=
+b.getAttribute("data-del");
 
-prod=prod.filter(function(r){
+var registro=
+prod.find(function(r){
+
+return String(r.id)===String(id)
+
+});
+
+
+if(!registro){
+
+return
+
+}
+
+
+/*
+CORRECCIÓN:
+Se identifica la OT por su número antes de eliminarla.
+*/
+
+var otEliminar=
+String(registro.ot);
+
+
+/*
+Eliminar OT.
+*/
+
+prod=
+prod.filter(function(r){
 
 return String(r.id)!==String(id)
 
 });
 
-avances=avances.filter(function(a){
 
-return String(a.ot)!==String(id)
-&&
-String(a.ot)!==String("")
+/*
+Eliminar avances de esa OT.
+*/
+
+avances=
+avances.filter(function(a){
+
+return String(a.ot)!==otEliminar
 
 });
+
 
 save();
 
@@ -1318,13 +1969,558 @@ render()
 }
 
 
+/* ==================================================
+   NUEVA CAPTURA RÁPIDA
+================================================== */
+
+function renderQuickResults(){
+
+var input=
+$("buscarOT");
+
+var box=
+$("resultadosOT");
+
+if(!input||!box)return;
+
+var texto=
+String(input.value||"")
+.trim()
+.toLowerCase();
+
+
+if(!texto){
+
+box.innerHTML="";
+
+return
+
+}
+
+
+var map=
+getOTs();
+
+var names=
+Object.keys(map)
+.filter(function(k){
+
+return k.toLowerCase()
+.indexOf(texto)!==-1
+
+})
+.sort();
+
+
+if(!names.length){
+
+box.innerHTML=
+'<div class="note" style="margin-top:10px;margin-bottom:0">'+
+'No encontré esa OT.'
++
+'</div>';
+
+return
+
+}
+
+
+box.innerHTML=
+names.map(function(k){
+
+var o=map[k];
+
+var inv=
+inventoryOT(k);
+
+var cur=
+currentProcess(k);
+
+var disp=
+inv[cur]||0;
+
+return"<button type='button' data-select-quick='"+esc(k)+"'>"+
+"<b style='font-size:16px'>OT "+
+esc(k)+
+"</b>"+
+"<br>"+
+"<span class='muted'>"+
+esc(o.modelo)+
+" · "+
+esc(o.linea)+
+" · Programado: "+
+N(o.programado).toLocaleString()+
+"</span>"+
+"<br>"+
+"<span class='muted'>"+
+"Inventario actual: "+
+esc(cur)+
+" · "+
+disp.toLocaleString()+
+" piezas"+
+"</span>"+
+"</button>"
+
+}).join("");
+
+
+box.querySelectorAll(
+"[data-select-quick]"
+)
+.forEach(function(btn){
+
+btn.onclick=function(){
+
+selectQuickOT(
+btn.getAttribute(
+"data-select-quick"
+)
+)
+
+}
+
+})
+
+}
+
+
+function populateFromProcesses(){
+
+var s=
+$("desdeProceso");
+
+s.innerHTML="";
+
+FLOW.slice(0,-1)
+.forEach(function(p){
+
+var o=
+document.createElement("option");
+
+o.value=p;
+o.textContent=p;
+
+s.appendChild(o)
+
+});
+
+}
+
+
+function populateToProcesses(from){
+
+var s=
+$("hastaProceso");
+
+s.innerHTML="";
+
+var fromIndex=
+FLOW.indexOf(from);
+
+FLOW.slice(
+fromIndex+1
+)
+.forEach(function(p){
+
+var o=
+document.createElement("option");
+
+o.value=p;
+o.textContent=p;
+
+s.appendChild(o)
+
+});
+
+}
+
+
+function refreshFromAvailability(){
+
+if(!selectedOT)return;
+
+var from=
+$("desdeProceso").value;
+
+var inv=
+inventoryOT(selectedOT);
+
+var disp=
+inv[from]||0;
+
+$("disponibleDesde").textContent=
+disp.toLocaleString();
+
+$("piezasMovimiento").max=
+disp;
+
+if(
+N($("piezasMovimiento").value)>disp
+){
+
+$("piezasMovimiento").value=disp
+
+}
+
+}
+
+
+function selectQuickOT(ot){
+
+var map=
+getOTs();
+
+var o=
+map[ot];
+
+if(!o)return;
+
+selectedOT=ot;
+
+$("buscarOT").value=ot;
+
+$("resultadosOT").innerHTML="";
+
+$("quickSelected").classList.add("show");
+
+$("moveBox").classList.add("show");
+
+$("quickOT").textContent=
+"OT "+o.ot;
+
+$("quickModelo").textContent=
+o.modelo;
+
+$("quickLinea").textContent=
+o.linea;
+
+$("quickProgramado").textContent=
+N(o.programado).toLocaleString();
+
+
+populateFromProcesses();
+
+
+/*
+Por defecto seleccionamos el proceso actual.
+*/
+
+var cur=
+currentProcess(ot);
+
+if(
+FLOW.indexOf(cur)>=0 &&
+cur!=="Auditoría"
+){
+
+$("desdeProceso").value=cur
+
+}else{
+
+$("desdeProceso").value="Programado"
+
+}
+
+
+populateToProcesses(
+$("desdeProceso").value
+);
+
+refreshFromAvailability();
+
+$("piezasMovimiento").value=0;
+
+$("fechaMovimiento").value=
+nowLocal();
+
+}
+
+
+function clearQuick(){
+
+selectedOT=null;
+
+$("buscarOT").value="";
+
+$("resultadosOT").innerHTML="";
+
+$("quickSelected").classList.remove("show");
+
+$("moveBox").classList.remove("show");
+
+$("piezasMovimiento").value=0;
+
+}
+
+
+$("buscarOT").addEventListener(
+"input",
+renderQuickResults
+);
+
+
+$("buscarOT").addEventListener(
+"keydown",
+function(e){
+
+if(e.key==="Enter"){
+
+var first=
+$("resultadosOT")
+.querySelector(
+"[data-select-quick]"
+);
+
+if(first){
+
+first.click()
+
+}
+
+}
+
+});
+
+
+$("desdeProceso").addEventListener(
+"change",
+function(){
+
+if(!selectedOT)return;
+
+populateToProcesses(
+$("desdeProceso").value
+);
+
+refreshFromAvailability()
+
+});
+
+
+$("hastaProceso").addEventListener(
+"change",
+refreshFromAvailability
+);
+
+
+$("piezasMovimiento").addEventListener(
+"input",
+refreshFromAvailability
+);
+
+
+$("registrarMovimiento")
+.addEventListener(
+"click",
+function(){
+
+if(!selectedOT){
+
+return alert(
+"Primero escribe y selecciona una OT."
+)
+
+}
+
+
+var from=
+$("desdeProceso").value;
+
+var to=
+$("hastaProceso").value;
+
+var q=
+N($("piezasMovimiento").value);
+
+var inv=
+inventoryOT(selectedOT);
+
+var disp=
+inv[from]||0;
+
+
+if(!from){
+
+return alert(
+"Selecciona el proceso de origen."
+)
+
+}
+
+
+if(!to){
+
+return alert(
+"Selecciona el proceso de destino."
+)
+
+}
+
+
+var fromIndex=
+FLOW.indexOf(from);
+
+var toIndex=
+FLOW.indexOf(to);
+
+
+if(toIndex<=fromIndex){
+
+return alert(
+"El proceso destino debe estar después del proceso de origen."
+)
+
+}
+
+
+if(q<=0){
+
+return alert(
+"Escribe las piezas que avanzan."
+)
+
+}
+
+
+if(q>disp){
+
+return alert(
+"No puedes avanzar "+
+q+
+" piezas.\n\n"+
+"Solo hay "+
+disp+
+" piezas disponibles en "+
+from+"."
+)
+
+}
+
+
+var o=
+getOTs()[selectedOT];
+
+var fh=
+$("fechaMovimiento").value||
+nowLocal();
+
+
+/*
+====================================================
+MOVIMIENTO MÚLTIPLE
+
+Si haces:
+
+Armado → Empaque
+
+el sistema genera:
+
+Armado → Salida pespunte
+Salida pespunte → Clasificación
+Clasificación → Empaque
+
+Todo queda registrado con la misma fecha/hora.
+
+Así el inventario y el destajo funcionan
+correctamente.
+====================================================
+*/
+
+for(
+var i=fromIndex;
+i<toIndex;
+i++
+){
+
+avances.push({
+
+id:String(
+Date.now()+
+"-"+
+i+
+"-"+
+Math.random()
+),
+
+ot:o.ot,
+
+linea:o.linea,
+
+modelo:o.modelo,
+
+procesoAnterior:
+FLOW[i],
+
+siguienteProceso:
+FLOW[i+1],
+
+piezas:q,
+
+fechaHora:fh,
+
+fecha:fh.slice(0,10)
+
+})
+
+}
+
+
+/*
+Guardar inmediatamente.
+*/
+
+save();
+
+
+var ruta=
+FLOW.slice(
+fromIndex,
+toIndex+1
+).join(" → ");
+
+
+alert(
+"Avance registrado correctamente.\n\n"+
+"OT: "+o.ot+
+"\n"+
+"Ruta: "+ruta+
+"\n"+
+"Piezas: "+q+
+"\n"+
+"Fecha: "+
+formatDateTime(fh)
+);
+
+
+clearQuick();
+
+render()
+
+});
+
+
+$("cancelarMovimiento")
+.addEventListener(
+"click",
+clearQuick
+);
+
+
+/* ==================================================
+   LISTA DE OTs / HISTORIAL
+================================================== */
+
 function renderAdvanceList(){
 
-var box=$("listaOT");
+var box=
+$("listaOT");
 
-var map=getOTs();
+var map=
+getOTs();
 
-var names=Object.keys(map).sort();
+var names=
+Object.keys(map).sort();
+
 
 if(!names.length){
 
@@ -1337,17 +2533,25 @@ return
 
 }
 
-box.innerHTML=names.map(function(k){
 
-var o=map[k];
+box.innerHTML=
+names.map(function(k){
 
-var cur=currentProcess(o.ot);
+var o=
+map[k];
 
-var avail=availableCurrent(o.ot);
+var cur=
+currentProcess(o.ot);
 
-var next=nextProcess(o.ot);
+var avail=
+availableCurrent(o.ot);
 
-var last=getLastAdvance(o.ot);
+var next=
+nextProcess(o.ot);
+
+var last=
+getLastAdvance(o.ot);
+
 
 return'<div class="otBox">'+
 
@@ -1393,213 +2597,82 @@ esc(formatDateTime(last.fechaHora))+
 
 '<button class="action primary" data-advance="'+
 esc(o.ot)+
-'" '+
-(!next||avail<=0?"disabled":"")+
-'>Avanzar OT</button>'+
+'">'+
+'Capturar avance'+
+'</button>'+
 
 '<button class="action secondary" data-detail="'+
 esc(o.ot)+
-'">Ver Lead Time</button>'+
+'">'+
+'Ver Lead Time'+
+'</button>'+
 
 '</div></div>'
 
 }).join("");
 
-box.querySelectorAll("[data-advance]")
+
+box.querySelectorAll(
+"[data-advance]"
+)
 .forEach(function(b){
 
 b.onclick=function(){
 
-selectOT(
-b.getAttribute("data-advance")
+selectQuickOT(
+b.getAttribute(
+"data-advance"
 )
+);
+
+$("moveBox").scrollIntoView({
+behavior:"smooth",
+block:"center"
+})
 
 }
 
 });
 
-box.querySelectorAll("[data-detail]")
+
+box.querySelectorAll(
+"[data-detail]"
+)
 .forEach(function(b){
 
 b.onclick=function(){
 
 showLeadDetail(
-b.getAttribute("data-detail")
+b.getAttribute(
+"data-detail"
+)
 )
 
 }
 
 });
+
 
 renderLead()
 
 }
 
 
-function selectOT(ot){
-
-var o=getOTs()[ot];
-
-if(!o)return;
-
-selectedOT=ot;
-
-$("panelAvance").style.display="block";
-
-$("avOT").textContent=o.ot;
-
-$("avModelo").textContent=o.modelo;
-
-$("avLinea").textContent=o.linea;
-
-$("avActual").value=
-currentProcess(ot);
-
-$("avDisponible").value=
-availableCurrent(ot);
-
-$("avSiguiente").value=
-nextProcess(ot)||"OT terminada";
-
-$("avPiezas").value=0;
-
-$("avPiezas").max=
-availableCurrent(ot);
-
-$("avFechaHora").value=
-nowLocal();
-
-$("panelAvance").scrollIntoView({
-behavior:"smooth",
-block:"start"
-})
-
-}
-
-
-$("guardarAvance").addEventListener(
-"click",
-function(){
-
-if(!selectedOT){
-
-return alert("Selecciona una OT.")
-
-}
-
-var actual=
-currentProcess(selectedOT);
-
-var siguiente=
-nextProcess(selectedOT);
-
-var disp=
-availableCurrent(selectedOT);
-
-var q=
-N($("avPiezas").value);
-
-if(!siguiente){
-
-return alert(
-"Esta OT ya llegó a Auditoría."
-)
-
-}
-
-if(q<=0){
-
-return alert(
-"Escribe las piezas que avanzan."
-)
-
-}
-
-if(q>disp){
-
-return alert(
-"No puedes avanzar "+
-q+
-" piezas. Solo hay "+
-disp+
-" piezas disponibles en "+
-actual+
-"."
-)
-
-}
-
-var o=getOTs()[selectedOT];
-
-var fh=
-$("avFechaHora").value||
-nowLocal();
-
-avances.push({
-
-id:String(Date.now()),
-
-ot:o.ot,
-
-linea:o.linea,
-
-modelo:o.modelo,
-
-procesoAnterior:actual,
-
-siguienteProceso:siguiente,
-
-piezas:q,
-
-fechaHora:fh,
-
-fecha:fh.slice(0,10)
-
-});
-
-save();
-
-alert(
-"Avance registrado.\n\n"+
-"OT: "+o.ot+
-"\n"+
-actual+
-" → "+
-siguiente+
-"\n"+
-"Piezas: "+q+
-"\n"+
-"Fecha: "+
-formatDateTime(fh)
-);
-
-selectedOT=null;
-
-$("panelAvance").style.display="none";
-
-render()
-
-});
-
-
-$("cancelarAvance").addEventListener(
-"click",
-function(){
-
-selectedOT=null;
-
-$("panelAvance").style.display="none"
-
-});
-
+/* ==================================================
+   LEAD TIME
+================================================== */
 
 function renderLead(){
 
-var tb=$("tablaLead");
+var tb=
+$("tablaLead");
 
-var map=getOTs();
+var map=
+getOTs();
 
-var names=Object.keys(map).sort();
+var names=
+Object.keys(map).sort();
+
 
 if(!names.length){
 
@@ -1610,11 +2683,16 @@ return
 
 }
 
-tb.innerHTML=names.map(function(k){
 
-var o=map[k];
+tb.innerHTML=
+names.map(function(k){
 
-var last=getLastAdvance(o.ot);
+var o=
+map[k];
+
+var last=
+getLastAdvance(o.ot);
+
 
 return"<tr>"+
 "<td><b>"+
@@ -1633,9 +2711,11 @@ o.programado+
 esc(currentProcess(o.ot))+
 "</span></td>"+
 "<td>"+
-(last
+(
+last
 ?formatDateTime(last.fechaHora)
-:"Sin avance")+
+:"Sin avance"
+)+
 "</td>"+
 "<td class='lead'>"+
 totalLeadTime(o.ot)+
@@ -1647,7 +2727,10 @@ esc(o.ot)+
 
 }).join("");
 
-tb.querySelectorAll("[data-lead]")
+
+tb.querySelectorAll(
+"[data-lead]"
+)
 .forEach(function(b){
 
 b.onclick=function(){
@@ -1665,11 +2748,14 @@ b.getAttribute("data-lead")
 
 function showLeadDetail(ot){
 
-var o=getOTs()[ot];
+var o=
+getOTs()[ot];
 
 if(!o)return;
 
-var arr=getAdvancesOT(ot);
+var arr=
+getAdvancesOT(ot);
+
 
 var html=
 '<div class="detailBox">'+
@@ -1691,6 +2777,7 @@ totalLeadTime(ot)+
 '</div>'+
 '</div>';
 
+
 if(!arr.length){
 
 html+=
@@ -1700,7 +2787,8 @@ html+=
 
 }else{
 
-var prev=getStartDateTime(ot);
+var prev=
+getStartDateTime(ot);
 
 html+=
 '<div class="tablewrap" style="margin-top:12px">'+
@@ -1715,6 +2803,7 @@ html+=
 '</tr>'+
 '</thead>'+
 '<tbody>';
+
 
 arr.forEach(function(a){
 
@@ -1734,19 +2823,26 @@ formatDateTime(a.fechaHora)+
 "</td>"+
 "<td class='lead'>"+
 formatDuration(
-diffMs(prev,a.fechaHora)
+diffMs(
+prev,
+a.fechaHora
+)
 )+
 "</td>"+
 "</tr>";
 
-prev=a.fechaHora
+
+prev=
+a.fechaHora
 
 });
+
 
 html+=
 "</tbody></table></div>"
 
 }
+
 
 $("detalleLead").style.display="block";
 
@@ -1760,6 +2856,10 @@ block:"start"
 }
 
 
+/* ==================================================
+   WORKSHOP
+================================================== */
+
 function renderWorkshop(){
 
 var ref=
@@ -1768,13 +2868,16 @@ $("wsFecha").value||today();
 var linea=
 $("wsLinea").value;
 
-var map=getOTs();
+var map=
+getOTs();
 
 var byLine={};
 
+
 Object.keys(map).forEach(function(k){
 
-var o=map[k];
+var o=
+map[k];
 
 if(
 linea!=="Todas"
@@ -1782,7 +2885,10 @@ linea!=="Todas"
 o.linea!==linea
 )return;
 
-var inv=inventoryOT(k);
+
+var inv=
+inventoryOT(k);
+
 
 if(!byLine[o.linea]){
 
@@ -1797,11 +2903,16 @@ Empaque:0,
 
 }
 
-var z=byLine[o.linea];
 
-z.programado+=o.programado;
+var z=
+byLine[o.linea];
 
-FLOW.slice(1).forEach(function(p){
+z.programado+=
+o.programado;
+
+
+FLOW.slice(1)
+.forEach(function(p){
 
 z[p]+=inv[p]
 
@@ -1809,14 +2920,21 @@ z[p]+=inv[p]
 
 });
 
-var tb=$("tablaWS");
 
-var lines=Object.keys(byLine);
+var tb=
+$("tablaWS");
 
-tb.innerHTML=lines.length
-?lines.map(function(l){
+var lines=
+Object.keys(byLine);
 
-var z=byLine[l];
+
+tb.innerHTML=
+lines.length
+?
+lines.map(function(l){
+
+var z=
+byLine[l];
 
 var tot=
 z.Armado+
@@ -1824,6 +2942,7 @@ z["Salida pespunte"]+
 z.Clasificación+
 z.Empaque+
 z["Auditoría"];
+
 
 return"<tr>"+
 "<td>"+
@@ -1839,7 +2958,7 @@ z.Armado+
 z["Salida pespunte"]+
 "</td>"+
 "<td>"+
-z.Clasificación+
+z["Clasificación"]+
 "</td>"+
 "<td>"+
 z.Empaque+
@@ -1856,9 +2975,13 @@ tot+
 :
 '<tr><td colspan="8">Sin inventario.</td></tr>';
 
-var otb=$("tablaWSOT");
 
-var names=Object.keys(map).sort();
+var otb=
+$("tablaWSOT");
+
+var names=
+Object.keys(map).sort();
+
 
 otb.innerHTML=
 names
@@ -1871,9 +2994,12 @@ map[k].linea===linea
 })
 .map(function(k){
 
-var o=map[k];
+var o=
+map[k];
 
-var inv=inventoryOT(k);
+var inv=
+inventoryOT(k);
+
 
 return"<tr>"+
 "<td><b>"+
@@ -1895,7 +3021,7 @@ inv.Armado+
 inv["Salida pespunte"]+
 "</td>"+
 "<td>"+
-inv.Clasificación+
+inv["Clasificación"]+
 "</td>"+
 "<td>"+
 inv.Empaque+
@@ -1912,14 +3038,21 @@ inv["Auditoría"]+
 }
 
 
+/* ==================================================
+   RESUMEN
+================================================== */
+
 function renderResumen(){
 
 var ref=
 $("refSemana").value||today();
 
-var map=getOTs();
+var map=
+getOTs();
 
-var names=Object.keys(map);
+var names=
+Object.keys(map);
+
 
 var weekOTs=
 names.filter(function(k){
@@ -1931,11 +3064,13 @@ ref
 
 });
 
+
 var totalProg=0;
 var totalEmp=0;
 var totalAud=0;
 var dp=0;
 var dr=0;
+
 
 var la={
 p:0,
@@ -1945,6 +3080,7 @@ dp:0,
 dr:0
 };
 
+
 var lb={
 p:0,
 e:0,
@@ -1953,14 +3089,22 @@ dp:0,
 dr:0
 };
 
+
 var groups=[];
+
 
 weekOTs.forEach(function(k){
 
-var o=map[k];
+var o=
+map[k];
+
 
 var q=
-empacadoEnSemana(k,ref);
+empacadoEnSemana(
+k,
+ref
+);
+
 
 var aud=
 getAdvancesOT(k)
@@ -1972,15 +3116,16 @@ return a.siguienteProceso==="Auditoría"
 inWeekAdvance(a,ref)
 
 })
-
 .reduce(function(t,a){
 
 return t+a.piezas
 
 },0);
 
+
 var c=
 cost[o.modelo]||{};
+
 
 var p=
 q*N(c.pes);
@@ -1988,7 +3133,9 @@ q*N(c.pes);
 var r=
 q*N(c.pre);
 
-totalProg+=o.programado;
+
+totalProg+=
+o.programado;
 
 totalEmp+=q;
 
@@ -1998,12 +3145,15 @@ dp+=p;
 
 dr+=r;
 
+
 var z=
 o.linea==="Línea A"
 ?la
 :lb;
 
-z.p+=o.programado;
+
+z.p+=
+o.programado;
 
 z.e+=q;
 
@@ -2012,6 +3162,7 @@ z.a+=aud;
 z.dp+=p;
 
 z.dr+=r;
+
 
 groups.push({
 
@@ -2027,6 +3178,7 @@ dr:r
 
 });
 
+
 $("kProg").textContent=
 totalProg.toLocaleString();
 
@@ -2039,27 +3191,38 @@ totalAud.toLocaleString();
 $("kReg").textContent=
 weekOTs.length;
 
+
 $("eficiencia").textContent=
 (
 totalProg
 ?
 (
-totalEmp/totalProg*100
+totalEmp/
+totalProg*
+100
 ).toFixed(1)
 :"0"
-)+"%";
+)+
+"%";
 
-$("dPes").textContent=M(dp);
 
-$("dPre").textContent=M(dr);
+$("dPes").textContent=
+M(dp);
 
-$("dPesA").textContent=M(la.dp);
+$("dPre").textContent=
+M(dr);
 
-$("dPesB").textContent=M(lb.dp);
+$("dPesA").textContent=
+M(la.dp);
 
-$("dPreA").textContent=M(la.dr);
+$("dPesB").textContent=
+M(lb.dp);
 
-$("dPreB").textContent=M(lb.dr);
+$("dPreA").textContent=
+M(la.dr);
+
+$("dPreB").textContent=
+M(lb.dr);
 
 
 function lineRow(name,z){
@@ -2068,6 +3231,7 @@ var ef=
 z.p
 ?(z.e/z.p*100).toFixed(1)
 :"0.0";
+
 
 return"<tr>"+
 "<td>"+
@@ -2095,9 +3259,11 @@ M(z.dr)+
 
 }
 
+
 $("tablaLineas").innerHTML=
 lineRow("Línea A",la)+
 lineRow("Línea B",lb);
+
 
 $("tablaOT").innerHTML=
 groups.length
@@ -2142,12 +3308,18 @@ M(g.dr)+
 }
 
 
+/* ==================================================
+   COSTOS
+================================================== */
+
 function renderCosts(){
 
-var tb=$("tablaCostos");
+var tb=
+$("tablaCostos");
 
 var names=
 Object.keys(cost).sort();
+
 
 tb.innerHTML=
 names.length
@@ -2173,7 +3345,10 @@ esc(m)+
 :
 '<tr><td colspan="4">Sin modelos.</td></tr>';
 
-tb.querySelectorAll("[data-cost]")
+
+tb.querySelectorAll(
+"[data-cost]"
+)
 .forEach(function(b){
 
 b.onclick=function(){
@@ -2181,9 +3356,14 @@ b.onclick=function(){
 var m=
 b.getAttribute("data-cost");
 
-if(confirm(
-"¿Eliminar el costo de "+m+"?"
-)){
+
+if(
+confirm(
+"¿Eliminar el costo de "+
+m+
+"?"
+)
+){
 
 delete cost[m];
 
@@ -2200,9 +3380,15 @@ render()
 }
 
 
+/* ==================================================
+   HISTORIAL
+================================================== */
+
 function renderHistory(){
 
-var tb=$("tablaHistorial");
+var tb=
+$("tablaHistorial");
+
 
 tb.innerHTML=
 hist.length
@@ -2242,6 +3428,10 @@ M(h.b)+
 }
 
 
+/* ==================================================
+   LIMPIAR
+================================================== */
+
 function clearForm(){
 
 $("ot").value="";
@@ -2250,10 +3440,15 @@ $("obs").value="";
 
 $("programado").value=0;
 
-$("fecha").value=today()
+$("fecha").value=
+today()
 
 }
 
+
+/* ==================================================
+   RENDER GENERAL
+================================================== */
 
 function render(){
 
@@ -2274,12 +3469,25 @@ renderHistory()
 }
 
 
-$("fecha").value=today();
+/* ==================================================
+   INICIALIZACIÓN
+================================================== */
 
-$("refSemana").value=today();
+$("fecha").value=
+today();
 
-$("wsFecha").value=today();
+$("refSemana").value=
+today();
 
+$("wsFecha").value=
+today();
+
+populateFromProcesses();
+
+
+/* ==================================================
+   NAVEGACIÓN
+================================================== */
 
 document.querySelectorAll(".tab")
 .forEach(function(btn){
@@ -2295,6 +3503,7 @@ x.classList.remove("active")
 
 });
 
+
 document.querySelectorAll(".page")
 .forEach(function(x){
 
@@ -2302,12 +3511,15 @@ x.classList.remove("active")
 
 });
 
+
 btn.classList.add("active");
+
 
 $(
 btn.getAttribute("data-target")
 )
 .classList.add("active");
+
 
 render()
 
@@ -2317,19 +3529,25 @@ render()
 });
 
 
+/* ==================================================
+   GUARDAR COSTO
+================================================== */
+
 $("guardarCosto")
 .addEventListener(
 "click",
 function(){
 
 var m=
-$("cModelo").value.trim();
+$("cModelo")
+.value.trim();
 
 var p=
 N($("cPes").value);
 
 var r=
 N($("cPre").value);
+
 
 if(!m){
 
@@ -2339,12 +3557,15 @@ return alert(
 
 }
 
+
 cost[m]={
 pes:p,
 pre:r
 };
 
+
 save();
+
 
 $("cModelo").value="";
 
@@ -2352,7 +3573,9 @@ $("cPes").value="";
 
 $("cPre").value="";
 
+
 render();
+
 
 alert(
 "Costo guardado."
@@ -2361,6 +3584,10 @@ alert(
 }
 );
 
+
+/* ==================================================
+   GUARDAR OT
+================================================== */
 
 $("guardar")
 .addEventListener(
@@ -2376,6 +3603,7 @@ $("ot").value.trim();
 var p=
 N($("programado").value);
 
+
 if(!ot){
 
 return alert(
@@ -2383,6 +3611,7 @@ return alert(
 )
 
 }
+
 
 if(!m){
 
@@ -2392,6 +3621,7 @@ return alert(
 
 }
 
+
 if(p<=0){
 
 return alert(
@@ -2399,6 +3629,7 @@ return alert(
 )
 
 }
+
 
 if(
 prod.some(function(r){
@@ -2417,6 +3648,7 @@ return alert(
 )
 
 }
+
 
 prod.push({
 
@@ -2439,11 +3671,13 @@ $("obs").value.trim()
 
 });
 
+
 save();
 
 clearForm();
 
 render();
+
 
 alert(
 "OT registrada correctamente."
@@ -2453,12 +3687,20 @@ alert(
 );
 
 
+/* ==================================================
+   LIMPIAR FORMULARIO
+================================================== */
+
 $("limpiar")
 .addEventListener(
 "click",
 clearForm
 );
 
+
+/* ==================================================
+   RESUMEN
+================================================== */
 
 $("actualizar")
 .addEventListener(
@@ -2473,6 +3715,10 @@ $("refSemana")
 renderResumen
 );
 
+
+/* ==================================================
+   WORKSHOP
+================================================== */
 
 $("actualizarWS")
 .addEventListener(
@@ -2495,6 +3741,10 @@ renderWorkshop
 );
 
 
+/* ==================================================
+   CERRAR SEMANA
+================================================== */
+
 $("cerrarSemana")
 .addEventListener(
 "click",
@@ -2503,7 +3753,9 @@ function(){
 var ref=
 $("refSemana").value||today();
 
-var map=getOTs();
+var map=
+getOTs();
+
 
 var a={
 programado:0,
@@ -2512,19 +3764,25 @@ pes:0,
 pre:0
 };
 
+
 var la={
 pes:0,
 pre:0
 };
+
 
 var lb={
 pes:0,
 pre:0
 };
 
-Object.keys(map).forEach(function(k){
 
-var o=map[k];
+Object.keys(map)
+.forEach(function(k){
+
+var o=
+map[k];
+
 
 if(
 !inWeekDate(
@@ -2533,17 +3791,24 @@ ref
 )
 )return;
 
+
 var q=
-empacadoEnSemana(k,ref);
+empacadoEnSemana(
+k,
+ref
+);
+
 
 var c=
 cost[o.modelo]||{};
+
 
 var p=
 q*N(c.pes);
 
 var r=
 q*N(c.pre);
+
 
 a.programado+=
 o.programado;
@@ -2553,6 +3818,7 @@ a.empaque+=q;
 a.pes+=p;
 
 a.pre+=r;
+
 
 if(
 o.linea==="Línea A"
@@ -2572,8 +3838,10 @@ lb.pre+=r
 
 });
 
+
 if(
-!a.programado&&!a.empaque
+!a.programado &&
+!a.empaque
 ){
 
 return alert(
@@ -2582,8 +3850,10 @@ return alert(
 
 }
 
+
 var sat=
 range(ref)[1];
+
 
 hist.push({
 
@@ -2603,9 +3873,11 @@ b:lb.pes+lb.pre
 
 });
 
+
 save();
 
 render();
+
 
 alert(
 "Semana cerrada. El destajo se calculó con las piezas empacadas."
@@ -2614,6 +3886,10 @@ alert(
 }
 );
 
+
+/* ==================================================
+   BORRAR HISTORIAL
+================================================== */
 
 $("borrarHistorial")
 .addEventListener(
@@ -2638,6 +3914,10 @@ render()
 );
 
 
+/* ==================================================
+   EXPORTAR CSV
+================================================== */
+
 $("exportar")
 .addEventListener(
 "click",
@@ -2646,7 +3926,9 @@ function(){
 var ref=
 $("refSemana").value||today();
 
-var map=getOTs();
+var map=
+getOTs();
+
 
 var rows=[
 [
@@ -2661,10 +3943,13 @@ var rows=[
 ]
 ];
 
+
 Object.keys(map)
 .forEach(function(k){
 
-var o=map[k];
+var o=
+map[k];
+
 
 if(
 !inWeekDate(
@@ -2673,11 +3958,17 @@ ref
 )
 )return;
 
+
 var q=
-empacadoEnSemana(k,ref);
+empacadoEnSemana(
+k,
+ref
+);
+
 
 var c=
 cost[o.modelo]||{};
+
 
 rows.push([
 o.ot,
@@ -2700,22 +3991,30 @@ q*N(c.pre)
 
 });
 
+
 var csv=
 rows.map(function(row){
 
 return row.map(function(v){
 
 return'"'+
-String(v==null?"":v)
-.replace(/"/g,'""')+
+String(
+v==null?"":v
+)
+.replace(
+/"/g,
+'""'
+)+
 '"'
 
 }).join(",")
 
 }).join("\n");
 
+
 var a=
 document.createElement("a");
+
 
 a.href=
 URL.createObjectURL(
@@ -2727,8 +4026,10 @@ type:"text/csv;charset=utf-8"
 )
 );
 
+
 a.download=
 "The_Studio_resumen.csv";
+
 
 document.body.appendChild(a);
 
@@ -2736,9 +4037,12 @@ a.click();
 
 a.remove()
 
-}
-);
+});
 
+
+/* ==================================================
+   ARRANQUE
+================================================== */
 
 render();
 
