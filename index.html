@@ -181,6 +181,11 @@ button:disabled{
  color:#fff
 }
 
+.editBtn{
+ background:#fff0d8;
+ color:#9a6200
+}
+
 .kpis{
  display:grid;
  grid-template-columns:repeat(4,1fr);
@@ -322,9 +327,7 @@ th{
 }
 
 
-/* =========================================================
-   WORK SHOP NUEVO
-========================================================= */
+/* WORK SHOP */
 
 .wsDailyGrid{
  display:grid;
@@ -442,11 +445,6 @@ th{
  color:#138a55
 }
 
-
-/* =========================================================
-   GENERAL SEMANAL
-========================================================= */
-
 .wsWeekCard{
  border-radius:20px;
  padding:18px;
@@ -511,11 +509,6 @@ th{
  font-weight:950
 }
 
-
-/* =========================================================
-   MOVIMIENTO
-========================================================= */
-
 .moveBox{
  border:2px solid #dce3ec;
  border-radius:14px;
@@ -565,51 +558,34 @@ th{
 <body>
 
 <header>
-
 <h1>THE STUDIO · CONTROL DE PRODUCCIÓN</h1>
-
 <p>
 OT · Programación · Avances · Work Shop · Destajo · Eficiencia · Lead Time · Cierre lunes–sábado
 </p>
-
 </header>
-
 
 <nav>
 
-<button class="tab active" data-target="captura">
-➕ Captura
-</button>
+<button class="tab active" data-target="captura">➕ Captura</button>
 
-<button class="tab" data-target="avances">
-🔄 Avances OT
-</button>
+<button class="tab" data-target="avances">🔄 Avances OT</button>
 
-<button class="tab" data-target="workshop">
-🏭 Work Shop
-</button>
+<button class="tab" data-target="workshop">🏭 Work Shop</button>
 
-<button class="tab" data-target="resumen">
-📊 Resumen
-</button>
+<button class="tab" data-target="resumen">📊 Resumen</button>
 
-<button class="tab" data-target="costos">
-💰 Costos
-</button>
+<button class="tab" data-target="costos">💰 Costos</button>
 
-<button class="tab" data-target="historial">
-📅 Historial
-</button>
+<button class="tab" data-target="historial">📅 Historial</button>
 
 </nav>
-
 
 <main>
 
 
-<!-- =========================================================
+<!-- =====================================================
      CAPTURA
-========================================================= -->
+===================================================== -->
 
 <section id="captura" class="page active">
 
@@ -619,76 +595,55 @@ OT · Programación · Avances · Work Shop · Destajo · Eficiencia · Lead Tim
 
 <div class="note">
 
-<b>La captura solo da de alta una OT nueva.</b>
+<b>Captura una nueva OT.</b>
 
-Los movimientos posteriores se registran desde
-<b>🔄 Avances OT</b>.
+<br><br>
+
+Si después detectas un error, utiliza
+<b>✏️ Editar</b> en la tabla de OTs registradas.
 
 </div>
 
 <div class="grid">
 
 <div class="field">
-
 <label>Fecha</label>
-
 <input id="fecha" type="date">
-
 </div>
 
-
 <div class="field">
-
 <label>Línea</label>
 
 <select id="linea">
 
 <option>Línea A</option>
-
 <option>Línea B</option>
 
 </select>
 
 </div>
 
-
 <div class="field">
-
 <label>OT / Orden de trabajo</label>
-
 <input id="ot" placeholder="Ej. 20-A">
-
 </div>
 
-
 <div class="field">
-
 <label>Modelo</label>
-
 <select id="modelo"></select>
-
 </div>
 
-
 <div class="field">
-
 <label>Programado</label>
-
 <input id="programado" type="number" min="0" value="0">
-
 </div>
-
 
 <div class="field">
-
 <label>Observaciones</label>
-
 <input id="obs" placeholder="Opcional">
-
 </div>
 
 </div>
-
 
 <div class="actions">
 
@@ -721,7 +676,7 @@ Limpiar
 <th>OT</th>
 <th>Modelo</th>
 <th>Programado</th>
-<th></th>
+<th>Acción</th>
 </tr>
 
 </thead>
@@ -737,9 +692,9 @@ Limpiar
 </section>
 
 
-<!-- =========================================================
-     AVANCES OT
-========================================================= -->
+<!-- =====================================================
+     AVANCES
+===================================================== -->
 
 <section id="avances" class="page">
 
@@ -766,14 +721,13 @@ Programado → Armado → Salida pespunte → Clasificación → Empaque → Aud
 
 <br><br>
 
-También puedes hacer un avance directo, por ejemplo:
+Puedes avanzar directamente, por ejemplo:
 
 <b>Armado → Empaque</b>
 
 y el sistema registrará automáticamente los pasos intermedios.
 
 </div>
-
 
 <div class="grid">
 
@@ -785,7 +739,6 @@ y el sistema registrará automáticamente los pasos intermedios.
 
 </div>
 
-
 <div class="field">
 
 <label>OT seleccionada</label>
@@ -795,7 +748,6 @@ y el sistema registrará automáticamente los pasos intermedios.
 </div>
 
 </div>
-
 
 <div id="resultadosOT" style="margin-top:12px"></div>
 
@@ -819,57 +771,37 @@ OT:
 
 </div>
 
-
 <div class="moveBox">
 
 <div class="grid">
 
 <div class="field">
-
 <label>Desde proceso</label>
-
 <select id="desdeProceso"></select>
-
 </div>
 
-
 <div class="field">
-
 <label>Hasta proceso</label>
-
 <select id="hastaProceso"></select>
-
 </div>
 
-
 <div class="field">
-
 <label>Piezas que avanzan</label>
-
 <input id="piezasMovimiento" type="number" min="0" value="0">
-
 </div>
-
 
 <div class="field">
-
 <label>Fecha y hora</label>
-
 <input id="fechaMovimiento" type="datetime-local">
-
 </div>
 
 </div>
-
 
 <div id="disponibleMovimiento"
 class="warningNote"
 style="margin-top:12px">
-
 Disponible: 0 piezas
-
 </div>
-
 
 <div class="actions">
 
@@ -931,9 +863,9 @@ Cancelar
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      WORK SHOP
-========================================================= -->
+===================================================== -->
 
 <section id="workshop" class="page">
 
@@ -943,15 +875,12 @@ Cancelar
 
 <div class="note">
 
-Aquí puedes ver rápidamente la producción de cada línea.
-
 <b>En proceso = Armado + Salida pespunte.</b>
 
-La parte inferior muestra el acumulado de la semana,
-de lunes a sábado.
+La información de Empaque corresponde a las piezas que
+entraron a Empaque en la fecha seleccionada.
 
 </div>
-
 
 <div class="field">
 
@@ -960,7 +889,6 @@ de lunes a sábado.
 <input id="wsFecha" type="date">
 
 </div>
-
 
 <div class="actions">
 
@@ -973,41 +901,26 @@ Actualizar Work Shop
 </div>
 
 
-<!-- =========================================================
-     PRODUCCIÓN DEL DÍA
-========================================================= -->
-
 <div class="card">
 
 <h2>📅 Producción del día</h2>
 
-<div class="muted" style="margin-bottom:14px">
-Resumen de piezas por línea y proceso
-</div>
-
-
 <div class="wsDailyGrid">
 
 
-<!-- LINEA A -->
+<!-- A -->
 
 <div class="wsLineCard lineA">
 
 <div class="wsLineHeader">
 
-<div class="wsFactory">
-🏭
-</div>
+<div class="wsFactory">🏭</div>
 
 <div>
 
-<div class="wsLineName">
-Línea A
-</div>
+<div class="wsLineName">Línea A</div>
 
-<div class="wsLineSub">
-Producción del día
-</div>
+<div class="wsLineSub">Producción del día</div>
 
 </div>
 
@@ -1022,21 +935,15 @@ Producción del día
 
 <div>
 
-<div class="wsLabel">
-Programado
-</div>
+<div class="wsLabel">Programado</div>
 
-<div class="wsSub">
-Piezas del día
-</div>
+<div class="wsSub">Piezas del día</div>
 
 </div>
 
 </div>
 
-<div class="wsValue" id="wsProgA">
-0
-</div>
+<div class="wsValue" id="wsProgA">0</div>
 
 </div>
 
@@ -1049,21 +956,15 @@ Piezas del día
 
 <div>
 
-<div class="wsLabel">
-En proceso
-</div>
+<div class="wsLabel">En proceso</div>
 
-<div class="wsSub">
-Armado + Salida pespunte
-</div>
+<div class="wsSub">Armado + Salida pespunte</div>
 
 </div>
 
 </div>
 
-<div class="wsValue" id="wsProcA">
-0
-</div>
+<div class="wsValue" id="wsProcA">0</div>
 
 </div>
 
@@ -1076,21 +977,15 @@ Armado + Salida pespunte
 
 <div>
 
-<div class="wsLabel">
-Clasificación
-</div>
+<div class="wsLabel">Clasificación</div>
 
-<div class="wsSub">
-Piezas actuales
-</div>
+<div class="wsSub">Inventario actual</div>
 
 </div>
 
 </div>
 
-<div class="wsValue" id="wsClasA">
-0
-</div>
+<div class="wsValue" id="wsClasA">0</div>
 
 </div>
 
@@ -1103,21 +998,15 @@ Piezas actuales
 
 <div>
 
-<div class="wsLabel">
-Empaque
-</div>
+<div class="wsLabel">Empaque</div>
 
-<div class="wsSub">
-Piezas del día
-</div>
+<div class="wsSub">Piezas del día</div>
 
 </div>
 
 </div>
 
-<div class="wsValue" id="wsEmpA">
-0
-</div>
+<div class="wsValue" id="wsEmpA">0</div>
 
 </div>
 
@@ -1130,46 +1019,34 @@ Piezas del día
 
 <div>
 
-<div class="wsLabel">
-Eficiencia
-</div>
+<div class="wsLabel">Eficiencia</div>
 
-<div class="wsSub">
-Empaque ÷ Programado
-</div>
+<div class="wsSub">Empaque ÷ Programado</div>
 
 </div>
 
 </div>
 
-<div class="wsEffValue" id="wsEfA">
-0.0%
-</div>
+<div class="wsEffValue" id="wsEfA">0.0%</div>
 
 </div>
 
 </div>
 
 
-<!-- LINEA B -->
+<!-- B -->
 
 <div class="wsLineCard lineB">
 
 <div class="wsLineHeader">
 
-<div class="wsFactory">
-🏭
-</div>
+<div class="wsFactory">🏭</div>
 
 <div>
 
-<div class="wsLineName">
-Línea B
-</div>
+<div class="wsLineName">Línea B</div>
 
-<div class="wsLineSub">
-Producción del día
-</div>
+<div class="wsLineSub">Producción del día</div>
 
 </div>
 
@@ -1184,21 +1061,15 @@ Producción del día
 
 <div>
 
-<div class="wsLabel">
-Programado
-</div>
+<div class="wsLabel">Programado</div>
 
-<div class="wsSub">
-Piezas del día
-</div>
+<div class="wsSub">Piezas del día</div>
 
 </div>
 
 </div>
 
-<div class="wsValue" id="wsProgB">
-0
-</div>
+<div class="wsValue" id="wsProgB">0</div>
 
 </div>
 
@@ -1211,21 +1082,15 @@ Piezas del día
 
 <div>
 
-<div class="wsLabel">
-En proceso
-</div>
+<div class="wsLabel">En proceso</div>
 
-<div class="wsSub">
-Armado + Salida pespunte
-</div>
+<div class="wsSub">Armado + Salida pespunte</div>
 
 </div>
 
 </div>
 
-<div class="wsValue" id="wsProcB">
-0
-</div>
+<div class="wsValue" id="wsProcB">0</div>
 
 </div>
 
@@ -1238,21 +1103,15 @@ Armado + Salida pespunte
 
 <div>
 
-<div class="wsLabel">
-Clasificación
-</div>
+<div class="wsLabel">Clasificación</div>
 
-<div class="wsSub">
-Piezas actuales
-</div>
+<div class="wsSub">Inventario actual</div>
 
 </div>
 
 </div>
 
-<div class="wsValue" id="wsClasB">
-0
-</div>
+<div class="wsValue" id="wsClasB">0</div>
 
 </div>
 
@@ -1265,21 +1124,15 @@ Piezas actuales
 
 <div>
 
-<div class="wsLabel">
-Empaque
-</div>
+<div class="wsLabel">Empaque</div>
 
-<div class="wsSub">
-Piezas del día
-</div>
+<div class="wsSub">Piezas del día</div>
 
 </div>
 
 </div>
 
-<div class="wsValue" id="wsEmpB">
-0
-</div>
+<div class="wsValue" id="wsEmpB">0</div>
 
 </div>
 
@@ -1292,20 +1145,16 @@ Piezas del día
 
 <div>
 
-<div class="wsLabel">
-Eficiencia
-</div>
+<div class="wsLabel">Eficiencia</div>
 
-<div class="wsSub">
-Empaque ÷ Programado
-</div>
+<div class="wsSub">Empaque ÷ Programado</div>
 
 </div>
 
 </div>
 
-<div class="wsEffValue" id="wsEfB">
-0.0%
+<div class="wsEffValue" id="wsEfB">0.0%</div>
+
 </div>
 
 </div>
@@ -1314,12 +1163,6 @@ Empaque ÷ Programado
 
 </div>
 
-</div>
-
-
-<!-- =========================================================
-     GENERAL DE LA SEMANA
-========================================================= -->
 
 <div class="card">
 
@@ -1327,19 +1170,13 @@ Empaque ÷ Programado
 
 <div class="wsWeekHeader">
 
-<div class="wsWeekIcon">
-📊
-</div>
+<div class="wsWeekIcon">📊</div>
 
 <div>
 
-<div class="wsWeekTitle">
-General de la semana
-</div>
+<div class="wsWeekTitle">General de la semana</div>
 
-<div class="wsWeekSub">
-Totales acumulados · lunes a sábado
-</div>
+<div class="wsWeekSub">Acumulado lunes a sábado</div>
 
 </div>
 
@@ -1348,24 +1185,17 @@ Totales acumulados · lunes a sábado
 
 <div class="wsWeekGrid">
 
-
 <div class="wsWeekMetric">
 
 <div>
 
-<div class="wsWeekLabel">
-📋 Programado
-</div>
+<div class="wsWeekLabel">📋 Programado</div>
 
-<div class="wsWeekSmall">
-Total programado de la semana
-</div>
+<div class="wsWeekSmall">Total de la semana</div>
 
 </div>
 
-<div class="wsWeekValue" id="wsProgSemana">
-0
-</div>
+<div class="wsWeekValue" id="wsProgSemana">0</div>
 
 </div>
 
@@ -1374,19 +1204,13 @@ Total programado de la semana
 
 <div>
 
-<div class="wsWeekLabel">
-📦 Empaque
-</div>
+<div class="wsWeekLabel">📦 Empaque</div>
 
-<div class="wsWeekSmall">
-Total empacado de la semana
-</div>
+<div class="wsWeekSmall">Total de la semana</div>
 
 </div>
 
-<div class="wsWeekValue" id="wsEmpSemana">
-0
-</div>
+<div class="wsWeekValue" id="wsEmpSemana">0</div>
 
 </div>
 
@@ -1395,10 +1219,8 @@ Total empacado de la semana
 
 <div class="successNote" style="margin-top:12px">
 
-🎯 Eficiencia general de la semana:
-<b id="wsEfSemana">
-0.0%
-</b>
+🎯 Eficiencia general:
+<b id="wsEfSemana">0.0%</b>
 
 </div>
 
@@ -1406,10 +1228,6 @@ Total empacado de la semana
 
 </div>
 
-
-<!-- =========================================================
-     INVENTARIO ACTUAL
-========================================================= -->
 
 <div class="card">
 
@@ -1417,13 +1235,11 @@ Total empacado de la semana
 
 <div class="note">
 
-Este inventario es dinámico.
+El inventario es dinámico:
 
-Cuando una pieza avanza,
-<b>sale del proceso anterior y entra al siguiente.</b>
+<b>cuando avanzas piezas, se restan del proceso anterior y se suman al siguiente.</b>
 
 </div>
-
 
 <div class="tablewrap">
 
@@ -1452,10 +1268,6 @@ Cuando una pieza avanza,
 
 </div>
 
-
-<!-- =========================================================
-     DETALLE OT
-========================================================= -->
 
 <div class="card">
 
@@ -1492,17 +1304,15 @@ Cuando una pieza avanza,
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      RESUMEN
-========================================================= -->
+===================================================== -->
 
 <section id="resumen" class="page">
 
 <div class="card">
 
 <h2>Resumen semanal</h2>
-
-<div class="grid">
 
 <div class="field">
 
@@ -1511,9 +1321,6 @@ Cuando una pieza avanza,
 <input id="refSemana" type="date">
 
 </div>
-
-</div>
-
 
 <div class="actions">
 
@@ -1533,46 +1340,23 @@ Exportar CSV
 <div class="kpis">
 
 <div class="kpi">
-
 <small>Programado</small>
-
-<strong id="kProg">
-0
-</strong>
-
+<strong id="kProg">0</strong>
 </div>
 
-
 <div class="kpi">
-
 <small>Empaque</small>
-
-<strong id="kEmp">
-0
-</strong>
-
+<strong id="kEmp">0</strong>
 </div>
 
-
 <div class="kpi">
-
 <small>Auditoría</small>
-
-<strong id="kAud">
-0
-</strong>
-
+<strong id="kAud">0</strong>
 </div>
 
-
 <div class="kpi">
-
 <small>OTs</small>
-
-<strong id="kReg">
-0
-</strong>
-
+<strong id="kReg">0</strong>
 </div>
 
 </div>
@@ -1580,13 +1364,11 @@ Exportar CSV
 
 <div class="card">
 
-<h2>📈 Eficiencia Programado vs Empaque</h2>
+<h2>📈 Eficiencia</h2>
 
 <div class="effBox">
 
-<div class="eff" id="eficiencia">
-0%
-</div>
+<div class="eff" id="eficiencia">0%</div>
 
 <div>
 Empaque ÷ Programado × 100
@@ -1603,9 +1385,7 @@ Empaque ÷ Programado × 100
 
 <h3>💰 Destajo Pespunte · Empaque</h3>
 
-<div class="money" id="dPes">
-$0.00
-</div>
+<div class="money" id="dPes">$0.00</div>
 
 <small>
 Línea A:
@@ -1622,9 +1402,7 @@ Línea B:
 
 <h3>💰 Destajo Preliminar · Empaque</h3>
 
-<div class="money" id="dPre">
-$0.00
-</div>
+<div class="money" id="dPre">$0.00</div>
 
 <small>
 Línea A:
@@ -1704,9 +1482,9 @@ Línea B:
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      COSTOS
-========================================================= -->
+===================================================== -->
 
 <section id="costos" class="page">
 
@@ -1716,42 +1494,29 @@ Línea B:
 
 <div class="note">
 
-Los costos se calculan sobre las
-<b>piezas que entran a Empaque.</b>
+Los costos se calculan sobre las piezas que entran a
+<b>Empaque.</b>
 
 </div>
-
 
 <div class="grid">
 
 <div class="field">
-
 <label>Modelo</label>
-
 <input id="cModelo" placeholder="Ej. Verona">
-
 </div>
 
-
 <div class="field">
-
 <label>Costo pieza pespunte</label>
-
-<input id="cPes" type="number" min="0" step="0.01" placeholder="12.00">
-
+<input id="cPes" type="number" min="0" step="0.01">
 </div>
-
 
 <div class="field">
-
 <label>Costo pieza preliminar</label>
-
-<input id="cPre" type="number" min="0" step="0.01" placeholder="8.00">
-
+<input id="cPre" type="number" min="0" step="0.01">
 </div>
 
 </div>
-
 
 <div class="actions">
 
@@ -1774,8 +1539,8 @@ Guardar costo
 
 <tr>
 <th>Modelo</th>
-<th>Costo pieza pespunte</th>
-<th>Costo pieza preliminar</th>
+<th>Pespunte</th>
+<th>Preliminar</th>
 <th></th>
 </tr>
 
@@ -1792,9 +1557,9 @@ Guardar costo
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      HISTORIAL
-========================================================= -->
+===================================================== -->
 
 <section id="historial" class="page">
 
@@ -1805,13 +1570,13 @@ Guardar costo
 <div class="note">
 
 La nómina es de <b>lunes a sábado</b>.
+
 El domingo queda fuera.
 
-El destajo semanal se calcula con las piezas que
-<b>entraron a Empaque</b> durante la semana.
+El destajo se calcula con las piezas que
+<b>entraron a Empaque</b>.
 
 </div>
-
 
 <div class="actions">
 
@@ -1868,9 +1633,9 @@ Borrar historial
 "use strict";
 
 
-/* =========================================================
+/* =====================================================
    STORAGE
-========================================================= */
+===================================================== */
 
 var KPROD="theStudioProduccion_v4";
 var KCOST="theStudioCostos_v4";
@@ -1959,9 +1724,10 @@ function load(k,def){
 
  try{
 
-  var x=JSON.parse(
-   localStorage.getItem(k)
-  );
+  var x=
+   JSON.parse(
+    localStorage.getItem(k)
+   );
 
   return x==null?def:x;
 
@@ -1980,6 +1746,7 @@ var hist=load(KHIST,[]);
 var avances=load(KADV,[]);
 
 var selectedOT=null;
+var editingId=null;
 
 
 var FLOW=[
@@ -2017,9 +1784,9 @@ function save(){
 }
 
 
-/* =========================================================
-   SEMANA LUNES - SÁBADO
-========================================================= */
+/* =====================================================
+   SEMANA
+===================================================== */
 
 function range(ref){
 
@@ -2050,19 +1817,14 @@ function range(ref){
 
  function iso(x){
 
-  x.setMinutes(
-   x.getMinutes()-
-   x.getTimezoneOffset()
-  );
-
   return x.toISOString().slice(0,10);
 
  }
 
 
  return[
-  iso(new Date(mon)),
-  iso(new Date(sat))
+  iso(mon),
+  iso(sat)
  ];
 
 }
@@ -2090,9 +1852,9 @@ function inWeekAdvance(a,ref){
 }
 
 
-/* =========================================================
+/* =====================================================
    MODELOS
-========================================================= */
+===================================================== */
 
 function fillModels(){
 
@@ -2140,9 +1902,9 @@ function fillModels(){
 }
 
 
-/* =========================================================
+/* =====================================================
    OTS
-========================================================= */
+===================================================== */
 
 function getOTs(){
 
@@ -2161,15 +1923,10 @@ function getOTs(){
    map[key]={
 
     ot:key,
-
     linea:r.linea,
-
     modelo:r.modelo,
-
     programado:0,
-
     fecha:r.fecha,
-
     obs:r.obs||""
 
    };
@@ -2195,36 +1952,32 @@ function getOTs(){
 }
 
 
-/* =========================================================
-   AVANCES
-========================================================= */
-
 function getAdvancesOT(ot){
 
  return avances
-  .filter(function(a){
+ .filter(function(a){
 
-   return(
-    String(a.ot)===
-    String(ot)
+  return(
+   String(a.ot)===
+   String(ot)
+  );
+
+ })
+ .sort(function(a,b){
+
+  return String(a.fechaHora)
+   .localeCompare(
+    String(b.fechaHora)
    );
 
-  })
-  .sort(function(a,b){
-
-   return String(a.fechaHora)
-    .localeCompare(
-     String(b.fechaHora)
-    );
-
-  });
+ });
 
 }
 
 
-/* =========================================================
+/* =====================================================
    INVENTARIO DINÁMICO
-========================================================= */
+===================================================== */
 
 function inventoryOT(ot){
 
@@ -2242,21 +1995,9 @@ function inventoryOT(ot){
  if(!o)return map;
 
 
- /*
-    TODA LA OT COMIENZA
-    EN PROGRAMADO.
- */
-
- map["Programado"]=
+ map.Programado=
   o.programado;
 
-
- /*
-    CADA AVANCE:
-
-    RESTA DEL PROCESO ANTERIOR
-    SUMA AL SIGUIENTE.
- */
 
  getAdvancesOT(ot)
  .forEach(function(a){
@@ -2303,9 +2044,36 @@ function inventoryOT(ot){
 }
 
 
-/* =========================================================
+/* =====================================================
+   PIEZAS YA SACADAS DE PROGRAMADO
+===================================================== */
+
+function piezasYaAvanzadas(ot){
+
+ return getAdvancesOT(ot)
+ .filter(function(a){
+
+  return(
+   a.procesoAnterior===
+   "Programado"
+  );
+
+ })
+ .reduce(function(total,a){
+
+  return(
+   total+
+   N(a.piezas)
+  );
+
+ },0);
+
+}
+
+
+/* =====================================================
    PROCESO ACTUAL
-========================================================= */
+===================================================== */
 
 function currentIndex(ot){
 
@@ -2354,76 +2122,25 @@ function currentIndex(ot){
 
 function currentProcess(ot){
 
- var i=
-  currentIndex(ot);
-
- return(
-  FLOW[i]||
-  "Programado"
- );
+ return FLOW[
+  currentIndex(ot)
+ ]||"Programado";
 
 }
 
 
-function nextProcess(ot){
-
- var i=
-  currentIndex(ot);
-
- return(
-  i<FLOW.length-1
-  ?FLOW[i+1]
-  :""
- );
-
-}
-
-
-function availableCurrent(ot){
-
- return(
-  inventoryOT(ot)
-  [currentProcess(ot)]
-  ||0
- );
-
-}
-
-
-function availableProcess(
- ot,
- proceso
-){
+function availableProcess(ot,proceso){
 
  return N(
-  inventoryOT(ot)
-  [proceso]
+  inventoryOT(ot)[proceso]
  );
 
 }
 
 
-/* =========================================================
-   ÚLTIMO AVANCE
-========================================================= */
-
-function getLastAdvance(ot){
-
- var a=
-  getAdvancesOT(ot);
-
- return(
-  a.length
-  ?a[a.length-1]
-  :null
- );
-
-}
-
-
-/* =========================================================
-   FECHA / LEAD TIME
-========================================================= */
+/* =====================================================
+   FECHAS / LEAD TIME
+===================================================== */
 
 function formatDateTime(v){
 
@@ -2501,6 +2218,20 @@ function getStartDateTime(ot){
 }
 
 
+function getLastAdvance(ot){
+
+ var a=
+  getAdvancesOT(ot);
+
+ return(
+  a.length
+  ?a[a.length-1]
+  :null
+ );
+
+}
+
+
 function totalLeadTime(ot){
 
  var s=
@@ -2524,14 +2255,11 @@ function totalLeadTime(ot){
 }
 
 
-/* =========================================================
+/* =====================================================
    EMPAQUE
-========================================================= */
+===================================================== */
 
-function empacadoEnFecha(
- ot,
- fecha
-){
+function empacadoEnFecha(ot,fecha){
 
  return getAdvancesOT(ot)
  .filter(function(a){
@@ -2545,20 +2273,14 @@ function empacadoEnFecha(
  })
  .reduce(function(t,a){
 
-  return(
-   t+
-   N(a.piezas)
-  );
+  return t+N(a.piezas);
 
  },0);
 
 }
 
 
-function empacadoEnSemana(
- ot,
- ref
-){
+function empacadoEnSemana(ot,ref){
 
  return getAdvancesOT(ot)
  .filter(function(a){
@@ -2572,19 +2294,16 @@ function empacadoEnSemana(
  })
  .reduce(function(t,a){
 
-  return(
-   t+
-   N(a.piezas)
-  );
+  return t+N(a.piezas);
 
  },0);
 
 }
 
 
-/* =========================================================
+/* =====================================================
    CAPTURA
-========================================================= */
+===================================================== */
 
 function renderCapture(){
 
@@ -2623,13 +2342,17 @@ function renderCapture(){
     <td>${esc(r.fecha)}</td>
 
     <td>
+
      <span class="pill ${
       r.linea==="Línea A"
       ?"a"
       :"b"
      }">
+
       ${esc(r.linea)}
+
      </span>
+
     </td>
 
     <td>
@@ -2645,11 +2368,23 @@ function renderCapture(){
     </td>
 
     <td>
+
+     <button
+      class="action editBtn"
+      data-edit="${esc(r.id)}">
+
+      ✏️ Editar
+
+     </button>
+
      <button
       class="action danger"
       data-del="${esc(r.id)}">
+
       Eliminar
+
      </button>
+
     </td>
 
    </tr>
@@ -2658,6 +2393,28 @@ function renderCapture(){
   }).join("");
 
 
+ /* EDITAR */
+
+ tb.querySelectorAll(
+  "[data-edit]"
+ )
+ .forEach(function(b){
+
+  b.onclick=function(){
+
+   editarOT(
+    b.getAttribute(
+     "data-edit"
+    )
+   );
+
+  };
+
+ });
+
+
+ /* ELIMINAR */
+
  tb.querySelectorAll(
   "[data-del]"
  )
@@ -2665,15 +2422,10 @@ function renderCapture(){
 
   b.onclick=function(){
 
-   if(
-    !confirm(
-     "¿Eliminar esta OT?"
-    )
-   )return;
-
-
    var id=
-    b.getAttribute("data-del");
+    b.getAttribute(
+     "data-del"
+    );
 
 
    var registro=
@@ -2690,23 +2442,45 @@ function renderCapture(){
    if(!registro)return;
 
 
+   var tieneAvances=
+    avances.some(function(a){
+
+     return(
+      String(a.ot)===
+      String(registro.ot)
+     );
+
+    });
+
+
+   if(tieneAvances){
+
+    alert(
+     "Esta OT ya tiene avances registrados.\n\n"+
+     "No se puede eliminar porque tiene historial de producción.\n\n"+
+     "Puedes utilizar ✏️ Editar para corregir sus datos."
+    );
+
+    return;
+
+   }
+
+
+   if(
+    !confirm(
+     "¿Eliminar la OT "+
+     registro.ot+
+     "?"
+    )
+   )return;
+
+
    prod=
     prod.filter(function(r){
 
      return(
       String(r.id)!==
       String(id)
-     );
-
-    });
-
-
-   avances=
-    avances.filter(function(a){
-
-     return(
-      String(a.ot)!==
-      String(registro.ot)
      );
 
     });
@@ -2723,9 +2497,471 @@ function renderCapture(){
 }
 
 
-/* =========================================================
-   BUSCAR OT
-========================================================= */
+/* =====================================================
+   EDITAR OT
+===================================================== */
+
+function editarOT(id){
+
+ var registro=
+  prod.find(function(r){
+
+   return(
+    String(r.id)===
+    String(id)
+   );
+
+  });
+
+
+ if(!registro)return;
+
+
+ editingId=id;
+
+
+ $("fecha").value=
+  registro.fecha||today();
+
+
+ $("linea").value=
+  registro.linea||"Línea A";
+
+
+ $("ot").value=
+  registro.ot||"";
+
+
+ $("modelo").value=
+  registro.modelo||"";
+
+
+ $("programado").value=
+  N(registro.programado);
+
+
+ $("obs").value=
+  registro.obs||"";
+
+
+ $("guardar").textContent=
+  "💾 Guardar cambios";
+
+
+ $("limpiar").textContent=
+  "↩️ Cancelar edición";
+
+
+ $("captura")
+  .scrollIntoView({
+   behavior:"smooth",
+   block:"start"
+  });
+
+
+ var avanzado=
+  piezasYaAvanzadas(
+   registro.ot
+  );
+
+
+ if(avanzado>0){
+
+  $("programado").min=
+   avanzado;
+
+ }else{
+
+  $("programado").min=0;
+
+ }
+
+
+ if(avanzado>0){
+
+  $("programado").setAttribute(
+   "title",
+   "Mínimo "+avanzado+
+   " piezas porque ya existen avances."
+  );
+
+ }
+
+}
+
+
+/* =====================================================
+   CANCELAR EDICIÓN
+===================================================== */
+
+function cancelarEdicion(){
+
+ editingId=null;
+
+
+ $("guardar").textContent=
+  "Guardar OT";
+
+
+ $("limpiar").textContent=
+  "Limpiar";
+
+
+ $("programado").min=0;
+
+
+ clearForm();
+
+}
+
+
+/* =====================================================
+   GUARDAR / ACTUALIZAR OT
+===================================================== */
+
+function guardarOT(){
+
+ var m=
+  $("modelo").value;
+
+ var ot=
+  $("ot").value.trim();
+
+ var p=
+  N(
+   $("programado").value
+  );
+
+ var fecha=
+  $("fecha").value||
+  today();
+
+ var linea=
+  $("linea").value;
+
+ var obs=
+  $("obs").value.trim();
+
+
+ if(!ot){
+
+  return alert(
+   "Escribe la OT."
+  );
+
+ }
+
+
+ if(!m){
+
+  return alert(
+   "Selecciona un modelo."
+  );
+
+ }
+
+
+ if(p<=0){
+
+  return alert(
+   "Escribe las piezas programadas."
+  );
+
+ }
+
+
+ /* =====================================================
+    MODO EDICIÓN
+ ===================================================== */
+
+ if(editingId){
+
+  var registro=
+   prod.find(function(r){
+
+    return(
+     String(r.id)===
+     String(editingId)
+    );
+
+   });
+
+
+  if(!registro){
+
+   cancelarEdicion();
+
+   return;
+
+  }
+
+
+  var otAnterior=
+   registro.ot;
+
+
+  /*
+     PIEZAS QUE YA SALIERON
+     DE PROGRAMADO.
+  */
+
+  var avanzado=
+   piezasYaAvanzadas(
+    otAnterior
+   );
+
+
+  if(p<avanzado){
+
+   alert(
+    "No puedes dejar la OT en "+
+    p+
+    " piezas.\n\n"+
+    "Ya existen "+
+    avanzado+
+    " piezas avanzadas desde Programado.\n\n"+
+    "La cantidad programada debe ser al menos "+
+    avanzado+
+    "."
+   );
+
+   return;
+
+  }
+
+
+  /*
+     SI CAMBIA LA OT,
+     VERIFICAR QUE NO EXISTA
+     OTRA IGUAL.
+  */
+
+  var duplicada=
+   prod.some(function(r){
+
+    return(
+     String(r.id)!==
+     String(editingId)&&
+     String(r.ot)
+      .trim()
+      .toLowerCase()
+     ===
+     ot.toLowerCase()
+    );
+
+   });
+
+
+  if(duplicada){
+
+   alert(
+    "Ya existe otra OT con el número "+
+    ot+
+    "."
+   );
+
+   return;
+
+  }
+
+
+  /*
+     ACTUALIZAR DATOS
+  */
+
+  registro.fecha=
+   fecha;
+
+  registro.linea=
+   linea;
+
+  registro.ot=
+   ot;
+
+  registro.modelo=
+   m;
+
+  registro.programado=
+   p;
+
+  registro.obs=
+   obs;
+
+
+  /*
+     SI CAMBIÓ EL NÚMERO DE OT,
+     CAMBIAMOS TAMBIÉN EL OT
+     EN TODOS SUS AVANCES.
+  */
+
+  if(
+   String(otAnterior)!==
+   String(ot)
+  ){
+
+   avances.forEach(function(a){
+
+    if(
+     String(a.ot)===
+     String(otAnterior)
+    ){
+
+     a.ot=ot;
+
+    }
+
+   });
+
+  }
+
+
+  /*
+     ACTUALIZAR LÍNEA Y MODELO
+     EN EL HISTORIAL DE AVANCES.
+  */
+
+  avances.forEach(function(a){
+
+   if(
+    String(a.ot)===
+    String(ot)
+   ){
+
+    a.linea=
+     linea;
+
+    a.modelo=
+     m;
+
+   }
+
+  });
+
+
+  save();
+
+
+  cancelarEdicion();
+
+  render();
+
+
+  alert(
+   "OT actualizada correctamente. ✅"
+  );
+
+
+  return;
+
+ }
+
+
+ /* =====================================================
+    NUEVA OT
+ ===================================================== */
+
+ var existe=
+  prod.some(function(r){
+
+   return(
+    String(r.ot)
+     .trim()
+     .toLowerCase()
+    ===
+    ot.toLowerCase()
+   );
+
+  });
+
+
+ if(existe){
+
+  return alert(
+   "Esta OT ya está registrada."
+  );
+
+ }
+
+
+ prod.push({
+
+  id:
+   String(
+    Date.now()+
+    Math.random()
+   ),
+
+  fecha:fecha,
+
+  linea:linea,
+
+  ot:ot,
+
+  modelo:m,
+
+  programado:p,
+
+  obs:obs
+
+ });
+
+
+ save();
+
+ clearForm();
+
+ render();
+
+
+ alert(
+  "OT registrada correctamente. ✅"
+ );
+
+}
+
+
+/* =====================================================
+   LIMPIAR FORMULARIO
+===================================================== */
+
+function clearForm(){
+
+ $("ot").value="";
+
+ $("obs").value="";
+
+ $("programado").value=0;
+
+ $("fecha").value=
+  today();
+
+ $("linea").value=
+  "Línea A";
+
+ if($("modelo").options.length){
+
+  $("modelo").selectedIndex=0;
+
+ }
+
+
+ editingId=null;
+
+
+ $("guardar").textContent=
+  "Guardar OT";
+
+ $("limpiar").textContent=
+  "Limpiar";
+
+ $("programado").min=0;
+
+}
+
+
+/* =====================================================
+   BÚSQUEDA OT
+===================================================== */
 
 function renderSearchOT(){
 
@@ -2743,6 +2979,7 @@ function renderSearchOT(){
 
  var map=
   getOTs();
+
 
  var names=
   Object.keys(map);
@@ -2804,9 +3041,7 @@ function renderSearchOT(){
     <div class="muted" style="margin-top:7px">
 
      Programado original:
-     <b>
-      ${N(o.programado).toLocaleString()}
-     </b>
+     <b>${o.programado.toLocaleString()}</b>
 
     </div>
 
@@ -2814,55 +3049,28 @@ function renderSearchOT(){
 
      Inventario actual:
 
-     <b>
-      Programado
-      ${inv.Programado.toLocaleString()}
-     </b>
-
+     <b>Programado ${inv.Programado.toLocaleString()}</b>
      ·
-
-     <b>
-      Armado
-      ${inv.Armado.toLocaleString()}
-     </b>
-
+     <b>Armado ${inv.Armado.toLocaleString()}</b>
      ·
-
-     <b>
-      Salida
-      ${inv["Salida pespunte"].toLocaleString()}
-     </b>
-
+     <b>Salida ${inv["Salida pespunte"].toLocaleString()}</b>
      ·
-
-     <b>
-      Clasificación
-      ${inv.Clasificación.toLocaleString()}
-     </b>
-
+     <b>Clasificación ${inv.Clasificación.toLocaleString()}</b>
      ·
-
-     <b>
-      Empaque
-      ${inv.Empaque.toLocaleString()}
-     </b>
-
+     <b>Empaque ${inv.Empaque.toLocaleString()}</b>
      ·
-
-     <b>
-      Auditoría
-      ${inv.Auditoría.toLocaleString()}
-     </b>
+     <b>Auditoría ${inv.Auditoría.toLocaleString()}</b>
 
     </div>
-
 
     <div class="actions">
 
      <button
       class="action primary"
       data-select-ot="${esc(o.ot)}">
+
       Seleccionar OT
+
      </button>
 
     </div>
@@ -2893,9 +3101,9 @@ function renderSearchOT(){
 }
 
 
-/* =========================================================
+/* =====================================================
    SELECCIONAR OT
-========================================================= */
+===================================================== */
 
 function selectMovementOT(ot){
 
@@ -2947,9 +3155,9 @@ function selectMovementOT(ot){
 }
 
 
-/* =========================================================
-   DESDE
-========================================================= */
+/* =====================================================
+   PROCESOS
+===================================================== */
 
 function fillFromProcesses(){
 
@@ -2967,7 +3175,6 @@ function fillFromProcesses(){
    );
 
   opt.value=p;
-
   opt.textContent=p;
 
   select.appendChild(opt);
@@ -2989,10 +3196,6 @@ function fillFromProcesses(){
 
 }
 
-
-/* =========================================================
-   HASTA
-========================================================= */
 
 function fillToProcesses(){
 
@@ -3034,21 +3237,14 @@ function fillToProcesses(){
  }
 
 
- if(to.options.length){
-
-  to.selectedIndex=0;
-
- }
-
-
  updateMovementAvailability();
 
 }
 
 
-/* =========================================================
+/* =====================================================
    DISPONIBLE
-========================================================= */
+===================================================== */
 
 function updateMovementAvailability(){
 
@@ -3078,19 +3274,17 @@ function updateMovementAvailability(){
 }
 
 
-/* =========================================================
+/* =====================================================
    GUARDAR MOVIMIENTO
-========================================================= */
+===================================================== */
 
 function guardarMovimiento(){
 
  if(!selectedOT){
 
-  alert(
+  return alert(
    "Selecciona una OT."
   );
-
-  return;
 
  }
 
@@ -3106,23 +3300,11 @@ function guardarMovimiento(){
    $("piezasMovimiento").value
   );
 
-
  var disponible=
   availableProcess(
    selectedOT,
    from
   );
-
-
- if(!from||!to){
-
-  alert(
-   "Selecciona desde y hasta."
-  );
-
-  return;
-
- }
 
 
  var fromIndex=
@@ -3134,46 +3316,36 @@ function guardarMovimiento(){
 
  if(toIndex<=fromIndex){
 
-  alert(
-   "El proceso destino debe estar después del proceso origen."
+  return alert(
+   "El proceso destino debe estar después del origen."
   );
-
-  return;
 
  }
 
 
  if(q<=0){
 
-  alert(
-   "Escribe las piezas que avanzan."
+  return alert(
+   "Escribe las piezas."
   );
-
-  return;
 
  }
 
 
  if(q>disponible){
 
-  alert(
-   "No puedes avanzar "+
-   q+
-   " piezas.\n\n"+
+  return alert(
    "Solo hay "+
    disponible+
    " piezas disponibles en "+
    from+"."
   );
 
-  return;
-
  }
 
 
  var o=
   getOTs()[selectedOT];
-
 
  var fh=
   $("fechaMovimiento").value||
@@ -3187,7 +3359,7 @@ function guardarMovimiento(){
 
     Armado → Empaque
 
-    genera:
+    CREA:
 
     Armado → Salida pespunte
     Salida pespunte → Clasificación
@@ -3237,9 +3409,11 @@ function guardarMovimiento(){
 
 
  alert(
-  "Avance registrado correctamente.\n\n"+
-  "OT: "+o.ot+"\n\n"+
-  from+" → "+to+"\n"+
+  "Avance registrado correctamente. ✅\n\n"+
+  "OT: "+o.ot+
+  "\n"+
+  from+" → "+to+
+  "\n"+
   "Piezas: "+q+
   "\n\n"+
   "El inventario fue actualizado."
@@ -3251,7 +3425,6 @@ function guardarMovimiento(){
 
  $("panelMovimiento")
   .style.display="none";
-
 
  $("buscarOT").value="";
 
@@ -3267,9 +3440,9 @@ function guardarMovimiento(){
 }
 
 
-/* =========================================================
+/* =====================================================
    LEAD
-========================================================= */
+===================================================== */
 
 function renderLead(){
 
@@ -3305,36 +3478,24 @@ function renderLead(){
    return `
    <tr>
 
-    <td>
-     <b>${esc(o.ot)}</b>
-    </td>
+    <td><b>${esc(o.ot)}</b></td>
 
-    <td>
-     ${esc(o.linea)}
-    </td>
+    <td>${esc(o.linea)}</td>
 
-    <td>
-     ${esc(o.modelo)}
-    </td>
+    <td>${esc(o.modelo)}</td>
 
-    <td>
-     ${o.programado}
-    </td>
+    <td>${o.programado}</td>
 
     <td>
      <span class="processPill">
-      ${esc(
-       currentProcess(o.ot)
-      )}
+      ${esc(currentProcess(o.ot))}
      </span>
     </td>
 
     <td>
      ${
       last
-      ?formatDateTime(
-       last.fechaHora
-      )
+      ?formatDateTime(last.fechaHora)
       :"Sin avance"
      }
     </td>
@@ -3348,7 +3509,9 @@ function renderLead(){
      <button
       class="action secondary"
       data-lead="${esc(o.ot)}">
+
       Ver detalle
+
      </button>
 
     </td>
@@ -3379,9 +3542,9 @@ function renderLead(){
 }
 
 
-/* =========================================================
+/* =====================================================
    DETALLE LEAD
-========================================================= */
+===================================================== */
 
 function showLeadDetail(ot){
 
@@ -3472,9 +3635,7 @@ function showLeadDetail(ot){
     '</td>'+
 
     '<td>'+
-     formatDateTime(
-      a.fechaHora
-     )+
+     formatDateTime(a.fechaHora)+
     '</td>'+
 
     '<td class="lead">'+
@@ -3520,9 +3681,9 @@ function showLeadDetail(ot){
 }
 
 
-/* =========================================================
+/* =====================================================
    WORK SHOP
-========================================================= */
+===================================================== */
 
 function renderWorkshop(){
 
@@ -3530,16 +3691,9 @@ function renderWorkshop(){
   $("wsFecha").value||
   today();
 
-
  var map=
   getOTs();
 
-
- /*
-    ========================================================
-    INVENTARIO ACTUAL POR LÍNEA
-    ========================================================
- */
 
  var byLine={};
 
@@ -3558,15 +3712,10 @@ function renderWorkshop(){
    byLine[o.linea]={
 
     Programado:0,
-
     Armado:0,
-
     "Salida pespunte":0,
-
     Clasificación:0,
-
     Empaque:0,
-
     Auditoría:0
 
    };
@@ -3574,52 +3723,46 @@ function renderWorkshop(){
   }
 
 
-  var z=
-   byLine[o.linea];
-
-
-  /*
-     IMPORTANTE:
-
-     Aquí usamos el INVENTARIO REAL.
-
-     Programado también baja
-     cuando las piezas avanzan.
-  */
-
   FLOW.forEach(function(p){
 
-   z[p]+=N(inv[p]);
+   byLine[o.linea][p]+=
+    N(inv[p]);
 
   });
 
  });
 
 
- /* ========================================================
-    TABLA INVENTARIO
- ======================================================== */
-
  var tb=
   $("tablaWS");
 
- var lines=
-  ["Línea A","Línea B"];
+
+ ["Línea A","Línea B"]
+ .forEach(function(l){
+
+  if(!byLine[l]){
+
+   byLine[l]={
+
+    Programado:0,
+    Armado:0,
+    "Salida pespunte":0,
+    Clasificación:0,
+    Empaque:0,
+    Auditoría:0
+
+   };
+
+  }
+
+ });
 
 
  tb.innerHTML=
-  lines.map(function(l){
+  ["Línea A","Línea B"]
+  .map(function(l){
 
-   var z=
-    byLine[l]||
-    {
-     Programado:0,
-     Armado:0,
-     "Salida pespunte":0,
-     Clasificación:0,
-     Empaque:0,
-     Auditoría:0
-    };
+   var z=byLine[l];
 
 
    var total=
@@ -3635,42 +3778,34 @@ function renderWorkshop(){
    <tr>
 
     <td>
+
      <span class="pill ${
       l==="Línea A"
       ?"a"
       :"b"
      }">
+
       ${l}
+
      </span>
+
     </td>
 
     <td class="inventoryNumber">
      ${z.Programado.toLocaleString()}
     </td>
 
-    <td>
-     ${z.Armado.toLocaleString()}
-    </td>
+    <td>${z.Armado.toLocaleString()}</td>
 
-    <td>
-     ${z["Salida pespunte"].toLocaleString()}
-    </td>
+    <td>${z["Salida pespunte"].toLocaleString()}</td>
 
-    <td>
-     ${z.Clasificación.toLocaleString()}
-    </td>
+    <td>${z.Clasificación.toLocaleString()}</td>
 
-    <td>
-     ${z.Empaque.toLocaleString()}
-    </td>
+    <td>${z.Empaque.toLocaleString()}</td>
 
-    <td>
-     ${z.Auditoría.toLocaleString()}
-    </td>
+    <td>${z.Auditoría.toLocaleString()}</td>
 
-    <td>
-     <b>${total.toLocaleString()}</b>
-    </td>
+    <td><b>${total.toLocaleString()}</b></td>
 
    </tr>
    `;
@@ -3678,9 +3813,7 @@ function renderWorkshop(){
   }).join("");
 
 
- /* ========================================================
-    DETALLE POR OT
- ======================================================== */
+ /* DETALLE OT */
 
  var otb=
   $("tablaWSOT");
@@ -3690,7 +3823,9 @@ function renderWorkshop(){
 
 
  otb.innerHTML=
-  names.map(function(k){
+  names.length
+
+  ?names.map(function(k){
 
    var o=map[k];
 
@@ -3701,56 +3836,34 @@ function renderWorkshop(){
    return `
    <tr>
 
-    <td>
-     <b>${esc(o.ot)}</b>
-    </td>
+    <td><b>${esc(o.ot)}</b></td>
 
-    <td>
-     ${esc(o.linea)}
-    </td>
+    <td>${esc(o.linea)}</td>
 
-    <td>
-     ${esc(o.modelo)}
-    </td>
+    <td>${esc(o.modelo)}</td>
 
-    <td>
-     ${inv.Programado}
-    </td>
+    <td>${inv.Programado}</td>
 
-    <td>
-     ${inv.Armado}
-    </td>
+    <td>${inv.Armado}</td>
 
-    <td>
-     ${inv["Salida pespunte"]}
-    </td>
+    <td>${inv["Salida pespunte"]}</td>
 
-    <td>
-     ${inv.Clasificación}
-    </td>
+    <td>${inv.Clasificación}</td>
 
-    <td>
-     ${inv.Empaque}
-    </td>
+    <td>${inv.Empaque}</td>
 
-    <td>
-     ${inv.Auditoría}
-    </td>
+    <td>${inv.Auditoría}</td>
 
    </tr>
    `;
 
   }).join("")
 
-
-  ||
-
+  :
   '<tr><td colspan="9">Sin OTs.</td></tr>';
 
 
- /* ========================================================
-    PRODUCCIÓN DEL DÍA
- ======================================================== */
+ /* PRODUCCIÓN DEL DÍA */
 
  var dia={
 
@@ -3771,74 +3884,38 @@ function renderWorkshop(){
  };
 
 
- /*
-    PROGRAMADO DEL DÍA
- */
-
  Object.keys(map)
  .forEach(function(k){
 
   var o=map[k];
 
 
-  if(
-   o.fecha===ref &&
-   dia[o.linea]
-  ){
+  if(o.fecha===ref){
 
    dia[o.linea].programado+=
     N(o.programado);
 
-  }
+
+   var inv=
+    inventoryOT(k);
 
 
-  /*
-     EMPAQUE DEL DÍA:
-     piezas que entraron a Empaque
-     en esa fecha.
-  */
+   dia[o.linea].proceso+=
+    inv.Armado+
+    inv["Salida pespunte"];
 
-  if(dia[o.linea]){
 
-   dia[o.linea].empaque+=
-    empacadoEnFecha(
-     k,
-     ref
-    );
+   dia[o.linea].clasificacion+=
+    inv.Clasificación;
 
   }
 
- });
 
-
- /*
-    PROCESO Y CLASIFICACIÓN
-    SE MUESTRAN COMO INVENTARIO
-    ACTUAL DE LAS OTs DEL DÍA.
- */
-
- Object.keys(map)
- .forEach(function(k){
-
-  var o=map[k];
-
-  if(
-   o.fecha!==ref ||
-   !dia[o.linea]
-  )return;
-
-
-  var inv=
-   inventoryOT(k);
-
-
-  dia[o.linea].proceso+=
-   inv.Armado+
-   inv["Salida pespunte"];
-
-
-  dia[o.linea].clasificacion+=
-   inv.Clasificación;
+  dia[o.linea].empaque+=
+   empacadoEnFecha(
+    k,
+    ref
+   );
 
  });
 
@@ -3909,12 +3986,9 @@ function renderWorkshop(){
   ).toFixed(1)+"%";
 
 
- /* ========================================================
-    GENERAL DE LA SEMANA
- ======================================================== */
+ /* SEMANA */
 
  var progSemana=0;
-
  var empSemana=0;
 
 
@@ -3925,22 +3999,22 @@ function renderWorkshop(){
 
 
   if(
-   !inWeekDate(
+   inWeekDate(
     o.fecha,
     ref
    )
-  )return;
+  ){
 
+   progSemana+=
+    N(o.programado);
 
-  progSemana+=
-   N(o.programado);
+   empSemana+=
+    empacadoEnSemana(
+     k,
+     ref
+    );
 
-
-  empSemana+=
-   empacadoEnSemana(
-    k,
-    ref
-   );
+  }
 
  });
 
@@ -3948,10 +4022,8 @@ function renderWorkshop(){
  $("wsProgSemana").textContent=
   progSemana.toLocaleString();
 
-
  $("wsEmpSemana").textContent=
   empSemana.toLocaleString();
-
 
  $("wsEfSemana").textContent=
   (
@@ -3963,9 +4035,9 @@ function renderWorkshop(){
 }
 
 
-/* =========================================================
+/* =====================================================
    RESUMEN
-========================================================= */
+===================================================== */
 
 function renderResumen(){
 
@@ -4049,10 +4121,7 @@ function renderResumen(){
    })
    .reduce(function(t,a){
 
-    return(
-     t+
-     N(a.piezas)
-    );
+    return t+N(a.piezas);
 
    },0);
 
@@ -4086,8 +4155,7 @@ function renderResumen(){
    :lb;
 
 
-  z.p+=
-   o.programado;
+  z.p+=o.programado;
 
   z.e+=q;
 
@@ -4101,17 +4169,11 @@ function renderResumen(){
   groups.push({
 
    ot:k,
-
    linea:o.linea,
-
    modelo:o.modelo,
-
    p:o.programado,
-
    e:q,
-
    dp:p,
-
    dr:r
 
   });
@@ -4191,14 +4253,8 @@ function renderResumen(){
 
 
  $("tablaLineas").innerHTML=
-  lineRow(
-   "Línea A",
-   la
-  )+
-  lineRow(
-   "Línea B",
-   lb
-  );
+  lineRow("Línea A",la)+
+  lineRow("Línea B",lb);
 
 
  $("tablaOT").innerHTML=
@@ -4239,14 +4295,15 @@ function renderResumen(){
 
   }).join("")
 
-  :'<tr><td colspan="8">Sin datos para esta semana.</td></tr>';
+  :
+  '<tr><td colspan="8">Sin datos.</td></tr>';
 
 }
 
 
-/* =========================================================
+/* =====================================================
    COSTOS
-========================================================= */
+===================================================== */
 
 function renderCosts(){
 
@@ -4266,24 +4323,20 @@ function renderCosts(){
    return `
    <tr>
 
-    <td>
-     ${esc(m)}
-    </td>
+    <td>${esc(m)}</td>
 
-    <td>
-     ${M(cost[m].pes)}
-    </td>
+    <td>${M(cost[m].pes)}</td>
 
-    <td>
-     ${M(cost[m].pre)}
-    </td>
+    <td>${M(cost[m].pre)}</td>
 
     <td>
 
      <button
       class="action danger"
       data-cost="${esc(m)}">
+
       Eliminar
+
      </button>
 
     </td>
@@ -4293,7 +4346,8 @@ function renderCosts(){
 
   }).join("")
 
-  :'<tr><td colspan="4">Sin modelos.</td></tr>';
+  :
+  '<tr><td colspan="4">Sin modelos.</td></tr>';
 
 
  tb.querySelectorAll(
@@ -4332,9 +4386,9 @@ function renderCosts(){
 }
 
 
-/* =========================================================
+/* =====================================================
    HISTORIAL
-========================================================= */
+===================================================== */
 
 function renderHistory(){
 
@@ -4372,32 +4426,15 @@ function renderHistory(){
 
    }).join("")
 
-  :'<tr><td colspan="7">Sin cierres.</td></tr>';
+  :
+  '<tr><td colspan="7">Sin cierres.</td></tr>';
 
 }
 
 
-/* =========================================================
-   LIMPIAR
-========================================================= */
-
-function clearForm(){
-
- $("ot").value="";
-
- $("obs").value="";
-
- $("programado").value=0;
-
- $("fecha").value=
-  today();
-
-}
-
-
-/* =========================================================
-   RENDER
-========================================================= */
+/* =====================================================
+   RENDER GENERAL
+===================================================== */
 
 function render(){
 
@@ -4418,9 +4455,9 @@ function render(){
 }
 
 
-/* =========================================================
-   VALORES INICIALES
-========================================================= */
+/* =====================================================
+   INICIO
+===================================================== */
 
 $("fecha").value=
  today();
@@ -4432,9 +4469,9 @@ $("wsFecha").value=
  today();
 
 
-/* =========================================================
+/* =====================================================
    TABS
-========================================================= */
+===================================================== */
 
 document
  .querySelectorAll(".tab")
@@ -4488,9 +4525,43 @@ document
  });
 
 
-/* =========================================================
-   GUARDAR COSTO
-========================================================= */
+/* =====================================================
+   BOTÓN GUARDAR OT
+===================================================== */
+
+$("guardar")
+ .addEventListener(
+  "click",
+  guardarOT
+ );
+
+
+/* =====================================================
+   LIMPIAR / CANCELAR
+===================================================== */
+
+$("limpiar")
+ .addEventListener(
+  "click",
+  function(){
+
+   if(editingId){
+
+    cancelarEdicion();
+
+   }else{
+
+    clearForm();
+
+   }
+
+  }
+ );
+
+
+/* =====================================================
+   COSTOS
+===================================================== */
 
 $("guardarCosto")
  .addEventListener(
@@ -4542,159 +4613,16 @@ $("guardarCosto")
 
 
    alert(
-    "Costo guardado."
+    "Costo guardado. ✅"
    );
 
   }
  );
 
 
-/* =========================================================
-   GUARDAR OT
-========================================================= */
-
-$("guardar")
- .addEventListener(
-  "click",
-  function(){
-
-   var m=
-    $("modelo").value;
-
-   var ot=
-    $("ot").value.trim();
-
-   var p=
-    N(
-     $("programado").value
-    );
-
-
-   if(!ot){
-
-    return alert(
-     "Escribe la OT."
-    );
-
-   }
-
-
-   if(!m){
-
-    return alert(
-     "Selecciona un modelo en Costos."
-    );
-
-   }
-
-
-   if(p<=0){
-
-    return alert(
-     "Escribe las piezas programadas."
-    );
-
-   }
-
-
-   if(
-    prod.some(function(r){
-
-     return(
-      String(r.ot)
-       .trim()
-       .toLowerCase()
-      ===
-      ot.toLowerCase()
-     );
-
-    })
-   ){
-
-    return alert(
-     "Esta OT ya está registrada. Usa Avances OT."
-    );
-
-   }
-
-
-   prod.push({
-
-    id:
-     String(Date.now()),
-
-    fecha:
-     $("fecha").value||
-     today(),
-
-    linea:
-     $("linea").value,
-
-    ot:ot,
-
-    modelo:m,
-
-    programado:p,
-
-    obs:
-     $("obs").value.trim()
-
-   });
-
-
-   save();
-
-   clearForm();
-
-   render();
-
-
-   alert(
-    "OT registrada correctamente."
-   );
-
-  }
- );
-
-
-/* =========================================================
-   BOTONES
-========================================================= */
-
-$("limpiar")
- .addEventListener(
-  "click",
-  clearForm
- );
-
-
-$("actualizar")
- .addEventListener(
-  "click",
-  renderResumen
- );
-
-
-$("refSemana")
- .addEventListener(
-  "change",
-  renderResumen
- );
-
-
-$("actualizarWS")
- .addEventListener(
-  "click",
-  renderWorkshop
- );
-
-
-$("wsFecha")
- .addEventListener(
-  "change",
-  renderWorkshop
- );
-
+/* =====================================================
+   AVANCES
+===================================================== */
 
 $("buscarOT")
  .addEventListener(
@@ -4747,9 +4675,45 @@ $("cancelarMovimiento")
  );
 
 
-/* =========================================================
+/* =====================================================
+   WORK SHOP
+===================================================== */
+
+$("actualizarWS")
+ .addEventListener(
+  "click",
+  renderWorkshop
+ );
+
+
+$("wsFecha")
+ .addEventListener(
+  "change",
+  renderWorkshop
+ );
+
+
+/* =====================================================
+   RESUMEN
+===================================================== */
+
+$("actualizar")
+ .addEventListener(
+  "click",
+  renderResumen
+ );
+
+
+$("refSemana")
+ .addEventListener(
+  "change",
+  renderResumen
+ );
+
+
+/* =====================================================
    CERRAR SEMANA
-========================================================= */
+===================================================== */
 
 $("cerrarSemana")
  .addEventListener(
@@ -4832,13 +4796,11 @@ $("cerrarSemana")
     ){
 
      la.pes+=p;
-
      la.pre+=r;
 
     }else{
 
      lb.pes+=p;
-
      lb.pre+=r;
 
     }
@@ -4866,11 +4828,9 @@ $("cerrarSemana")
 
     cierre:sat,
 
-    programado:
-     a.programado,
+    programado:a.programado,
 
-    empaque:
-     a.empaque,
+    empaque:a.empaque,
 
     pes:a.pes,
 
@@ -4893,17 +4853,16 @@ $("cerrarSemana")
 
 
    alert(
-    "Semana cerrada.\n\n"+
-    "El destajo se calculó con las piezas empacadas."
+    "Semana cerrada correctamente. ✅"
    );
 
   }
  );
 
 
-/* =========================================================
+/* =====================================================
    BORRAR HISTORIAL
-========================================================= */
+===================================================== */
 
 $("borrarHistorial")
  .addEventListener(
@@ -4928,9 +4887,9 @@ $("borrarHistorial")
  );
 
 
-/* =========================================================
+/* =====================================================
    EXPORTAR
-========================================================= */
+===================================================== */
 
 $("exportar")
  .addEventListener(
@@ -5038,9 +4997,7 @@ $("exportar")
 
 
    var a=
-    document.createElement(
-     "a"
-    );
+    document.createElement("a");
 
 
    a.href=
@@ -5059,10 +5016,7 @@ $("exportar")
     "The_Studio_resumen.csv";
 
 
-   document
-    .body
-    .appendChild(a);
-
+   document.body.appendChild(a);
 
    a.click();
 
@@ -5072,14 +5026,13 @@ $("exportar")
  );
 
 
-/* =========================================================
-   INICIAR
-========================================================= */
+/* =====================================================
+   INICIAR APP
+===================================================== */
 
 render();
 
 })();
-
 </script>
 
 </body>
