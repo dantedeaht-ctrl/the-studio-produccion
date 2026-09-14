@@ -6,6 +6,7 @@
 <title>The Studio</title>
 
 <style>
+
 *{box-sizing:border-box}
 
 body{
@@ -206,9 +207,7 @@ button:disabled{
  padding:14px
 }
 
-.kpi small{
- color:#707986
-}
+.kpi small{color:#707986}
 
 .kpi strong{
  display:block;
@@ -334,6 +333,450 @@ th{
 
 
 /* =====================================================
+   NUEVO PANEL VISUAL DE EFICIENCIA DIARIA
+===================================================== */
+
+.dailyEfficiencyCard{
+ background:#fff;
+ border:2px solid #dfe5ed;
+ border-radius:20px;
+ padding:17px;
+ margin-bottom:14px;
+ box-shadow:0 4px 15px rgba(0,0,0,.04)
+}
+
+.dailyEfficiencyHeader{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:12px;
+ margin-bottom:15px
+}
+
+.dailyEfficiencyTitle{
+ font-size:21px;
+ font-weight:950
+}
+
+.dailyEfficiencySub{
+ font-size:12px;
+ color:#6b7280;
+ margin-top:3px
+}
+
+.dailyEfficiencyBadge{
+ min-width:86px;
+ text-align:center;
+ padding:10px 8px;
+ border-radius:14px;
+ background:#eef5ff;
+ color:#1769ff
+}
+
+.dailyEfficiencyBadge strong{
+ display:block;
+ font-size:25px;
+ font-weight:950;
+ line-height:1
+}
+
+.dailyEfficiencyBadge span{
+ display:block;
+ font-size:9px;
+ font-weight:850;
+ margin-top:4px
+}
+
+.visualCompare{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px
+}
+
+.compareBox{
+ border-radius:16px;
+ padding:15px
+}
+
+.compareProgramado{
+ background:#eef5ff;
+ border:2px solid #d8e6ff
+}
+
+.compareSalida{
+ background:#fff4e4;
+ border:2px solid #f1dfbf
+}
+
+.compareTop{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+ margin-bottom:9px
+}
+
+.compareName{
+ font-size:14px;
+ font-weight:900
+}
+
+.compareIcon{
+ font-size:25px
+}
+
+.compareNumber{
+ font-size:34px;
+ line-height:1;
+ font-weight:950;
+ margin-bottom:8px
+}
+
+.compareSmall{
+ font-size:11px;
+ color:#6b7280;
+ font-weight:700
+}
+
+.bigBarLabel{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-top:16px;
+ margin-bottom:7px;
+ font-size:12px;
+ font-weight:900
+}
+
+.bigBar{
+ width:100%;
+ height:22px;
+ background:#e8edf2;
+ border-radius:99px;
+ overflow:hidden;
+ box-shadow:inset 0 1px 3px rgba(0,0,0,.08)
+}
+
+.bigBarFill{
+ height:100%;
+ width:0%;
+ border-radius:99px;
+ transition:width .35s ease
+}
+
+.barGood{
+ background:#18a566
+}
+
+.barMedium{
+ background:#e5a700
+}
+
+.barLow{
+ background:#e05252
+}
+
+.compareFooter{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ margin-top:8px;
+ font-size:11px;
+ color:#687382;
+ font-weight:750
+}
+
+.visualStatus{
+ margin-top:14px;
+ padding:13px;
+ border-radius:13px;
+ display:flex;
+ align-items:center;
+ gap:11px;
+ font-weight:850
+}
+
+.visualStatusIcon{
+ font-size:25px
+}
+
+.visualStatusText strong{
+ display:block;
+ font-size:15px
+}
+
+.visualStatusText span{
+ display:block;
+ font-size:11px;
+ font-weight:650;
+ margin-top:2px
+}
+
+.statusGood{
+ background:#eaf8f0;
+ color:#137d50
+}
+
+.statusMedium{
+ background:#fff7df;
+ color:#8d6900
+}
+
+.statusLow{
+ background:#ffeded;
+ color:#a83232
+}
+
+.statusNone{
+ background:#f1f3f6;
+ color:#596575
+}
+
+
+/* =====================================================
+   FILTRO AVANCES
+===================================================== */
+
+.advanceFilterCard{
+ background:#fff;
+ border:2px solid #dfe5ed;
+ border-radius:20px;
+ padding:16px;
+ margin-bottom:14px
+}
+
+.advanceFilterTitle{
+ font-size:21px;
+ font-weight:950;
+ margin-bottom:5px
+}
+
+.advanceFilterSub{
+ font-size:13px;
+ color:#6b7280;
+ margin-bottom:14px
+}
+
+.advanceDashboard{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+ margin-top:14px
+}
+
+.advanceDashBox{
+ border-radius:16px;
+ padding:16px;
+ border:2px solid #e1e6ec
+}
+
+.advanceDashBox.blue{
+ background:#eef5ff;
+ border-color:#d8e6ff
+}
+
+.advanceDashBox.orange{
+ background:#fff5e6;
+ border-color:#f2dfbd
+}
+
+.advanceDashBox.green{
+ background:#eaf8f0;
+ border-color:#d5ecdf
+}
+
+.advanceDashLabel{
+ font-size:13px;
+ font-weight:850;
+ color:#5d6875
+}
+
+.advanceDashValue{
+ font-size:32px;
+ font-weight:950;
+ margin-top:3px
+}
+
+.advanceDashSub{
+ font-size:11px;
+ color:#707986;
+ margin-top:3px
+}
+
+.advanceProgress{
+ margin-top:14px;
+ background:#e8edf2;
+ height:14px;
+ border-radius:99px;
+ overflow:hidden
+}
+
+.advanceProgressBar{
+ height:100%;
+ width:0%;
+ border-radius:99px;
+ transition:.25s
+}
+
+.advanceProgressText{
+ display:flex;
+ justify-content:space-between;
+ margin-top:7px;
+ font-size:12px;
+ font-weight:850
+}
+
+
+/* =====================================================
+   OTs DEL DÍA
+===================================================== */
+
+.dailyOTGrid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px
+}
+
+.dailyOTCard{
+ background:#fff;
+ border:2px solid #e0e5eb;
+ border-radius:18px;
+ padding:15px;
+ position:relative
+}
+
+.dailyOTTop{
+ display:flex;
+ justify-content:space-between;
+ align-items:flex-start;
+ gap:10px;
+ margin-bottom:12px
+}
+
+.dailyOTNumber{
+ font-size:21px;
+ font-weight:950
+}
+
+.dailyOTModel{
+ color:#6b7280;
+ font-size:12px;
+ margin-top:3px
+}
+
+.dailyOTProgrammed{
+ background:#eef5ff;
+ border-radius:12px;
+ padding:10px;
+ text-align:center
+}
+
+.dailyOTProgrammed strong{
+ display:block;
+ font-size:24px;
+ font-weight:950
+}
+
+.dailyOTProgrammed span{
+ font-size:10px;
+ color:#697586;
+ font-weight:800
+}
+
+.dailyOTStatus{
+ margin-top:10px;
+ padding:12px;
+ border-radius:13px
+}
+
+.statusProgramado{
+ background:#eef5ff;
+ color:#1769ff
+}
+
+.statusArmado{
+ background:#fff7df;
+ color:#946c00
+}
+
+.statusSalida{
+ background:#fff0df;
+ color:#a55a00
+}
+
+.statusClasificacion{
+ background:#f1edff;
+ color:#6b4dd8
+}
+
+.statusEmpaque{
+ background:#eaf8f0;
+ color:#138a55
+}
+
+.statusAuditoria{
+ background:#e8f7f5;
+ color:#087c74
+}
+
+.statusComplete{
+ background:#eaf8f0;
+ color:#138a55
+}
+
+.statusLabel{
+ font-size:11px;
+ font-weight:850;
+ text-transform:uppercase;
+ letter-spacing:.3px
+}
+
+.statusValue{
+ font-size:18px;
+ font-weight:950;
+ margin-top:2px
+}
+
+.dailyOTStats{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+ margin-top:10px
+}
+
+.dailyOTStat{
+ background:#f6f8fa;
+ border-radius:10px;
+ padding:9px
+}
+
+.dailyOTStat span{
+ display:block;
+ font-size:10px;
+ color:#737d89;
+ font-weight:750
+}
+
+.dailyOTStat strong{
+ display:block;
+ font-size:16px;
+ margin-top:2px
+}
+
+.dailyOTButton{
+ width:100%;
+ border:0;
+ background:#edf2f7;
+ color:#26313d;
+ border-radius:10px;
+ padding:11px;
+ margin-top:10px;
+ font-weight:850;
+ cursor:pointer
+}
+
+
+/* =====================================================
    WORK SHOP
 ===================================================== */
 
@@ -395,25 +838,12 @@ th{
  gap:10px
 }
 
-.wsMetric:last-child{
- margin-bottom:0
-}
+.wsMetric:last-child{margin-bottom:0}
 
-.wsMetricBlue{
- background:#eef5ff
-}
-
-.wsMetricYellow{
- background:#fff7e7
-}
-
-.wsMetricPurple{
- background:#f1edff
-}
-
-.wsMetricGreen{
- background:#e9f8f0
-}
+.wsMetricBlue{background:#eef5ff}
+.wsMetricYellow{background:#fff7e7}
+.wsMetricPurple{background:#f1edff}
+.wsMetricGreen{background:#e9f8f0}
 
 .wsMetricLeft{
  display:flex;
@@ -421,9 +851,7 @@ th{
  gap:11px
 }
 
-.wsIcon{
- font-size:25px
-}
+.wsIcon{font-size:25px}
 
 .wsLabel{
  font-weight:900;
@@ -441,18 +869,11 @@ th{
  font-weight:950
 }
 
-/* MÉTRICAS CLICABLES */
-
 .wsClickable{
  cursor:pointer;
  text-decoration:underline;
  text-decoration-style:dotted;
- text-underline-offset:4px;
- transition:.15s
-}
-
-.wsClickable:active{
- transform:scale(.96)
+ text-underline-offset:4px
 }
 
 .wsEfficiency{
@@ -481,9 +902,7 @@ th{
  margin-bottom:14px
 }
 
-.wsWeekIcon{
- font-size:36px
-}
+.wsWeekIcon{font-size:36px}
 
 .wsWeekTitle{
  font-size:27px;
@@ -511,9 +930,7 @@ th{
  justify-content:space-between
 }
 
-.wsWeekMetric.green{
- background:#e9f8f0
-}
+.wsWeekMetric.green{background:#e9f8f0}
 
 .wsWeekLabel{
  font-size:16px;
@@ -530,24 +947,6 @@ th{
  font-size:31px;
  font-weight:950
 }
-
-.moveBox{
- border:2px solid #dce3ec;
- border-radius:14px;
- padding:14px;
- background:#fafbfc;
- margin-top:12px
-}
-
-.inventoryNumber{
- font-size:18px;
- font-weight:900
-}
-
-
-/* =====================================================
-   DETALLE INTERACTIVO WORK SHOP
-===================================================== */
 
 .wsDetailCard{
  margin-top:14px;
@@ -602,9 +1001,7 @@ th{
  background:#fafbfc
 }
 
-.wsDetailOT:last-child{
- margin-bottom:0
-}
+.wsDetailOT:last-child{margin-bottom:0}
 
 .wsDetailOTHead{
  display:flex;
@@ -636,6 +1033,19 @@ th{
  flex-wrap:wrap
 }
 
+.noDailyData{
+ text-align:center;
+ padding:25px 12px;
+ color:#6b7280;
+ background:#f8fafc;
+ border-radius:14px
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
 @media(max-width:700px){
 
  .grid,
@@ -647,6 +1057,22 @@ th{
 
  .kpis{
   grid-template-columns:1fr 1fr
+ }
+
+ .advanceDashboard{
+  grid-template-columns:1fr 1fr
+ }
+
+ .advanceDashBox:last-child{
+  grid-column:1 / -1
+ }
+
+ .dailyOTGrid{
+  grid-template-columns:1fr
+ }
+
+ .visualCompare{
+  grid-template-columns:1fr
  }
 
  main{
@@ -665,12 +1091,16 @@ th{
   font-size:24px
  }
 
- .wsDetailOTHead{
-  align-items:flex-start
+}
+
+@media(max-width:420px){
+
+ .advanceDashboard{
+  grid-template-columns:1fr
  }
 
- .wsDetailPieces{
-  font-size:20px
+ .advanceDashBox:last-child{
+  grid-column:auto
  }
 
 }
@@ -678,36 +1108,54 @@ th{
 </style>
 </head>
 
+
 <body>
 
 <header>
+
 <h1>THE STUDIO · CONTROL DE PRODUCCIÓN</h1>
+
 <p>
 OT · Programación · Avances · Work Shop · Destajo · Eficiencia · Lead Time · Cierre lunes–sábado
 </p>
+
 </header>
+
 
 <nav>
 
-<button class="tab active" data-target="captura">➕ Captura</button>
+<button class="tab active" data-target="captura">
+➕ Captura
+</button>
 
-<button class="tab" data-target="avances">🔄 Avances OT</button>
+<button class="tab" data-target="avances">
+🔄 Avances OT
+</button>
 
-<button class="tab" data-target="workshop">🏭 Work Shop</button>
+<button class="tab" data-target="workshop">
+🏭 Work Shop
+</button>
 
-<button class="tab" data-target="resumen">📊 Resumen</button>
+<button class="tab" data-target="resumen">
+📊 Resumen
+</button>
 
-<button class="tab" data-target="costos">💰 Costos</button>
+<button class="tab" data-target="costos">
+💰 Costos
+</button>
 
-<button class="tab" data-target="historial">📅 Historial</button>
+<button class="tab" data-target="historial">
+📅 Historial
+</button>
 
 </nav>
+
 
 <main>
 
 
 <!-- =====================================================
-     CAPTURA
+CAPTURA
 ===================================================== -->
 
 <section id="captura" class="page active">
@@ -723,18 +1171,23 @@ OT · Programación · Avances · Work Shop · Destajo · Eficiencia · Lead Tim
 <br><br>
 
 Si después detectas un error, utiliza
-<b>✏️ Editar</b> en la tabla de OTs registradas.
+<b>✏️ Editar</b>
+en la tabla de OTs registradas.
 
 </div>
 
 <div class="grid">
 
 <div class="field">
+
 <label>Fecha</label>
+
 <input id="fecha" type="date">
+
 </div>
 
 <div class="field">
+
 <label>Línea</label>
 
 <select id="linea">
@@ -747,23 +1200,35 @@ Si después detectas un error, utiliza
 </div>
 
 <div class="field">
+
 <label>OT / Orden de trabajo</label>
+
 <input id="ot" placeholder="Ej. 20-A">
+
 </div>
 
 <div class="field">
+
 <label>Modelo</label>
+
 <select id="modelo"></select>
+
 </div>
 
 <div class="field">
+
 <label>Programado</label>
+
 <input id="programado" type="number" min="0" value="0">
+
 </div>
 
 <div class="field">
+
 <label>Observaciones</label>
+
 <input id="obs" placeholder="Opcional">
+
 </div>
 
 </div>
@@ -815,8 +1280,9 @@ Limpiar
 </section>
 
 
+
 <!-- =====================================================
-     AVANCES
+AVANCES
 ===================================================== -->
 
 <section id="avances" class="page">
@@ -827,12 +1293,8 @@ Limpiar
 
 <div class="note">
 
-<b>Captura rápida de avance.</b>
-
-<br><br>
-
-Busca la OT, selecciona desde qué proceso hasta qué proceso,
-escribe las piezas y registra el avance.
+<b>Busca una OT rápidamente</b>
+para registrar un movimiento.
 
 <br><br>
 
@@ -844,11 +1306,11 @@ Programado → Armado → Salida pespunte → Clasificación → Empaque → Aud
 
 <br><br>
 
-Puedes avanzar directamente, por ejemplo:
+También puedes avanzar directamente:
 
 <b>Armado → Empaque</b>
 
-y el sistema registrará automáticamente los pasos intermedios.
+y The Studio registra automáticamente los pasos intermedios.
 
 </div>
 
@@ -877,6 +1339,295 @@ y el sistema registrará automáticamente los pasos intermedios.
 </div>
 
 
+
+<!-- =====================================================
+FILTRO DIARIO
+===================================================== -->
+
+<div class="advanceFilterCard">
+
+<div class="advanceFilterTitle">
+📅 OTs programadas por día
+</div>
+
+<div class="advanceFilterSub">
+
+Selecciona el día en que programaste las OTs y la línea.
+The Studio te mostrará la programación y dónde está actualmente cada OT.
+
+</div>
+
+<div class="grid">
+
+<div class="field">
+
+<label>Día de programación</label>
+
+<input id="avanceFecha" type="date">
+
+</div>
+
+<div class="field">
+
+<label>Línea</label>
+
+<select id="avanceLinea">
+
+<option value="Todas">🏭 Todas las líneas</option>
+
+<option value="Línea A">🔵 Línea A</option>
+
+<option value="Línea B">🟢 Línea B</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="advanceDashboard">
+
+<div class="advanceDashBox blue">
+
+<div class="advanceDashLabel">
+📋 PROGRAMADO
+</div>
+
+<div id="avanceDiaProgramado" class="advanceDashValue">
+0
+</div>
+
+<div class="advanceDashSub">
+Piezas programadas ese día
+</div>
+
+</div>
+
+
+<div class="advanceDashBox orange">
+
+<div class="advanceDashLabel">
+⚙️ SALIDA PESpUNTE
+</div>
+
+<div id="avanceDiaSalida" class="advanceDashValue">
+0
+</div>
+
+<div class="advanceDashSub">
+Inventario actual en salida de pespunte
+</div>
+
+</div>
+
+
+<div class="advanceDashBox green">
+
+<div class="advanceDashLabel">
+🎯 AVANCE
+</div>
+
+<div id="avanceDiaPorcentaje" class="advanceDashValue">
+0.0%
+</div>
+
+<div class="advanceDashSub">
+Salida pespunte ÷ programado
+</div>
+
+</div>
+
+</div>
+
+<div class="advanceProgress">
+
+<div id="avanceDiaBarra" class="advanceProgressBar"></div>
+
+</div>
+
+<div class="advanceProgressText">
+
+<span>Programado</span>
+
+<span id="avanceDiaTexto">
+0 / 0 piezas
+</span>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+NUEVA GRÁFICA VISUAL
+===================================================== -->
+
+<div class="dailyEfficiencyCard">
+
+<div class="dailyEfficiencyHeader">
+
+<div>
+
+<div class="dailyEfficiencyTitle">
+📊 Eficiencia del día
+</div>
+
+<div id="graficaDiaSub" class="dailyEfficiencySub">
+Programado contra salida de pespunte
+</div>
+
+</div>
+
+<div class="dailyEfficiencyBadge">
+
+<strong id="graficaDiaPorcentaje">
+0%
+</strong>
+
+<span>AVANCE</span>
+
+</div>
+
+</div>
+
+
+<div class="visualCompare">
+
+
+<div class="compareBox compareProgramado">
+
+<div class="compareTop">
+
+<div class="compareName">
+📋 PROGRAMADO
+</div>
+
+<div class="compareIcon">
+📋
+</div>
+
+</div>
+
+<div id="graficaProgramado" class="compareNumber">
+0
+</div>
+
+<div class="compareSmall">
+Piezas programadas
+</div>
+
+</div>
+
+
+<div class="compareBox compareSalida">
+
+<div class="compareTop">
+
+<div class="compareName">
+⚙️ SALIDA PESpUNTE
+</div>
+
+<div class="compareIcon">
+⚙️
+</div>
+
+</div>
+
+<div id="graficaSalida" class="compareNumber">
+0
+</div>
+
+<div class="compareSmall">
+Piezas actualmente en salida
+</div>
+
+</div>
+
+</div>
+
+
+<div class="bigBarLabel">
+
+<span>
+PROGRAMADO → SALIDA PESPUNTE
+</span>
+
+<strong id="graficaBarraTexto">
+0%
+</strong>
+
+</div>
+
+
+<div class="bigBar">
+
+<div id="graficaBarra" class="bigBarFill"></div>
+
+</div>
+
+
+<div class="compareFooter">
+
+<span>
+0 piezas en salida
+</span>
+
+<span id="graficaFaltante">
+Faltan 0 piezas
+</span>
+
+</div>
+
+
+<div id="graficaStatus" class="visualStatus statusNone">
+
+<div id="graficaStatusIcon" class="visualStatusIcon">
+⚪
+</div>
+
+<div class="visualStatusText">
+
+<strong id="graficaStatusTitulo">
+Sin producción
+</strong>
+
+<span id="graficaStatusTexto">
+Selecciona una fecha con programación.
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+OTS DEL DÍA
+===================================================== -->
+
+<div class="card">
+
+<h2>📋 OTs del día</h2>
+
+<div id="avanceListaSub" class="muted">
+Selecciona una fecha
+</div>
+
+<br>
+
+<div id="avanceListaOT" class="dailyOTGrid"></div>
+
+</div>
+
+
+
+<!-- =====================================================
+PANEL MOVIMIENTO
+===================================================== -->
+
 <div class="card" id="panelMovimiento" style="display:none">
 
 <h2>Registrar avance</h2>
@@ -894,35 +1645,43 @@ OT:
 
 </div>
 
-<div class="moveBox">
-
-<div class="grid">
+<div class="grid" style="margin-top:12px">
 
 <div class="field">
+
 <label>Desde proceso</label>
+
 <select id="desdeProceso"></select>
+
 </div>
 
 <div class="field">
+
 <label>Hasta proceso</label>
+
 <select id="hastaProceso"></select>
+
 </div>
 
 <div class="field">
+
 <label>Piezas que avanzan</label>
+
 <input id="piezasMovimiento" type="number" min="0" value="0">
+
 </div>
 
 <div class="field">
+
 <label>Fecha y hora</label>
+
 <input id="fechaMovimiento" type="datetime-local">
-</div>
 
 </div>
 
-<div id="disponibleMovimiento"
-class="warningNote"
-style="margin-top:12px">
+</div>
+
+<div id="disponibleMovimiento" class="warningNote" style="margin-top:12px">
 Disponible: 0 piezas
 </div>
 
@@ -940,8 +1699,11 @@ Cancelar
 
 </div>
 
-</div>
 
+
+<!-- =====================================================
+LEAD TIME
+===================================================== -->
 
 <div class="card">
 
@@ -954,6 +1716,7 @@ Cancelar
 <thead>
 
 <tr>
+
 <th>OT</th>
 <th>Línea</th>
 <th>Modelo</th>
@@ -962,6 +1725,7 @@ Cancelar
 <th>Último avance</th>
 <th>Lead Time</th>
 <th></th>
+
 </tr>
 
 </thead>
@@ -986,8 +1750,9 @@ Cancelar
 </section>
 
 
+
 <!-- =====================================================
-     WORK SHOP
+WORK SHOP
 ===================================================== -->
 
 <section id="workshop" class="page">
@@ -1005,7 +1770,7 @@ entraron a Empaque en la fecha seleccionada.
 
 <br><br>
 
-<b>💡 Toca cualquier número de producción para ver las OTs que lo componen.</b>
+<b>💡 Toca cualquier número para ver las OTs que lo componen.</b>
 
 </div>
 
@@ -1035,7 +1800,7 @@ Actualizar Work Shop
 <div class="wsDailyGrid">
 
 
-<!-- A -->
+<!-- LINEA A -->
 
 <div class="wsLineCard lineA">
 
@@ -1073,7 +1838,9 @@ Actualizar Work Shop
 <div class="wsValue wsClickable"
 id="wsProgA"
 data-ws-detail="programado"
-data-ws-line="Línea A">0</div>
+data-ws-line="Línea A">
+0
+</div>
 
 </div>
 
@@ -1088,7 +1855,7 @@ data-ws-line="Línea A">0</div>
 
 <div class="wsLabel">En proceso</div>
 
-<div class="wsSub">Armado + Salida pespunte · Toca el número</div>
+<div class="wsSub">Armado + Salida pespunte</div>
 
 </div>
 
@@ -1097,7 +1864,9 @@ data-ws-line="Línea A">0</div>
 <div class="wsValue wsClickable"
 id="wsProcA"
 data-ws-detail="proceso"
-data-ws-line="Línea A">0</div>
+data-ws-line="Línea A">
+0
+</div>
 
 </div>
 
@@ -1112,7 +1881,7 @@ data-ws-line="Línea A">0</div>
 
 <div class="wsLabel">Clasificación</div>
 
-<div class="wsSub">Inventario actual · Toca el número</div>
+<div class="wsSub">Inventario actual</div>
 
 </div>
 
@@ -1121,7 +1890,9 @@ data-ws-line="Línea A">0</div>
 <div class="wsValue wsClickable"
 id="wsClasA"
 data-ws-detail="clasificacion"
-data-ws-line="Línea A">0</div>
+data-ws-line="Línea A">
+0
+</div>
 
 </div>
 
@@ -1136,7 +1907,7 @@ data-ws-line="Línea A">0</div>
 
 <div class="wsLabel">Empaque</div>
 
-<div class="wsSub">Piezas del día · Toca el número</div>
+<div class="wsSub">Piezas del día</div>
 
 </div>
 
@@ -1145,7 +1916,9 @@ data-ws-line="Línea A">0</div>
 <div class="wsValue wsClickable"
 id="wsEmpA"
 data-ws-detail="empaque"
-data-ws-line="Línea A">0</div>
+data-ws-line="Línea A">
+0
+</div>
 
 </div>
 
@@ -1166,14 +1939,17 @@ data-ws-line="Línea A">0</div>
 
 </div>
 
-<div class="wsEffValue" id="wsEfA">0.0%</div>
-
+<div class="wsEffValue" id="wsEfA">
+0.0%
 </div>
 
 </div>
 
+</div>
 
-<!-- B -->
+
+
+<!-- LINEA B -->
 
 <div class="wsLineCard lineB">
 
@@ -1211,7 +1987,9 @@ data-ws-line="Línea A">0</div>
 <div class="wsValue wsClickable"
 id="wsProgB"
 data-ws-detail="programado"
-data-ws-line="Línea B">0</div>
+data-ws-line="Línea B">
+0
+</div>
 
 </div>
 
@@ -1226,7 +2004,7 @@ data-ws-line="Línea B">0</div>
 
 <div class="wsLabel">En proceso</div>
 
-<div class="wsSub">Armado + Salida pespunte · Toca el número</div>
+<div class="wsSub">Armado + Salida pespunte</div>
 
 </div>
 
@@ -1235,7 +2013,9 @@ data-ws-line="Línea B">0</div>
 <div class="wsValue wsClickable"
 id="wsProcB"
 data-ws-detail="proceso"
-data-ws-line="Línea B">0</div>
+data-ws-line="Línea B">
+0
+</div>
 
 </div>
 
@@ -1250,7 +2030,7 @@ data-ws-line="Línea B">0</div>
 
 <div class="wsLabel">Clasificación</div>
 
-<div class="wsSub">Inventario actual · Toca el número</div>
+<div class="wsSub">Inventario actual</div>
 
 </div>
 
@@ -1259,7 +2039,9 @@ data-ws-line="Línea B">0</div>
 <div class="wsValue wsClickable"
 id="wsClasB"
 data-ws-detail="clasificacion"
-data-ws-line="Línea B">0</div>
+data-ws-line="Línea B">
+0
+</div>
 
 </div>
 
@@ -1274,7 +2056,7 @@ data-ws-line="Línea B">0</div>
 
 <div class="wsLabel">Empaque</div>
 
-<div class="wsSub">Piezas del día · Toca el número</div>
+<div class="wsSub">Piezas del día</div>
 
 </div>
 
@@ -1283,7 +2065,9 @@ data-ws-line="Línea B">0</div>
 <div class="wsValue wsClickable"
 id="wsEmpB"
 data-ws-detail="empaque"
-data-ws-line="Línea B">0</div>
+data-ws-line="Línea B">
+0
+</div>
 
 </div>
 
@@ -1304,42 +2088,35 @@ data-ws-line="Línea B">0</div>
 
 </div>
 
-<div class="wsEffValue" id="wsEfB">0.0%</div>
-
+<div class="wsEffValue" id="wsEfB">
+0.0%
 </div>
 
 </div>
 
 </div>
 
+</div>
 
-<!-- =====================================================
-     DETALLE INTERACTIVO
-===================================================== -->
 
-<div id="wsDetalleCard"
-class="wsDetailCard"
-style="display:none">
+
+<div id="wsDetalleCard" class="wsDetailCard" style="display:none">
 
 <div class="wsDetailHeader">
 
 <div>
 
-<div id="wsDetalleTitulo"
-class="wsDetailTitle">
+<div id="wsDetalleTitulo" class="wsDetailTitle">
 Detalle
 </div>
 
-<div id="wsDetalleSub"
-class="wsDetailSub">
+<div id="wsDetalleSub" class="wsDetailSub">
 OTs relacionadas
 </div>
 
 </div>
 
-<button
-id="cerrarWsDetalle"
-class="wsDetailClose">
+<button id="cerrarWsDetalle" class="wsDetailClose">
 ✕ Cerrar
 </button>
 
@@ -1381,7 +2158,9 @@ class="wsDetailClose">
 
 </div>
 
-<div class="wsWeekValue" id="wsProgSemana">0</div>
+<div class="wsWeekValue" id="wsProgSemana">
+0
+</div>
 
 </div>
 
@@ -1396,7 +2175,9 @@ class="wsDetailClose">
 
 </div>
 
-<div class="wsWeekValue" id="wsEmpSemana">0</div>
+<div class="wsWeekValue" id="wsEmpSemana">
+0
+</div>
 
 </div>
 
@@ -1406,6 +2187,7 @@ class="wsDetailClose">
 <div class="successNote" style="margin-top:12px">
 
 🎯 Eficiencia general:
+
 <b id="wsEfSemana">0.0%</b>
 
 </div>
@@ -1434,6 +2216,7 @@ El inventario es dinámico:
 <thead>
 
 <tr>
+
 <th>Línea</th>
 <th>Programado</th>
 <th>Armado</th>
@@ -1442,6 +2225,7 @@ El inventario es dinámico:
 <th>Empaque</th>
 <th>Auditoría</th>
 <th>Total</th>
+
 </tr>
 
 </thead>
@@ -1466,6 +2250,7 @@ El inventario es dinámico:
 <thead>
 
 <tr>
+
 <th>OT</th>
 <th>Línea</th>
 <th>Modelo</th>
@@ -1475,6 +2260,7 @@ El inventario es dinámico:
 <th>Clasificación</th>
 <th>Empaque</th>
 <th>Auditoría</th>
+
 </tr>
 
 </thead>
@@ -1490,8 +2276,9 @@ El inventario es dinámico:
 </section>
 
 
+
 <!-- =====================================================
-     RESUMEN
+RESUMEN
 ===================================================== -->
 
 <section id="resumen" class="page">
@@ -1554,11 +2341,11 @@ Exportar CSV
 
 <div class="effBox">
 
-<div class="eff" id="eficiencia">0%</div>
-
-<div>
-Empaque ÷ Programado × 100
+<div class="eff" id="eficiencia">
+0%
 </div>
+
+<div>Empaque ÷ Programado × 100</div>
 
 </div>
 
@@ -1574,11 +2361,15 @@ Empaque ÷ Programado × 100
 <div class="money" id="dPes">$0.00</div>
 
 <small>
+
 Línea A:
 <b id="dPesA">$0.00</b>
+
 ·
+
 Línea B:
 <b id="dPesB">$0.00</b>
+
 </small>
 
 </div>
@@ -1591,11 +2382,15 @@ Línea B:
 <div class="money" id="dPre">$0.00</div>
 
 <small>
+
 Línea A:
 <b id="dPreA">$0.00</b>
+
 ·
+
 Línea B:
 <b id="dPreB">$0.00</b>
+
 </small>
 
 </div>
@@ -1614,6 +2409,7 @@ Línea B:
 <thead>
 
 <tr>
+
 <th>Línea</th>
 <th>Programado</th>
 <th>Empaque</th>
@@ -1621,6 +2417,7 @@ Línea B:
 <th>Eficiencia</th>
 <th>Destajo Pespunte</th>
 <th>Destajo Preliminar</th>
+
 </tr>
 
 </thead>
@@ -1645,6 +2442,7 @@ Línea B:
 <thead>
 
 <tr>
+
 <th>OT</th>
 <th>Línea</th>
 <th>Modelo</th>
@@ -1653,6 +2451,7 @@ Línea B:
 <th>Eficiencia</th>
 <th>Pespunte</th>
 <th>Preliminar</th>
+
 </tr>
 
 </thead>
@@ -1668,8 +2467,9 @@ Línea B:
 </section>
 
 
+
 <!-- =====================================================
-     COSTOS
+COSTOS
 ===================================================== -->
 
 <section id="costos" class="page">
@@ -1686,9 +2486,7 @@ Los costos se calculan sobre las piezas que entran a
 <br><br>
 
 <strong>
-✏️ Si modificas un costo, The Studio actualizará
-automáticamente el destajo de todas las piezas ya capturadas
-de ese modelo.
+✏️ Si modificas un costo, The Studio actualizará automáticamente el destajo.
 </strong>
 
 </div>
@@ -1696,18 +2494,27 @@ de ese modelo.
 <div class="grid">
 
 <div class="field">
+
 <label>Modelo</label>
+
 <input id="cModelo" placeholder="Ej. Verona">
+
 </div>
 
 <div class="field">
+
 <label>Costo pieza pespunte</label>
+
 <input id="cPes" type="number" min="0" step="0.01">
+
 </div>
 
 <div class="field">
+
 <label>Costo pieza preliminar</label>
+
 <input id="cPre" type="number" min="0" step="0.01">
+
 </div>
 
 </div>
@@ -1718,10 +2525,7 @@ de ese modelo.
 Guardar costo
 </button>
 
-<button
-id="cancelarCosto"
-class="action secondary"
-style="display:none">
+<button id="cancelarCosto" class="action secondary" style="display:none">
 ↩️ Cancelar edición
 </button>
 
@@ -1736,12 +2540,7 @@ style="display:none">
 
 💡 <b>Importante:</b>
 al actualizar el costo de un modelo,
-los cálculos de destajo del
-<b>Resumen semanal</b>,
-<b>Detalle por OT</b>,
-<b>Destajo por línea</b>
-y <b>Exportación</b>
-utilizarán automáticamente el nuevo costo.
+los cálculos de destajo utilizarán automáticamente el nuevo costo.
 
 </div>
 
@@ -1771,8 +2570,9 @@ utilizarán automáticamente el nuevo costo.
 </section>
 
 
+
 <!-- =====================================================
-     HISTORIAL
+HISTORIAL
 ===================================================== -->
 
 <section id="historial" class="page">
@@ -1816,6 +2616,7 @@ Borrar historial
 <thead>
 
 <tr>
+
 <th>Cierre</th>
 <th>Programado</th>
 <th>Empaque</th>
@@ -1823,6 +2624,7 @@ Borrar historial
 <th>Preliminar</th>
 <th>Destajo A</th>
 <th>Destajo B</th>
+
 </tr>
 
 </thead>
@@ -1837,7 +2639,9 @@ Borrar historial
 
 </section>
 
+
 </main>
+
 
 
 <script>
@@ -1848,7 +2652,8 @@ Borrar historial
 
 
 /* =====================================================
-   STORAGE
+STORAGE
+NO CAMBIAR ESTAS CLAVES
 ===================================================== */
 
 var KPROD="theStudioProduccion_v4";
@@ -1863,16 +2668,12 @@ function $(id){
 
 
 function N(v){
-
  var n=Number(v);
-
  return isFinite(n)?n:0;
-
 }
 
 
 function M(v){
-
  return N(v).toLocaleString(
   "es-MX",
   {
@@ -1880,15 +2681,13 @@ function M(v){
    currency:"MXN"
   }
  );
-
 }
 
 
 function esc(v){
 
- return String(
-  v==null?"":v
- ).replace(
+ return String(v==null?"":v)
+ .replace(
   /[&<>"']/g,
   function(c){
 
@@ -1961,13 +2760,12 @@ var avances=load(KADV,[]);
 
 var selectedOT=null;
 var editingId=null;
-
-/* =====================================================
-   EDICIÓN DE COSTOS
-===================================================== */
-
 var editingCostModel=null;
 
+
+/* =====================================================
+FLUJO
+===================================================== */
 
 var FLOW=[
  "Programado",
@@ -1978,6 +2776,10 @@ var FLOW=[
  "Auditoría"
 ];
 
+
+/* =====================================================
+GUARDAR
+===================================================== */
 
 function save(){
 
@@ -2005,7 +2807,7 @@ function save(){
 
 
 /* =====================================================
-   SEMANA
+SEMANA
 ===================================================== */
 
 function range(ref){
@@ -2036,9 +2838,7 @@ function range(ref){
 
 
  function iso(x){
-
   return x.toISOString().slice(0,10);
-
  }
 
 
@@ -2073,7 +2873,7 @@ function inWeekAdvance(a,ref){
 
 
 /* =====================================================
-   MODELOS
+MODELOS
 ===================================================== */
 
 function fillModels(){
@@ -2086,6 +2886,7 @@ function fillModels(){
   Object.keys(cost).sort();
 
  s.innerHTML="";
+
 
  var first=
   document.createElement("option");
@@ -2114,21 +2915,20 @@ function fillModels(){
 
 
  if(old&&cost[old]){
-
   s.value=old;
-
  }
 
 }
 
 
 /* =====================================================
-   OTS
+OTS
 ===================================================== */
 
 function getOTs(){
 
  var map={};
+
 
  prod.forEach(function(r){
 
@@ -2141,14 +2941,12 @@ function getOTs(){
   if(!map[key]){
 
    map[key]={
-
     ot:key,
     linea:r.linea,
     modelo:r.modelo,
     programado:0,
     fecha:r.fecha,
     obs:r.obs||""
-
    };
 
   }
@@ -2159,9 +2957,7 @@ function getOTs(){
 
 
   if(r.fecha<map[key].fecha){
-
    map[key].fecha=r.fecha;
-
   }
 
  });
@@ -2172,15 +2968,17 @@ function getOTs(){
 }
 
 
+/* =====================================================
+AVANCES OT
+===================================================== */
+
 function getAdvancesOT(ot){
 
  return avances
  .filter(function(a){
 
-  return(
-   String(a.ot)===
-   String(ot)
-  );
+  return String(a.ot)===
+   String(ot);
 
  })
  .sort(function(a,b){
@@ -2196,7 +2994,7 @@ function getAdvancesOT(ot){
 
 
 /* =====================================================
-   INVENTARIO DINÁMICO
+INVENTARIO
 ===================================================== */
 
 function inventoryOT(ot){
@@ -2204,9 +3002,7 @@ function inventoryOT(ot){
  var map={};
 
  FLOW.forEach(function(p){
-
   map[p]=0;
-
  });
 
 
@@ -2222,27 +3018,18 @@ function inventoryOT(ot){
  getAdvancesOT(ot)
  .forEach(function(a){
 
-  var from=
-   a.procesoAnterior;
-
-  var to=
-   a.siguienteProceso;
-
-  var q=
-   N(a.piezas);
+  var from=a.procesoAnterior;
+  var to=a.siguienteProceso;
+  var q=N(a.piezas);
 
 
   if(map[from]!=null){
-
    map[from]-=q;
-
   }
 
 
   if(map[to]!=null){
-
    map[to]+=q;
-
   }
 
  });
@@ -2251,9 +3038,7 @@ function inventoryOT(ot){
  FLOW.forEach(function(p){
 
   if(map[p]<0){
-
    map[p]=0;
-
   }
 
  });
@@ -2265,7 +3050,7 @@ function inventoryOT(ot){
 
 
 /* =====================================================
-   PIEZAS YA SACADAS DE PROGRAMADO
+PIEZAS AVANZADAS
 ===================================================== */
 
 function piezasYaAvanzadas(ot){
@@ -2273,18 +3058,13 @@ function piezasYaAvanzadas(ot){
  return getAdvancesOT(ot)
  .filter(function(a){
 
-  return(
-   a.procesoAnterior===
-   "Programado"
-  );
+  return a.procesoAnterior===
+   "Programado";
 
  })
  .reduce(function(total,a){
 
-  return(
-   total+
-   N(a.piezas)
-  );
+  return total+N(a.piezas);
 
  },0);
 
@@ -2292,7 +3072,7 @@ function piezasYaAvanzadas(ot){
 
 
 /* =====================================================
-   PROCESO ACTUAL
+PROCESO ACTUAL
 ===================================================== */
 
 function currentIndex(ot){
@@ -2307,12 +3087,8 @@ function currentIndex(ot){
   i--
  ){
 
-  if(
-   inv[FLOW[i]]>0
-  ){
-
+  if(inv[FLOW[i]]>0){
    return i;
-
   }
 
  }
@@ -2349,6 +3125,10 @@ function currentProcess(ot){
 }
 
 
+/* =====================================================
+DISPONIBLE
+===================================================== */
+
 function availableProcess(ot,proceso){
 
  return N(
@@ -2359,7 +3139,7 @@ function availableProcess(ot,proceso){
 
 
 /* =====================================================
-   FECHAS / LEAD TIME
+FECHA
 ===================================================== */
 
 function formatDateTime(v){
@@ -2383,37 +3163,24 @@ function formatDateTime(v){
 
 
 function diffMs(a,b){
-
- return(
-  new Date(b)-
-  new Date(a)
- );
-
+ return new Date(b)-new Date(a);
 }
 
 
 function formatDuration(ms){
 
- if(
-  !isFinite(ms)||
-  ms<0
- ){
-
+ if(!isFinite(ms)||ms<0){
   return"0h 0m";
-
  }
 
 
- var min=
-  Math.floor(ms/60000);
+ var min=Math.floor(ms/60000);
 
- var days=
-  Math.floor(min/1440);
+ var days=Math.floor(min/1440);
 
  min%=1440;
 
- var h=
-  Math.floor(min/60);
+ var h=Math.floor(min/60);
 
  min%=60;
 
@@ -2440,35 +3207,29 @@ function getStartDateTime(ot){
 
 function getLastAdvance(ot){
 
- var a=
-  getAdvancesOT(ot);
+ var a=getAdvancesOT(ot);
 
- return(
-  a.length
+ return a.length
   ?a[a.length-1]
-  :null
- );
+  :null;
 
 }
 
 
 function totalLeadTime(ot){
 
- var s=
-  getStartDateTime(ot);
+ var s=getStartDateTime(ot);
 
- var l=
-  getLastAdvance(ot);
-
+ var l=getLastAdvance(ot);
 
  return(
   s&&l
   ?formatDuration(
-   diffMs(
-    s,
-    l.fechaHora
+    diffMs(
+     s,
+     l.fechaHora
+    )
    )
-  )
   :"0h 0m"
  );
 
@@ -2476,7 +3237,7 @@ function totalLeadTime(ot){
 
 
 /* =====================================================
-   EMPAQUE
+EMPAQUE
 ===================================================== */
 
 function empacadoEnFecha(ot,fecha){
@@ -2485,8 +3246,7 @@ function empacadoEnFecha(ot,fecha){
  .filter(function(a){
 
   return(
-   a.siguienteProceso===
-    "Empaque" &&
+   a.siguienteProceso==="Empaque" &&
    a.fecha===fecha
   );
 
@@ -2506,8 +3266,7 @@ function empacadoEnSemana(ot,ref){
  .filter(function(a){
 
   return(
-   a.siguienteProceso===
-    "Empaque" &&
+   a.siguienteProceso==="Empaque" &&
    inWeekAdvance(a,ref)
   );
 
@@ -2522,13 +3281,12 @@ function empacadoEnSemana(ot,ref){
 
 
 /* =====================================================
-   CAPTURA
+CAPTURA
 ===================================================== */
 
 function renderCapture(){
 
- var tb=
-  $("tablaCaptura");
+ var tb=$("tablaCaptura");
 
  var rows=
   prod.slice().sort(
@@ -2557,6 +3315,7 @@ function renderCapture(){
   rows.map(function(r){
 
    return `
+
    <tr>
 
     <td>${esc(r.fecha)}</td>
@@ -2564,9 +3323,7 @@ function renderCapture(){
     <td>
 
      <span class="pill ${
-      r.linea==="Línea A"
-      ?"a"
-      :"b"
+      r.linea==="Línea A"?"a":"b"
      }">
 
       ${esc(r.linea)}
@@ -2575,17 +3332,11 @@ function renderCapture(){
 
     </td>
 
-    <td>
-     <b>${esc(r.ot)}</b>
-    </td>
+    <td><b>${esc(r.ot)}</b></td>
 
-    <td>
-     ${esc(r.modelo)}
-    </td>
+    <td>${esc(r.modelo)}</td>
 
-    <td>
-     ${N(r.programado).toLocaleString()}
-    </td>
+    <td>${N(r.programado).toLocaleString()}</td>
 
     <td>
 
@@ -2608,22 +3359,19 @@ function renderCapture(){
     </td>
 
    </tr>
+
    `;
 
   }).join("");
 
 
- tb.querySelectorAll(
-  "[data-edit]"
- )
+ tb.querySelectorAll("[data-edit]")
  .forEach(function(b){
 
   b.onclick=function(){
 
    editarOT(
-    b.getAttribute(
-     "data-edit"
-    )
+    b.getAttribute("data-edit")
    );
 
   };
@@ -2631,26 +3379,20 @@ function renderCapture(){
  });
 
 
- tb.querySelectorAll(
-  "[data-del]"
- )
+ tb.querySelectorAll("[data-del]")
  .forEach(function(b){
 
   b.onclick=function(){
 
    var id=
-    b.getAttribute(
-     "data-del"
-    );
+    b.getAttribute("data-del");
 
 
    var registro=
     prod.find(function(r){
 
-     return(
-      String(r.id)===
-      String(id)
-     );
+     return String(r.id)===
+      String(id);
 
     });
 
@@ -2661,10 +3403,8 @@ function renderCapture(){
    var tieneAvances=
     avances.some(function(a){
 
-     return(
-      String(a.ot)===
-      String(registro.ot)
-     );
+     return String(a.ot)===
+      String(registro.ot);
 
     });
 
@@ -2682,28 +3422,22 @@ function renderCapture(){
    }
 
 
-   if(
-    !confirm(
-     "¿Eliminar la OT "+
-     registro.ot+
-     "?"
-    )
-   )return;
+   if(!confirm(
+    "¿Eliminar la OT "+
+    registro.ot+"?"
+   ))return;
 
 
    prod=
     prod.filter(function(r){
 
-     return(
-      String(r.id)!==
-      String(id)
-     );
+     return String(r.id)!==
+      String(id);
 
     });
 
 
    save();
-
    render();
 
   };
@@ -2714,7 +3448,7 @@ function renderCapture(){
 
 
 /* =====================================================
-   EDITAR OT
+EDITAR OT
 ===================================================== */
 
 function editarOT(id){
@@ -2722,10 +3456,8 @@ function editarOT(id){
  var registro=
   prod.find(function(r){
 
-   return(
-    String(r.id)===
-    String(id)
-   );
+   return String(r.id)===
+    String(id);
 
   });
 
@@ -2739,22 +3471,17 @@ function editarOT(id){
  $("fecha").value=
   registro.fecha||today();
 
-
  $("linea").value=
   registro.linea||"Línea A";
-
 
  $("ot").value=
   registro.ot||"";
 
-
  $("modelo").value=
   registro.modelo||"";
 
-
  $("programado").value=
   N(registro.programado);
-
 
  $("obs").value=
   registro.obs||"";
@@ -2763,16 +3490,8 @@ function editarOT(id){
  $("guardar").textContent=
   "💾 Guardar cambios";
 
-
  $("limpiar").textContent=
   "↩️ Cancelar edición";
-
-
- $("captura")
-  .scrollIntoView({
-   behavior:"smooth",
-   block:"start"
-  });
 
 
  var avanzado=
@@ -2781,108 +3500,62 @@ function editarOT(id){
   );
 
 
- if(avanzado>0){
-
-  $("programado").min=
-   avanzado;
-
- }else{
-
-  $("programado").min=0;
-
- }
+ $("programado").min=
+  avanzado>0?avanzado:0;
 
 
- if(avanzado>0){
-
-  $("programado").setAttribute(
-   "title",
-   "Mínimo "+avanzado+
-   " piezas porque ya existen avances."
-  );
-
- }
+ $("captura")
+ .scrollIntoView({
+  behavior:"smooth",
+  block:"start"
+ });
 
 }
 
-
-/* =====================================================
-   CANCELAR EDICIÓN OT
-===================================================== */
 
 function cancelarEdicion(){
 
  editingId=null;
 
-
  $("guardar").textContent=
   "Guardar OT";
-
 
  $("limpiar").textContent=
   "Limpiar";
 
-
  $("programado").min=0;
-
 
  clearForm();
 
 }
 
 
-/* =====================================================
-   GUARDAR / ACTUALIZAR OT
-===================================================== */
-
 function guardarOT(){
 
- var m=
-  $("modelo").value;
+ var m=$("modelo").value;
 
- var ot=
-  $("ot").value.trim();
+ var ot=$("ot").value.trim();
 
- var p=
-  N(
-   $("programado").value
-  );
+ var p=N($("programado").value);
 
  var fecha=
-  $("fecha").value||
-  today();
+  $("fecha").value||today();
 
- var linea=
-  $("linea").value;
+ var linea=$("linea").value;
 
- var obs=
-  $("obs").value.trim();
+ var obs=$("obs").value.trim();
 
 
  if(!ot){
-
-  return alert(
-   "Escribe la OT."
-  );
-
+  return alert("Escribe la OT.");
  }
-
 
  if(!m){
-
-  return alert(
-   "Selecciona un modelo."
-  );
-
+  return alert("Selecciona un modelo.");
  }
 
-
  if(p<=0){
-
-  return alert(
-   "Escribe las piezas programadas."
-  );
-
+  return alert("Escribe las piezas programadas.");
  }
 
 
@@ -2891,26 +3564,20 @@ function guardarOT(){
   var registro=
    prod.find(function(r){
 
-    return(
-     String(r.id)===
-     String(editingId)
-    );
+    return String(r.id)===
+     String(editingId);
 
    });
 
 
   if(!registro){
-
    cancelarEdicion();
-
    return;
-
   }
 
 
   var otAnterior=
    registro.ot;
-
 
   var avanzado=
    piezasYaAvanzadas(
@@ -2922,14 +3589,10 @@ function guardarOT(){
 
    alert(
     "No puedes dejar la OT en "+
-    p+
-    " piezas.\n\n"+
+    p+" piezas.\n\n"+
     "Ya existen "+
     avanzado+
-    " piezas avanzadas desde Programado.\n\n"+
-    "La cantidad programada debe ser al menos "+
-    avanzado+
-    "."
+    " piezas avanzadas desde Programado."
    );
 
    return;
@@ -2942,12 +3605,9 @@ function guardarOT(){
 
     return(
      String(r.id)!==
-     String(editingId)&&
-     String(r.ot)
-      .trim()
-      .toLowerCase()
-     ===
-     ot.toLowerCase()
+      String(editingId)&&
+     String(r.ot).trim().toLowerCase()===
+      ot.toLowerCase()
     );
 
    });
@@ -2957,8 +3617,7 @@ function guardarOT(){
 
    alert(
     "Ya existe otra OT con el número "+
-    ot+
-    "."
+    ot+"."
    );
 
    return;
@@ -2966,36 +3625,21 @@ function guardarOT(){
   }
 
 
-  registro.fecha=
-   fecha;
-
-  registro.linea=
-   linea;
-
-  registro.ot=
-   ot;
-
-  registro.modelo=
-   m;
-
-  registro.programado=
-   p;
-
-  registro.obs=
-   obs;
+  registro.fecha=fecha;
+  registro.linea=linea;
+  registro.ot=ot;
+  registro.modelo=m;
+  registro.programado=p;
+  registro.obs=obs;
 
 
-  if(
-   String(otAnterior)!==
-   String(ot)
-  ){
+  if(String(otAnterior)!==
+     String(ot)){
 
    avances.forEach(function(a){
 
-    if(
-     String(a.ot)===
-     String(otAnterior)
-    ){
+    if(String(a.ot)===
+       String(otAnterior)){
 
      a.ot=ot;
 
@@ -3008,16 +3652,11 @@ function guardarOT(){
 
   avances.forEach(function(a){
 
-   if(
-    String(a.ot)===
-    String(ot)
-   ){
+   if(String(a.ot)===
+      String(ot)){
 
-    a.linea=
-     linea;
-
-    a.modelo=
-     m;
+    a.linea=linea;
+    a.modelo=m;
 
    }
 
@@ -3025,16 +3664,13 @@ function guardarOT(){
 
 
   save();
-
   cancelarEdicion();
-
   render();
 
 
   alert(
    "OT actualizada correctamente. ✅"
   );
-
 
   return;
 
@@ -3047,8 +3683,7 @@ function guardarOT(){
    return(
     String(r.ot)
      .trim()
-     .toLowerCase()
-    ===
+     .toLowerCase()===
     ot.toLowerCase()
    );
 
@@ -3073,24 +3708,17 @@ function guardarOT(){
    ),
 
   fecha:fecha,
-
   linea:linea,
-
   ot:ot,
-
   modelo:m,
-
   programado:p,
-
   obs:obs
 
  });
 
 
  save();
-
  clearForm();
-
  render();
 
 
@@ -3101,33 +3729,21 @@ function guardarOT(){
 }
 
 
-/* =====================================================
-   LIMPIAR
-===================================================== */
-
 function clearForm(){
 
  $("ot").value="";
-
  $("obs").value="";
-
  $("programado").value=0;
+ $("fecha").value=today();
+ $("linea").value="Línea A";
 
- $("fecha").value=
-  today();
-
- $("linea").value=
-  "Línea A";
 
  if($("modelo").options.length){
-
   $("modelo").selectedIndex=0;
-
  }
 
 
  editingId=null;
-
 
  $("guardar").textContent=
   "Guardar OT";
@@ -3141,29 +3757,21 @@ function clearForm(){
 
 
 /* =====================================================
-   BÚSQUEDA OT
+BUSCADOR
 ===================================================== */
 
 function renderSearchOT(){
 
- var input=
-  $("buscarOT");
+ var input=$("buscarOT");
 
- var box=
-  $("resultadosOT");
+ var box=$("resultadosOT");
 
  var text=
-  input.value
-   .trim()
-   .toLowerCase();
+  input.value.trim().toLowerCase();
 
+ var map=getOTs();
 
- var map=
-  getOTs();
-
-
- var names=
-  Object.keys(map);
+ var names=Object.keys(map);
 
 
  if(!text){
@@ -3179,8 +3787,7 @@ function renderSearchOT(){
  var found=
   names.filter(function(k){
 
-   return k
-    .toLowerCase()
+   return k.toLowerCase()
     .includes(text);
 
   });
@@ -3202,11 +3809,11 @@ function renderSearchOT(){
 
    var o=map[k];
 
-   var inv=
-    inventoryOT(k);
+   var inv=inventoryOT(k);
 
 
    return `
+
    <div class="otBox">
 
     <div class="otTitle">
@@ -3214,9 +3821,19 @@ function renderSearchOT(){
     </div>
 
     <div class="muted">
+
      Modelo:
      <b>${esc(o.modelo)}</b>
-     · ${esc(o.linea)}
+
+     ·
+
+     ${esc(o.linea)}
+
+     ·
+
+     Programada:
+     <b>${esc(o.fecha)}</b>
+
     </div>
 
     <div class="muted" style="margin-top:7px">
@@ -3257,14 +3874,13 @@ function renderSearchOT(){
     </div>
 
    </div>
+
    `;
 
   }).join("");
 
 
- box.querySelectorAll(
-  "[data-select-ot]"
- )
+ box.querySelectorAll("[data-select-ot]")
  .forEach(function(btn){
 
   btn.onclick=function(){
@@ -3283,30 +3899,26 @@ function renderSearchOT(){
 
 
 /* =====================================================
-   SELECCIONAR OT
+SELECCIONAR OT
 ===================================================== */
 
 function selectMovementOT(ot){
 
- var o=
-  getOTs()[ot];
+ var o=getOTs()[ot];
 
  if(!o)return;
+
 
  selectedOT=ot;
 
 
- $("otSeleccionada").value=
-  o.ot;
+ $("otSeleccionada").value=o.ot;
 
- $("movOT").textContent=
-  o.ot;
+ $("movOT").textContent=o.ot;
 
- $("movModelo").textContent=
-  o.modelo;
+ $("movModelo").textContent=o.modelo;
 
- $("movLinea").textContent=
-  o.linea;
+ $("movLinea").textContent=o.linea;
 
 
  $("panelMovimiento")
@@ -3319,9 +3931,7 @@ function selectMovementOT(ot){
  $("fechaMovimiento").value=
   nowLocal();
 
-
- $("piezasMovimiento").value=
-  0;
+ $("piezasMovimiento").value=0;
 
 
  updateMovementAvailability();
@@ -3337,13 +3947,12 @@ function selectMovementOT(ot){
 
 
 /* =====================================================
-   PROCESOS
+PROCESOS
 ===================================================== */
 
 function fillFromProcesses(){
 
- var select=
-  $("desdeProceso");
+ var select=$("desdeProceso");
 
  select.innerHTML="";
 
@@ -3366,9 +3975,7 @@ function fillFromProcesses(){
  if(selectedOT){
 
   select.value=
-   currentProcess(
-    selectedOT
-   );
+   currentProcess(selectedOT);
 
  }
 
@@ -3380,15 +3987,11 @@ function fillFromProcesses(){
 
 function fillToProcesses(){
 
- var from=
-  $("desdeProceso").value;
+ var from=$("desdeProceso").value;
 
- var to=
-  $("hastaProceso");
+ var to=$("hastaProceso");
 
- var idx=
-  FLOW.indexOf(from);
-
+ var idx=FLOW.indexOf(from);
 
  to.innerHTML="";
 
@@ -3407,11 +4010,8 @@ function fillToProcesses(){
     "option"
    );
 
-  opt.value=
-   FLOW[i];
-
-  opt.textContent=
-   FLOW[i];
+  opt.value=FLOW[i];
+  opt.textContent=FLOW[i];
 
   to.appendChild(opt);
 
@@ -3423,16 +4023,12 @@ function fillToProcesses(){
 }
 
 
-/* =====================================================
-   DISPONIBLE
-===================================================== */
-
 function updateMovementAvailability(){
 
  if(!selectedOT)return;
 
- var from=
-  $("desdeProceso").value;
+
+ var from=$("desdeProceso").value;
 
  var q=
   availableProcess(
@@ -3456,7 +4052,7 @@ function updateMovementAvailability(){
 
 
 /* =====================================================
-   GUARDAR MOVIMIENTO
+GUARDAR MOVIMIENTO
 ===================================================== */
 
 function guardarMovimiento(){
@@ -3470,16 +4066,13 @@ function guardarMovimiento(){
  }
 
 
- var from=
-  $("desdeProceso").value;
+ var from=$("desdeProceso").value;
 
- var to=
-  $("hastaProceso").value;
+ var to=$("hastaProceso").value;
 
- var q=
-  N(
-   $("piezasMovimiento").value
-  );
+ var q=N(
+  $("piezasMovimiento").value
+ );
 
  var disponible=
   availableProcess(
@@ -3525,8 +4118,7 @@ function guardarMovimiento(){
  }
 
 
- var o=
-  getOTs()[selectedOT];
+ var o=getOTs()[selectedOT];
 
  var fh=
   $("fechaMovimiento").value||
@@ -3563,8 +4155,7 @@ function guardarMovimiento(){
 
    fechaHora:fh,
 
-   fecha:
-    fh.slice(0,10)
+   fecha:fh.slice(0,10)
 
   });
 
@@ -3580,14 +4171,11 @@ function guardarMovimiento(){
   "\n"+
   from+" → "+to+
   "\n"+
-  "Piezas: "+q+
-  "\n\n"+
-  "El inventario fue actualizado."
+  "Piezas: "+q
  );
 
 
  selectedOT=null;
-
 
  $("panelMovimiento")
   .style.display="none";
@@ -3607,16 +4195,615 @@ function guardarMovimiento(){
 
 
 /* =====================================================
-   LEAD
+OTS POR DÍA
+===================================================== */
+
+function getDailyOTs(){
+
+ var fecha=
+  $("avanceFecha").value||
+  today();
+
+ var linea=
+  $("avanceLinea").value||
+  "Todas";
+
+ var map=getOTs();
+
+ var lista=[];
+
+
+ Object.keys(map)
+ .forEach(function(k){
+
+  var o=map[k];
+
+
+  if(o.fecha!==fecha)return;
+
+
+  if(
+   linea!=="Todas" &&
+   o.linea!==linea
+  ){
+
+   return;
+
+  }
+
+
+  var inv=inventoryOT(k);
+
+
+  lista.push({
+
+   ot:o.ot,
+
+   modelo:o.modelo,
+
+   linea:o.linea,
+
+   fecha:o.fecha,
+
+   programado:N(o.programado),
+
+   armado:N(inv.Armado),
+
+   salida:N(
+    inv["Salida pespunte"]
+   ),
+
+   clasificacion:N(
+    inv.Clasificación
+   ),
+
+   empaque:N(inv.Empaque),
+
+   auditoria:N(inv.Auditoría),
+
+   ultimo:currentProcess(k)
+
+  });
+
+ });
+
+
+ lista.sort(function(a,b){
+
+  return String(a.ot)
+   .localeCompare(
+    String(b.ot),
+    undefined,
+    {numeric:true}
+   );
+
+ });
+
+
+ return lista;
+
+}
+
+
+/* =====================================================
+ESTATUS
+===================================================== */
+
+function statusClass(proceso){
+
+ if(proceso==="Armado")
+  return"statusArmado";
+
+ if(proceso==="Salida pespunte")
+  return"statusSalida";
+
+ if(proceso==="Clasificación")
+  return"statusClasificacion";
+
+ if(proceso==="Empaque")
+  return"statusEmpaque";
+
+ if(proceso==="Auditoría")
+  return"statusAuditoria";
+
+ return"statusProgramado";
+
+}
+
+
+/* =====================================================
+NUEVA GRÁFICA VISUAL
+===================================================== */
+
+function renderDailyEfficiency(
+ totalProgramado,
+ totalSalida,
+ fecha,
+ linea
+){
+
+ var porcentaje=
+  totalProgramado
+  ?totalSalida/
+   totalProgramado*
+   100
+  :0;
+
+
+ var visual=
+  Math.max(
+   0,
+   Math.min(
+    100,
+    porcentaje
+   )
+  );
+
+
+ $("graficaProgramado")
+  .textContent=
+  totalProgramado.toLocaleString();
+
+
+ $("graficaSalida")
+  .textContent=
+  totalSalida.toLocaleString();
+
+
+ $("graficaDiaPorcentaje")
+  .textContent=
+  porcentaje.toFixed(1)+"%";
+
+
+ $("graficaBarraTexto")
+  .textContent=
+  porcentaje.toFixed(1)+"%";
+
+
+ $("graficaBarra")
+  .style.width=
+  visual+"%";
+
+
+ $("graficaDiaSub")
+  .textContent=
+   fecha+
+   " · "+
+   linea+
+   " · Programado contra salida de pespunte";
+
+
+ var faltante=
+  Math.max(
+   0,
+   totalProgramado-totalSalida
+  );
+
+
+ $("graficaFaltante")
+  .textContent=
+   "Faltan "+
+   faltante.toLocaleString()+
+   " piezas";
+
+
+ var footer=
+  $("graficaSalida")
+  .parentElement
+  .nextElementSibling;
+
+
+ var status=
+  $("graficaStatus");
+
+
+ var icon=
+  $("graficaStatusIcon");
+
+ var titulo=
+  $("graficaStatusTitulo");
+
+ var texto=
+  $("graficaStatusTexto");
+
+
+ status.className=
+  "visualStatus";
+
+
+ $("graficaBarra")
+  .className=
+  "bigBarFill";
+
+
+ if(totalProgramado===0){
+
+  status.classList.add(
+   "statusNone"
+  );
+
+  icon.textContent="⚪";
+
+  titulo.textContent=
+   "Sin programación";
+
+  texto.textContent=
+   "No hay piezas programadas para esta fecha y línea.";
+
+  return;
+
+ }
+
+
+ if(porcentaje>=80){
+
+  $("graficaBarra")
+   .classList.add(
+    "barGood"
+   );
+
+  status.classList.add(
+   "statusGood"
+  );
+
+  icon.textContent="🟢";
+
+  titulo.textContent=
+   "Muy buen avance";
+
+  texto.textContent=
+   "La salida de pespunte está en 80% o más de lo programado.";
+
+ }else if(porcentaje>=50){
+
+  $("graficaBarra")
+   .classList.add(
+    "barMedium"
+   );
+
+  status.classList.add(
+   "statusMedium"
+  );
+
+  icon.textContent="🟡";
+
+  titulo.textContent=
+   "Avance medio";
+
+  texto.textContent=
+   "Hay avance, pero todavía existe una diferencia importante contra lo programado.";
+
+ }else{
+
+  $("graficaBarra")
+   .classList.add(
+    "barLow"
+   );
+
+  status.classList.add(
+   "statusLow"
+  );
+
+  icon.textContent="🔴";
+
+  titulo.textContent=
+   "Atención";
+
+  texto.textContent=
+   "La salida de pespunte está por debajo del 50% de lo programado.";
+
+ }
+
+}
+
+
+/* =====================================================
+RENDER OTs DEL DÍA
+===================================================== */
+
+function renderDailyAdvances(){
+
+ var lista=getDailyOTs();
+
+
+ var totalProgramado=
+  lista.reduce(
+   function(t,x){
+    return t+x.programado;
+   },
+   0
+  );
+
+
+ var totalSalida=
+  lista.reduce(
+   function(t,x){
+    return t+x.salida;
+   },
+   0
+  );
+
+
+ var porcentaje=
+  totalProgramado
+  ?totalSalida/
+   totalProgramado*
+   100
+  :0;
+
+
+ $("avanceDiaProgramado")
+  .textContent=
+  totalProgramado.toLocaleString();
+
+
+ $("avanceDiaSalida")
+  .textContent=
+  totalSalida.toLocaleString();
+
+
+ $("avanceDiaPorcentaje")
+  .textContent=
+  porcentaje.toFixed(1)+"%";
+
+
+ var barra=
+  Math.max(
+   0,
+   Math.min(
+    100,
+    porcentaje
+   )
+  );
+
+
+ $("avanceDiaBarra")
+  .style.width=
+  barra+"%";
+
+
+ if(porcentaje>=80){
+
+  $("avanceDiaBarra").style.background=
+   "#18a566";
+
+ }else if(porcentaje>=50){
+
+  $("avanceDiaBarra").style.background=
+   "#e5a700";
+
+ }else{
+
+  $("avanceDiaBarra").style.background=
+   "#e05252";
+
+ }
+
+
+ $("avanceDiaTexto")
+  .textContent=
+  totalSalida.toLocaleString()+
+  " / "+
+  totalProgramado.toLocaleString()+
+  " piezas";
+
+
+ renderDailyEfficiency(
+  totalProgramado,
+  totalSalida,
+  $("avanceFecha").value||today(),
+  $("avanceLinea").value||"Todas"
+ );
+
+
+ var fecha=
+  $("avanceFecha").value||
+  today();
+
+ var linea=
+  $("avanceLinea").value||
+  "Todas";
+
+
+ $("avanceListaSub")
+  .textContent=
+  fecha+
+  " · "+
+  linea+
+  " · "+
+  lista.length+
+  " OT"+
+  (
+   lista.length===1
+   ?""
+   :"s"
+  );
+
+
+ var box=$("avanceListaOT");
+
+
+ if(!lista.length){
+
+  box.innerHTML=
+
+   '<div class="noDailyData">'+
+   '📭<br><br>'+
+   '<b>No hay OTs programadas para este día y línea.</b>'+
+   '</div>';
+
+  return;
+
+ }
+
+
+ box.innerHTML=
+  lista.map(function(x){
+
+   var sc=
+    statusClass(x.ultimo);
+
+
+   return `
+
+   <div class="dailyOTCard">
+
+    <div class="dailyOTTop">
+
+     <div>
+
+      <div class="dailyOTNumber">
+       OT ${esc(x.ot)}
+      </div>
+
+      <div class="dailyOTModel">
+
+       ${esc(x.modelo)}
+
+       ·
+
+       <span class="pill ${
+        x.linea==="Línea A"
+        ?"a"
+        :"b"
+       }">
+
+        ${esc(x.linea)}
+
+       </span>
+
+      </div>
+
+     </div>
+
+
+     <div class="dailyOTProgrammed">
+
+      <strong>
+       ${x.programado.toLocaleString()}
+      </strong>
+
+      <span>
+       PROGRAMADO
+      </span>
+
+     </div>
+
+    </div>
+
+
+    <div class="dailyOTStatus ${sc}">
+
+     <div class="statusLabel">
+      ÚLTIMO ESTATUS
+     </div>
+
+     <div class="statusValue">
+      ${esc(x.ultimo)}
+     </div>
+
+    </div>
+
+
+    <div class="dailyOTStats">
+
+     <div class="dailyOTStat">
+
+      <span>⚙️ Armado</span>
+
+      <strong>
+       ${x.armado.toLocaleString()}
+      </strong>
+
+     </div>
+
+
+     <div class="dailyOTStat">
+
+      <span>🟠 Salida pespunte</span>
+
+      <strong>
+       ${x.salida.toLocaleString()}
+      </strong>
+
+     </div>
+
+
+     <div class="dailyOTStat">
+
+      <span>🟣 Clasificación</span>
+
+      <strong>
+       ${x.clasificacion.toLocaleString()}
+      </strong>
+
+     </div>
+
+
+     <div class="dailyOTStat">
+
+      <span>🟢 Empaque</span>
+
+      <strong>
+       ${x.empaque.toLocaleString()}
+      </strong>
+
+     </div>
+
+    </div>
+
+
+    <button
+     class="dailyOTButton"
+     data-daily-avance="${esc(x.ot)}">
+
+     🔄 Ver / registrar avance
+
+    </button>
+
+   </div>
+
+   `;
+
+  }).join("");
+
+
+ box.querySelectorAll(
+  "[data-daily-avance]"
+ )
+ .forEach(function(btn){
+
+  btn.onclick=function(){
+
+   var ot=
+    btn.getAttribute(
+     "data-daily-avance"
+    );
+
+
+   selectMovementOT(ot);
+
+
+   $("buscarOT").value=ot;
+
+   renderSearchOT();
+
+  };
+
+ });
+
+}
+
+
+/* =====================================================
+LEAD TIME
 ===================================================== */
 
 function renderLead(){
 
- var tb=
-  $("tablaLead");
+ var tb=$("tablaLead");
 
- var map=
-  getOTs();
+ var map=getOTs();
 
  var names=
   Object.keys(map).sort();
@@ -3642,6 +4829,7 @@ function renderLead(){
 
 
    return `
+
    <tr>
 
     <td><b>${esc(o.ot)}</b></td>
@@ -3653,17 +4841,21 @@ function renderLead(){
     <td>${o.programado}</td>
 
     <td>
+
      <span class="processPill">
       ${esc(currentProcess(o.ot))}
      </span>
+
     </td>
 
     <td>
+
      ${
       last
       ?formatDateTime(last.fechaHora)
       :"Sin avance"
      }
+
     </td>
 
     <td class="lead">
@@ -3683,6 +4875,7 @@ function renderLead(){
     </td>
 
    </tr>
+
    `;
 
   }).join("");
@@ -3696,9 +4889,7 @@ function renderLead(){
   b.onclick=function(){
 
    showLeadDetail(
-    b.getAttribute(
-     "data-lead"
-    )
+    b.getAttribute("data-lead")
    );
 
   };
@@ -3709,45 +4900,52 @@ function renderLead(){
 
 
 /* =====================================================
-   DETALLE LEAD
+DETALLE LEAD
 ===================================================== */
 
 function showLeadDetail(ot){
 
- var o=
-  getOTs()[ot];
+ var o=getOTs()[ot];
 
  if(!o)return;
 
 
- var arr=
-  getAdvancesOT(ot);
+ var arr=getAdvancesOT(ot);
 
 
  var html=
+
   '<div class="detailBox">'+
 
-   '<h3>OT '+
-    esc(o.ot)+
-   '</h3>'+
+   '<h3>OT '+esc(o.ot)+'</h3>'+
 
    '<div class="muted">'+
-    'Modelo: <b>'+
-     esc(o.modelo)+
+
+    'Programada el: <b>'+
+    esc(o.fecha)+
     '</b>'+
+
+    ' · Modelo: <b>'+
+    esc(o.modelo)+
+    '</b>'+
+
     ' · Línea: <b>'+
-     esc(o.linea)+
+    esc(o.linea)+
     '</b>'+
+
     ' · Programado: <b>'+
-     o.programado+
+    o.programado+
     '</b>'+
+
    '</div>'+
 
    '<div style="margin-top:6px">'+
+
     'Lead Time total: '+
     '<span class="lead">'+
-     totalLeadTime(ot)+
+    totalLeadTime(ot)+
     '</span>'+
+
    '</div>'+
 
   '</div>';
@@ -3762,14 +4960,17 @@ function showLeadDetail(ot){
 
  }else{
 
-  var prev=
-   getStartDateTime(ot);
+  var prev=getStartDateTime(ot);
 
 
   html+=
+
    '<div class="tablewrap" style="margin-top:12px">'+
+
    '<table>'+
+
    '<thead>'+
+
    '<tr>'+
    '<th>Anterior</th>'+
    '<th>Siguiente</th>'+
@@ -3777,47 +4978,49 @@ function showLeadDetail(ot){
    '<th>Fecha / hora</th>'+
    '<th>Tiempo</th>'+
    '</tr>'+
+
    '</thead>'+
+
    '<tbody>';
 
 
   arr.forEach(function(a){
 
    html+=
+
     '<tr>'+
 
     '<td>'+
-     esc(a.procesoAnterior)+
+    esc(a.procesoAnterior)+
     '</td>'+
 
     '<td>'+
-     '<span class="processPill">'+
-      esc(a.siguienteProceso)+
-     '</span>'+
+
+    '<span class="processPill">'+
+    esc(a.siguienteProceso)+
+    '</span>'+
+
     '</td>'+
 
-    '<td>'+
-     a.piezas+
-    '</td>'+
+    '<td>'+a.piezas+'</td>'+
 
     '<td>'+
-     formatDateTime(a.fechaHora)+
+    formatDateTime(a.fechaHora)+
     '</td>'+
 
     '<td class="lead">'+
-     formatDuration(
-      diffMs(
-       prev,
-       a.fechaHora
-      )
-     )+
+    formatDuration(
+     diffMs(
+      prev,
+      a.fechaHora
+     )
+    )+
     '</td>'+
 
     '</tr>';
 
 
-   prev=
-    a.fechaHora;
+   prev=a.fechaHora;
 
   });
 
@@ -3830,12 +5033,9 @@ function showLeadDetail(ot){
  }
 
 
- $("detalleLead")
-  .style.display="block";
+ $("detalleLead").style.display="block";
 
-
- $("detalleOT")
-  .innerHTML=html;
+ $("detalleOT").innerHTML=html;
 
 
  $("detalleLead")
@@ -3848,17 +5048,15 @@ function showLeadDetail(ot){
 
 
 /* =====================================================
-   WORK SHOP · DETALLE DE OTs
+WORK SHOP
 ===================================================== */
 
 function mostrarDetalleWS(tipo,linea){
 
  var ref=
-  $("wsFecha").value||
-  today();
+  $("wsFecha").value||today();
 
- var map=
-  getOTs();
+ var map=getOTs();
 
  var lista=[];
 
@@ -3871,25 +5069,19 @@ function mostrarDetalleWS(tipo,linea){
   if(o.linea!==linea)return;
 
 
-  var inv=
-   inventoryOT(k);
+  var inv=inventoryOT(k);
 
   var piezas=0;
 
-
-  /* PROGRAMADO */
 
   if(tipo==="programado"){
 
    if(o.fecha!==ref)return;
 
-   piezas=
-    N(o.programado);
+   piezas=N(o.programado);
 
   }
 
-
-  /* EN PROCESO */
 
   if(tipo==="proceso"){
 
@@ -3900,17 +5092,12 @@ function mostrarDetalleWS(tipo,linea){
   }
 
 
-  /* CLASIFICACIÓN */
-
   if(tipo==="clasificacion"){
 
-   piezas=
-    N(inv.Clasificación);
+   piezas=N(inv.Clasificación);
 
   }
 
-
-  /* EMPAQUE */
 
   if(tipo==="empaque"){
 
@@ -3928,15 +5115,10 @@ function mostrarDetalleWS(tipo,linea){
    lista.push({
 
     ot:o.ot,
-
     modelo:o.modelo,
-
     linea:o.linea,
-
     piezas:piezas,
-
     programado:o.programado,
-
     fecha:o.fecha
 
    });
@@ -3962,9 +5144,7 @@ function mostrarDetalleWS(tipo,linea){
  var total=
   lista.reduce(
    function(t,x){
-
     return t+x.piezas;
-
    },
    0
   );
@@ -3977,23 +5157,20 @@ function mostrarDetalleWS(tipo,linea){
  $("wsDetalleSub").textContent=
   "Fecha: "+ref+
   " · "+lista.length+
-  " OT"+(lista.length===1?"":"s");
+  " OT"+
+  (lista.length===1?"":"s");
 
 
  $("wsDetalleContenido").innerHTML=
 
   '<div class="wsDetailTotal">'+
-
-   'TOTAL: '+
-   '<b>'+
-    total.toLocaleString()+
-   '</b>'+
-   ' piezas'+
-
+  'TOTAL: <b>'+
+  total.toLocaleString()+
+  '</b> piezas'+
   '</div>'+
 
-
   (
+
    lista.length
 
    ?
@@ -4001,14 +5178,12 @@ function mostrarDetalleWS(tipo,linea){
    lista
    .sort(function(a,b){
 
-    return(
-     String(a.ot)
-      .localeCompare(
-       String(b.ot),
-       undefined,
-       {numeric:true}
-      )
-    );
+    return String(a.ot)
+     .localeCompare(
+      String(b.ot),
+      undefined,
+      {numeric:true}
+     );
 
    })
    .map(function(x){
@@ -4017,66 +5192,64 @@ function mostrarDetalleWS(tipo,linea){
 
     <div class="wsDetailOT">
 
-      <div class="wsDetailOTHead">
+     <div class="wsDetailOTHead">
 
-        <div>
+      <div>
 
-          <div class="wsDetailOTName">
-            OT ${esc(x.ot)}
-          </div>
+       <div class="wsDetailOTName">
+        OT ${esc(x.ot)}
+       </div>
 
-          <div class="wsDetailInfo">
+       <div class="wsDetailInfo">
 
-            Modelo:
-            <b>${esc(x.modelo)}</b>
-
-            ·
-
-            ${esc(x.linea)}
-
-          </div>
-
-        </div>
-
-        <div class="wsDetailPieces">
-          ${x.piezas.toLocaleString()}
-        </div>
-
-      </div>
-
-
-      <div class="wsDetailInfo">
-
-        Programado original:
-        <b>${N(x.programado).toLocaleString()}</b>
+        Modelo:
+        <b>${esc(x.modelo)}</b>
 
         ·
 
-        Fecha:
-        <b>${esc(x.fecha)}</b>
+        ${esc(x.linea)}
+
+       </div>
 
       </div>
 
-
-      <div class="wsDetailActions">
-
-        <button
-          class="action editBtn"
-          data-ws-edit="${esc(x.ot)}">
-
-          ✏️ Editar OT
-
-        </button>
-
-        <button
-          class="action secondary"
-          data-ws-avance="${esc(x.ot)}">
-
-          🔄 Ver avance
-
-        </button>
-
+      <div class="wsDetailPieces">
+       ${x.piezas.toLocaleString()}
       </div>
+
+     </div>
+
+     <div class="wsDetailInfo">
+
+      Programado original:
+      <b>${N(x.programado).toLocaleString()}</b>
+
+      ·
+
+      Fecha:
+      <b>${esc(x.fecha)}</b>
+
+     </div>
+
+     <div class="wsDetailActions">
+
+      <button
+       class="action editBtn"
+       data-ws-edit="${esc(x.ot)}">
+
+       ✏️ Editar OT
+
+      </button>
+
+      <button
+       class="action secondary"
+       data-ws-avance="${esc(x.ot)}">
+
+       🔄 Ver avance
+
+      </button>
+
+     </div>
 
     </div>
 
@@ -4084,14 +5257,10 @@ function mostrarDetalleWS(tipo,linea){
 
    }).join("")
 
-
    :
 
    '<div class="note">'+
-
-    'No hay piezas en este concepto '+
-    'para la fecha y línea seleccionadas.'+
-
+   'No hay piezas en este concepto para la fecha y línea seleccionadas.'+
    '</div>'
 
   );
@@ -4101,188 +5270,139 @@ function mostrarDetalleWS(tipo,linea){
   .style.display="block";
 
 
- /* EDITAR OT */
-
  $("wsDetalleContenido")
-  .querySelectorAll(
-   "[data-ws-edit]"
-  )
-  .forEach(function(btn){
+ .querySelectorAll(
+  "[data-ws-edit]"
+ )
+ .forEach(function(btn){
 
-   btn.onclick=function(){
+  btn.onclick=function(){
 
-    var ot=
-     btn.getAttribute(
-      "data-ws-edit"
-     );
-
-    var mapOT=
-     getOTs()[ot];
-
-    if(!mapOT)return;
-
-
-    var registro=
-     prod.find(function(r){
-
-      return(
-       String(r.ot)===
-       String(ot)
-      );
-
-     });
-
-
-    if(!registro){
-
-     alert(
-      "No se encontró el registro de la OT."
-     );
-
-     return;
-
-    }
-
-
-    /*
-       Cambiar a Captura
-    */
-
-    document
-     .querySelectorAll(".tab")
-     .forEach(function(x){
-
-      x.classList.remove(
-       "active"
-      );
-
-     });
-
-
-    document
-     .querySelectorAll(".page")
-     .forEach(function(x){
-
-      x.classList.remove(
-       "active"
-      );
-
-     });
-
-
-    var tabCaptura=
-     document.querySelector(
-      '[data-target="captura"]'
-     );
-
-
-    if(tabCaptura){
-
-     tabCaptura.classList.add(
-      "active"
-     );
-
-    }
-
-
-    $("captura")
-     .classList.add(
-      "active"
-     );
-
-
-    /*
-       Cargar OT en formulario
-    */
-
-    editarOT(
-     registro.id
+   var ot=
+    btn.getAttribute(
+     "data-ws-edit"
     );
 
 
-    $("wsDetalleCard")
-     .style.display="none";
+   var registro=
+    prod.find(function(r){
 
-   };
+     return String(r.ot)===
+      String(ot);
 
-  });
+    });
 
 
- /* VER AVANCE */
+   if(!registro){
+
+    alert(
+     "No se encontró el registro de la OT."
+    );
+
+    return;
+
+   }
+
+
+   document
+   .querySelectorAll(".tab")
+   .forEach(function(x){
+
+    x.classList.remove("active");
+
+   });
+
+
+   document
+   .querySelectorAll(".page")
+   .forEach(function(x){
+
+    x.classList.remove("active");
+
+   });
+
+
+   document
+   .querySelector(
+    '[data-target="captura"]'
+   )
+   .classList.add("active");
+
+
+   $("captura")
+    .classList.add("active");
+
+
+   editarOT(
+    registro.id
+   );
+
+
+   $("wsDetalleCard")
+    .style.display="none";
+
+  };
+
+ });
+
 
  $("wsDetalleContenido")
-  .querySelectorAll(
-   "[data-ws-avance]"
-  )
-  .forEach(function(btn){
+ .querySelectorAll(
+  "[data-ws-avance]"
+ )
+ .forEach(function(btn){
 
-   btn.onclick=function(){
+  btn.onclick=function(){
 
-    var ot=
-     btn.getAttribute(
-      "data-ws-avance"
-     );
-
-
-    document
-     .querySelectorAll(".tab")
-     .forEach(function(x){
-
-      x.classList.remove(
-       "active"
-      );
-
-     });
+   var ot=
+    btn.getAttribute(
+     "data-ws-avance"
+    );
 
 
-    document
-     .querySelectorAll(".page")
-     .forEach(function(x){
+   document
+   .querySelectorAll(".tab")
+   .forEach(function(x){
 
-      x.classList.remove(
-       "active"
-      );
+    x.classList.remove("active");
 
-     });
+   });
 
 
-    var tabAv=
-     document.querySelector(
-      '[data-target="avances"]'
-     );
+   document
+   .querySelectorAll(".page")
+   .forEach(function(x){
+
+    x.classList.remove("active");
+
+   });
 
 
-    if(tabAv){
-
-     tabAv.classList.add(
-      "active"
-     );
-
-    }
+   document
+   .querySelector(
+    '[data-target="avances"]'
+   )
+   .classList.add("active");
 
 
-    $("avances")
-     .classList.add(
-      "active"
-     );
+   $("avances")
+    .classList.add("active");
 
 
-    $("buscarOT").value=
-     ot;
+   $("buscarOT").value=ot;
+
+   renderSearchOT();
 
 
-    renderSearchOT();
+   $("avances")
+    .scrollIntoView({
+     behavior:"smooth",
+     block:"start"
+    });
 
+  };
 
-    $("avances")
-     .scrollIntoView({
-      behavior:"smooth",
-      block:"start"
-     });
-
-   };
-
-  });
+ });
 
 
  $("wsDetalleCard")
@@ -4295,45 +5415,43 @@ function mostrarDetalleWS(tipo,linea){
 
 
 /* =====================================================
-   WORK SHOP
+WORK SHOP RENDER
 ===================================================== */
 
 function renderWorkshop(){
 
  var ref=
-  $("wsFecha").value||
-  today();
+  $("wsFecha").value||today();
 
- var map=
-  getOTs();
-
+ var map=getOTs();
 
  var byLine={};
 
 
- Object.keys(map)
- .forEach(function(k){
+ prod.forEach(function(r){
+
+  var k=String(r.ot);
 
   var o=map[k];
 
-  var inv=
-   inventoryOT(k);
+  if(!o)return;
 
 
   if(!byLine[o.linea]){
 
    byLine[o.linea]={
-
     Programado:0,
     Armado:0,
     "Salida pespunte":0,
     Clasificación:0,
     Empaque:0,
     Auditoría:0
-
    };
 
   }
+
+
+  var inv=inventoryOT(k);
 
 
   FLOW.forEach(function(p){
@@ -4346,24 +5464,18 @@ function renderWorkshop(){
  });
 
 
- var tb=
-  $("tablaWS");
-
-
  ["Línea A","Línea B"]
  .forEach(function(l){
 
   if(!byLine[l]){
 
    byLine[l]={
-
     Programado:0,
     Armado:0,
     "Salida pespunte":0,
     Clasificación:0,
     Empaque:0,
     Auditoría:0
-
    };
 
   }
@@ -4371,7 +5483,8 @@ function renderWorkshop(){
  });
 
 
- tb.innerHTML=
+ $("tablaWS").innerHTML=
+
   ["Línea A","Línea B"]
   .map(function(l){
 
@@ -4388,14 +5501,13 @@ function renderWorkshop(){
 
 
    return `
+
    <tr>
 
     <td>
 
      <span class="pill ${
-      l==="Línea A"
-      ?"a"
-      :"b"
+      l==="Línea A"?"a":"b"
      }">
 
       ${l}
@@ -4404,79 +5516,65 @@ function renderWorkshop(){
 
     </td>
 
-    <td class="inventoryNumber">
-     ${z.Programado.toLocaleString()}
-    </td>
-
+    <td>${z.Programado.toLocaleString()}</td>
     <td>${z.Armado.toLocaleString()}</td>
-
     <td>${z["Salida pespunte"].toLocaleString()}</td>
-
     <td>${z.Clasificación.toLocaleString()}</td>
-
     <td>${z.Empaque.toLocaleString()}</td>
-
     <td>${z.Auditoría.toLocaleString()}</td>
 
-    <td><b>${total.toLocaleString()}</b></td>
+    <td>
+     <b>${total.toLocaleString()}</b>
+    </td>
 
    </tr>
+
    `;
 
   }).join("");
 
 
- /* DETALLE OT */
-
- var otb=
-  $("tablaWSOT");
-
  var names=
   Object.keys(map).sort();
 
 
- otb.innerHTML=
+ $("tablaWSOT").innerHTML=
+
   names.length
 
-  ?names.map(function(k){
+  ?
+
+  names.map(function(k){
 
    var o=map[k];
 
-   var inv=
-    inventoryOT(k);
+   var inv=inventoryOT(k);
 
 
    return `
+
    <tr>
 
     <td><b>${esc(o.ot)}</b></td>
-
     <td>${esc(o.linea)}</td>
-
     <td>${esc(o.modelo)}</td>
-
     <td>${inv.Programado}</td>
-
     <td>${inv.Armado}</td>
-
     <td>${inv["Salida pespunte"]}</td>
-
     <td>${inv.Clasificación}</td>
-
     <td>${inv.Empaque}</td>
-
     <td>${inv.Auditoría}</td>
 
    </tr>
+
    `;
 
   }).join("")
 
   :
+
   '<tr><td colspan="9">Sin OTs.</td></tr>';
 
-
- /* PRODUCCIÓN DEL DÍA */
 
  var dia={
 
@@ -4502,15 +5600,13 @@ function renderWorkshop(){
 
   var o=map[k];
 
-
   if(o.fecha===ref){
 
    dia[o.linea].programado+=
     N(o.programado);
 
 
-   var inv=
-    inventoryOT(k);
+   var inv=inventoryOT(k);
 
 
    dia[o.linea].proceso+=
@@ -4533,30 +5629,16 @@ function renderWorkshop(){
  });
 
 
- var pA=
-  dia["Línea A"].programado;
-
- var eA=
-  dia["Línea A"].empaque;
-
- var prA=
-  dia["Línea A"].proceso;
-
- var cA=
-  dia["Línea A"].clasificacion;
+ var pA=dia["Línea A"].programado;
+ var eA=dia["Línea A"].empaque;
+ var prA=dia["Línea A"].proceso;
+ var cA=dia["Línea A"].clasificacion;
 
 
- var pB=
-  dia["Línea B"].programado;
-
- var eB=
-  dia["Línea B"].empaque;
-
- var prB=
-  dia["Línea B"].proceso;
-
- var cB=
-  dia["Línea B"].clasificacion;
+ var pB=dia["Línea B"].programado;
+ var eB=dia["Línea B"].empaque;
+ var prB=dia["Línea B"].proceso;
+ var cB=dia["Línea B"].clasificacion;
 
 
  $("wsProgA").textContent=
@@ -4573,9 +5655,7 @@ function renderWorkshop(){
 
  $("wsEfA").textContent=
   (
-   pA
-   ?eA/pA*100
-   :0
+   pA?eA/pA*100:0
   ).toFixed(1)+"%";
 
 
@@ -4593,15 +5673,12 @@ function renderWorkshop(){
 
  $("wsEfB").textContent=
   (
-   pB
-   ?eB/pB*100
-   :0
+   pB?eB/pB*100:0
   ).toFixed(1)+"%";
 
 
- /* SEMANA */
-
  var progSemana=0;
+
  var empSemana=0;
 
 
@@ -4646,54 +5723,45 @@ function renderWorkshop(){
   ).toFixed(1)+"%";
 
 
- /* =================================================
-    ACTIVAR BOTONES DEL WORK SHOP
- ================================================= */
-
  document
-  .querySelectorAll(
-   "[data-ws-detail]"
-  )
-  .forEach(function(btn){
+ .querySelectorAll(
+  "[data-ws-detail]"
+ )
+ .forEach(function(btn){
 
-   btn.onclick=function(){
+  btn.onclick=function(){
 
-    mostrarDetalleWS(
+   mostrarDetalleWS(
 
-     btn.getAttribute(
-      "data-ws-detail"
-     ),
+    btn.getAttribute(
+     "data-ws-detail"
+    ),
 
-     btn.getAttribute(
-      "data-ws-line"
-     )
+    btn.getAttribute(
+     "data-ws-line"
+    )
 
-    );
+   );
 
-   };
+  };
 
-  });
+ });
 
 }
 
 
 /* =====================================================
-   RESUMEN
+RESUMEN
 ===================================================== */
 
 function renderResumen(){
 
  var ref=
-  $("refSemana").value||
-  today();
+  $("refSemana").value||today();
 
+ var map=getOTs();
 
- var map=
-  getOTs();
-
-
- var names=
-  Object.keys(map);
+ var names=Object.keys(map);
 
 
  var weekOTs=
@@ -4754,10 +5822,7 @@ function renderResumen(){
     return(
      a.siguienteProceso===
       "Auditoría" &&
-     inWeekAdvance(
-      a,
-      ref
-     )
+     inWeekAdvance(a,ref)
     );
 
    })
@@ -4768,35 +5833,17 @@ function renderResumen(){
    },0);
 
 
-  /*
-     EL COSTO SE CONSULTA EN TIEMPO REAL
-     DESDE cost[o.modelo].
-
-     Por eso si modificamos el costo de un modelo,
-     todas las OTs existentes de ese modelo
-     se recalculan automáticamente.
-  */
-
-  var c=
-   cost[o.modelo]||{};
+  var c=cost[o.modelo]||{};
 
 
-  var p=
-   q*N(c.pes);
-
-  var r=
-   q*N(c.pre);
+  var p=q*N(c.pes);
+  var r=q*N(c.pre);
 
 
-  totalProg+=
-   o.programado;
-
+  totalProg+=o.programado;
   totalEmp+=q;
-
   totalAud+=aud;
-
   dp+=p;
-
   dr+=r;
 
 
@@ -4807,13 +5854,9 @@ function renderResumen(){
 
 
   z.p+=o.programado;
-
   z.e+=q;
-
   z.a+=aud;
-
   z.dp+=p;
-
   z.dr+=r;
 
 
@@ -4853,51 +5896,36 @@ function renderResumen(){
   ).toFixed(1)+"%";
 
 
- $("dPes").textContent=
-  M(dp);
+ $("dPes").textContent=M(dp);
+ $("dPre").textContent=M(dr);
 
- $("dPre").textContent=
-  M(dr);
+ $("dPesA").textContent=M(la.dp);
+ $("dPesB").textContent=M(lb.dp);
 
- $("dPesA").textContent=
-  M(la.dp);
-
- $("dPesB").textContent=
-  M(lb.dp);
-
- $("dPreA").textContent=
-  M(la.dr);
-
- $("dPreB").textContent=
-  M(lb.dr);
+ $("dPreA").textContent=M(la.dr);
+ $("dPreB").textContent=M(lb.dr);
 
 
  function lineRow(name,z){
 
   var ef=
-   z.p
-   ?z.e/z.p*100
-   :0;
+   z.p?z.e/z.p*100:0;
 
 
   return `
+
   <tr>
 
    <td>${name}</td>
-
    <td>${z.p}</td>
-
    <td>${z.e}</td>
-
    <td>${z.a}</td>
-
    <td>${ef.toFixed(1)}%</td>
-
    <td>${M(z.dp)}</td>
-
    <td>${M(z.dr)}</td>
 
   </tr>
+
   `;
 
  }
@@ -4912,22 +5940,22 @@ function renderResumen(){
 
   groups.length
 
-  ?groups.map(function(g){
+  ?
+
+  groups.map(function(g){
 
    return `
+
    <tr>
 
     <td>${esc(g.ot)}</td>
-
     <td>${esc(g.linea)}</td>
-
     <td>${esc(g.modelo)}</td>
-
     <td>${g.p}</td>
-
     <td>${g.e}</td>
 
     <td>
+
      ${
       g.p
       ?(
@@ -4935,31 +5963,32 @@ function renderResumen(){
       ).toFixed(1)
       :"0.0"
      }%
+
     </td>
 
     <td>${M(g.dp)}</td>
-
     <td>${M(g.dr)}</td>
 
    </tr>
+
    `;
 
   }).join("")
 
   :
+
   '<tr><td colspan="8">Sin datos.</td></tr>';
 
 }
 
 
 /* =====================================================
-   COSTOS
+COSTOS
 ===================================================== */
 
 function renderCosts(){
 
- var tb=
-  $("tablaCostos");
+ var tb=$("tablaCostos");
 
  var names=
   Object.keys(cost).sort();
@@ -4969,22 +5998,19 @@ function renderCosts(){
 
   names.length
 
-  ?names.map(function(m){
+  ?
+
+  names.map(function(m){
 
    return `
+
    <tr>
 
-    <td>
-     <b>${esc(m)}</b>
-    </td>
+    <td><b>${esc(m)}</b></td>
 
-    <td>
-     ${M(cost[m].pes)}
-    </td>
+    <td>${M(cost[m].pes)}</td>
 
-    <td>
-     ${M(cost[m].pre)}
-    </td>
+    <td>${M(cost[m].pre)}</td>
 
     <td>
 
@@ -5007,17 +6033,15 @@ function renderCosts(){
     </td>
 
    </tr>
+
    `;
 
   }).join("")
 
   :
+
   '<tr><td colspan="4">Sin modelos.</td></tr>';
 
-
- /* =================================================
-    EDITAR COSTO
- ================================================= */
 
  tb.querySelectorAll(
   "[data-edit-cost]"
@@ -5026,21 +6050,16 @@ function renderCosts(){
 
   b.onclick=function(){
 
-   var m=
+   editarCosto(
     b.getAttribute(
      "data-edit-cost"
-    );
-
-   editarCosto(m);
+    )
+   );
 
   };
 
  });
 
-
- /* =================================================
-    ELIMINAR COSTO
- ================================================= */
 
  tb.querySelectorAll(
   "[data-cost]"
@@ -5055,43 +6074,15 @@ function renderCosts(){
     );
 
 
-   var tieneOT=
-    prod.some(function(r){
-
-     return(
-      String(r.modelo)===
-      String(m)
-     );
-
-    });
-
-
-   var mensaje=
+   if(!confirm(
     "¿Eliminar el costo de "+
-    m+
-    "?";
-
-
-   if(tieneOT){
-
-    mensaje+=
-     "\n\n⚠️ Este modelo tiene OTs registradas."+
-     "\nSi eliminas el costo, las piezas"+
-     " que no tengan costo quedarán en $0.00"+
-     " hasta que vuelvas a registrar su costo.";
-
-   }
-
-
-   if(!confirm(mensaje))
-    return;
+    m+"?"
+   ))return;
 
 
    delete cost[m];
 
-
    save();
-
    render();
 
 
@@ -5107,45 +6098,23 @@ function renderCosts(){
 
 
 /* =====================================================
-   EDITAR COSTO
+EDITAR COSTO
 ===================================================== */
 
 function editarCosto(modelo){
 
- var c=
-  cost[modelo];
+ var c=cost[modelo];
+
+ if(!c)return;
 
 
- if(!c){
-
-  return alert(
-   "No se encontró el costo del modelo."
-  );
-
- }
+ editingCostModel=modelo;
 
 
- editingCostModel=
-  modelo;
+ $("cModelo").value=modelo;
+ $("cPes").value=N(c.pes);
+ $("cPre").value=N(c.pre);
 
-
- $("cModelo").value=
-  modelo;
-
-
- $("cPes").value=
-  N(c.pes);
-
-
- $("cPre").value=
-  N(c.pre);
-
-
- /*
-    El nombre del modelo queda bloqueado
-    durante la edición para proteger la relación
-    OT → Modelo → Costo.
- */
 
  $("cModelo").readOnly=true;
 
@@ -5159,20 +6128,13 @@ function editarCosto(modelo){
 
 
  $("costos")
-  .scrollIntoView({
-   behavior:"smooth",
-   block:"start"
-  });
-
-
- $("cPes").focus();
+ .scrollIntoView({
+  behavior:"smooth",
+  block:"start"
+ });
 
 }
 
-
-/* =====================================================
-   CANCELAR EDICIÓN DE COSTO
-===================================================== */
 
 function cancelarEdicionCosto(){
 
@@ -5198,53 +6160,51 @@ function cancelarEdicionCosto(){
 
 
 /* =====================================================
-   HISTORIAL
+HISTORIAL
 ===================================================== */
 
 function renderHistory(){
 
- var tb=
-  $("tablaHistorial");
+ var tb=$("tablaHistorial");
 
 
  tb.innerHTML=
 
   hist.length
 
-  ?hist.slice()
+  ?
+
+  hist.slice()
    .reverse()
    .map(function(h){
 
     return `
+
     <tr>
 
      <td>${esc(h.cierre)}</td>
-
      <td>${h.programado}</td>
-
      <td>${h.empaque}</td>
-
      <td>${M(h.pes)}</td>
-
      <td>${M(h.pre)}</td>
-
      <td>${M(h.a)}</td>
-
      <td>${M(h.b)}</td>
 
     </tr>
+
     `;
 
    }).join("")
 
   :
+
   '<tr><td colspan="7">Sin cierres.</td></tr>';
 
 }
 
 
 /* =====================================================
-   RENDER GENERAL
+RENDER
 ===================================================== */
 
 function render(){
@@ -5254,6 +6214,8 @@ function render(){
  renderCapture();
 
  renderLead();
+
+ renderDailyAdvances();
 
  renderWorkshop();
 
@@ -5267,251 +6229,257 @@ function render(){
 
 
 /* =====================================================
-   INICIO
+FECHAS INICIALES
 ===================================================== */
 
-$("fecha").value=
- today();
+$("fecha").value=today();
 
-$("refSemana").value=
- today();
+$("refSemana").value=today();
 
-$("wsFecha").value=
- today();
+$("wsFecha").value=today();
+
+$("avanceFecha").value=today();
 
 
 /* =====================================================
-   TABS
+TABS
 ===================================================== */
 
 document
- .querySelectorAll(".tab")
- .forEach(function(btn){
+.querySelectorAll(".tab")
+.forEach(function(btn){
 
-  btn.addEventListener(
-   "click",
-   function(){
-
-    document
-     .querySelectorAll(".tab")
-     .forEach(function(x){
-
-      x.classList.remove(
-       "active"
-      );
-
-     });
-
-
-    document
-     .querySelectorAll(".page")
-     .forEach(function(x){
-
-      x.classList.remove(
-       "active"
-      );
-
-     });
-
-
-    btn.classList.add(
-     "active"
-    );
-
-
-    $(
-     btn.getAttribute(
-      "data-target"
-     )
-    ).classList.add(
-     "active"
-    );
-
-
-    render();
-
-   }
-  );
-
- });
-
-
-/* =====================================================
-   GUARDAR OT
-===================================================== */
-
-$("guardar")
- .addEventListener(
-  "click",
-  guardarOT
- );
-
-
-/* =====================================================
-   LIMPIAR
-===================================================== */
-
-$("limpiar")
- .addEventListener(
+ btn.addEventListener(
   "click",
   function(){
 
-   if(editingId){
+   document
+   .querySelectorAll(".tab")
+   .forEach(function(x){
 
-    cancelarEdicion();
+    x.classList.remove(
+     "active"
+    );
 
-   }else{
+   });
 
-    clearForm();
 
-   }
+   document
+   .querySelectorAll(".page")
+   .forEach(function(x){
+
+    x.classList.remove(
+     "active"
+    );
+
+   });
+
+
+   btn.classList.add("active");
+
+
+   $(
+    btn.getAttribute(
+     "data-target"
+    )
+   ).classList.add("active");
+
+
+   render();
 
   }
  );
 
+});
+
 
 /* =====================================================
-   COSTOS
+CAPTURA
+===================================================== */
+
+$("guardar")
+.addEventListener(
+ "click",
+ guardarOT
+);
+
+
+$("limpiar")
+.addEventListener(
+ "click",
+ function(){
+
+  if(editingId){
+   cancelarEdicion();
+  }else{
+   clearForm();
+  }
+
+ }
+);
+
+
+/* =====================================================
+FILTRO AVANCES
+===================================================== */
+
+$("avanceFecha")
+.addEventListener(
+ "change",
+ renderDailyAdvances
+);
+
+
+$("avanceLinea")
+.addEventListener(
+ "change",
+ renderDailyAdvances
+);
+
+
+/* =====================================================
+BUSCAR OT
+===================================================== */
+
+$("buscarOT")
+.addEventListener(
+ "input",
+ renderSearchOT
+);
+
+
+/* =====================================================
+AVANCES
+===================================================== */
+
+$("desdeProceso")
+.addEventListener(
+ "change",
+ fillToProcesses
+);
+
+
+$("hastaProceso")
+.addEventListener(
+ "change",
+ updateMovementAvailability
+);
+
+
+$("piezasMovimiento")
+.addEventListener(
+ "input",
+ updateMovementAvailability
+);
+
+
+$("guardarMovimiento")
+.addEventListener(
+ "click",
+ guardarMovimiento
+);
+
+
+$("cancelarMovimiento")
+.addEventListener(
+ "click",
+ function(){
+
+  selectedOT=null;
+
+  $("panelMovimiento")
+   .style.display="none";
+
+  $("otSeleccionada").value="";
+
+ }
+);
+
+
+/* =====================================================
+WORK SHOP
+===================================================== */
+
+$("actualizarWS")
+.addEventListener(
+ "click",
+ renderWorkshop
+);
+
+
+$("wsFecha")
+.addEventListener(
+ "change",
+ renderWorkshop
+);
+
+
+$("cerrarWsDetalle")
+.addEventListener(
+ "click",
+ function(){
+
+  $("wsDetalleCard")
+   .style.display="none";
+
+ }
+);
+
+
+/* =====================================================
+RESUMEN
+===================================================== */
+
+$("actualizar")
+.addEventListener(
+ "click",
+ renderResumen
+);
+
+
+$("refSemana")
+.addEventListener(
+ "change",
+ renderResumen
+);
+
+
+/* =====================================================
+COSTOS
 ===================================================== */
 
 $("guardarCosto")
- .addEventListener(
-  "click",
-  function(){
+.addEventListener(
+ "click",
+ function(){
 
-   var m=
-    $("cModelo")
-     .value
-     .trim();
+  var m=
+   $("cModelo").value.trim();
 
-   var p=
-    N(
-     $("cPes").value
-    );
+  var p=
+   N($("cPes").value);
 
-   var r=
-    N(
-     $("cPre").value
-    );
+  var r=
+   N($("cPre").value);
 
 
-   if(!m){
-
-    return alert(
-     "Escribe el modelo."
-    );
-
-   }
+  if(!m){
+   return alert(
+    "Escribe el modelo."
+   );
+  }
 
 
-   if(p<0 || r<0){
-
-    return alert(
-     "Los costos no pueden ser negativos."
-    );
-
-   }
+  if(p<0||r<0){
+   return alert(
+    "Los costos no pueden ser negativos."
+   );
+  }
 
 
-   /* =================================================
-      ACTUALIZAR COSTO EXISTENTE
-   ================================================= */
+  if(editingCostModel){
 
-   if(editingCostModel){
-
-    var modeloOriginal=
-     editingCostModel;
-
-
-    if(!cost[modeloOriginal]){
-
-     cancelarEdicionCosto();
-
-     return alert(
-      "El modelo ya no existe."
-     );
-
-    }
-
-
-    var costoAnteriorPes=
-     N(cost[modeloOriginal].pes);
-
-
-    var costoAnteriorPre=
-     N(cost[modeloOriginal].pre);
-
-
-    /*
-       IMPORTANTE:
-
-       Se mantiene exactamente el mismo nombre
-       de modelo.
-
-       Todas las OTs existentes que tengan ese
-       modelo continuarán apuntando al nuevo costo.
-    */
-
-    cost[modeloOriginal]={
-     pes:p,
-     pre:r
-    };
-
-
-    save();
-
-
-    cancelarEdicionCosto();
-
-
-    /*
-       render() recalcula inmediatamente todos
-       los valores económicos que dependen de
-       cost[modelo].
-    */
-
-    render();
-
-
-    alert(
-     "Costo actualizado correctamente. ✅\n\n"+
-     "Modelo: "+modeloOriginal+
-     "\n\n"+
-     "Pespunte: "+
-     M(costoAnteriorPes)+
-     " → "+
-     M(p)+
-     "\n"+
-     "Preliminar: "+
-     M(costoAnteriorPre)+
-     " → "+
-     M(r)+
-     "\n\n"+
-     "Los cálculos de las piezas ya capturadas "+
-     "de este modelo fueron actualizados."
-    );
-
-
-    return;
-
-   }
-
-
-   /* =================================================
-      NUEVO COSTO
-   ================================================= */
-
-   if(cost[m]){
-
-    return alert(
-     "Este modelo ya tiene un costo registrado.\n\n"+
-     "Si quieres modificarlo, utiliza ✏️ Editar."
-    );
-
-   }
-
-
-   cost[m]={
+   cost[editingCostModel]={
     pes:p,
     pre:r
    };
@@ -5519,463 +6487,370 @@ $("guardarCosto")
 
    save();
 
-
-   $("cModelo").value="";
-   $("cPes").value="";
-   $("cPre").value="";
-
+   cancelarEdicionCosto();
 
    render();
 
 
    alert(
-    "Costo guardado. ✅"
+    "Costo actualizado correctamente. ✅"
+   );
+
+   return;
+
+  }
+
+
+  if(cost[m]){
+
+   return alert(
+    "Este modelo ya tiene un costo registrado.\n\n"+
+    "Utiliza ✏️ Editar para modificarlo."
    );
 
   }
- );
 
 
-/* =====================================================
-   CANCELAR EDICIÓN DE COSTO
-===================================================== */
+  cost[m]={
+   pes:p,
+   pre:r
+  };
+
+
+  save();
+
+
+  $("cModelo").value="";
+  $("cPes").value="";
+  $("cPre").value="";
+
+
+  render();
+
+
+  alert(
+   "Costo guardado. ✅"
+  );
+
+ }
+);
+
 
 $("cancelarCosto")
- .addEventListener(
-  "click",
-  function(){
-
-   cancelarEdicionCosto();
-
-  }
- );
+.addEventListener(
+ "click",
+ cancelarEdicionCosto
+);
 
 
 /* =====================================================
-   AVANCES
-===================================================== */
-
-$("buscarOT")
- .addEventListener(
-  "input",
-  renderSearchOT
- );
-
-
-$("desdeProceso")
- .addEventListener(
-  "change",
-  fillToProcesses
- );
-
-
-$("hastaProceso")
- .addEventListener(
-  "change",
-  updateMovementAvailability
- );
-
-
-$("piezasMovimiento")
- .addEventListener(
-  "input",
-  updateMovementAvailability
- );
-
-
-$("guardarMovimiento")
- .addEventListener(
-  "click",
-  guardarMovimiento
- );
-
-
-$("cancelarMovimiento")
- .addEventListener(
-  "click",
-  function(){
-
-   selectedOT=null;
-
-   $("panelMovimiento")
-    .style.display="none";
-
-   $("otSeleccionada").value="";
-
-  }
- );
-
-
-/* =====================================================
-   WORK SHOP
-===================================================== */
-
-$("actualizarWS")
- .addEventListener(
-  "click",
-  renderWorkshop
- );
-
-
-$("wsFecha")
- .addEventListener(
-  "change",
-  renderWorkshop
- );
-
-
-$("cerrarWsDetalle")
- .addEventListener(
-  "click",
-  function(){
-
-   $("wsDetalleCard")
-    .style.display="none";
-
-  }
- );
-
-
-/* =====================================================
-   RESUMEN
-===================================================== */
-
-$("actualizar")
- .addEventListener(
-  "click",
-  renderResumen
- );
-
-
-$("refSemana")
- .addEventListener(
-  "change",
-  renderResumen
- );
-
-
-/* =====================================================
-   CERRAR SEMANA
+CERRAR SEMANA
 ===================================================== */
 
 $("cerrarSemana")
- .addEventListener(
-  "click",
-  function(){
+.addEventListener(
+ "click",
+ function(){
 
-   var ref=
-    $("refSemana").value||
-    today();
-
-
-   var map=
-    getOTs();
+  var ref=
+   $("refSemana").value||
+   today();
 
 
-   var a={
-    programado:0,
-    empaque:0,
-    pes:0,
-    pre:0
-   };
+  var map=getOTs();
 
 
-   var la={
-    pes:0,
-    pre:0
-   };
+  var a={
+   programado:0,
+   empaque:0,
+   pes:0,
+   pre:0
+  };
 
 
-   var lb={
-    pes:0,
-    pre:0
-   };
+  var la={
+   pes:0,
+   pre:0
+  };
 
 
-   Object.keys(map)
-   .forEach(function(k){
-
-    var o=map[k];
-
-
-    if(
-     !inWeekDate(
-      o.fecha,
-      ref
-     )
-    )return;
+  var lb={
+   pes:0,
+   pre:0
+  };
 
 
-    var q=
-     empacadoEnSemana(
-      k,
-      ref
-     );
+  Object.keys(map)
+  .forEach(function(k){
 
-
-    var c=
-     cost[o.modelo]||{};
-
-
-    var p=
-     q*N(c.pes);
-
-    var r=
-     q*N(c.pre);
-
-
-    a.programado+=
-     o.programado;
-
-    a.empaque+=q;
-
-    a.pes+=p;
-
-    a.pre+=r;
-
-
-    if(
-     o.linea==="Línea A"
-    ){
-
-     la.pes+=p;
-     la.pre+=r;
-
-    }else{
-
-     lb.pes+=p;
-     lb.pre+=r;
-
-    }
-
-   });
+   var o=map[k];
 
 
    if(
-    !a.programado &&
-    !a.empaque
-   ){
+    !inWeekDate(
+     o.fecha,
+     ref
+    )
+   )return;
 
-    return alert(
-     "No hay producción en la semana seleccionada."
+
+   var q=
+    empacadoEnSemana(
+     k,
+     ref
     );
+
+
+   var c=
+    cost[o.modelo]||{};
+
+
+   var p=q*N(c.pes);
+   var r=q*N(c.pre);
+
+
+   a.programado+=
+    o.programado;
+
+   a.empaque+=q;
+
+   a.pes+=p;
+   a.pre+=r;
+
+
+   if(o.linea==="Línea A"){
+
+    la.pes+=p;
+    la.pre+=r;
+
+   }else{
+
+    lb.pes+=p;
+    lb.pre+=r;
 
    }
 
-
-   var sat=
-    range(ref)[1];
+  });
 
 
-   hist.push({
+  if(!a.programado&&!a.empaque){
 
-    cierre:sat,
+   return alert(
+    "No hay producción en la semana seleccionada."
+   );
 
-    programado:a.programado,
+  }
 
-    empaque:a.empaque,
 
-    pes:a.pes,
+  var sat=range(ref)[1];
 
-    pre:a.pre,
 
-    a:
-     la.pes+
-     la.pre,
+  hist.push({
 
-    b:
-     lb.pes+
-     lb.pre
+   cierre:sat,
 
-   });
+   programado:a.programado,
 
+   empaque:a.empaque,
+
+   pes:a.pes,
+
+   pre:a.pre,
+
+   a:la.pes+la.pre,
+
+   b:lb.pes+lb.pre
+
+  });
+
+
+  save();
+
+  render();
+
+
+  alert(
+   "Semana cerrada correctamente. ✅"
+  );
+
+ }
+);
+
+
+/* =====================================================
+BORRAR HISTORIAL
+===================================================== */
+
+$("borrarHistorial")
+.addEventListener(
+ "click",
+ function(){
+
+  if(confirm(
+   "¿Borrar todo el historial?"
+  )){
+
+   hist=[];
 
    save();
 
    render();
 
-
-   alert(
-    "Semana cerrada correctamente. ✅"
-   );
-
   }
- );
+
+ }
+);
 
 
 /* =====================================================
-   BORRAR HISTORIAL
-===================================================== */
-
-$("borrarHistorial")
- .addEventListener(
-  "click",
-  function(){
-
-   if(
-    confirm(
-     "¿Borrar todo el historial?"
-    )
-   ){
-
-    hist=[];
-
-    save();
-
-    render();
-
-   }
-
-  }
- );
-
-
-/* =====================================================
-   EXPORTAR
+EXPORTAR CSV
 ===================================================== */
 
 $("exportar")
- .addEventListener(
-  "click",
-  function(){
+.addEventListener(
+ "click",
+ function(){
 
-   var ref=
-    $("refSemana").value||
-    today();
-
-
-   var map=
-    getOTs();
+  var ref=
+   $("refSemana").value||
+   today();
 
 
-   var rows=[
-
-    [
-     "OT",
-     "Linea",
-     "Modelo",
-     "Programado",
-     "Empaque",
-     "Eficiencia",
-     "Destajo Pespunte",
-     "Destajo Preliminar"
-    ]
-
-   ];
+  var map=getOTs();
 
 
-   Object.keys(map)
-   .forEach(function(k){
+  var rows=[
 
-    var o=map[k];
+   [
+    "OT",
+    "Linea",
+    "Modelo",
+    "Fecha Programacion",
+    "Programado",
+    "Empaque",
+    "Eficiencia",
+    "Destajo Pespunte",
+    "Destajo Preliminar"
+   ]
 
-
-    if(
-     !inWeekDate(
-      o.fecha,
-      ref
-     )
-    )return;
-
-
-    var q=
-     empacadoEnSemana(
-      k,
-      ref
-     );
+  ];
 
 
-    var c=
-     cost[o.modelo]||{};
+  Object.keys(map)
+  .forEach(function(k){
+
+   var o=map[k];
 
 
-    rows.push([
-
-     o.ot,
-
-     o.linea,
-
-     o.modelo,
-
-     o.programado,
-
-     q,
-
-     (
-      o.programado
-      ?q/o.programado*100
-      :0
-     ).toFixed(1)+"%",
-
-     (
-      q*N(c.pes)
-     ).toFixed(2),
-
-     (
-      q*N(c.pre)
-     ).toFixed(2)
-
-    ]);
-
-   });
+   if(
+    !inWeekDate(
+     o.fecha,
+     ref
+    )
+   )return;
 
 
-   var csv=
-    rows.map(function(row){
-
-     return row.map(function(v){
-
-      return '"'+
-       String(
-        v==null?"":v
-       ).replace(
-        /"/g,
-        '""'
-       )+
-       '"';
-
-     }).join(",");
-
-    }).join("\n");
-
-
-   var a=
-    document.createElement("a");
-
-
-   a.href=
-    URL.createObjectURL(
-     new Blob(
-      [csv],
-      {
-       type:
-        "text/csv;charset=utf-8"
-      }
-     )
+   var q=
+    empacadoEnSemana(
+     k,
+     ref
     );
 
 
-   a.download=
-    "The_Studio_resumen.csv";
+   var c=
+    cost[o.modelo]||{};
 
 
-   document.body.appendChild(a);
+   rows.push([
 
-   a.click();
+    o.ot,
 
-   a.remove();
+    o.linea,
 
-  }
- );
+    o.modelo,
+
+    o.fecha,
+
+    o.programado,
+
+    q,
+
+    (
+     o.programado
+     ?q/o.programado*100
+     :0
+    ).toFixed(1)+"%",
+
+    (
+     q*N(c.pes)
+    ).toFixed(2),
+
+    (
+     q*N(c.pre)
+    ).toFixed(2)
+
+   ]);
+
+  });
+
+
+  var csv=
+   rows.map(function(row){
+
+    return row.map(function(v){
+
+     return '"'+
+      String(
+       v==null?"":v
+      ).replace(
+       /"/g,
+       '""'
+      )+
+      '"';
+
+    }).join(",");
+
+   }).join("\n");
+
+
+  var a=
+   document.createElement("a");
+
+
+  a.href=
+   URL.createObjectURL(
+    new Blob(
+     [csv],
+     {
+      type:
+       "text/csv;charset=utf-8"
+     }
+    )
+   );
+
+
+  a.download=
+   "The_Studio_resumen.csv";
+
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+ }
+);
 
 
 /* =====================================================
-   INICIAR APP
+INICIAR
 ===================================================== */
 
 render();
 
 })();
+
 </script>
 
 </body>
