@@ -140,6 +140,12 @@ h3{
  color:#202733
 }
 
+.field input[readonly]{
+ background:#f1f4f7;
+ color:#596575;
+ font-weight:700
+}
+
 .actions{
  display:flex;
  gap:9px;
@@ -1670,12 +1676,20 @@ Línea B:
 
 <div class="card">
 
-<h2>Costos por modelo</h2>
+<h2>💰 Costos por modelo</h2>
 
 <div class="note">
 
 Los costos se calculan sobre las piezas que entran a
 <b>Empaque.</b>
+
+<br><br>
+
+<strong>
+✏️ Si modificas un costo, The Studio actualizará
+automáticamente el destajo de todas las piezas ya capturadas
+de ese modelo.
+</strong>
 
 </div>
 
@@ -1704,12 +1718,32 @@ Los costos se calculan sobre las piezas que entran a
 Guardar costo
 </button>
 
+<button
+id="cancelarCosto"
+class="action secondary"
+style="display:none">
+↩️ Cancelar edición
+</button>
+
 </div>
 
 </div>
 
 
 <div class="card">
+
+<div class="successNote">
+
+💡 <b>Importante:</b>
+al actualizar el costo de un modelo,
+los cálculos de destajo del
+<b>Resumen semanal</b>,
+<b>Detalle por OT</b>,
+<b>Destajo por línea</b>
+y <b>Exportación</b>
+utilizarán automáticamente el nuevo costo.
+
+</div>
 
 <div class="tablewrap">
 
@@ -1721,7 +1755,7 @@ Guardar costo
 <th>Modelo</th>
 <th>Pespunte</th>
 <th>Preliminar</th>
-<th></th>
+<th>Acción</th>
 </tr>
 
 </thead>
@@ -1927,6 +1961,12 @@ var avances=load(KADV,[]);
 
 var selectedOT=null;
 var editingId=null;
+
+/* =====================================================
+   EDICIÓN DE COSTOS
+===================================================== */
+
+var editingCostModel=null;
 
 
 var FLOW=[
@@ -2767,7 +2807,7 @@ function editarOT(id){
 
 
 /* =====================================================
-   CANCELAR EDICIÓN
+   CANCELAR EDICIÓN OT
 ===================================================== */
 
 function cancelarEdicion(){
@@ -4728,6 +4768,15 @@ function renderResumen(){
    },0);
 
 
+  /*
+     EL COSTO SE CONSULTA EN TIEMPO REAL
+     DESDE cost[o.modelo].
+
+     Por eso si modificamos el costo de un modelo,
+     todas las OTs existentes de ese modelo
+     se recalculan automáticamente.
+  */
+
   var c=
    cost[o.modelo]||{};
 
@@ -4925,19 +4974,33 @@ function renderCosts(){
    return `
    <tr>
 
-    <td>${esc(m)}</td>
-
-    <td>${M(cost[m].pes)}</td>
-
-    <td>${M(cost[m].pre)}</td>
+    <td>
+     <b>${esc(m)}</b>
+    </td>
 
     <td>
+     ${M(cost[m].pes)}
+    </td>
+
+    <td>
+     ${M(cost[m].pre)}
+    </td>
+
+    <td>
+
+     <button
+      class="action editBtn"
+      data-edit-cost="${esc(m)}">
+
+      ✏️ Editar
+
+     </button>
 
      <button
       class="action danger"
       data-cost="${esc(m)}">
 
-      Eliminar
+      🗑️ Eliminar
 
      </button>
 
@@ -4952,6 +5015,33 @@ function renderCosts(){
   '<tr><td colspan="4">Sin modelos.</td></tr>';
 
 
+ /* =================================================
+    EDITAR COSTO
+ ================================================= */
+
+ tb.querySelectorAll(
+  "[data-edit-cost]"
+ )
+ .forEach(function(b){
+
+  b.onclick=function(){
+
+   var m=
+    b.getAttribute(
+     "data-edit-cost"
+    );
+
+   editarCosto(m);
+
+  };
+
+ });
+
+
+ /* =================================================
+    ELIMINAR COSTO
+ ================================================= */
+
  tb.querySelectorAll(
   "[data-cost]"
  )
@@ -4965,25 +5055,144 @@ function renderCosts(){
     );
 
 
-   if(
-    confirm(
-     "¿Eliminar el costo de "+
-     m+
-     "?"
-    )
-   ){
+   var tieneOT=
+    prod.some(function(r){
 
-    delete cost[m];
+     return(
+      String(r.modelo)===
+      String(m)
+     );
 
-    save();
+    });
 
-    render();
+
+   var mensaje=
+    "¿Eliminar el costo de "+
+    m+
+    "?";
+
+
+   if(tieneOT){
+
+    mensaje+=
+     "\n\n⚠️ Este modelo tiene OTs registradas."+
+     "\nSi eliminas el costo, las piezas"+
+     " que no tengan costo quedarán en $0.00"+
+     " hasta que vuelvas a registrar su costo.";
 
    }
+
+
+   if(!confirm(mensaje))
+    return;
+
+
+   delete cost[m];
+
+
+   save();
+
+   render();
+
+
+   alert(
+    "Costo eliminado. ✅"
+   );
 
   };
 
  });
+
+}
+
+
+/* =====================================================
+   EDITAR COSTO
+===================================================== */
+
+function editarCosto(modelo){
+
+ var c=
+  cost[modelo];
+
+
+ if(!c){
+
+  return alert(
+   "No se encontró el costo del modelo."
+  );
+
+ }
+
+
+ editingCostModel=
+  modelo;
+
+
+ $("cModelo").value=
+  modelo;
+
+
+ $("cPes").value=
+  N(c.pes);
+
+
+ $("cPre").value=
+  N(c.pre);
+
+
+ /*
+    El nombre del modelo queda bloqueado
+    durante la edición para proteger la relación
+    OT → Modelo → Costo.
+ */
+
+ $("cModelo").readOnly=true;
+
+
+ $("guardarCosto").textContent=
+  "💾 Actualizar costo";
+
+
+ $("cancelarCosto")
+  .style.display="inline-block";
+
+
+ $("costos")
+  .scrollIntoView({
+   behavior:"smooth",
+   block:"start"
+  });
+
+
+ $("cPes").focus();
+
+}
+
+
+/* =====================================================
+   CANCELAR EDICIÓN DE COSTO
+===================================================== */
+
+function cancelarEdicionCosto(){
+
+ editingCostModel=null;
+
+
+ $("cModelo").value="";
+ $("cPes").value="";
+ $("cPre").value="";
+
+
+ $("cModelo").readOnly=false;
+
+
+ $("guardarCosto").textContent=
+  "Guardar costo";
+
+
+ $("cancelarCosto")
+  .style.display="none";
 
 }
 
@@ -5195,6 +5404,113 @@ $("guardarCosto")
    }
 
 
+   if(p<0 || r<0){
+
+    return alert(
+     "Los costos no pueden ser negativos."
+    );
+
+   }
+
+
+   /* =================================================
+      ACTUALIZAR COSTO EXISTENTE
+   ================================================= */
+
+   if(editingCostModel){
+
+    var modeloOriginal=
+     editingCostModel;
+
+
+    if(!cost[modeloOriginal]){
+
+     cancelarEdicionCosto();
+
+     return alert(
+      "El modelo ya no existe."
+     );
+
+    }
+
+
+    var costoAnteriorPes=
+     N(cost[modeloOriginal].pes);
+
+
+    var costoAnteriorPre=
+     N(cost[modeloOriginal].pre);
+
+
+    /*
+       IMPORTANTE:
+
+       Se mantiene exactamente el mismo nombre
+       de modelo.
+
+       Todas las OTs existentes que tengan ese
+       modelo continuarán apuntando al nuevo costo.
+    */
+
+    cost[modeloOriginal]={
+     pes:p,
+     pre:r
+    };
+
+
+    save();
+
+
+    cancelarEdicionCosto();
+
+
+    /*
+       render() recalcula inmediatamente todos
+       los valores económicos que dependen de
+       cost[modelo].
+    */
+
+    render();
+
+
+    alert(
+     "Costo actualizado correctamente. ✅\n\n"+
+     "Modelo: "+modeloOriginal+
+     "\n\n"+
+     "Pespunte: "+
+     M(costoAnteriorPes)+
+     " → "+
+     M(p)+
+     "\n"+
+     "Preliminar: "+
+     M(costoAnteriorPre)+
+     " → "+
+     M(r)+
+     "\n\n"+
+     "Los cálculos de las piezas ya capturadas "+
+     "de este modelo fueron actualizados."
+    );
+
+
+    return;
+
+   }
+
+
+   /* =================================================
+      NUEVO COSTO
+   ================================================= */
+
+   if(cost[m]){
+
+    return alert(
+     "Este modelo ya tiene un costo registrado.\n\n"+
+     "Si quieres modificarlo, utiliza ✏️ Editar."
+    );
+
+   }
+
+
    cost[m]={
     pes:p,
     pre:r
@@ -5205,9 +5521,7 @@ $("guardarCosto")
 
 
    $("cModelo").value="";
-
    $("cPes").value="";
-
    $("cPre").value="";
 
 
@@ -5217,6 +5531,21 @@ $("guardarCosto")
    alert(
     "Costo guardado. ✅"
    );
+
+  }
+ );
+
+
+/* =====================================================
+   CANCELAR EDICIÓN DE COSTO
+===================================================== */
+
+$("cancelarCosto")
+ .addEventListener(
+  "click",
+  function(){
+
+   cancelarEdicionCosto();
 
   }
  );
