@@ -1,8 +1,12 @@
 <!doctype html>
 <html lang="es">
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1,viewport-fit=cover">
+
 <title>The Studio</title>
 
 <style>
@@ -207,7 +211,9 @@ button:disabled{
  padding:14px
 }
 
-.kpi small{color:#707986}
+.kpi small{
+ color:#707986
+}
 
 .kpi strong{
  display:block;
@@ -333,7 +339,7 @@ th{
 
 
 /* =====================================================
-   NUEVO PANEL VISUAL DE EFICIENCIA DIARIA
+NUEVO PANEL VISUAL DE EFICIENCIA DIARIA
 ===================================================== */
 
 .dailyEfficiencyCard{
@@ -534,7 +540,7 @@ th{
 
 
 /* =====================================================
-   FILTRO AVANCES
+FILTRO AVANCES
 ===================================================== */
 
 .advanceFilterCard{
@@ -628,7 +634,7 @@ th{
 
 
 /* =====================================================
-   OTs DEL DÍA
+OTS DEL DÍA
 ===================================================== */
 
 .dailyOTGrid{
@@ -777,7 +783,7 @@ th{
 
 
 /* =====================================================
-   WORK SHOP
+WORK SHOP
 ===================================================== */
 
 .wsDailyGrid{
@@ -838,12 +844,25 @@ th{
  gap:10px
 }
 
-.wsMetric:last-child{margin-bottom:0}
+.wsMetric:last-child{
+ margin-bottom:0
+}
 
-.wsMetricBlue{background:#eef5ff}
-.wsMetricYellow{background:#fff7e7}
-.wsMetricPurple{background:#f1edff}
-.wsMetricGreen{background:#e9f8f0}
+.wsMetricBlue{
+ background:#eef5ff
+}
+
+.wsMetricYellow{
+ background:#fff7e7
+}
+
+.wsMetricPurple{
+ background:#f1edff
+}
+
+.wsMetricGreen{
+ background:#e9f8f0
+}
 
 .wsMetricLeft{
  display:flex;
@@ -851,7 +870,9 @@ th{
  gap:11px
 }
 
-.wsIcon{font-size:25px}
+.wsIcon{
+ font-size:25px
+}
 
 .wsLabel{
  font-weight:900;
@@ -902,7 +923,9 @@ th{
  margin-bottom:14px
 }
 
-.wsWeekIcon{font-size:36px}
+.wsWeekIcon{
+ font-size:36px
+}
 
 .wsWeekTitle{
  font-size:27px;
@@ -930,7 +953,9 @@ th{
  justify-content:space-between
 }
 
-.wsWeekMetric.green{background:#e9f8f0}
+.wsWeekMetric.green{
+ background:#e9f8f0
+}
 
 .wsWeekLabel{
  font-size:16px;
@@ -1001,7 +1026,9 @@ th{
  background:#fafbfc
 }
 
-.wsDetailOT:last-child{margin-bottom:0}
+.wsDetailOT:last-child{
+ margin-bottom:0
+}
 
 .wsDetailOTHead{
  display:flex;
@@ -1043,7 +1070,23 @@ th{
 
 
 /* =====================================================
-   MOBILE
+ETIQUETA ARRASTRE
+===================================================== */
+
+.arrastrePill{
+ display:inline-block;
+ margin-top:4px;
+ background:#fff0d8;
+ color:#9a6200;
+ font-size:10px;
+ font-weight:900;
+ padding:4px 7px;
+ border-radius:99px
+}
+
+
+/* =====================================================
+MOBILE
 ===================================================== */
 
 @media(max-width:700px){
@@ -1460,7 +1503,7 @@ Salida pespunte ÷ programado
 
 
 <!-- =====================================================
-NUEVA GRÁFICA VISUAL
+GRÁFICA VISUAL
 ===================================================== -->
 
 <div class="dailyEfficiencyCard">
@@ -1525,7 +1568,7 @@ Piezas programadas
 <div class="compareTop">
 
 <div class="compareName">
-⚙️ SALIDA PESpUNTE
+⚙️ SALIDA PESPUNTE
 </div>
 
 <div class="compareIcon">
@@ -1570,7 +1613,7 @@ PROGRAMADO → SALIDA PESPUNTE
 <div class="compareFooter">
 
 <span>
-0 piezas en salida
+Piezas en salida
 </span>
 
 <span id="graficaFaltante">
@@ -1766,7 +1809,8 @@ WORK SHOP
 <b>En proceso = Armado + Salida pespunte.</b>
 
 La información de Empaque corresponde a las piezas que
-entraron a Empaque en la fecha seleccionada.
+<b>realmente entraron a Empaque en la fecha seleccionada</b>,
+aunque la OT haya sido programada otro día.
 
 <br><br>
 
@@ -1907,7 +1951,7 @@ data-ws-line="Línea A">
 
 <div class="wsLabel">Empaque</div>
 
-<div class="wsSub">Piezas del día</div>
+<div class="wsSub">Piezas que entraron hoy</div>
 
 </div>
 
@@ -2056,7 +2100,7 @@ data-ws-line="Línea B">
 
 <div class="wsLabel">Empaque</div>
 
-<div class="wsSub">Piezas del día</div>
+<div class="wsSub">Piezas que entraron hoy</div>
 
 </div>
 
@@ -2139,7 +2183,9 @@ OTs relacionadas
 
 <div class="wsWeekTitle">General de la semana</div>
 
-<div class="wsWeekSub">Acumulado lunes a sábado</div>
+<div class="wsWeekSub">
+Programado de la semana · Empaque real lunes a sábado
+</div>
 
 </div>
 
@@ -2154,7 +2200,7 @@ OTs relacionadas
 
 <div class="wsWeekLabel">📋 Programado</div>
 
-<div class="wsWeekSmall">Total de la semana</div>
+<div class="wsWeekSmall">OTs programadas lunes-sábado</div>
 
 </div>
 
@@ -2171,7 +2217,9 @@ OTs relacionadas
 
 <div class="wsWeekLabel">📦 Empaque</div>
 
-<div class="wsWeekSmall">Total de la semana</div>
+<div class="wsWeekSmall">
+Todo lo que entró a Empaque lunes-sábado
+</div>
 
 </div>
 
@@ -2189,6 +2237,12 @@ OTs relacionadas
 🎯 Eficiencia general:
 
 <b id="wsEfSemana">0.0%</b>
+
+<br>
+
+<small>
+Nota: Empaque puede incluir OTs arrastradas de semanas anteriores.
+</small>
 
 </div>
 
@@ -2310,6 +2364,25 @@ Exportar CSV
 </div>
 
 
+<div class="note">
+
+<b>📋 Programado</b> = piezas de OTs programadas durante
+lunes a sábado.
+
+<br><br>
+
+<b>💰 Nómina / Destajo</b> = todas las piezas que
+<b>realmente entraron a Empaque de lunes a sábado</b>,
+sin importar cuándo fueron programadas.
+
+<br><br>
+
+🟠 <b>ARRASTRE</b> = OT programada en una semana anterior
+que generó Empaque y nómina en la semana actual.
+
+</div>
+
+
 <div class="kpis">
 
 <div class="kpi">
@@ -2318,7 +2391,7 @@ Exportar CSV
 </div>
 
 <div class="kpi">
-<small>Empaque</small>
+<small>Empaque para nómina</small>
 <strong id="kEmp">0</strong>
 </div>
 
@@ -2328,7 +2401,7 @@ Exportar CSV
 </div>
 
 <div class="kpi">
-<small>OTs</small>
+<small>OTs con Empaque</small>
 <strong id="kReg">0</strong>
 </div>
 
@@ -2337,7 +2410,7 @@ Exportar CSV
 
 <div class="card">
 
-<h2>📈 Eficiencia</h2>
+<h2>📈 Indicador semanal</h2>
 
 <div class="effBox">
 
@@ -2345,7 +2418,16 @@ Exportar CSV
 0%
 </div>
 
-<div>Empaque ÷ Programado × 100</div>
+<div>
+Empaque de la semana ÷ Programado de la semana × 100
+</div>
+
+<br>
+
+<small>
+Este indicador puede superar 100% cuando existen OTs arrastradas
+de semanas anteriores.
+</small>
 
 </div>
 
@@ -2433,7 +2515,7 @@ Línea B:
 
 <div class="card">
 
-<h2>Detalle por OT</h2>
+<h2>Detalle por OT · Nómina</h2>
 
 <div class="tablewrap">
 
@@ -2446,8 +2528,8 @@ Línea B:
 <th>OT</th>
 <th>Línea</th>
 <th>Modelo</th>
-<th>Programado</th>
-<th>Empaque</th>
+<th>Programado semana</th>
+<th>Empaque semana</th>
 <th>Eficiencia</th>
 <th>Pespunte</th>
 <th>Preliminar</th>
@@ -2587,8 +2669,17 @@ La nómina es de <b>lunes a sábado</b>.
 
 El domingo queda fuera.
 
-El destajo se calcula con las piezas que
-<b>entraron a Empaque</b>.
+<br><br>
+
+<b>💰 Regla de nómina:</b>
+
+el destajo se calcula con
+<b>todas las piezas que entraron a Empaque</b>
+durante lunes-sábado.
+
+<br><br>
+
+Esto incluye OTs arrastradas de semanas anteriores.
 
 </div>
 
@@ -2668,12 +2759,16 @@ function $(id){
 
 
 function N(v){
+
  var n=Number(v);
+
  return isFinite(n)?n:0;
+
 }
 
 
 function M(v){
+
  return N(v).toLocaleString(
   "es-MX",
   {
@@ -2681,6 +2776,7 @@ function M(v){
    currency:"MXN"
   }
  );
+
 }
 
 
@@ -2808,6 +2904,8 @@ function save(){
 
 /* =====================================================
 SEMANA
+LUNES → SÁBADO
+DOMINGO FUERA
 ===================================================== */
 
 function range(ref){
@@ -2838,7 +2936,9 @@ function range(ref){
 
 
  function iso(x){
+
   return x.toISOString().slice(0,10);
+
  }
 
 
@@ -2957,7 +3057,9 @@ function getOTs(){
 
 
   if(r.fecha<map[key].fecha){
+
    map[key].fecha=r.fecha;
+
   }
 
  });
@@ -3002,7 +3104,9 @@ function inventoryOT(ot){
  var map={};
 
  FLOW.forEach(function(p){
+
   map[p]=0;
+
  });
 
 
@@ -3024,12 +3128,16 @@ function inventoryOT(ot){
 
 
   if(map[from]!=null){
+
    map[from]-=q;
+
   }
 
 
   if(map[to]!=null){
+
    map[to]+=q;
+
   }
 
  });
@@ -3038,7 +3146,9 @@ function inventoryOT(ot){
  FLOW.forEach(function(p){
 
   if(map[p]<0){
+
    map[p]=0;
+
   }
 
  });
@@ -3088,7 +3198,9 @@ function currentIndex(ot){
  ){
 
   if(inv[FLOW[i]]>0){
+
    return i;
+
   }
 
  }
@@ -3163,14 +3275,18 @@ function formatDateTime(v){
 
 
 function diffMs(a,b){
+
  return new Date(b)-new Date(a);
+
 }
 
 
 function formatDuration(ms){
 
  if(!isFinite(ms)||ms<0){
+
   return"0h 0m";
+
  }
 
 
@@ -3260,6 +3376,11 @@ function empacadoEnFecha(ot,fecha){
 }
 
 
+/* =====================================================
+EMPAQUE EN SEMANA
+ESTA FUNCIÓN ES LA BASE DE LA NÓMINA
+===================================================== */
+
 function empacadoEnSemana(ot,ref){
 
  return getAdvancesOT(ot)
@@ -3276,6 +3397,69 @@ function empacadoEnSemana(ot,ref){
   return t+N(a.piezas);
 
  },0);
+
+}
+
+
+/* =====================================================
+OTs QUE GENERAN NÓMINA EN LA SEMANA
+
+IMPORTANTE:
+
+La nómina NO depende de la fecha de programación.
+
+Depende de cuándo las piezas entraron a Empaque.
+
+Lunes → sábado.
+
+Una OT programada la semana anterior puede generar
+nómina esta semana.
+===================================================== */
+
+function getPayrollOTs(ref){
+
+ var map=getOTs();
+
+ var lista=[];
+
+
+ Object.keys(map)
+ .forEach(function(k){
+
+  var o=map[k];
+
+
+  var empaque=
+   empacadoEnSemana(
+    k,
+    ref
+   );
+
+
+  if(empaque>0){
+
+   lista.push({
+
+    ot:k,
+
+    linea:o.linea,
+
+    modelo:o.modelo,
+
+    fechaProgramacion:o.fecha,
+
+    programado:o.programado,
+
+    empaque:empaque
+
+   });
+
+  }
+
+ });
+
+
+ return lista;
 
 }
 
@@ -3547,15 +3731,21 @@ function guardarOT(){
 
 
  if(!ot){
+
   return alert("Escribe la OT.");
+
  }
 
  if(!m){
+
   return alert("Selecciona un modelo.");
+
  }
 
  if(p<=0){
+
   return alert("Escribe las piezas programadas.");
+
  }
 
 
@@ -3571,8 +3761,11 @@ function guardarOT(){
 
 
   if(!registro){
+
    cancelarEdicion();
+
    return;
+
   }
 
 
@@ -3739,11 +3932,14 @@ function clearForm(){
 
 
  if($("modelo").options.length){
+
   $("modelo").selectedIndex=0;
+
  }
 
 
  editingId=null;
+
 
  $("guardar").textContent=
   "Guardar OT";
@@ -4171,7 +4367,12 @@ function guardarMovimiento(){
   "\n"+
   from+" → "+to+
   "\n"+
-  "Piezas: "+q
+  "Piezas: "+q+
+  (
+   to==="Empaque"
+   ?"\n\n💰 Estas piezas cuentan para la nómina de la semana en curso."
+   :""
+  )
  );
 
 
@@ -4312,7 +4513,7 @@ function statusClass(proceso){
 
 
 /* =====================================================
-NUEVA GRÁFICA VISUAL
+GRÁFICA VISUAL
 ===================================================== */
 
 function renderDailyEfficiency(
@@ -4385,12 +4586,6 @@ function renderDailyEfficiency(
    "Faltan "+
    faltante.toLocaleString()+
    " piezas";
-
-
- var footer=
-  $("graficaSalida")
-  .parentElement
-  .nextElementSibling;
 
 
  var status=
@@ -5576,6 +5771,10 @@ function renderWorkshop(){
   '<tr><td colspan="9">Sin OTs.</td></tr>';
 
 
+ /* =====================================================
+ PRODUCCIÓN DEL DÍA
+ ===================================================== */
+
  var dia={
 
   "Línea A":{
@@ -5600,6 +5799,12 @@ function renderWorkshop(){
 
   var o=map[k];
 
+
+  /*
+   PROGRAMADO:
+   solamente lo programado en la fecha.
+  */
+
   if(o.fecha===ref){
 
    dia[o.linea].programado+=
@@ -5619,6 +5824,15 @@ function renderWorkshop(){
 
   }
 
+
+  /*
+   EMPAQUE:
+   cualquier OT que realmente entró a Empaque
+   en la fecha seleccionada.
+
+   Puede ser una OT programada hoy o una OT
+   arrastrada de días/semanas anteriores.
+  */
 
   dia[o.linea].empaque+=
    empacadoEnFecha(
@@ -5677,6 +5891,17 @@ function renderWorkshop(){
   ).toFixed(1)+"%";
 
 
+ /* =====================================================
+ GENERAL DE LA SEMANA
+
+ PROGRAMADO:
+ OTs programadas lunes-sábado.
+
+ EMPAQUE:
+ TODO lo que entró a Empaque lunes-sábado,
+ incluyendo arrastres.
+ ===================================================== */
+
  var progSemana=0;
 
  var empSemana=0;
@@ -5698,13 +5923,14 @@ function renderWorkshop(){
    progSemana+=
     N(o.programado);
 
-   empSemana+=
-    empacadoEnSemana(
-     k,
-     ref
-    );
-
   }
+
+
+  empSemana+=
+   empacadoEnSemana(
+    k,
+    ref
+   );
 
  });
 
@@ -5714,6 +5940,7 @@ function renderWorkshop(){
 
  $("wsEmpSemana").textContent=
   empSemana.toLocaleString();
+
 
  $("wsEfSemana").textContent=
   (
@@ -5764,6 +5991,14 @@ function renderResumen(){
  var names=Object.keys(map);
 
 
+ /*
+ =====================================================
+ PROGRAMACIÓN DE LA SEMANA
+
+ Solo OTs programadas lunes-sábado.
+ =====================================================
+ */
+
  var weekOTs=
   names.filter(function(k){
 
@@ -5776,14 +6011,62 @@ function renderResumen(){
 
 
  var totalProg=0;
+
+ var laProg=0;
+
+ var lbProg=0;
+
+
+ weekOTs.forEach(function(k){
+
+  var o=map[k];
+
+
+  totalProg+=
+   N(o.programado);
+
+
+  if(o.linea==="Línea A"){
+
+   laProg+=
+    N(o.programado);
+
+  }else{
+
+   lbProg+=
+    N(o.programado);
+
+  }
+
+ });
+
+
+ /*
+ =====================================================
+ NÓMINA
+
+ Aquí entran TODAS las OTs que tuvieron Empaque
+ durante lunes-sábado.
+
+ Incluye OTs de semanas anteriores.
+ =====================================================
+ */
+
+ var payrollOTs=
+  getPayrollOTs(ref);
+
+
  var totalEmp=0;
+
  var totalAud=0;
+
  var dp=0;
+
  var dr=0;
 
 
  var la={
-  p:0,
+  p:laProg,
   e:0,
   a:0,
   dp:0,
@@ -5792,7 +6075,7 @@ function renderResumen(){
 
 
  var lb={
-  p:0,
+  p:lbProg,
   e:0,
   a:0,
   dp:0,
@@ -5803,20 +6086,23 @@ function renderResumen(){
  var groups=[];
 
 
- weekOTs.forEach(function(k){
+ payrollOTs.forEach(function(x){
 
-  var o=map[k];
+  var o=map[x.ot];
+
+  if(!o)return;
 
 
   var q=
-   empacadoEnSemana(
-    k,
-    ref
-   );
+   N(x.empaque);
 
+
+  /*
+   Auditoría de la misma semana.
+  */
 
   var aud=
-   getAdvancesOT(k)
+   getAdvancesOT(x.ot)
    .filter(function(a){
 
     return(
@@ -5833,17 +6119,23 @@ function renderResumen(){
    },0);
 
 
-  var c=cost[o.modelo]||{};
+  var c=
+   cost[o.modelo]||{};
 
 
-  var p=q*N(c.pes);
-  var r=q*N(c.pre);
+  var p=
+   q*N(c.pes);
+
+  var r=
+   q*N(c.pre);
 
 
-  totalProg+=o.programado;
   totalEmp+=q;
+
   totalAud+=aud;
+
   dp+=p;
+
   dr+=r;
 
 
@@ -5853,40 +6145,79 @@ function renderResumen(){
    :lb;
 
 
-  z.p+=o.programado;
   z.e+=q;
+
   z.a+=aud;
+
   z.dp+=p;
+
   z.dr+=r;
+
+
+  /*
+   Si fue programada esta semana,
+   mostramos su programación.
+
+   Si fue arrastre, programado semana = 0.
+  */
+
+  var programadoSemana=
+   inWeekDate(
+    o.fecha,
+    ref
+   )
+   ?N(o.programado)
+   :0;
 
 
   groups.push({
 
-   ot:k,
+   ot:x.ot,
+
    linea:o.linea,
+
    modelo:o.modelo,
-   p:o.programado,
+
+   p:programadoSemana,
+
    e:q,
+
    dp:p,
-   dr:r
+
+   dr:r,
+
+   fechaProgramacion:o.fecha
 
   });
 
  });
 
 
+ /* =====================================================
+ KPIs
+ ===================================================== */
+
  $("kProg").textContent=
   totalProg.toLocaleString();
+
 
  $("kEmp").textContent=
   totalEmp.toLocaleString();
 
+
  $("kAud").textContent=
   totalAud.toLocaleString();
 
- $("kReg").textContent=
-  weekOTs.length;
 
+ $("kReg").textContent=
+  groups.length;
+
+
+ /*
+ Indicador de producción.
+
+ Puede superar 100% si entran OTs arrastradas.
+ */
 
  $("eficiencia").textContent=
   (
@@ -5896,20 +6227,41 @@ function renderResumen(){
   ).toFixed(1)+"%";
 
 
- $("dPes").textContent=M(dp);
- $("dPre").textContent=M(dr);
+ /* =====================================================
+ DESTAJO
+ ===================================================== */
 
- $("dPesA").textContent=M(la.dp);
- $("dPesB").textContent=M(lb.dp);
+ $("dPes").textContent=
+  M(dp);
 
- $("dPreA").textContent=M(la.dr);
- $("dPreB").textContent=M(lb.dr);
+ $("dPre").textContent=
+  M(dr);
 
+
+ $("dPesA").textContent=
+  M(la.dp);
+
+ $("dPesB").textContent=
+  M(lb.dp);
+
+
+ $("dPreA").textContent=
+  M(la.dr);
+
+ $("dPreB").textContent=
+  M(lb.dr);
+
+
+ /* =====================================================
+ TABLA POR LÍNEA
+ ===================================================== */
 
  function lineRow(name,z){
 
   var ef=
-   z.p?z.e/z.p*100:0;
+   z.p
+   ?z.e/z.p*100
+   :0;
 
 
   return `
@@ -5917,11 +6269,17 @@ function renderResumen(){
   <tr>
 
    <td>${name}</td>
-   <td>${z.p}</td>
-   <td>${z.e}</td>
-   <td>${z.a}</td>
+
+   <td>${z.p.toLocaleString()}</td>
+
+   <td>${z.e.toLocaleString()}</td>
+
+   <td>${z.a.toLocaleString()}</td>
+
    <td>${ef.toFixed(1)}%</td>
+
    <td>${M(z.dp)}</td>
+
    <td>${M(z.dr)}</td>
 
   </tr>
@@ -5936,23 +6294,79 @@ function renderResumen(){
   lineRow("Línea B",lb);
 
 
+ /* =====================================================
+ DETALLE POR OT
+
+ Incluye:
+ - OTs programadas esta semana
+   que generaron Empaque
+ - OTs arrastradas de semanas anteriores
+   que generaron Empaque esta semana
+ ===================================================== */
+
  $("tablaOT").innerHTML=
 
   groups.length
 
   ?
 
-  groups.map(function(g){
+  groups
+  .sort(function(a,b){
+
+   return String(a.ot)
+    .localeCompare(
+     String(b.ot),
+     undefined,
+     {numeric:true}
+    );
+
+  })
+  .map(function(g){
+
+   var arrastre=
+    !inWeekDate(
+     g.fechaProgramacion,
+     ref
+    );
+
 
    return `
 
    <tr>
 
-    <td>${esc(g.ot)}</td>
+    <td>
+
+     <b>${esc(g.ot)}</b>
+
+     ${
+      arrastre
+      ?
+      '<br><span class="arrastrePill">🟠 ARRASTRE</span>'
+      :""
+     }
+
+    </td>
+
     <td>${esc(g.linea)}</td>
+
     <td>${esc(g.modelo)}</td>
-    <td>${g.p}</td>
-    <td>${g.e}</td>
+
+    <td>
+
+     ${g.p.toLocaleString()}
+
+     ${
+      arrastre
+      ?
+      '<br><small style="color:#9a6200">Programada '+esc(g.fechaProgramacion)+'</small>'
+      :""
+     }
+
+    </td>
+
+    <td>
+     ${g.e.toLocaleString()}
+    </td>
 
     <td>
 
@@ -5967,6 +6381,7 @@ function renderResumen(){
     </td>
 
     <td>${M(g.dp)}</td>
+
     <td>${M(g.dr)}</td>
 
    </tr>
@@ -5977,7 +6392,7 @@ function renderResumen(){
 
   :
 
-  '<tr><td colspan="8">Sin datos.</td></tr>';
+  '<tr><td colspan="8">Sin piezas de Empaque en esta semana.</td></tr>';
 
 }
 
@@ -6310,9 +6725,13 @@ $("limpiar")
  function(){
 
   if(editingId){
+
    cancelarEdicion();
+
   }else{
+
    clearForm();
+
   }
 
  }
@@ -6464,16 +6883,20 @@ $("guardarCosto")
 
 
   if(!m){
+
    return alert(
     "Escribe el modelo."
    );
+
   }
 
 
   if(p<0||r<0){
+
    return alert(
     "Los costos no pueden ser negativos."
    );
+
   }
 
 
@@ -6545,6 +6968,15 @@ $("cancelarCosto")
 
 /* =====================================================
 CERRAR SEMANA
+
+REGLA:
+
+PROGRAMADO:
+solo OTs programadas durante la semana.
+
+EMPAQUE:
+todo lo que entró a Empaque durante la semana,
+incluyendo OTs arrastradas.
 ===================================================== */
 
 $("cerrarSemana")
@@ -6560,8 +6992,46 @@ $("cerrarSemana")
   var map=getOTs();
 
 
+  /* =====================================================
+  PROGRAMADO DE LA SEMANA
+  ===================================================== */
+
+  var programadoSemana=0;
+
+
+  Object.keys(map)
+  .forEach(function(k){
+
+   var o=map[k];
+
+
+   if(
+    inWeekDate(
+     o.fecha,
+     ref
+    )
+   ){
+
+    programadoSemana+=
+     N(o.programado);
+
+   }
+
+  });
+
+
+  /* =====================================================
+  EMPAQUE DE LA SEMANA
+
+  NO importa cuándo fue programada la OT.
+  ===================================================== */
+
+  var payrollOTs=
+   getPayrollOTs(ref);
+
+
   var a={
-   programado:0,
+   programado:programadoSemana,
    empaque:0,
    pes:0,
    pre:0
@@ -6580,41 +7050,32 @@ $("cerrarSemana")
   };
 
 
-  Object.keys(map)
-  .forEach(function(k){
+  payrollOTs.forEach(function(x){
 
-   var o=map[k];
+   var o=map[x.ot];
 
-
-   if(
-    !inWeekDate(
-     o.fecha,
-     ref
-    )
-   )return;
+   if(!o)return;
 
 
    var q=
-    empacadoEnSemana(
-     k,
-     ref
-    );
+    N(x.empaque);
 
 
    var c=
     cost[o.modelo]||{};
 
 
-   var p=q*N(c.pes);
-   var r=q*N(c.pre);
+   var p=
+    q*N(c.pes);
 
+   var r=
+    q*N(c.pre);
 
-   a.programado+=
-    o.programado;
 
    a.empaque+=q;
 
    a.pes+=p;
+
    a.pre+=r;
 
 
@@ -6633,33 +7094,45 @@ $("cerrarSemana")
   });
 
 
-  if(!a.programado&&!a.empaque){
+  if(
+   !a.programado &&
+   !a.empaque
+  ){
 
    return alert(
-    "No hay producción en la semana seleccionada."
+    "No hay producción ni piezas de Empaque en la semana seleccionada."
    );
 
   }
 
 
-  var sat=range(ref)[1];
+  var sat=
+   range(ref)[1];
 
 
   hist.push({
 
    cierre:sat,
 
-   programado:a.programado,
+   programado:
+    a.programado,
 
-   empaque:a.empaque,
+   empaque:
+    a.empaque,
 
-   pes:a.pes,
+   pes:
+    a.pes,
 
-   pre:a.pre,
+   pre:
+    a.pre,
 
-   a:la.pes+la.pre,
+   a:
+    la.pes+
+    la.pre,
 
-   b:lb.pes+lb.pre
+   b:
+    lb.pes+
+    lb.pre
 
   });
 
@@ -6670,7 +7143,14 @@ $("cerrarSemana")
 
 
   alert(
-   "Semana cerrada correctamente. ✅"
+   "Semana cerrada correctamente. ✅\n\n"+
+   "Programado: "+
+   a.programado.toLocaleString()+
+   " piezas\n"+
+   "Empaque para nómina: "+
+   a.empaque.toLocaleString()+
+   " piezas\n\n"+
+   "El Empaque incluye OTs arrastradas de semanas anteriores."
   );
 
  }
@@ -6704,6 +7184,10 @@ $("borrarHistorial")
 
 /* =====================================================
 EXPORTAR CSV
+
+Exporta tanto:
+- programación de la semana
+- como OTs arrastradas que generaron Empaque
 ===================================================== */
 
 $("exportar")
@@ -6719,22 +7203,12 @@ $("exportar")
   var map=getOTs();
 
 
-  var rows=[
+  var keys={};
 
-   [
-    "OT",
-    "Linea",
-    "Modelo",
-    "Fecha Programacion",
-    "Programado",
-    "Empaque",
-    "Eficiencia",
-    "Destajo Pespunte",
-    "Destajo Preliminar"
-   ]
 
-  ];
-
+  /*
+   OTs programadas esta semana.
+  */
 
   Object.keys(map)
   .forEach(function(k){
@@ -6743,11 +7217,65 @@ $("exportar")
 
 
    if(
-    !inWeekDate(
+    inWeekDate(
      o.fecha,
      ref
     )
-   )return;
+   ){
+
+    keys[k]=true;
+
+   }
+
+  });
+
+
+  /*
+   OTs que generaron Empaque esta semana.
+  */
+
+  getPayrollOTs(ref)
+  .forEach(function(x){
+
+   keys[x.ot]=true;
+
+  });
+
+
+  var rows=[
+
+   [
+    "OT",
+    "Linea",
+    "Modelo",
+    "Fecha Programacion",
+    "Programado Semana",
+    "Empaque Semana",
+    "Tipo",
+    "Eficiencia",
+    "Destajo Pespunte",
+    "Destajo Preliminar"
+   ]
+
+  ];
+
+
+  Object.keys(keys)
+  .sort(function(a,b){
+
+   return String(a)
+    .localeCompare(
+     String(b),
+     undefined,
+     {numeric:true}
+    );
+
+  })
+  .forEach(function(k){
+
+   var o=map[k];
+
+   if(!o)return;
 
 
    var q=
@@ -6755,6 +7283,32 @@ $("exportar")
      k,
      ref
     );
+
+
+   var programadoSemana=
+    inWeekDate(
+     o.fecha,
+     ref
+    )
+    ?N(o.programado)
+    :0;
+
+
+   var arrastre=
+    !inWeekDate(
+     o.fecha,
+     ref
+    );
+
+
+   if(
+    !programadoSemana &&
+    !q
+   ){
+
+    return;
+
+   }
 
 
    var c=
@@ -6771,13 +7325,17 @@ $("exportar")
 
     o.fecha,
 
-    o.programado,
+    programadoSemana,
 
     q,
 
+    arrastre
+    ?"ARRASTRE"
+    :"PROGRAMADA ESTA SEMANA",
+
     (
-     o.programado
-     ?q/o.programado*100
+     programadoSemana
+     ?q/programadoSemana*100
      :0
     ).toFixed(1)+"%",
 
