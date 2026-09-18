@@ -339,7 +339,7 @@ th{
 
 
 /* =====================================================
-NUEVO PANEL VISUAL DE EFICIENCIA DIARIA
+EFICIENCIA DIARIA
 ===================================================== */
 
 .dailyEfficiencyCard{
@@ -412,6 +412,11 @@ NUEVO PANEL VISUAL DE EFICIENCIA DIARIA
 .compareSalida{
  background:#fff4e4;
  border:2px solid #f1dfbf
+}
+
+.compareEmpaque{
+ background:#eaf8f0;
+ border:2px solid #d5ecdf
 }
 
 .compareTop{
@@ -536,6 +541,95 @@ NUEVO PANEL VISUAL DE EFICIENCIA DIARIA
 .statusNone{
  background:#f1f3f6;
  color:#596575
+}
+
+
+/* =====================================================
+NUEVO: INDICADORES DE FLUJO
+===================================================== */
+
+.flowKpiGrid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+ margin-top:14px
+}
+
+.flowKpi{
+ border-radius:15px;
+ padding:14px;
+ border:2px solid #e0e5eb
+}
+
+.flowKpi.blue{
+ background:#eef5ff;
+ border-color:#d8e6ff
+}
+
+.flowKpi.orange{
+ background:#fff4e4;
+ border-color:#f1dfbf
+}
+
+.flowKpi.green{
+ background:#eaf8f0;
+ border-color:#d5ecdf
+}
+
+.flowKpi.purple{
+ background:#f1edff;
+ border-color:#ddd4ff
+}
+
+.flowKpiLabel{
+ font-size:11px;
+ font-weight:900;
+ color:#66717e;
+ text-transform:uppercase
+}
+
+.flowKpiValue{
+ font-size:27px;
+ font-weight:950;
+ margin-top:4px
+}
+
+.flowKpiSub{
+ font-size:11px;
+ color:#707986;
+ margin-top:3px
+}
+
+.productionSpeedGrid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+ margin-top:12px
+}
+
+.speedBox{
+ background:#f8fafc;
+ border:2px solid #e1e6ec;
+ border-radius:14px;
+ padding:13px
+}
+
+.speedLabel{
+ font-size:11px;
+ font-weight:850;
+ color:#66717e
+}
+
+.speedValue{
+ font-size:24px;
+ font-weight:950;
+ margin-top:3px
+}
+
+.speedSub{
+ font-size:10px;
+ color:#737d89;
+ margin-top:2px
 }
 
 
@@ -864,6 +958,10 @@ WORK SHOP
  background:#e9f8f0
 }
 
+.wsMetricOrange{
+ background:#fff0df
+}
+
 .wsMetricLeft{
  display:flex;
  align-items:center;
@@ -1118,6 +1216,11 @@ MOBILE
   grid-template-columns:1fr
  }
 
+ .flowKpiGrid,
+ .productionSpeedGrid{
+  grid-template-columns:1fr 1fr
+ }
+
  main{
   padding:10px
  }
@@ -1138,7 +1241,9 @@ MOBILE
 
 @media(max-width:420px){
 
- .advanceDashboard{
+ .advanceDashboard,
+ .flowKpiGrid,
+ .productionSpeedGrid{
   grid-template-columns:1fr
  }
 
@@ -1159,7 +1264,7 @@ MOBILE
 <h1>THE STUDIO · CONTROL DE PRODUCCIÓN</h1>
 
 <p>
-OT · Programación · Avances · Work Shop · Destajo · Eficiencia · Lead Time · Cierre lunes–sábado
+OT · Programación · Avances · Work Shop · Destajo · Eficiencia · Piezas/hora · Tiempos estándar · Cierre lunes–sábado
 </p>
 
 </header>
@@ -1396,7 +1501,7 @@ FILTRO DIARIO
 <div class="advanceFilterSub">
 
 Selecciona el día en que programaste las OTs y la línea.
-The Studio te mostrará la programación y dónde está actualmente cada OT.
+The Studio te mostrará la programación y el movimiento real de piezas.
 
 </div>
 
@@ -1450,7 +1555,7 @@ Piezas programadas ese día
 <div class="advanceDashBox orange">
 
 <div class="advanceDashLabel">
-⚙️ SALIDA PESpUNTE
+⚙️ SALIDA PESPUNTE
 </div>
 
 <div id="avanceDiaSalida" class="advanceDashValue">
@@ -1458,7 +1563,7 @@ Piezas programadas ese día
 </div>
 
 <div class="advanceDashSub">
-Inventario actual en salida de pespunte
+Piezas que entraron a salida de pespunte ese día
 </div>
 
 </div>
@@ -1490,7 +1595,7 @@ Salida pespunte ÷ programado
 
 <div class="advanceProgressText">
 
-<span>Programado</span>
+<span>Programado → Pespunte</span>
 
 <span id="avanceDiaTexto">
 0 / 0 piezas
@@ -1513,11 +1618,11 @@ GRÁFICA VISUAL
 <div>
 
 <div class="dailyEfficiencyTitle">
-📊 Eficiencia del día
+📊 Flujo de producción del día
 </div>
 
 <div id="graficaDiaSub" class="dailyEfficiencySub">
-Programado contra salida de pespunte
+Programado → Salida pespunte → Empaque
 </div>
 
 </div>
@@ -1528,7 +1633,7 @@ Programado contra salida de pespunte
 0%
 </strong>
 
-<span>AVANCE</span>
+<span>PROGRAMADO → PESpUNTE</span>
 
 </div>
 
@@ -1557,7 +1662,7 @@ Programado contra salida de pespunte
 </div>
 
 <div class="compareSmall">
-Piezas programadas
+Piezas programadas ese día
 </div>
 
 </div>
@@ -1582,7 +1687,7 @@ Piezas programadas
 </div>
 
 <div class="compareSmall">
-Piezas actualmente en salida
+Piezas que entraron a salida ese día
 </div>
 
 </div>
@@ -1613,12 +1718,92 @@ PROGRAMADO → SALIDA PESPUNTE
 <div class="compareFooter">
 
 <span>
-Piezas en salida
+Salida pespunte del día
 </span>
 
 <span id="graficaFaltante">
 Faltan 0 piezas
 </span>
+
+</div>
+
+
+<div class="flowKpiGrid">
+
+<div class="flowKpi blue">
+
+<div class="flowKpiLabel">
+📋 → ⚙️ Avance
+</div>
+
+<div id="flowKpiPespunte" class="flowKpiValue">
+0.0%
+</div>
+
+<div class="flowKpiSub">
+Salida pespunte ÷ Programado
+</div>
+
+</div>
+
+
+<div class="flowKpi orange">
+
+<div class="flowKpiLabel">
+⚙️ → 📦 Conversión
+</div>
+
+<div id="flowKpiEmpaque" class="flowKpiValue">
+0.0%
+</div>
+
+<div class="flowKpiSub">
+Empaque ÷ Salida pespunte
+</div>
+
+</div>
+
+
+<div class="flowKpi green">
+
+<div class="flowKpiLabel">
+📋 → 📦 Cumplimiento
+</div>
+
+<div id="flowKpiCumplimiento" class="flowKpiValue">
+0.0%
+</div>
+
+<div class="flowKpiSub">
+Empaque ÷ Programado
+</div>
+
+</div>
+
+</div>
+
+
+<div class="compareBox compareEmpaque" style="margin-top:12px">
+
+<div class="compareTop">
+
+<div class="compareName">
+📦 EMPAQUE · NÓMINA
+</div>
+
+<div class="compareIcon">
+💰
+</div>
+
+</div>
+
+<div id="graficaEmpaque" class="compareNumber">
+0
+</div>
+
+<div class="compareSmall">
+Piezas que realmente entraron a Empaque ese día · base de nómina/destajo
+</div>
 
 </div>
 
@@ -1808,13 +1993,28 @@ WORK SHOP
 
 <b>En proceso = Armado + Salida pespunte.</b>
 
-La información de Empaque corresponde a las piezas que
-<b>realmente entraron a Empaque en la fecha seleccionada</b>,
-aunque la OT haya sido programada otro día.
+<br><br>
+
+Los indicadores de flujo utilizan movimientos reales registrados
+en la fecha seleccionada.
 
 <br><br>
 
-<b>💡 Toca cualquier número para ver las OTs que lo componen.</b>
+<b>📋 Programado → ⚙️ Salida pespunte</b>
+mide cuánto de lo programado avanzó hasta pespunte.
+
+<br><br>
+
+<b>⚙️ Salida pespunte → 📦 Empaque</b>
+mide qué porcentaje de la salida de pespunte del día llegó a Empaque.
+
+<br><br>
+
+<b>💰 Empaque</b> es la base de nómina/destajo.
+
+<br><br>
+
+💡 Toca cualquier número para ver las OTs que lo componen.
 
 </div>
 
@@ -1856,7 +2056,7 @@ Actualizar Work Shop
 
 <div class="wsLineName">Línea A</div>
 
-<div class="wsLineSub">Producción del día</div>
+<div class="wsLineSub">Indicadores de producción</div>
 
 </div>
 
@@ -1889,7 +2089,7 @@ data-ws-line="Línea A">
 </div>
 
 
-<div class="wsMetric wsMetricYellow">
+<div class="wsMetric wsMetricOrange">
 
 <div class="wsMetricLeft">
 
@@ -1897,9 +2097,35 @@ data-ws-line="Línea A">
 
 <div>
 
+<div class="wsLabel">Salida Pespunte</div>
+
+<div class="wsSub">Salida real del día · Toca el número</div>
+
+</div>
+
+</div>
+
+<div class="wsValue wsClickable"
+id="wsSalidaA"
+data-ws-detail="salida"
+data-ws-line="Línea A">
+0
+</div>
+
+</div>
+
+
+<div class="wsMetric wsMetricYellow">
+
+<div class="wsMetricLeft">
+
+<div class="wsIcon">🔧</div>
+
+<div>
+
 <div class="wsLabel">En proceso</div>
 
-<div class="wsSub">Armado + Salida pespunte</div>
+<div class="wsSub">Armado + inventario salida pespunte</div>
 
 </div>
 
@@ -1949,7 +2175,7 @@ data-ws-line="Línea A">
 
 <div>
 
-<div class="wsLabel">Empaque</div>
+<div class="wsLabel">Empaque · Nómina</div>
 
 <div class="wsSub">Piezas que entraron hoy</div>
 
@@ -1975,9 +2201,9 @@ data-ws-line="Línea A">
 
 <div>
 
-<div class="wsLabel">Eficiencia</div>
+<div class="wsLabel">Programado → Pespunte</div>
 
-<div class="wsSub">Empaque ÷ Programado</div>
+<div class="wsSub">Salida pespunte ÷ Programado</div>
 
 </div>
 
@@ -1985,6 +2211,112 @@ data-ws-line="Línea A">
 
 <div class="wsEffValue" id="wsEfA">
 0.0%
+</div>
+
+</div>
+
+
+<div class="flowKpiGrid">
+
+<div class="flowKpi orange">
+
+<div class="flowKpiLabel">
+⚙️ → 📦
+</div>
+
+<div id="wsConvA" class="flowKpiValue">
+0.0%
+</div>
+
+<div class="flowKpiSub">
+Pespunte → Empaque
+</div>
+
+</div>
+
+<div class="flowKpi green">
+
+<div class="flowKpiLabel">
+📋 → 📦
+</div>
+
+<div id="wsCumA" class="flowKpiValue">
+0.0%
+</div>
+
+<div class="flowKpiSub">
+Empaque → Programado
+</div>
+
+</div>
+
+<div class="flowKpi purple">
+
+<div class="flowKpiLabel">
+⏱️ Piezas/hora
+</div>
+
+<div id="wsPphA" class="flowKpiValue">
+0.0
+</div>
+
+<div class="flowKpiSub">
+Empaque / hora productiva
+</div>
+
+</div>
+
+</div>
+
+
+<div class="productionSpeedGrid">
+
+<div class="speedBox">
+
+<div class="speedLabel">
+⏱️ MINUTOS DISPONIBLES
+</div>
+
+<div id="wsMinA" class="speedValue">
+580
+</div>
+
+<div class="speedSub">
+Jornada productiva
+</div>
+
+</div>
+
+<div class="speedBox">
+
+<div class="speedLabel">
+🧮 MIN/PZA ESTÁNDAR
+</div>
+
+<div id="wsStdA" class="speedValue">
+—
+</div>
+
+<div class="speedSub">
+Promedio ponderado por programación
+</div>
+
+</div>
+
+<div class="speedBox">
+
+<div class="speedLabel">
+🎯 CAPACIDAD TEÓRICA
+</div>
+
+<div id="wsCapA" class="speedValue">
+—
+</div>
+
+<div class="speedSub">
+Piezas según tiempo estándar
+</div>
+
 </div>
 
 </div>
@@ -2005,7 +2337,7 @@ data-ws-line="Línea A">
 
 <div class="wsLineName">Línea B</div>
 
-<div class="wsLineSub">Producción del día</div>
+<div class="wsLineSub">Indicadores de producción</div>
 
 </div>
 
@@ -2038,7 +2370,7 @@ data-ws-line="Línea B">
 </div>
 
 
-<div class="wsMetric wsMetricYellow">
+<div class="wsMetric wsMetricOrange">
 
 <div class="wsMetricLeft">
 
@@ -2046,9 +2378,35 @@ data-ws-line="Línea B">
 
 <div>
 
+<div class="wsLabel">Salida Pespunte</div>
+
+<div class="wsSub">Salida real del día · Toca el número</div>
+
+</div>
+
+</div>
+
+<div class="wsValue wsClickable"
+id="wsSalidaB"
+data-ws-detail="salida"
+data-ws-line="Línea B">
+0
+</div>
+
+</div>
+
+
+<div class="wsMetric wsMetricYellow">
+
+<div class="wsMetricLeft">
+
+<div class="wsIcon">🔧</div>
+
+<div>
+
 <div class="wsLabel">En proceso</div>
 
-<div class="wsSub">Armado + Salida pespunte</div>
+<div class="wsSub">Armado + inventario salida pespunte</div>
 
 </div>
 
@@ -2098,7 +2456,7 @@ data-ws-line="Línea B">
 
 <div>
 
-<div class="wsLabel">Empaque</div>
+<div class="wsLabel">Empaque · Nómina</div>
 
 <div class="wsSub">Piezas que entraron hoy</div>
 
@@ -2124,9 +2482,9 @@ data-ws-line="Línea B">
 
 <div>
 
-<div class="wsLabel">Eficiencia</div>
+<div class="wsLabel">Programado → Pespunte</div>
 
-<div class="wsSub">Empaque ÷ Programado</div>
+<div class="wsSub">Salida pespunte ÷ Programado</div>
 
 </div>
 
@@ -2138,10 +2496,115 @@ data-ws-line="Línea B">
 
 </div>
 
+
+<div class="flowKpiGrid">
+
+<div class="flowKpi orange">
+
+<div class="flowKpiLabel">
+⚙️ → 📦
+</div>
+
+<div id="wsConvB" class="flowKpiValue">
+0.0%
+</div>
+
+<div class="flowKpiSub">
+Pespunte → Empaque
 </div>
 
 </div>
 
+<div class="flowKpi green">
+
+<div class="flowKpiLabel">
+📋 → 📦
+</div>
+
+<div id="wsCumB" class="flowKpiValue">
+0.0%
+</div>
+
+<div class="flowKpiSub">
+Empaque → Programado
+</div>
+
+</div>
+
+<div class="flowKpi purple">
+
+<div class="flowKpiLabel">
+⏱️ Piezas/hora
+</div>
+
+<div id="wsPphB" class="flowKpiValue">
+0.0
+</div>
+
+<div class="flowKpiSub">
+Empaque / hora productiva
+</div>
+
+</div>
+
+</div>
+
+
+<div class="productionSpeedGrid">
+
+<div class="speedBox">
+
+<div class="speedLabel">
+⏱️ MINUTOS DISPONIBLES
+</div>
+
+<div id="wsMinB" class="speedValue">
+580
+</div>
+
+<div class="speedSub">
+Jornada productiva
+</div>
+
+</div>
+
+<div class="speedBox">
+
+<div class="speedLabel">
+🧮 MIN/PZA ESTÁNDAR
+</div>
+
+<div id="wsStdB" class="speedValue">
+—
+</div>
+
+<div class="speedSub">
+Promedio ponderado por programación
+</div>
+
+</div>
+
+<div class="speedBox">
+
+<div class="speedLabel">
+🎯 CAPACIDAD TEÓRICA
+</div>
+
+<div id="wsCapB" class="speedValue">
+—
+</div>
+
+<div class="speedSub">
+Piezas según tiempo estándar
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 
 <div id="wsDetalleCard" class="wsDetailCard" style="display:none">
@@ -2184,7 +2647,7 @@ OTs relacionadas
 <div class="wsWeekTitle">General de la semana</div>
 
 <div class="wsWeekSub">
-Programado de la semana · Empaque real lunes a sábado
+Programado · Pespunte · Empaque real lunes a sábado
 </div>
 
 </div>
@@ -2241,7 +2704,7 @@ Todo lo que entró a Empaque lunes-sábado
 <br>
 
 <small>
-Nota: Empaque puede incluir OTs arrastradas de semanas anteriores.
+Empaque ÷ Programado. Puede superar 100% cuando existen OTs arrastradas.
 </small>
 
 </div>
@@ -2558,7 +3021,7 @@ COSTOS
 
 <div class="card">
 
-<h2>💰 Costos por modelo</h2>
+<h2>💰 Costos y tiempos por modelo</h2>
 
 <div class="note">
 
@@ -2567,9 +3030,21 @@ Los costos se calculan sobre las piezas que entran a
 
 <br><br>
 
-<strong>
-✏️ Si modificas un costo, The Studio actualizará automáticamente el destajo.
-</strong>
+El campo <b>Min/pieza</b> es el tiempo estándar del modelo.
+
+<br><br>
+
+Ejemplo:
+
+<br>
+
+<b>1.50 min/pieza</b> =
+<b>40 piezas/hora teóricas</b>.
+
+<br><br>
+
+The Studio utilizará este dato para calcular
+capacidad teórica, carga y rendimiento por tiempo estándar.
 
 </div>
 
@@ -2599,6 +3074,14 @@ Los costos se calculan sobre las piezas que entran a
 
 </div>
 
+<div class="field">
+
+<label>Tiempo estándar · Min/pieza</label>
+
+<input id="cMin" type="number" min="0" step="0.01" placeholder="Ej. 1.50">
+
+</div>
+
 </div>
 
 <div class="actions">
@@ -2621,8 +3104,19 @@ Guardar costo
 <div class="successNote">
 
 💡 <b>Importante:</b>
-al actualizar el costo de un modelo,
-los cálculos de destajo utilizarán automáticamente el nuevo costo.
+
+puedes modificar posteriormente el costo o el tiempo estándar
+de cualquier modelo.
+
+<br><br>
+
+Los datos nuevos se utilizan automáticamente en los indicadores.
+
+<br><br>
+
+Los modelos que ya tenías registrados conservan sus costos.
+Si todavía no tienen tiempo estándar, aparecerán como
+<b>“Sin tiempo”</b> hasta que lo captures.
 
 </div>
 
@@ -2636,6 +3130,8 @@ los cálculos de destajo utilizarán automáticamente el nuevo costo.
 <th>Modelo</th>
 <th>Pespunte</th>
 <th>Preliminar</th>
+<th>Min/pieza</th>
+<th>Piezas/hora</th>
 <th>Acción</th>
 </tr>
 
@@ -2874,6 +3370,26 @@ var FLOW=[
 
 
 /* =====================================================
+JORNADA PRODUCTIVA
+=====================================================
+
+8:00 → 13:00 = 300 min
+13:00 → 13:40 = comida = 0 min productivos
+13:40 → 18:20 = 280 min
+
+TOTAL = 580 MINUTOS PRODUCTIVOS
+===================================================== */
+
+var JORNADA={
+ inicio1:8*60,
+ comidaInicio:13*60,
+ comidaFin:13*60+40,
+ fin:18*60+20,
+ total:580
+};
+
+
+/* =====================================================
 GUARDAR
 ===================================================== */
 
@@ -2968,6 +3484,122 @@ function inWeekAdvance(a,ref){
   a.fecha,
   ref
  );
+
+}
+
+
+/* =====================================================
+MINUTOS PRODUCTIVOS
+===================================================== */
+
+function productiveMinutesForDate(fecha){
+
+ var hoy=today();
+
+ /*
+ Históricos:
+ jornada completa = 580 min.
+ */
+
+ if(fecha<hoy){
+
+  return JORNADA.total;
+
+ }
+
+
+ /*
+ Fechas futuras:
+ todavía no transcurre jornada.
+ */
+
+ if(fecha>hoy){
+
+  return 0;
+
+ }
+
+
+ /*
+ Hoy:
+ calculamos solamente los minutos productivos
+ que realmente han transcurrido.
+ */
+
+ var d=new Date();
+
+ var mins=
+  d.getHours()*60+
+  d.getMinutes();
+
+ if(mins<JORNADA.inicio1){
+
+  return 0;
+
+ }
+
+
+ if(
+  mins>=JORNADA.inicio1 &&
+  mins<JORNADA.comidaInicio
+ ){
+
+  return mins-JORNADA.inicio1;
+
+ }
+
+
+ if(
+  mins>=JORNADA.comidaInicio &&
+  mins<JORNADA.comidaFin
+ ){
+
+  return 300;
+
+ }
+
+
+ if(
+  mins>=JORNADA.comidaFin &&
+  mins<JORNADA.fin
+ ){
+
+  return(
+   300+
+   (
+    mins-JORNADA.comidaFin
+   )
+  );
+
+ }
+
+
+ return JORNADA.total;
+
+}
+
+
+/* =====================================================
+FORMATO MINUTOS
+===================================================== */
+
+function formatMinutes(v){
+
+ var n=Math.max(0,N(v));
+
+ if(n===0)return"0 min";
+
+ var h=Math.floor(n/60);
+
+ var m=Math.round(n%60);
+
+ if(h>0){
+
+  return h+"h "+m+"m";
+
+ }
+
+ return m+" min";
 
 }
 
@@ -3377,8 +4009,43 @@ function empacadoEnFecha(ot,fecha){
 
 
 /* =====================================================
+SALIDA PESPUNTE DEL DÍA
+
+IMPORTANTE:
+Esto mide las piezas que REALMENTE ENTRARON
+al proceso "Salida pespunte" en esa fecha.
+
+No es inventario actual.
+
+Así podemos comparar:
+
+Programado → Salida pespunte
+Salida pespunte → Empaque
+===================================================== */
+
+function salidaPespunteEnFecha(ot,fecha){
+
+ return getAdvancesOT(ot)
+ .filter(function(a){
+
+  return(
+   a.siguienteProceso==="Salida pespunte" &&
+   a.fecha===fecha
+  );
+
+ })
+ .reduce(function(t,a){
+
+  return t+N(a.piezas);
+
+ },0);
+
+}
+
+
+/* =====================================================
 EMPAQUE EN SEMANA
-ESTA FUNCIÓN ES LA BASE DE LA NÓMINA
+BASE DE NÓMINA
 ===================================================== */
 
 function empacadoEnSemana(ot,ref){
@@ -3402,18 +4069,7 @@ function empacadoEnSemana(ot,ref){
 
 
 /* =====================================================
-OTs QUE GENERAN NÓMINA EN LA SEMANA
-
-IMPORTANTE:
-
-La nómina NO depende de la fecha de programación.
-
-Depende de cuándo las piezas entraron a Empaque.
-
-Lunes → sábado.
-
-Una OT programada la semana anterior puede generar
-nómina esta semana.
+OTs QUE GENERAN NÓMINA
 ===================================================== */
 
 function getPayrollOTs(ref){
@@ -3460,6 +4116,111 @@ function getPayrollOTs(ref){
 
 
  return lista;
+
+}
+
+
+/* =====================================================
+COSTO / TIEMPO ESTÁNDAR
+===================================================== */
+
+function standardMinutesForModel(modelo){
+
+ var c=
+  cost[modelo]||{};
+
+ return N(c.min);
+
+}
+
+
+function piecesPerHourForModel(modelo){
+
+ var min=
+  standardMinutesForModel(modelo);
+
+ if(min<=0)return 0;
+
+ return 60/min;
+
+}
+
+
+/*
+Promedio ponderado de minutos por pieza.
+
+Ejemplo:
+
+Modelo A:
+100 piezas × 1.5 min = 150 min
+
+Modelo B:
+200 piezas × 2.0 min = 400 min
+
+Total:
+550 min / 300 piezas
+= 1.833 min/pieza
+*/
+
+function weightedStandardMinutes(lista){
+
+ var pieces=0;
+ var minutes=0;
+
+
+ lista.forEach(function(x){
+
+  var min=
+   standardMinutesForModel(
+    x.modelo
+   );
+
+  var q=N(x.piezas);
+
+
+  if(min>0&&q>0){
+
+   pieces+=q;
+
+   minutes+=q*min;
+
+  }
+
+ });
+
+
+ return pieces>0
+  ?minutes/pieces
+  :0;
+
+}
+
+
+function standardMinutesForPieces(lista){
+
+ var total=0;
+
+
+ lista.forEach(function(x){
+
+  var min=
+   standardMinutesForModel(
+    x.modelo
+   );
+
+  var q=N(x.piezas);
+
+
+  if(min>0){
+
+   total+=q*min;
+
+  }
+
+ });
+
+
+ return total;
 
 }
 
@@ -4519,13 +5280,30 @@ GRÁFICA VISUAL
 function renderDailyEfficiency(
  totalProgramado,
  totalSalida,
+ totalEmpaque,
  fecha,
  linea
 ){
 
- var porcentaje=
+ var porcentajePespunte=
   totalProgramado
   ?totalSalida/
+   totalProgramado*
+   100
+  :0;
+
+
+ var porcentajeEmpaque=
+  totalSalida
+  ?totalEmpaque/
+   totalSalida*
+   100
+  :0;
+
+
+ var porcentajeCumplimiento=
+  totalProgramado
+  ?totalEmpaque/
    totalProgramado*
    100
   :0;
@@ -4536,7 +5314,7 @@ function renderDailyEfficiency(
    0,
    Math.min(
     100,
-    porcentaje
+    porcentajePespunte
    )
   );
 
@@ -4551,14 +5329,19 @@ function renderDailyEfficiency(
   totalSalida.toLocaleString();
 
 
+ $("graficaEmpaque")
+  .textContent=
+  totalEmpaque.toLocaleString();
+
+
  $("graficaDiaPorcentaje")
   .textContent=
-  porcentaje.toFixed(1)+"%";
+  porcentajePespunte.toFixed(1)+"%";
 
 
  $("graficaBarraTexto")
   .textContent=
-  porcentaje.toFixed(1)+"%";
+  porcentajePespunte.toFixed(1)+"%";
 
 
  $("graficaBarra")
@@ -4566,12 +5349,27 @@ function renderDailyEfficiency(
   visual+"%";
 
 
+ $("flowKpiPespunte")
+  .textContent=
+  porcentajePespunte.toFixed(1)+"%";
+
+
+ $("flowKpiEmpaque")
+  .textContent=
+  porcentajeEmpaque.toFixed(1)+"%";
+
+
+ $("flowKpiCumplimiento")
+  .textContent=
+  porcentajeCumplimiento.toFixed(1)+"%";
+
+
  $("graficaDiaSub")
   .textContent=
    fecha+
    " · "+
    linea+
-   " · Programado contra salida de pespunte";
+   " · Flujo real del día";
 
 
  var faltante=
@@ -4585,7 +5383,7 @@ function renderDailyEfficiency(
   .textContent=
    "Faltan "+
    faltante.toLocaleString()+
-   " piezas";
+   " piezas para igualar programación";
 
 
  var status=
@@ -4630,7 +5428,7 @@ function renderDailyEfficiency(
  }
 
 
- if(porcentaje>=80){
+ if(porcentajePespunte>=80){
 
   $("graficaBarra")
    .classList.add(
@@ -4644,12 +5442,12 @@ function renderDailyEfficiency(
   icon.textContent="🟢";
 
   titulo.textContent=
-   "Muy buen avance";
+   "Buen avance hacia pespunte";
 
   texto.textContent=
    "La salida de pespunte está en 80% o más de lo programado.";
 
- }else if(porcentaje>=50){
+ }else if(porcentajePespunte>=50){
 
   $("graficaBarra")
    .classList.add(
@@ -4666,7 +5464,7 @@ function renderDailyEfficiency(
    "Avance medio";
 
   texto.textContent=
-   "Hay avance, pero todavía existe una diferencia importante contra lo programado.";
+   "Existe avance hacia pespunte, pero todavía hay diferencia contra la programación.";
 
  }else{
 
@@ -4710,13 +5508,40 @@ function renderDailyAdvances(){
   );
 
 
- var totalSalida=
-  lista.reduce(
-   function(t,x){
-    return t+x.salida;
-   },
-   0
-  );
+ /*
+ Salida Pespunte:
+ movimiento real del día.
+ */
+
+ var totalSalida=0;
+
+ lista.forEach(function(x){
+
+  totalSalida+=
+   salidaPespunteEnFecha(
+    x.ot,
+    x.fecha
+   );
+
+ });
+
+
+ /*
+ Empaque:
+ movimiento real del día.
+ */
+
+ var totalEmpaque=0;
+
+ lista.forEach(function(x){
+
+  totalEmpaque+=
+   empacadoEnFecha(
+    x.ot,
+    x.fecha
+   );
+
+ });
 
 
  var porcentaje=
@@ -4786,6 +5611,7 @@ function renderDailyAdvances(){
  renderDailyEfficiency(
   totalProgramado,
   totalSalida,
+  totalEmpaque,
   $("avanceFecha").value||today(),
   $("avanceLinea").value||"Todas"
  );
@@ -4837,6 +5663,20 @@ function renderDailyAdvances(){
 
    var sc=
     statusClass(x.ultimo);
+
+
+   var salidaDia=
+    salidaPespunteEnFecha(
+     x.ot,
+     x.fecha
+    );
+
+
+   var empaqueDia=
+    empacadoEnFecha(
+     x.ot,
+     x.fecha
+    );
 
 
    return `
@@ -4915,10 +5755,10 @@ function renderDailyAdvances(){
 
      <div class="dailyOTStat">
 
-      <span>🟠 Salida pespunte</span>
+      <span>🟠 Salida pespunte hoy</span>
 
       <strong>
-       ${x.salida.toLocaleString()}
+       ${salidaDia.toLocaleString()}
       </strong>
 
      </div>
@@ -4937,10 +5777,10 @@ function renderDailyAdvances(){
 
      <div class="dailyOTStat">
 
-      <span>🟢 Empaque</span>
+      <span>🟢 Empaque hoy</span>
 
       <strong>
-       ${x.empaque.toLocaleString()}
+       ${empaqueDia.toLocaleString()}
       </strong>
 
      </div>
@@ -5278,6 +6118,17 @@ function mostrarDetalleWS(tipo,linea){
   }
 
 
+  if(tipo==="salida"){
+
+   piezas=
+    salidaPespunteEnFecha(
+     k,
+     ref
+    );
+
+  }
+
+
   if(tipo==="proceso"){
 
    piezas=
@@ -5327,11 +6178,13 @@ function mostrarDetalleWS(tipo,linea){
 
   programado:"📋 Programado",
 
-  proceso:"⚙️ En proceso",
+  salida:"⚙️ Salida Pespunte",
+
+  proceso:"🔧 En proceso",
 
   clasificacion:"📦 Clasificación",
 
-  empaque:"📦 Empaque"
+  empaque:"💰 Empaque · Nómina"
 
  };
 
@@ -5623,13 +6476,27 @@ function renderWorkshop(){
  var byLine={};
 
 
- prod.forEach(function(r){
+ ["Línea A","Línea B"]
+ .forEach(function(l){
 
-  var k=String(r.ot);
+  byLine[l]={
+   Programado:0,
+   Armado:0,
+   "Salida pespunte":0,
+   Clasificación:0,
+   Empaque:0,
+   Auditoría:0
+  };
+
+ });
+
+
+ Object.keys(map)
+ .forEach(function(k){
 
   var o=map[k];
 
-  if(!o)return;
+  var inv=inventoryOT(k);
 
 
   if(!byLine[o.linea]){
@@ -5646,34 +6513,12 @@ function renderWorkshop(){
   }
 
 
-  var inv=inventoryOT(k);
-
-
   FLOW.forEach(function(p){
 
    byLine[o.linea][p]+=
     N(inv[p]);
 
   });
-
- });
-
-
- ["Línea A","Línea B"]
- .forEach(function(l){
-
-  if(!byLine[l]){
-
-   byLine[l]={
-    Programado:0,
-    Armado:0,
-    "Salida pespunte":0,
-    Clasificación:0,
-    Empaque:0,
-    Auditoría:0
-   };
-
-  }
 
  });
 
@@ -5779,6 +6624,7 @@ function renderWorkshop(){
 
   "Línea A":{
    programado:0,
+   salida:0,
    proceso:0,
    clasificacion:0,
    empaque:0
@@ -5786,6 +6632,7 @@ function renderWorkshop(){
 
   "Línea B":{
    programado:0,
+   salida:0,
    proceso:0,
    clasificacion:0,
    empaque:0
@@ -5798,6 +6645,8 @@ function renderWorkshop(){
  .forEach(function(k){
 
   var o=map[k];
+
+  if(!dia[o.linea])return;
 
 
   /*
@@ -5815,23 +6664,32 @@ function renderWorkshop(){
 
 
    dia[o.linea].proceso+=
-    inv.Armado+
-    inv["Salida pespunte"];
+    N(inv.Armado)+
+    N(inv["Salida pespunte"]);
 
 
    dia[o.linea].clasificacion+=
-    inv.Clasificación;
+    N(inv.Clasificación);
 
   }
 
 
   /*
-   EMPAQUE:
-   cualquier OT que realmente entró a Empaque
-   en la fecha seleccionada.
+   SALIDA PESPUNTE:
+   movimiento real del día.
+  */
 
-   Puede ser una OT programada hoy o una OT
-   arrastrada de días/semanas anteriores.
+  dia[o.linea].salida+=
+   salidaPespunteEnFecha(
+    k,
+    ref
+   );
+
+
+  /*
+   EMPAQUE:
+   movimiento real del día.
+   Incluye arrastre.
   */
 
   dia[o.linea].empaque+=
@@ -5844,19 +6702,277 @@ function renderWorkshop(){
 
 
  var pA=dia["Línea A"].programado;
+ var sA=dia["Línea A"].salida;
  var eA=dia["Línea A"].empaque;
  var prA=dia["Línea A"].proceso;
  var cA=dia["Línea A"].clasificacion;
 
 
  var pB=dia["Línea B"].programado;
+ var sB=dia["Línea B"].salida;
  var eB=dia["Línea B"].empaque;
  var prB=dia["Línea B"].proceso;
  var cB=dia["Línea B"].clasificacion;
 
 
+ /*
+ =====================================================
+ INDICADORES DE TIEMPO
+ =====================================================
+ */
+
+ function lineModels(linea){
+
+  var lista=[];
+
+
+  Object.keys(map)
+  .forEach(function(k){
+
+   var o=map[k];
+
+
+   if(
+    o.linea!==linea ||
+    o.fecha!==ref
+   ){
+
+    return;
+
+   }
+
+
+   lista.push({
+
+    modelo:o.modelo,
+
+    piezas:N(o.programado)
+
+   });
+
+  });
+
+
+  return lista;
+
+ }
+
+
+ function lineOutputModels(linea){
+
+  var lista=[];
+
+
+  Object.keys(map)
+  .forEach(function(k){
+
+   var o=map[k];
+
+
+   if(o.linea!==linea)return;
+
+
+   var q=
+    empacadoEnFecha(
+     k,
+     ref
+    );
+
+
+   if(q<=0)return;
+
+
+   lista.push({
+
+    modelo:o.modelo,
+
+    piezas:q
+
+   });
+
+  });
+
+
+  return lista;
+
+ }
+
+
+ function renderLineTime(
+  linea,
+  prefix,
+  programado
+ ){
+
+  var mins=
+   productiveMinutesForDate(
+    ref
+   );
+
+
+  /*
+   Tiempo estándar según lo programado.
+  */
+
+  var planned=
+   lineModels(linea);
+
+
+  var std=
+   weightedStandardMinutes(
+    planned
+   );
+
+
+  /*
+   Capacidad teórica:
+
+   580 / min/pieza
+  */
+
+  var capacidad=
+   std>0
+   ?mins/std
+   :0;
+
+
+  /*
+   Piezas reales por hora:
+
+   Empaque / horas productivas.
+  */
+
+  var emp=
+   linea==="Línea A"
+   ?eA
+   :eB;
+
+
+  var horas=
+   mins/60;
+
+
+  var pph=
+   horas>0
+   ?emp/horas
+   :0;
+
+
+  $(prefix+"Min").textContent=
+   mins.toLocaleString()+
+   " min";
+
+
+  $(prefix+"Std").textContent=
+   std>0
+   ?std.toFixed(2)
+   :"—";
+
+
+  $(prefix+"Cap").textContent=
+   capacidad>0
+   ?Math.round(capacidad).toLocaleString()
+   :"—";
+
+
+  $(prefix+"Pph").textContent=
+   pph.toFixed(1);
+
+
+ }
+
+
+ renderLineTime(
+  "Línea A",
+  "ws",
+  pA
+ );
+
+
+ /*
+ Como existen IDs wsMinA y wsMinB,
+ ajustamos explícitamente cada línea.
+ */
+
+ function setTimeLine(
+  linea,
+  sufijo,
+  emp
+ ){
+
+  var mins=
+   productiveMinutesForDate(
+    ref
+   );
+
+
+  var planned=
+   lineModels(linea);
+
+
+  var std=
+   weightedStandardMinutes(
+    planned
+   );
+
+
+  var capacidad=
+   std>0
+   ?mins/std
+   :0;
+
+
+  var horas=
+   mins/60;
+
+
+  var pph=
+   horas>0
+   ?emp/horas
+   :0;
+
+
+  $("wsMin"+sufijo).textContent=
+   mins.toLocaleString();
+
+
+  $("wsStd"+sufijo).textContent=
+   std>0
+   ?std.toFixed(2)
+   :"—";
+
+
+  $("wsCap"+sufijo).textContent=
+   capacidad>0
+   ?Math.round(capacidad).toLocaleString()
+   :"—";
+
+
+  $("wsPph"+sufijo).textContent=
+   pph.toFixed(1);
+
+ }
+
+
+ setTimeLine(
+  "Línea A",
+  "A",
+  eA
+ );
+
+
+ setTimeLine(
+  "Línea B",
+  "B",
+  eB
+ );
+
+
  $("wsProgA").textContent=
   pA.toLocaleString();
+
+ $("wsSalidaA").textContent=
+  sA.toLocaleString();
 
  $("wsProcA").textContent=
   prA.toLocaleString();
@@ -5867,7 +6983,20 @@ function renderWorkshop(){
  $("wsEmpA").textContent=
   eA.toLocaleString();
 
+
  $("wsEfA").textContent=
+  (
+   pA?sA/pA*100:0
+  ).toFixed(1)+"%";
+
+
+ $("wsConvA").textContent=
+  (
+   sA?eA/sA*100:0
+  ).toFixed(1)+"%";
+
+
+ $("wsCumA").textContent=
   (
    pA?eA/pA*100:0
   ).toFixed(1)+"%";
@@ -5875,6 +7004,9 @@ function renderWorkshop(){
 
  $("wsProgB").textContent=
   pB.toLocaleString();
+
+ $("wsSalidaB").textContent=
+  sB.toLocaleString();
 
  $("wsProcB").textContent=
   prB.toLocaleString();
@@ -5885,7 +7017,20 @@ function renderWorkshop(){
  $("wsEmpB").textContent=
   eB.toLocaleString();
 
+
  $("wsEfB").textContent=
+  (
+   pB?sB/pB*100:0
+  ).toFixed(1)+"%";
+
+
+ $("wsConvB").textContent=
+  (
+   sB?eB/sB*100:0
+  ).toFixed(1)+"%";
+
+
+ $("wsCumB").textContent=
   (
    pB?eB/pB*100:0
   ).toFixed(1)+"%";
@@ -5893,13 +7038,6 @@ function renderWorkshop(){
 
  /* =====================================================
  GENERAL DE LA SEMANA
-
- PROGRAMADO:
- OTs programadas lunes-sábado.
-
- EMPAQUE:
- TODO lo que entró a Empaque lunes-sábado,
- incluyendo arrastres.
  ===================================================== */
 
  var progSemana=0;
@@ -5991,14 +7129,6 @@ function renderResumen(){
  var names=Object.keys(map);
 
 
- /*
- =====================================================
- PROGRAMACIÓN DE LA SEMANA
-
- Solo OTs programadas lunes-sábado.
- =====================================================
- */
-
  var weekOTs=
   names.filter(function(k){
 
@@ -6040,17 +7170,6 @@ function renderResumen(){
 
  });
 
-
- /*
- =====================================================
- NÓMINA
-
- Aquí entran TODAS las OTs que tuvieron Empaque
- durante lunes-sábado.
-
- Incluye OTs de semanas anteriores.
- =====================================================
- */
 
  var payrollOTs=
   getPayrollOTs(ref);
@@ -6096,10 +7215,6 @@ function renderResumen(){
   var q=
    N(x.empaque);
 
-
-  /*
-   Auditoría de la misma semana.
-  */
 
   var aud=
    getAdvancesOT(x.ot)
@@ -6154,13 +7269,6 @@ function renderResumen(){
   z.dr+=r;
 
 
-  /*
-   Si fue programada esta semana,
-   mostramos su programación.
-
-   Si fue arrastre, programado semana = 0.
-  */
-
   var programadoSemana=
    inWeekDate(
     o.fecha,
@@ -6193,10 +7301,6 @@ function renderResumen(){
  });
 
 
- /* =====================================================
- KPIs
- ===================================================== */
-
  $("kProg").textContent=
   totalProg.toLocaleString();
 
@@ -6213,12 +7317,6 @@ function renderResumen(){
   groups.length;
 
 
- /*
- Indicador de producción.
-
- Puede superar 100% si entran OTs arrastradas.
- */
-
  $("eficiencia").textContent=
   (
    totalProg
@@ -6226,10 +7324,6 @@ function renderResumen(){
    :0
   ).toFixed(1)+"%";
 
-
- /* =====================================================
- DESTAJO
- ===================================================== */
 
  $("dPes").textContent=
   M(dp);
@@ -6251,10 +7345,6 @@ function renderResumen(){
  $("dPreB").textContent=
   M(lb.dr);
 
-
- /* =====================================================
- TABLA POR LÍNEA
- ===================================================== */
 
  function lineRow(name,z){
 
@@ -6293,16 +7383,6 @@ function renderResumen(){
   lineRow("Línea A",la)+
   lineRow("Línea B",lb);
 
-
- /* =====================================================
- DETALLE POR OT
-
- Incluye:
- - OTs programadas esta semana
-   que generaron Empaque
- - OTs arrastradas de semanas anteriores
-   que generaron Empaque esta semana
- ===================================================== */
 
  $("tablaOT").innerHTML=
 
@@ -6417,15 +7497,45 @@ function renderCosts(){
 
   names.map(function(m){
 
+   var c=cost[m]||{};
+
+   var min=N(c.min);
+
+   var pph=
+    min>0
+    ?60/min
+    :0;
+
+
    return `
 
    <tr>
 
     <td><b>${esc(m)}</b></td>
 
-    <td>${M(cost[m].pes)}</td>
+    <td>${M(c.pes)}</td>
 
-    <td>${M(cost[m].pre)}</td>
+    <td>${M(c.pre)}</td>
+
+    <td>
+
+     ${
+      min>0
+      ?min.toFixed(2)
+      :"Sin tiempo"
+     }
+
+    </td>
+
+    <td>
+
+     ${
+      pph>0
+      ?pph.toFixed(1)
+      :"—"
+     }
+
+    </td>
 
     <td>
 
@@ -6455,7 +7565,7 @@ function renderCosts(){
 
   :
 
-  '<tr><td colspan="4">Sin modelos.</td></tr>';
+  '<tr><td colspan="6">Sin modelos.</td></tr>';
 
 
  tb.querySelectorAll(
@@ -6529,6 +7639,7 @@ function editarCosto(modelo){
  $("cModelo").value=modelo;
  $("cPes").value=N(c.pes);
  $("cPre").value=N(c.pre);
+ $("cMin").value=N(c.min);
 
 
  $("cModelo").readOnly=true;
@@ -6559,6 +7670,7 @@ function cancelarEdicionCosto(){
  $("cModelo").value="";
  $("cPes").value="";
  $("cPre").value="";
+ $("cMin").value="";
 
 
  $("cModelo").readOnly=false;
@@ -6881,6 +7993,9 @@ $("guardarCosto")
   var r=
    N($("cPre").value);
 
+  var t=
+   N($("cMin").value);
+
 
   if(!m){
 
@@ -6891,10 +8006,10 @@ $("guardarCosto")
   }
 
 
-  if(p<0||r<0){
+  if(p<0||r<0||t<0){
 
    return alert(
-    "Los costos no pueden ser negativos."
+    "Los costos y tiempos no pueden ser negativos."
    );
 
   }
@@ -6902,9 +8017,18 @@ $("guardarCosto")
 
   if(editingCostModel){
 
+   /*
+    IMPORTANTE:
+    conservamos el mismo registro y solamente
+    agregamos el campo min.
+
+    Esto NO cambia la clave de localStorage.
+   */
+
    cost[editingCostModel]={
     pes:p,
-    pre:r
+    pre:r,
+    min:t
    };
 
 
@@ -6916,7 +8040,7 @@ $("guardarCosto")
 
 
    alert(
-    "Costo actualizado correctamente. ✅"
+    "Costo y tiempo estándar actualizados correctamente. ✅"
    );
 
    return;
@@ -6936,7 +8060,8 @@ $("guardarCosto")
 
   cost[m]={
    pes:p,
-   pre:r
+   pre:r,
+   min:t
   };
 
 
@@ -6946,13 +8071,14 @@ $("guardarCosto")
   $("cModelo").value="";
   $("cPes").value="";
   $("cPre").value="";
+  $("cMin").value="";
 
 
   render();
 
 
   alert(
-   "Costo guardado. ✅"
+   "Costo y tiempo estándar guardados. ✅"
   );
 
  }
@@ -6968,15 +8094,6 @@ $("cancelarCosto")
 
 /* =====================================================
 CERRAR SEMANA
-
-REGLA:
-
-PROGRAMADO:
-solo OTs programadas durante la semana.
-
-EMPAQUE:
-todo lo que entró a Empaque durante la semana,
-incluyendo OTs arrastradas.
 ===================================================== */
 
 $("cerrarSemana")
@@ -6991,10 +8108,6 @@ $("cerrarSemana")
 
   var map=getOTs();
 
-
-  /* =====================================================
-  PROGRAMADO DE LA SEMANA
-  ===================================================== */
 
   var programadoSemana=0;
 
@@ -7019,12 +8132,6 @@ $("cerrarSemana")
 
   });
 
-
-  /* =====================================================
-  EMPAQUE DE LA SEMANA
-
-  NO importa cuándo fue programada la OT.
-  ===================================================== */
 
   var payrollOTs=
    getPayrollOTs(ref);
@@ -7184,10 +8291,6 @@ $("borrarHistorial")
 
 /* =====================================================
 EXPORTAR CSV
-
-Exporta tanto:
-- programación de la semana
-- como OTs arrastradas que generaron Empaque
 ===================================================== */
 
 $("exportar")
@@ -7205,10 +8308,6 @@ $("exportar")
 
   var keys={};
 
-
-  /*
-   OTs programadas esta semana.
-  */
 
   Object.keys(map)
   .forEach(function(k){
@@ -7230,10 +8329,6 @@ $("exportar")
   });
 
 
-  /*
-   OTs que generaron Empaque esta semana.
-  */
-
   getPayrollOTs(ref)
   .forEach(function(x){
 
@@ -7254,7 +8349,8 @@ $("exportar")
     "Tipo",
     "Eficiencia",
     "Destajo Pespunte",
-    "Destajo Preliminar"
+    "Destajo Preliminar",
+    "Min/Pieza"
    ]
 
   ];
@@ -7345,7 +8441,11 @@ $("exportar")
 
     (
      q*N(c.pre)
-    ).toFixed(2)
+    ).toFixed(2),
+
+    N(c.min)>0
+    ?N(c.min).toFixed(2)
+    :""
 
    ]);
 
