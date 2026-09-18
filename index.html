@@ -337,11 +337,6 @@ th{
  color:#1769ff
 }
 
-
-/* =====================================================
-EFICIENCIA DIARIA
-===================================================== */
-
 .dailyEfficiencyCard{
  background:#fff;
  border:2px solid #dfe5ed;
@@ -543,11 +538,6 @@ EFICIENCIA DIARIA
  color:#596575
 }
 
-
-/* =====================================================
-NUEVO: INDICADORES DE FLUJO
-===================================================== */
-
 .flowKpiGrid{
  display:grid;
  grid-template-columns:repeat(3,1fr);
@@ -631,11 +621,6 @@ NUEVO: INDICADORES DE FLUJO
  color:#737d89;
  margin-top:2px
 }
-
-
-/* =====================================================
-FILTRO AVANCES
-===================================================== */
 
 .advanceFilterCard{
  background:#fff;
@@ -725,11 +710,6 @@ FILTRO AVANCES
  font-size:12px;
  font-weight:850
 }
-
-
-/* =====================================================
-OTS DEL DÍA
-===================================================== */
 
 .dailyOTGrid{
  display:grid;
@@ -874,11 +854,6 @@ OTS DEL DÍA
  font-weight:850;
  cursor:pointer
 }
-
-
-/* =====================================================
-WORK SHOP
-===================================================== */
 
 .wsDailyGrid{
  display:grid;
@@ -1166,11 +1141,6 @@ WORK SHOP
  border-radius:14px
 }
 
-
-/* =====================================================
-ETIQUETA ARRASTRE
-===================================================== */
-
 .arrastrePill{
  display:inline-block;
  margin-top:4px;
@@ -1181,11 +1151,6 @@ ETIQUETA ARRASTRE
  padding:4px 7px;
  border-radius:99px
 }
-
-
-/* =====================================================
-MOBILE
-===================================================== */
 
 @media(max-width:700px){
 
@@ -1256,7 +1221,6 @@ MOBILE
 </style>
 </head>
 
-
 <body>
 
 <header>
@@ -1268,7 +1232,6 @@ OT · Programación · Avances · Work Shop · Destajo · Eficiencia · Piezas/h
 </p>
 
 </header>
-
 
 <nav>
 
@@ -1298,13 +1261,7 @@ OT · Programación · Avances · Work Shop · Destajo · Eficiencia · Piezas/h
 
 </nav>
 
-
 <main>
-
-
-<!-- =====================================================
-CAPTURA
-===================================================== -->
 
 <section id="captura" class="page active">
 
@@ -1395,7 +1352,6 @@ Limpiar
 
 </div>
 
-
 <div class="card">
 
 <h2>OT registradas</h2>
@@ -1426,12 +1382,6 @@ Limpiar
 </div>
 
 </section>
-
-
-
-<!-- =====================================================
-AVANCES
-===================================================== -->
 
 <section id="avances" class="page">
 
@@ -1485,12 +1435,6 @@ y The Studio registra automáticamente los pasos intermedios.
 <div id="resultadosOT" style="margin-top:12px"></div>
 
 </div>
-
-
-
-<!-- =====================================================
-FILTRO DIARIO
-===================================================== -->
 
 <div class="advanceFilterCard">
 
@@ -1551,7 +1495,6 @@ Piezas programadas ese día
 
 </div>
 
-
 <div class="advanceDashBox orange">
 
 <div class="advanceDashLabel">
@@ -1567,7 +1510,6 @@ Piezas que entraron a salida de pespunte ese día
 </div>
 
 </div>
-
 
 <div class="advanceDashBox green">
 
@@ -1605,12 +1547,6 @@ Salida pespunte ÷ programado
 
 </div>
 
-
-
-<!-- =====================================================
-GRÁFICA VISUAL
-===================================================== -->
-
 <div class="dailyEfficiencyCard">
 
 <div class="dailyEfficiencyHeader">
@@ -1633,15 +1569,13 @@ Programado → Salida pespunte → Empaque
 0%
 </strong>
 
-<span>PROGRAMADO → PESpUNTE</span>
+<span>PROGRAMADO → PESPUNTE</span>
 
 </div>
 
 </div>
-
 
 <div class="visualCompare">
-
 
 <div class="compareBox compareProgramado">
 
@@ -1666,7 +1600,6 @@ Piezas programadas ese día
 </div>
 
 </div>
-
 
 <div class="compareBox compareSalida">
 
@@ -1694,7 +1627,6 @@ Piezas que entraron a salida ese día
 
 </div>
 
-
 <div class="bigBarLabel">
 
 <span>
@@ -1707,13 +1639,11 @@ PROGRAMADO → SALIDA PESPUNTE
 
 </div>
 
-
 <div class="bigBar">
 
 <div id="graficaBarra" class="bigBarFill"></div>
 
 </div>
-
 
 <div class="compareFooter">
 
@@ -1726,7 +1656,6 @@ Faltan 0 piezas
 </span>
 
 </div>
-
 
 <div class="flowKpiGrid">
 
@@ -1746,7 +1675,6 @@ Salida pespunte ÷ Programado
 
 </div>
 
-
 <div class="flowKpi orange">
 
 <div class="flowKpiLabel">
@@ -1762,7 +1690,6 @@ Empaque ÷ Salida pespunte
 </div>
 
 </div>
-
 
 <div class="flowKpi green">
 
@@ -1781,7 +1708,6 @@ Empaque ÷ Programado
 </div>
 
 </div>
-
 
 <div class="compareBox compareEmpaque" style="margin-top:12px">
 
@@ -1807,7 +1733,6 @@ Piezas que realmente entraron a Empaque ese día · base de nómina/destajo
 
 </div>
 
-
 <div id="graficaStatus" class="visualStatus statusNone">
 
 <div id="graficaStatusIcon" class="visualStatusIcon">
@@ -1830,12 +1755,6 @@ Selecciona una fecha con programación.
 
 </div>
 
-
-
-<!-- =====================================================
-OTS DEL DÍA
-===================================================== -->
-
 <div class="card">
 
 <h2>📋 OTs del día</h2>
@@ -1849,12 +1768,6 @@ Selecciona una fecha
 <div id="avanceListaOT" class="dailyOTGrid"></div>
 
 </div>
-
-
-
-<!-- =====================================================
-PANEL MOVIMIENTO
-===================================================== -->
 
 <div class="card" id="panelMovimiento" style="display:none">
 
@@ -1927,12 +1840,6 @@ Cancelar
 
 </div>
 
-
-
-<!-- =====================================================
-LEAD TIME
-===================================================== -->
-
 <div class="card">
 
 <h2>Lead Time por OT</h2>
@@ -1966,7 +1873,6 @@ LEAD TIME
 
 </div>
 
-
 <div class="card" id="detalleLead" style="display:none">
 
 <h2>Historial de procesos de la OT</h2>
@@ -1976,12 +1882,6 @@ LEAD TIME
 </div>
 
 </section>
-
-
-
-<!-- =====================================================
-WORK SHOP
-===================================================== -->
 
 <section id="workshop" class="page">
 
@@ -2036,15 +1936,11 @@ Actualizar Work Shop
 
 </div>
 
-
 <div class="card">
 
 <h2>📅 Producción del día</h2>
 
 <div class="wsDailyGrid">
-
-
-<!-- LINEA A -->
 
 <div class="wsLineCard lineA">
 
@@ -2061,7 +1957,6 @@ Actualizar Work Shop
 </div>
 
 </div>
-
 
 <div class="wsMetric wsMetricBlue">
 
@@ -2088,7 +1983,6 @@ data-ws-line="Línea A">
 
 </div>
 
-
 <div class="wsMetric wsMetricOrange">
 
 <div class="wsMetricLeft">
@@ -2113,7 +2007,6 @@ data-ws-line="Línea A">
 </div>
 
 </div>
-
 
 <div class="wsMetric wsMetricYellow">
 
@@ -2140,7 +2033,6 @@ data-ws-line="Línea A">
 
 </div>
 
-
 <div class="wsMetric wsMetricPurple">
 
 <div class="wsMetricLeft">
@@ -2155,8 +2047,6 @@ data-ws-line="Línea A">
 
 </div>
 
-</div>
-
 <div class="wsValue wsClickable"
 id="wsClasA"
 data-ws-detail="clasificacion"
@@ -2165,7 +2055,6 @@ data-ws-line="Línea A">
 </div>
 
 </div>
-
 
 <div class="wsMetric wsMetricGreen">
 
@@ -2192,7 +2081,6 @@ data-ws-line="Línea A">
 
 </div>
 
-
 <div class="wsEfficiency">
 
 <div class="wsMetricLeft">
@@ -2214,7 +2102,6 @@ data-ws-line="Línea A">
 </div>
 
 </div>
-
 
 <div class="flowKpiGrid">
 
@@ -2267,7 +2154,6 @@ Empaque / hora productiva
 </div>
 
 </div>
-
 
 <div class="productionSpeedGrid">
 
@@ -2323,10 +2209,6 @@ Piezas según tiempo estándar
 
 </div>
 
-
-
-<!-- LINEA B -->
-
 <div class="wsLineCard lineB">
 
 <div class="wsLineHeader">
@@ -2342,7 +2224,6 @@ Piezas según tiempo estándar
 </div>
 
 </div>
-
 
 <div class="wsMetric wsMetricBlue">
 
@@ -2369,7 +2250,6 @@ data-ws-line="Línea B">
 
 </div>
 
-
 <div class="wsMetric wsMetricOrange">
 
 <div class="wsMetricLeft">
@@ -2394,7 +2274,6 @@ data-ws-line="Línea B">
 </div>
 
 </div>
-
 
 <div class="wsMetric wsMetricYellow">
 
@@ -2421,7 +2300,6 @@ data-ws-line="Línea B">
 
 </div>
 
-
 <div class="wsMetric wsMetricPurple">
 
 <div class="wsMetricLeft">
@@ -2436,8 +2314,6 @@ data-ws-line="Línea B">
 
 </div>
 
-</div>
-
 <div class="wsValue wsClickable"
 id="wsClasB"
 data-ws-detail="clasificacion"
@@ -2446,7 +2322,6 @@ data-ws-line="Línea B">
 </div>
 
 </div>
-
 
 <div class="wsMetric wsMetricGreen">
 
@@ -2473,7 +2348,6 @@ data-ws-line="Línea B">
 
 </div>
 
-
 <div class="wsEfficiency">
 
 <div class="wsMetricLeft">
@@ -2495,7 +2369,6 @@ data-ws-line="Línea B">
 </div>
 
 </div>
-
 
 <div class="flowKpiGrid">
 
@@ -2548,7 +2421,6 @@ Empaque / hora productiva
 </div>
 
 </div>
-
 
 <div class="productionSpeedGrid">
 
@@ -2606,7 +2478,6 @@ Piezas según tiempo estándar
 
 </div>
 
-
 <div id="wsDetalleCard" class="wsDetailCard" style="display:none">
 
 <div class="wsDetailHeader">
@@ -2633,7 +2504,6 @@ OTs relacionadas
 
 </div>
 
-
 <div class="card">
 
 <div class="wsWeekCard">
@@ -2654,7 +2524,6 @@ Programado · Pespunte · Empaque real lunes a sábado
 
 </div>
 
-
 <div class="wsWeekGrid">
 
 <div class="wsWeekMetric">
@@ -2672,7 +2541,6 @@ Programado · Pespunte · Empaque real lunes a sábado
 </div>
 
 </div>
-
 
 <div class="wsWeekMetric green">
 
@@ -2694,7 +2562,6 @@ Todo lo que entró a Empaque lunes-sábado
 
 </div>
 
-
 <div class="successNote" style="margin-top:12px">
 
 🎯 Eficiencia general:
@@ -2712,7 +2579,6 @@ Empaque ÷ Programado. Puede superar 100% cuando existen OTs arrastradas.
 </div>
 
 </div>
-
 
 <div class="card">
 
@@ -2755,7 +2621,6 @@ El inventario es dinámico:
 
 </div>
 
-
 <div class="card">
 
 <h2>Detalle por OT</h2>
@@ -2792,12 +2657,6 @@ El inventario es dinámico:
 
 </section>
 
-
-
-<!-- =====================================================
-RESUMEN
-===================================================== -->
-
 <section id="resumen" class="page">
 
 <div class="card">
@@ -2826,7 +2685,6 @@ Exportar CSV
 
 </div>
 
-
 <div class="note">
 
 <b>📋 Programado</b> = piezas de OTs programadas durante
@@ -2844,7 +2702,6 @@ sin importar cuándo fueron programadas.
 que generó Empaque y nómina en la semana actual.
 
 </div>
-
 
 <div class="kpis">
 
@@ -2869,7 +2726,6 @@ que generó Empaque y nómina en la semana actual.
 </div>
 
 </div>
-
 
 <div class="card">
 
@@ -2896,7 +2752,6 @@ de semanas anteriores.
 
 </div>
 
-
 <div class="moneygrid">
 
 <div class="moneybox">
@@ -2919,7 +2774,6 @@ Línea B:
 
 </div>
 
-
 <div class="moneybox">
 
 <h3>💰 Destajo Preliminar · Empaque</h3>
@@ -2941,7 +2795,6 @@ Línea B:
 </div>
 
 </div>
-
 
 <div class="card">
 
@@ -2974,7 +2827,6 @@ Línea B:
 </div>
 
 </div>
-
 
 <div class="card">
 
@@ -3011,12 +2863,6 @@ Línea B:
 
 </section>
 
-
-
-<!-- =====================================================
-COSTOS
-===================================================== -->
-
 <section id="costos" class="page">
 
 <div class="card">
@@ -3045,6 +2891,12 @@ Ejemplo:
 
 The Studio utilizará este dato para calcular
 capacidad teórica, carga y rendimiento por tiempo estándar.
+
+<br><br>
+
+<b>✏️ Puedes editar cualquier modelo posteriormente.</b>
+Si cambia el costo, se actualizarán automáticamente los cálculos
+del modelo en los indicadores.
 
 </div>
 
@@ -3098,7 +2950,6 @@ Guardar costo
 
 </div>
 
-
 <div class="card">
 
 <div class="successNote">
@@ -3114,7 +2965,10 @@ Los datos nuevos se utilizan automáticamente en los indicadores.
 
 <br><br>
 
-Los modelos que ya tenías registrados conservan sus costos.
+<b>Los modelos anteriores conservan Pespunte y Preliminar.</b>
+
+<br>
+
 Si todavía no tienen tiempo estándar, aparecerán como
 <b>“Sin tiempo”</b> hasta que lo captures.
 
@@ -3146,12 +3000,6 @@ Si todavía no tienen tiempo estándar, aparecerán como
 </div>
 
 </section>
-
-
-
-<!-- =====================================================
-HISTORIAL
-===================================================== -->
 
 <section id="historial" class="page">
 
@@ -3193,7 +3041,6 @@ Borrar historial
 
 </div>
 
-
 <div class="card">
 
 <div class="tablewrap">
@@ -3226,17 +3073,13 @@ Borrar historial
 
 </section>
 
-
 </main>
-
-
 
 <script>
 
 (function(){
 
 "use strict";
-
 
 /* =====================================================
 STORAGE
@@ -3248,11 +3091,33 @@ var KCOST="theStudioCostos_v4";
 var KHIST="theStudioHistorial_v4";
 var KADV="theStudioAvances_v4";
 
+/* =====================================================
+RECUPERACIÓN DE COSTOS
+=====================================================
+
+IMPORTANTE:
+
+La versión actual utiliza:
+
+theStudioCostos_v4
+
+Pero si una versión anterior tenía los costos guardados
+con otra clave, se intentan recuperar automáticamente.
+
+NO se borra ninguna clave anterior.
+
+===================================================== */
+
+var LEGACY_COST_KEYS=[
+ "theStudioCostos_v3",
+ "theStudioCostos_v2",
+ "theStudioCostos_v1",
+ "theStudioCostos"
+];
 
 function $(id){
  return document.getElementById(id);
 }
-
 
 function N(v){
 
@@ -3261,7 +3126,6 @@ function N(v){
  return isFinite(n)?n:0;
 
 }
-
 
 function M(v){
 
@@ -3274,7 +3138,6 @@ function M(v){
  );
 
 }
-
 
 function esc(v){
 
@@ -3296,7 +3159,6 @@ function esc(v){
 
 }
 
-
 function today(){
 
  var d=new Date();
@@ -3309,7 +3171,6 @@ function today(){
  return d.toISOString().slice(0,10);
 
 }
-
 
 function nowLocal(){
 
@@ -3324,15 +3185,15 @@ function nowLocal(){
 
 }
 
-
 function load(k,def){
 
  try{
 
-  var x=
-   JSON.parse(
-    localStorage.getItem(k)
-   );
+  var raw=localStorage.getItem(k);
+
+  if(raw===null)return def;
+
+  var x=JSON.parse(raw);
 
   return x==null?def:x;
 
@@ -3344,20 +3205,278 @@ function load(k,def){
 
 }
 
+/* =====================================================
+NORMALIZAR COSTOS
+=====================================================
+
+Acepta tanto la estructura nueva:
+
+{
+ Modelo:{
+  pes:10,
+  pre:5,
+  min:1.5
+ }
+}
+
+como la estructura anterior:
+
+{
+ Modelo:{
+  pes:10,
+  pre:5
+ }
+}
+
+También permite recuperar estructuras antiguas
+que estuvieran guardadas como arreglo.
+
+===================================================== */
+
+function normalizeCostData(data){
+
+ var result={};
+
+ if(!data)return result;
+
+ /* ---------------------------------------------
+ OBJETO
+ --------------------------------------------- */
+
+ if(
+  typeof data==="object" &&
+  !Array.isArray(data)
+ ){
+
+  Object.keys(data).forEach(function(modelo){
+
+   var c=data[modelo];
+
+   if(
+    c &&
+    typeof c==="object"
+   ){
+
+    var nombre=
+     String(
+      c.modelo||
+      c.model||
+      modelo
+     ).trim();
+
+    if(!nombre)return;
+
+    result[nombre]={
+
+     pes:
+      N(
+       c.pes!=null
+       ?c.pes
+       :c.pespunte
+      ),
+
+     pre:
+      N(
+       c.pre!=null
+       ?c.pre
+       :(
+        c.preliminar!=null
+        ?c.preliminar
+        :c.prelim
+       )
+      ),
+
+     min:
+      N(
+       c.min!=null
+       ?c.min
+       :(
+        c.minutos!=null
+        ?c.minutos
+        :(
+         c.minPieza!=null
+         ?c.minPieza
+         :c.tiempo
+        )
+       )
+      )
+
+    };
+
+   }
+
+  });
+
+  return result;
+
+ }
+
+ /* ---------------------------------------------
+ ARREGLO
+ --------------------------------------------- */
+
+ if(Array.isArray(data)){
+
+  data.forEach(function(c){
+
+   if(!c || typeof c!=="object")return;
+
+   var nombre=
+    String(
+     c.modelo||
+     c.model||
+     c.nombre||
+     ""
+    ).trim();
+
+   if(!nombre)return;
+
+   result[nombre]={
+
+    pes:
+     N(
+      c.pes!=null
+      ?c.pes
+      :c.pespunte
+     ),
+
+    pre:
+     N(
+      c.pre!=null
+      ?c.pre
+      :(
+       c.preliminar!=null
+       ?c.preliminar
+       :c.prelim
+      )
+     ),
+
+    min:
+     N(
+      c.min!=null
+      ?c.min
+      :(
+       c.minutos!=null
+       ?c.minutos
+       :(
+        c.minPieza!=null
+        ?c.minPieza
+        :c.tiempo
+       )
+      )
+     )
+
+   };
+
+  });
+
+ }
+
+ return result;
+
+}
+
+/* =====================================================
+CARGAR COSTOS CON RECUPERACIÓN
+===================================================== */
+
+function loadCostsSafely(){
+
+ var actualRaw=
+  localStorage.getItem(KCOST);
+
+ var actual={};
+
+ if(actualRaw!==null){
+
+  try{
+
+   actual=
+    normalizeCostData(
+     JSON.parse(actualRaw)
+    );
+
+  }catch(e){
+
+   actual={};
+
+  }
+
+ }
+
+ /*
+ Si v4 ya tiene modelos, se respetan.
+ */
+
+ if(Object.keys(actual).length>0){
+
+  return actual;
+
+ }
+
+ /*
+ Si v4 está vacío, buscamos versiones anteriores.
+ */
+
+ for(
+  var i=0;
+  i<LEGACY_COST_KEYS.length;
+  i++
+ ){
+
+  var key=
+   LEGACY_COST_KEYS[i];
+
+  var raw=
+   localStorage.getItem(key);
+
+  if(raw===null)continue;
+
+  try{
+
+   var recovered=
+    normalizeCostData(
+     JSON.parse(raw)
+    );
+
+   if(
+    Object.keys(recovered).length>0
+   ){
+
+    /*
+     Recuperamos automáticamente
+     hacia la clave oficial v4.
+
+     NO borramos la clave anterior.
+    */
+
+    localStorage.setItem(
+     KCOST,
+     JSON.stringify(
+      recovered
+     )
+    );
+
+    return recovered;
+
+   }
+
+  }catch(e){}
+
+ }
+
+ return {};
+
+}
 
 var prod=load(KPROD,[]);
-var cost=load(KCOST,{});
+var cost=loadCostsSafely();
 var hist=load(KHIST,[]);
 var avances=load(KADV,[]);
 
 var selectedOT=null;
 var editingId=null;
 var editingCostModel=null;
-
-
-/* =====================================================
-FLUJO
-===================================================== */
 
 var FLOW=[
  "Programado",
@@ -3368,18 +3487,6 @@ var FLOW=[
  "Auditoría"
 ];
 
-
-/* =====================================================
-JORNADA PRODUCTIVA
-=====================================================
-
-8:00 → 13:00 = 300 min
-13:00 → 13:40 = comida = 0 min productivos
-13:40 → 18:20 = 280 min
-
-TOTAL = 580 MINUTOS PRODUCTIVOS
-===================================================== */
-
 var JORNADA={
  inicio1:8*60,
  comidaInicio:13*60,
@@ -3387,7 +3494,6 @@ var JORNADA={
  fin:18*60+20,
  total:580
 };
-
 
 /* =====================================================
 GUARDAR
@@ -3417,11 +3523,8 @@ function save(){
 
 }
 
-
 /* =====================================================
 SEMANA
-LUNES → SÁBADO
-DOMINGO FUERA
 ===================================================== */
 
 function range(ref){
@@ -3450,13 +3553,11 @@ function range(ref){
   mon.getDate()+5
  );
 
-
  function iso(x){
 
   return x.toISOString().slice(0,10);
 
  }
-
 
  return[
   iso(mon),
@@ -3464,7 +3565,6 @@ function range(ref){
  ];
 
 }
-
 
 function inWeekDate(date,ref){
 
@@ -3477,7 +3577,6 @@ function inWeekDate(date,ref){
 
 }
 
-
 function inWeekAdvance(a,ref){
 
  return inWeekDate(
@@ -3487,7 +3586,6 @@ function inWeekAdvance(a,ref){
 
 }
 
-
 /* =====================================================
 MINUTOS PRODUCTIVOS
 ===================================================== */
@@ -3496,35 +3594,17 @@ function productiveMinutesForDate(fecha){
 
  var hoy=today();
 
- /*
- Históricos:
- jornada completa = 580 min.
- */
-
  if(fecha<hoy){
 
   return JORNADA.total;
 
  }
 
-
- /*
- Fechas futuras:
- todavía no transcurre jornada.
- */
-
  if(fecha>hoy){
 
   return 0;
 
  }
-
-
- /*
- Hoy:
- calculamos solamente los minutos productivos
- que realmente han transcurrido.
- */
 
  var d=new Date();
 
@@ -3538,7 +3618,6 @@ function productiveMinutesForDate(fecha){
 
  }
 
-
  if(
   mins>=JORNADA.inicio1 &&
   mins<JORNADA.comidaInicio
@@ -3548,7 +3627,6 @@ function productiveMinutesForDate(fecha){
 
  }
 
-
  if(
   mins>=JORNADA.comidaInicio &&
   mins<JORNADA.comidaFin
@@ -3557,7 +3635,6 @@ function productiveMinutesForDate(fecha){
   return 300;
 
  }
-
 
  if(
   mins>=JORNADA.comidaFin &&
@@ -3573,36 +3650,9 @@ function productiveMinutesForDate(fecha){
 
  }
 
-
  return JORNADA.total;
 
 }
-
-
-/* =====================================================
-FORMATO MINUTOS
-===================================================== */
-
-function formatMinutes(v){
-
- var n=Math.max(0,N(v));
-
- if(n===0)return"0 min";
-
- var h=Math.floor(n/60);
-
- var m=Math.round(n%60);
-
- if(h>0){
-
-  return h+"h "+m+"m";
-
- }
-
- return m+" min";
-
-}
-
 
 /* =====================================================
 MODELOS
@@ -3619,7 +3669,6 @@ function fillModels(){
 
  s.innerHTML="";
 
-
  var first=
   document.createElement("option");
 
@@ -3631,7 +3680,6 @@ function fillModels(){
   :"Primero agrega un modelo en Costos";
 
  s.appendChild(first);
-
 
  names.forEach(function(m){
 
@@ -3645,13 +3693,11 @@ function fillModels(){
 
  });
 
-
  if(old&&cost[old]){
   s.value=old;
  }
 
 }
-
 
 /* =====================================================
 OTS
@@ -3661,14 +3707,12 @@ function getOTs(){
 
  var map={};
 
-
  prod.forEach(function(r){
 
   var key=
    String(r.ot||"").trim();
 
   if(!key)return;
-
 
   if(!map[key]){
 
@@ -3683,10 +3727,8 @@ function getOTs(){
 
   }
 
-
   map[key].programado+=
    N(r.programado);
-
 
   if(r.fecha<map[key].fecha){
 
@@ -3696,14 +3738,12 @@ function getOTs(){
 
  });
 
-
  return map;
 
 }
 
-
 /* =====================================================
-AVANCES OT
+AVANCES
 ===================================================== */
 
 function getAdvancesOT(ot){
@@ -3726,7 +3766,6 @@ function getAdvancesOT(ot){
 
 }
 
-
 /* =====================================================
 INVENTARIO
 ===================================================== */
@@ -3741,15 +3780,12 @@ function inventoryOT(ot){
 
  });
 
-
  var o=getOTs()[ot];
 
  if(!o)return map;
 
-
  map.Programado=
   o.programado;
-
 
  getAdvancesOT(ot)
  .forEach(function(a){
@@ -3758,13 +3794,11 @@ function inventoryOT(ot){
   var to=a.siguienteProceso;
   var q=N(a.piezas);
 
-
   if(map[from]!=null){
 
    map[from]-=q;
 
   }
-
 
   if(map[to]!=null){
 
@@ -3773,7 +3807,6 @@ function inventoryOT(ot){
   }
 
  });
-
 
  FLOW.forEach(function(p){
 
@@ -3785,15 +3818,9 @@ function inventoryOT(ot){
 
  });
 
-
  return map;
 
 }
-
-
-/* =====================================================
-PIEZAS AVANZADAS
-===================================================== */
 
 function piezasYaAvanzadas(ot){
 
@@ -3812,16 +3839,10 @@ function piezasYaAvanzadas(ot){
 
 }
 
-
-/* =====================================================
-PROCESO ACTUAL
-===================================================== */
-
 function currentIndex(ot){
 
  var inv=
   inventoryOT(ot);
-
 
  for(
   var i=FLOW.length-1;
@@ -3837,10 +3858,8 @@ function currentIndex(ot){
 
  }
 
-
  var arr=
   getAdvancesOT(ot);
-
 
  if(arr.length){
 
@@ -3854,11 +3873,9 @@ function currentIndex(ot){
 
  }
 
-
  return 0;
 
 }
-
 
 function currentProcess(ot){
 
@@ -3868,11 +3885,6 @@ function currentProcess(ot){
 
 }
 
-
-/* =====================================================
-DISPONIBLE
-===================================================== */
-
 function availableProcess(ot,proceso){
 
  return N(
@@ -3881,9 +3893,8 @@ function availableProcess(ot,proceso){
 
 }
 
-
 /* =====================================================
-FECHA
+FECHAS / LEAD TIME
 ===================================================== */
 
 function formatDateTime(v){
@@ -3905,13 +3916,11 @@ function formatDateTime(v){
 
 }
 
-
 function diffMs(a,b){
 
  return new Date(b)-new Date(a);
 
 }
-
 
 function formatDuration(ms){
 
@@ -3920,7 +3929,6 @@ function formatDuration(ms){
   return"0h 0m";
 
  }
-
 
  var min=Math.floor(ms/60000);
 
@@ -3932,7 +3940,6 @@ function formatDuration(ms){
 
  min%=60;
 
-
  return(
   days>0
   ?days+"d "+h+"h "+min+"m"
@@ -3940,7 +3947,6 @@ function formatDuration(ms){
  );
 
 }
-
 
 function getStartDateTime(ot){
 
@@ -3952,7 +3958,6 @@ function getStartDateTime(ot){
 
 }
 
-
 function getLastAdvance(ot){
 
  var a=getAdvancesOT(ot);
@@ -3962,7 +3967,6 @@ function getLastAdvance(ot){
   :null;
 
 }
-
 
 function totalLeadTime(ot){
 
@@ -3983,9 +3987,8 @@ function totalLeadTime(ot){
 
 }
 
-
 /* =====================================================
-EMPAQUE
+EMPAQUE / PESPUNTE
 ===================================================== */
 
 function empacadoEnFecha(ot,fecha){
@@ -4007,22 +4010,6 @@ function empacadoEnFecha(ot,fecha){
 
 }
 
-
-/* =====================================================
-SALIDA PESPUNTE DEL DÍA
-
-IMPORTANTE:
-Esto mide las piezas que REALMENTE ENTRARON
-al proceso "Salida pespunte" en esa fecha.
-
-No es inventario actual.
-
-Así podemos comparar:
-
-Programado → Salida pespunte
-Salida pespunte → Empaque
-===================================================== */
-
 function salidaPespunteEnFecha(ot,fecha){
 
  return getAdvancesOT(ot)
@@ -4041,12 +4028,6 @@ function salidaPespunteEnFecha(ot,fecha){
  },0);
 
 }
-
-
-/* =====================================================
-EMPAQUE EN SEMANA
-BASE DE NÓMINA
-===================================================== */
 
 function empacadoEnSemana(ot,ref){
 
@@ -4067,23 +4048,16 @@ function empacadoEnSemana(ot,ref){
 
 }
 
-
-/* =====================================================
-OTs QUE GENERAN NÓMINA
-===================================================== */
-
 function getPayrollOTs(ref){
 
  var map=getOTs();
 
  var lista=[];
 
-
  Object.keys(map)
  .forEach(function(k){
 
   var o=map[k];
-
 
   var empaque=
    empacadoEnSemana(
@@ -4091,21 +4065,15 @@ function getPayrollOTs(ref){
     ref
    );
 
-
   if(empaque>0){
 
    lista.push({
 
     ot:k,
-
     linea:o.linea,
-
     modelo:o.modelo,
-
     fechaProgramacion:o.fecha,
-
     programado:o.programado,
-
     empaque:empaque
 
    });
@@ -4114,14 +4082,12 @@ function getPayrollOTs(ref){
 
  });
 
-
  return lista;
 
 }
 
-
 /* =====================================================
-COSTO / TIEMPO ESTÁNDAR
+TIEMPOS ESTÁNDAR
 ===================================================== */
 
 function standardMinutesForModel(modelo){
@@ -4129,10 +4095,11 @@ function standardMinutesForModel(modelo){
  var c=
   cost[modelo]||{};
 
- return N(c.min);
+ return N(
+  c.min
+ );
 
 }
-
 
 function piecesPerHourForModel(modelo){
 
@@ -4145,28 +4112,10 @@ function piecesPerHourForModel(modelo){
 
 }
 
-
-/*
-Promedio ponderado de minutos por pieza.
-
-Ejemplo:
-
-Modelo A:
-100 piezas × 1.5 min = 150 min
-
-Modelo B:
-200 piezas × 2.0 min = 400 min
-
-Total:
-550 min / 300 piezas
-= 1.833 min/pieza
-*/
-
 function weightedStandardMinutes(lista){
 
  var pieces=0;
  var minutes=0;
-
 
  lista.forEach(function(x){
 
@@ -4177,53 +4126,20 @@ function weightedStandardMinutes(lista){
 
   var q=N(x.piezas);
 
-
   if(min>0&&q>0){
 
    pieces+=q;
-
    minutes+=q*min;
 
   }
 
  });
 
-
  return pieces>0
   ?minutes/pieces
   :0;
 
 }
-
-
-function standardMinutesForPieces(lista){
-
- var total=0;
-
-
- lista.forEach(function(x){
-
-  var min=
-   standardMinutesForModel(
-    x.modelo
-   );
-
-  var q=N(x.piezas);
-
-
-  if(min>0){
-
-   total+=q*min;
-
-  }
-
- });
-
-
- return total;
-
-}
-
 
 /* =====================================================
 CAPTURA
@@ -4245,7 +4161,6 @@ function renderCapture(){
    }
   );
 
-
  if(!rows.length){
 
   tb.innerHTML=
@@ -4254,7 +4169,6 @@ function renderCapture(){
   return;
 
  }
-
 
  tb.innerHTML=
   rows.map(function(r){
@@ -4309,7 +4223,6 @@ function renderCapture(){
 
   }).join("");
 
-
  tb.querySelectorAll("[data-edit]")
  .forEach(function(b){
 
@@ -4323,7 +4236,6 @@ function renderCapture(){
 
  });
 
-
  tb.querySelectorAll("[data-del]")
  .forEach(function(b){
 
@@ -4331,7 +4243,6 @@ function renderCapture(){
 
    var id=
     b.getAttribute("data-del");
-
 
    var registro=
     prod.find(function(r){
@@ -4341,9 +4252,7 @@ function renderCapture(){
 
     });
 
-
    if(!registro)return;
-
 
    var tieneAvances=
     avances.some(function(a){
@@ -4352,7 +4261,6 @@ function renderCapture(){
       String(registro.ot);
 
     });
-
 
    if(tieneAvances){
 
@@ -4366,12 +4274,10 @@ function renderCapture(){
 
    }
 
-
    if(!confirm(
     "¿Eliminar la OT "+
     registro.ot+"?"
    ))return;
-
 
    prod=
     prod.filter(function(r){
@@ -4381,7 +4287,6 @@ function renderCapture(){
 
     });
 
-
    save();
    render();
 
@@ -4390,7 +4295,6 @@ function renderCapture(){
  });
 
 }
-
 
 /* =====================================================
 EDITAR OT
@@ -4406,12 +4310,9 @@ function editarOT(id){
 
   });
 
-
  if(!registro)return;
 
-
  editingId=id;
-
 
  $("fecha").value=
   registro.fecha||today();
@@ -4431,23 +4332,19 @@ function editarOT(id){
  $("obs").value=
   registro.obs||"";
 
-
  $("guardar").textContent=
   "💾 Guardar cambios";
 
  $("limpiar").textContent=
   "↩️ Cancelar edición";
 
-
  var avanzado=
   piezasYaAvanzadas(
    registro.ot
   );
 
-
  $("programado").min=
   avanzado>0?avanzado:0;
-
 
  $("captura")
  .scrollIntoView({
@@ -4456,7 +4353,6 @@ function editarOT(id){
  });
 
 }
-
 
 function cancelarEdicion(){
 
@@ -4474,7 +4370,6 @@ function cancelarEdicion(){
 
 }
 
-
 function guardarOT(){
 
  var m=$("modelo").value;
@@ -4489,7 +4384,6 @@ function guardarOT(){
  var linea=$("linea").value;
 
  var obs=$("obs").value.trim();
-
 
  if(!ot){
 
@@ -4509,7 +4403,6 @@ function guardarOT(){
 
  }
 
-
  if(editingId){
 
   var registro=
@@ -4520,7 +4413,6 @@ function guardarOT(){
 
    });
 
-
   if(!registro){
 
    cancelarEdicion();
@@ -4529,7 +4421,6 @@ function guardarOT(){
 
   }
 
-
   var otAnterior=
    registro.ot;
 
@@ -4537,7 +4428,6 @@ function guardarOT(){
    piezasYaAvanzadas(
     otAnterior
    );
-
 
   if(p<avanzado){
 
@@ -4553,7 +4443,6 @@ function guardarOT(){
 
   }
 
-
   var duplicada=
    prod.some(function(r){
 
@@ -4566,7 +4455,6 @@ function guardarOT(){
 
    });
 
-
   if(duplicada){
 
    alert(
@@ -4578,14 +4466,12 @@ function guardarOT(){
 
   }
 
-
   registro.fecha=fecha;
   registro.linea=linea;
   registro.ot=ot;
   registro.modelo=m;
   registro.programado=p;
   registro.obs=obs;
-
 
   if(String(otAnterior)!==
      String(ot)){
@@ -4603,7 +4489,6 @@ function guardarOT(){
 
   }
 
-
   avances.forEach(function(a){
 
    if(String(a.ot)===
@@ -4616,11 +4501,9 @@ function guardarOT(){
 
   });
 
-
   save();
   cancelarEdicion();
   render();
-
 
   alert(
    "OT actualizada correctamente. ✅"
@@ -4629,7 +4512,6 @@ function guardarOT(){
   return;
 
  }
-
 
  var existe=
   prod.some(function(r){
@@ -4643,7 +4525,6 @@ function guardarOT(){
 
   });
 
-
  if(existe){
 
   return alert(
@@ -4651,7 +4532,6 @@ function guardarOT(){
   );
 
  }
-
 
  prod.push({
 
@@ -4670,18 +4550,15 @@ function guardarOT(){
 
  });
 
-
  save();
  clearForm();
  render();
-
 
  alert(
   "OT registrada correctamente. ✅"
  );
 
 }
-
 
 function clearForm(){
 
@@ -4691,16 +4568,13 @@ function clearForm(){
  $("fecha").value=today();
  $("linea").value="Línea A";
 
-
  if($("modelo").options.length){
 
   $("modelo").selectedIndex=0;
 
  }
 
-
  editingId=null;
-
 
  $("guardar").textContent=
   "Guardar OT";
@@ -4711,7 +4585,6 @@ function clearForm(){
  $("programado").min=0;
 
 }
-
 
 /* =====================================================
 BUSCADOR
@@ -4730,7 +4603,6 @@ function renderSearchOT(){
 
  var names=Object.keys(map);
 
-
  if(!text){
 
   box.innerHTML=
@@ -4740,7 +4612,6 @@ function renderSearchOT(){
 
  }
 
-
  var found=
   names.filter(function(k){
 
@@ -4748,7 +4619,6 @@ function renderSearchOT(){
     .includes(text);
 
   });
-
 
  if(!found.length){
 
@@ -4759,7 +4629,6 @@ function renderSearchOT(){
 
  }
 
-
  box.innerHTML=
   found.slice(0,20)
   .map(function(k){
@@ -4767,7 +4636,6 @@ function renderSearchOT(){
    var o=map[k];
 
    var inv=inventoryOT(k);
-
 
    return `
 
@@ -4836,7 +4704,6 @@ function renderSearchOT(){
 
   }).join("");
 
-
  box.querySelectorAll("[data-select-ot]")
  .forEach(function(btn){
 
@@ -4854,20 +4721,13 @@ function renderSearchOT(){
 
 }
 
-
-/* =====================================================
-SELECCIONAR OT
-===================================================== */
-
 function selectMovementOT(ot){
 
  var o=getOTs()[ot];
 
  if(!o)return;
 
-
  selectedOT=ot;
-
 
  $("otSeleccionada").value=o.ot;
 
@@ -4877,22 +4737,17 @@ function selectMovementOT(ot){
 
  $("movLinea").textContent=o.linea;
 
-
  $("panelMovimiento")
   .style.display="block";
 
-
  fillFromProcesses();
-
 
  $("fechaMovimiento").value=
   nowLocal();
 
  $("piezasMovimiento").value=0;
 
-
  updateMovementAvailability();
-
 
  $("panelMovimiento")
   .scrollIntoView({
@@ -4902,17 +4757,11 @@ function selectMovementOT(ot){
 
 }
 
-
-/* =====================================================
-PROCESOS
-===================================================== */
-
 function fillFromProcesses(){
 
  var select=$("desdeProceso");
 
  select.innerHTML="";
-
 
  FLOW.forEach(function(p){
 
@@ -4928,7 +4777,6 @@ function fillFromProcesses(){
 
  });
 
-
  if(selectedOT){
 
   select.value=
@@ -4936,11 +4784,9 @@ function fillFromProcesses(){
 
  }
 
-
  fillToProcesses();
 
 }
-
 
 function fillToProcesses(){
 
@@ -4952,9 +4798,7 @@ function fillToProcesses(){
 
  to.innerHTML="";
 
-
  if(idx<0)return;
-
 
  for(
   var i=idx+1;
@@ -4974,16 +4818,13 @@ function fillToProcesses(){
 
  }
 
-
  updateMovementAvailability();
 
 }
 
-
 function updateMovementAvailability(){
 
  if(!selectedOT)return;
-
 
  var from=$("desdeProceso").value;
 
@@ -4993,7 +4834,6 @@ function updateMovementAvailability(){
    from
   );
 
-
  $("disponibleMovimiento")
   .innerHTML=
    "Disponible en <b>"+
@@ -5002,15 +4842,9 @@ function updateMovementAvailability(){
    q.toLocaleString()+
    " piezas";
 
-
  $("piezasMovimiento").max=q;
 
 }
-
-
-/* =====================================================
-GUARDAR MOVIMIENTO
-===================================================== */
 
 function guardarMovimiento(){
 
@@ -5021,7 +4855,6 @@ function guardarMovimiento(){
   );
 
  }
-
 
  var from=$("desdeProceso").value;
 
@@ -5037,13 +4870,11 @@ function guardarMovimiento(){
    from
   );
 
-
  var fromIndex=
   FLOW.indexOf(from);
 
  var toIndex=
   FLOW.indexOf(to);
-
 
  if(toIndex<=fromIndex){
 
@@ -5053,7 +4884,6 @@ function guardarMovimiento(){
 
  }
 
-
  if(q<=0){
 
   return alert(
@@ -5061,7 +4891,6 @@ function guardarMovimiento(){
   );
 
  }
-
 
  if(q>disponible){
 
@@ -5074,13 +4903,11 @@ function guardarMovimiento(){
 
  }
 
-
  var o=getOTs()[selectedOT];
 
  var fh=
   $("fechaMovimiento").value||
   nowLocal();
-
 
  for(
   var i=fromIndex;
@@ -5118,9 +4945,7 @@ function guardarMovimiento(){
 
  }
 
-
  save();
-
 
  alert(
   "Avance registrado correctamente. ✅\n\n"+
@@ -5136,7 +4961,6 @@ function guardarMovimiento(){
   )
  );
 
-
  selectedOT=null;
 
  $("panelMovimiento")
@@ -5146,18 +4970,15 @@ function guardarMovimiento(){
 
  $("otSeleccionada").value="";
 
-
  $("resultadosOT").innerHTML=
   '<div class="successNote">Avance registrado correctamente.</div>';
-
 
  render();
 
 }
 
-
 /* =====================================================
-OTS POR DÍA
+OTS DEL DÍA
 ===================================================== */
 
 function getDailyOTs(){
@@ -5174,15 +4995,12 @@ function getDailyOTs(){
 
  var lista=[];
 
-
  Object.keys(map)
  .forEach(function(k){
 
   var o=map[k];
 
-
   if(o.fecha!==fecha)return;
-
 
   if(
    linea!=="Todas" &&
@@ -5193,42 +5011,25 @@ function getDailyOTs(){
 
   }
 
-
   var inv=inventoryOT(k);
-
 
   lista.push({
 
    ot:o.ot,
-
    modelo:o.modelo,
-
    linea:o.linea,
-
    fecha:o.fecha,
-
    programado:N(o.programado),
-
    armado:N(inv.Armado),
-
-   salida:N(
-    inv["Salida pespunte"]
-   ),
-
-   clasificacion:N(
-    inv.Clasificación
-   ),
-
+   salida:N(inv["Salida pespunte"]),
+   clasificacion:N(inv.Clasificación),
    empaque:N(inv.Empaque),
-
    auditoria:N(inv.Auditoría),
-
    ultimo:currentProcess(k)
 
   });
 
  });
-
 
  lista.sort(function(a,b){
 
@@ -5241,15 +5042,9 @@ function getDailyOTs(){
 
  });
 
-
  return lista;
 
 }
-
-
-/* =====================================================
-ESTATUS
-===================================================== */
 
 function statusClass(proceso){
 
@@ -5272,9 +5067,8 @@ function statusClass(proceso){
 
 }
 
-
 /* =====================================================
-GRÁFICA VISUAL
+GRÁFICA
 ===================================================== */
 
 function renderDailyEfficiency(
@@ -5292,7 +5086,6 @@ function renderDailyEfficiency(
    100
   :0;
 
-
  var porcentajeEmpaque=
   totalSalida
   ?totalEmpaque/
@@ -5300,14 +5093,12 @@ function renderDailyEfficiency(
    100
   :0;
 
-
  var porcentajeCumplimiento=
   totalProgramado
   ?totalEmpaque/
    totalProgramado*
    100
   :0;
-
 
  var visual=
   Math.max(
@@ -5318,51 +5109,41 @@ function renderDailyEfficiency(
    )
   );
 
-
  $("graficaProgramado")
   .textContent=
   totalProgramado.toLocaleString();
-
 
  $("graficaSalida")
   .textContent=
   totalSalida.toLocaleString();
 
-
  $("graficaEmpaque")
   .textContent=
   totalEmpaque.toLocaleString();
-
 
  $("graficaDiaPorcentaje")
   .textContent=
   porcentajePespunte.toFixed(1)+"%";
 
-
  $("graficaBarraTexto")
   .textContent=
   porcentajePespunte.toFixed(1)+"%";
-
 
  $("graficaBarra")
   .style.width=
   visual+"%";
 
-
  $("flowKpiPespunte")
   .textContent=
   porcentajePespunte.toFixed(1)+"%";
-
 
  $("flowKpiEmpaque")
   .textContent=
   porcentajeEmpaque.toFixed(1)+"%";
 
-
  $("flowKpiCumplimiento")
   .textContent=
   porcentajeCumplimiento.toFixed(1)+"%";
-
 
  $("graficaDiaSub")
   .textContent=
@@ -5371,13 +5152,11 @@ function renderDailyEfficiency(
    linea+
    " · Flujo real del día";
 
-
  var faltante=
   Math.max(
    0,
    totalProgramado-totalSalida
   );
-
 
  $("graficaFaltante")
   .textContent=
@@ -5385,10 +5164,8 @@ function renderDailyEfficiency(
    faltante.toLocaleString()+
    " piezas para igualar programación";
 
-
  var status=
   $("graficaStatus");
-
 
  var icon=
   $("graficaStatusIcon");
@@ -5399,15 +5176,12 @@ function renderDailyEfficiency(
  var texto=
   $("graficaStatusTexto");
 
-
  status.className=
   "visualStatus";
-
 
  $("graficaBarra")
   .className=
   "bigBarFill";
-
 
  if(totalProgramado===0){
 
@@ -5426,7 +5200,6 @@ function renderDailyEfficiency(
   return;
 
  }
-
 
  if(porcentajePespunte>=80){
 
@@ -5489,15 +5262,13 @@ function renderDailyEfficiency(
 
 }
 
-
 /* =====================================================
-RENDER OTs DEL DÍA
+RENDER AVANCES
 ===================================================== */
 
 function renderDailyAdvances(){
 
  var lista=getDailyOTs();
-
 
  var totalProgramado=
   lista.reduce(
@@ -5506,12 +5277,6 @@ function renderDailyAdvances(){
    },
    0
   );
-
-
- /*
- Salida Pespunte:
- movimiento real del día.
- */
 
  var totalSalida=0;
 
@@ -5525,12 +5290,6 @@ function renderDailyAdvances(){
 
  });
 
-
- /*
- Empaque:
- movimiento real del día.
- */
-
  var totalEmpaque=0;
 
  lista.forEach(function(x){
@@ -5543,7 +5302,6 @@ function renderDailyAdvances(){
 
  });
 
-
  var porcentaje=
   totalProgramado
   ?totalSalida/
@@ -5551,21 +5309,17 @@ function renderDailyAdvances(){
    100
   :0;
 
-
  $("avanceDiaProgramado")
   .textContent=
   totalProgramado.toLocaleString();
-
 
  $("avanceDiaSalida")
   .textContent=
   totalSalida.toLocaleString();
 
-
  $("avanceDiaPorcentaje")
   .textContent=
   porcentaje.toFixed(1)+"%";
-
 
  var barra=
   Math.max(
@@ -5576,11 +5330,9 @@ function renderDailyAdvances(){
    )
   );
 
-
  $("avanceDiaBarra")
   .style.width=
   barra+"%";
-
 
  if(porcentaje>=80){
 
@@ -5599,14 +5351,12 @@ function renderDailyAdvances(){
 
  }
 
-
  $("avanceDiaTexto")
   .textContent=
   totalSalida.toLocaleString()+
   " / "+
   totalProgramado.toLocaleString()+
   " piezas";
-
 
  renderDailyEfficiency(
   totalProgramado,
@@ -5616,7 +5366,6 @@ function renderDailyAdvances(){
   $("avanceLinea").value||"Todas"
  );
 
-
  var fecha=
   $("avanceFecha").value||
   today();
@@ -5624,7 +5373,6 @@ function renderDailyAdvances(){
  var linea=
   $("avanceLinea").value||
   "Todas";
-
 
  $("avanceListaSub")
   .textContent=
@@ -5640,9 +5388,7 @@ function renderDailyAdvances(){
    :"s"
   );
 
-
  var box=$("avanceListaOT");
-
 
  if(!lista.length){
 
@@ -5657,13 +5403,11 @@ function renderDailyAdvances(){
 
  }
 
-
  box.innerHTML=
   lista.map(function(x){
 
    var sc=
     statusClass(x.ultimo);
-
 
    var salidaDia=
     salidaPespunteEnFecha(
@@ -5671,13 +5415,11 @@ function renderDailyAdvances(){
      x.fecha
     );
 
-
    var empaqueDia=
     empacadoEnFecha(
      x.ot,
      x.fecha
     );
-
 
    return `
 
@@ -5711,7 +5453,6 @@ function renderDailyAdvances(){
 
      </div>
 
-
      <div class="dailyOTProgrammed">
 
       <strong>
@@ -5726,7 +5467,6 @@ function renderDailyAdvances(){
 
     </div>
 
-
     <div class="dailyOTStatus ${sc}">
 
      <div class="statusLabel">
@@ -5738,7 +5478,6 @@ function renderDailyAdvances(){
      </div>
 
     </div>
-
 
     <div class="dailyOTStats">
 
@@ -5752,7 +5491,6 @@ function renderDailyAdvances(){
 
      </div>
 
-
      <div class="dailyOTStat">
 
       <span>🟠 Salida pespunte hoy</span>
@@ -5763,7 +5501,6 @@ function renderDailyAdvances(){
 
      </div>
 
-
      <div class="dailyOTStat">
 
       <span>🟣 Clasificación</span>
@@ -5773,7 +5510,6 @@ function renderDailyAdvances(){
       </strong>
 
      </div>
-
 
      <div class="dailyOTStat">
 
@@ -5786,7 +5522,6 @@ function renderDailyAdvances(){
      </div>
 
     </div>
-
 
     <button
      class="dailyOTButton"
@@ -5802,7 +5537,6 @@ function renderDailyAdvances(){
 
   }).join("");
 
-
  box.querySelectorAll(
   "[data-daily-avance]"
  )
@@ -5815,9 +5549,7 @@ function renderDailyAdvances(){
      "data-daily-avance"
     );
 
-
    selectMovementOT(ot);
-
 
    $("buscarOT").value=ot;
 
@@ -5829,9 +5561,8 @@ function renderDailyAdvances(){
 
 }
 
-
 /* =====================================================
-LEAD TIME
+LEAD
 ===================================================== */
 
 function renderLead(){
@@ -5843,7 +5574,6 @@ function renderLead(){
  var names=
   Object.keys(map).sort();
 
-
  if(!names.length){
 
   tb.innerHTML=
@@ -5853,7 +5583,6 @@ function renderLead(){
 
  }
 
-
  tb.innerHTML=
   names.map(function(k){
 
@@ -5861,7 +5590,6 @@ function renderLead(){
 
    var last=
     getLastAdvance(o.ot);
-
 
    return `
 
@@ -5915,7 +5643,6 @@ function renderLead(){
 
   }).join("");
 
-
  tb.querySelectorAll(
   "[data-lead]"
  )
@@ -5933,20 +5660,13 @@ function renderLead(){
 
 }
 
-
-/* =====================================================
-DETALLE LEAD
-===================================================== */
-
 function showLeadDetail(ot){
 
  var o=getOTs()[ot];
 
  if(!o)return;
 
-
  var arr=getAdvancesOT(ot);
-
 
  var html=
 
@@ -5985,7 +5705,6 @@ function showLeadDetail(ot){
 
   '</div>';
 
-
  if(!arr.length){
 
   html+=
@@ -5996,7 +5715,6 @@ function showLeadDetail(ot){
  }else{
 
   var prev=getStartDateTime(ot);
-
 
   html+=
 
@@ -6017,7 +5735,6 @@ function showLeadDetail(ot){
    '</thead>'+
 
    '<tbody>';
-
 
   arr.forEach(function(a){
 
@@ -6054,11 +5771,9 @@ function showLeadDetail(ot){
 
     '</tr>';
 
-
    prev=a.fechaHora;
 
   });
-
 
   html+=
    '</tbody>'+
@@ -6067,11 +5782,9 @@ function showLeadDetail(ot){
 
  }
 
-
  $("detalleLead").style.display="block";
 
  $("detalleOT").innerHTML=html;
-
 
  $("detalleLead")
   .scrollIntoView({
@@ -6080,7 +5793,6 @@ function showLeadDetail(ot){
   });
 
 }
-
 
 /* =====================================================
 WORK SHOP
@@ -6095,7 +5807,6 @@ function mostrarDetalleWS(tipo,linea){
 
  var lista=[];
 
-
  Object.keys(map)
  .forEach(function(k){
 
@@ -6103,11 +5814,9 @@ function mostrarDetalleWS(tipo,linea){
 
   if(o.linea!==linea)return;
 
-
   var inv=inventoryOT(k);
 
   var piezas=0;
-
 
   if(tipo==="programado"){
 
@@ -6116,7 +5825,6 @@ function mostrarDetalleWS(tipo,linea){
    piezas=N(o.programado);
 
   }
-
 
   if(tipo==="salida"){
 
@@ -6128,7 +5836,6 @@ function mostrarDetalleWS(tipo,linea){
 
   }
 
-
   if(tipo==="proceso"){
 
    piezas=
@@ -6137,13 +5844,11 @@ function mostrarDetalleWS(tipo,linea){
 
   }
 
-
   if(tipo==="clasificacion"){
 
    piezas=N(inv.Clasificación);
 
   }
-
 
   if(tipo==="empaque"){
 
@@ -6154,7 +5859,6 @@ function mostrarDetalleWS(tipo,linea){
     );
 
   }
-
 
   if(piezas>0){
 
@@ -6173,7 +5877,6 @@ function mostrarDetalleWS(tipo,linea){
 
  });
 
-
  var nombres={
 
   programado:"📋 Programado",
@@ -6188,7 +5891,6 @@ function mostrarDetalleWS(tipo,linea){
 
  };
 
-
  var total=
   lista.reduce(
    function(t,x){
@@ -6197,17 +5899,14 @@ function mostrarDetalleWS(tipo,linea){
    0
   );
 
-
  $("wsDetalleTitulo").textContent=
   nombres[tipo]+" · "+linea;
-
 
  $("wsDetalleSub").textContent=
   "Fecha: "+ref+
   " · "+lista.length+
   " OT"+
   (lista.length===1?"":"s");
-
 
  $("wsDetalleContenido").innerHTML=
 
@@ -6313,10 +6012,8 @@ function mostrarDetalleWS(tipo,linea){
 
   );
 
-
  $("wsDetalleCard")
   .style.display="block";
-
 
  $("wsDetalleContenido")
  .querySelectorAll(
@@ -6331,7 +6028,6 @@ function mostrarDetalleWS(tipo,linea){
      "data-ws-edit"
     );
 
-
    var registro=
     prod.find(function(r){
 
@@ -6339,7 +6035,6 @@ function mostrarDetalleWS(tipo,linea){
       String(ot);
 
     });
-
 
    if(!registro){
 
@@ -6351,7 +6046,6 @@ function mostrarDetalleWS(tipo,linea){
 
    }
 
-
    document
    .querySelectorAll(".tab")
    .forEach(function(x){
@@ -6359,7 +6053,6 @@ function mostrarDetalleWS(tipo,linea){
     x.classList.remove("active");
 
    });
-
 
    document
    .querySelectorAll(".page")
@@ -6369,22 +6062,18 @@ function mostrarDetalleWS(tipo,linea){
 
    });
 
-
    document
    .querySelector(
     '[data-target="captura"]'
    )
    .classList.add("active");
 
-
    $("captura")
     .classList.add("active");
-
 
    editarOT(
     registro.id
    );
-
 
    $("wsDetalleCard")
     .style.display="none";
@@ -6392,7 +6081,6 @@ function mostrarDetalleWS(tipo,linea){
   };
 
  });
-
 
  $("wsDetalleContenido")
  .querySelectorAll(
@@ -6407,7 +6095,6 @@ function mostrarDetalleWS(tipo,linea){
      "data-ws-avance"
     );
 
-
    document
    .querySelectorAll(".tab")
    .forEach(function(x){
@@ -6415,7 +6102,6 @@ function mostrarDetalleWS(tipo,linea){
     x.classList.remove("active");
 
    });
-
 
    document
    .querySelectorAll(".page")
@@ -6425,22 +6111,18 @@ function mostrarDetalleWS(tipo,linea){
 
    });
 
-
    document
    .querySelector(
     '[data-target="avances"]'
    )
    .classList.add("active");
 
-
    $("avances")
     .classList.add("active");
-
 
    $("buscarOT").value=ot;
 
    renderSearchOT();
-
 
    $("avances")
     .scrollIntoView({
@@ -6452,7 +6134,6 @@ function mostrarDetalleWS(tipo,linea){
 
  });
 
-
  $("wsDetalleCard")
   .scrollIntoView({
    behavior:"smooth",
@@ -6460,7 +6141,6 @@ function mostrarDetalleWS(tipo,linea){
   });
 
 }
-
 
 /* =====================================================
 WORK SHOP RENDER
@@ -6474,7 +6154,6 @@ function renderWorkshop(){
  var map=getOTs();
 
  var byLine={};
-
 
  ["Línea A","Línea B"]
  .forEach(function(l){
@@ -6490,14 +6169,12 @@ function renderWorkshop(){
 
  });
 
-
  Object.keys(map)
  .forEach(function(k){
 
   var o=map[k];
 
   var inv=inventoryOT(k);
-
 
   if(!byLine[o.linea]){
 
@@ -6512,7 +6189,6 @@ function renderWorkshop(){
 
   }
 
-
   FLOW.forEach(function(p){
 
    byLine[o.linea][p]+=
@@ -6522,14 +6198,12 @@ function renderWorkshop(){
 
  });
 
-
  $("tablaWS").innerHTML=
 
   ["Línea A","Línea B"]
   .map(function(l){
 
    var z=byLine[l];
-
 
    var total=
     z.Programado+
@@ -6538,7 +6212,6 @@ function renderWorkshop(){
     z.Clasificación+
     z.Empaque+
     z.Auditoría;
-
 
    return `
 
@@ -6573,10 +6246,8 @@ function renderWorkshop(){
 
   }).join("");
 
-
  var names=
   Object.keys(map).sort();
-
 
  $("tablaWSOT").innerHTML=
 
@@ -6589,7 +6260,6 @@ function renderWorkshop(){
    var o=map[k];
 
    var inv=inventoryOT(k);
-
 
    return `
 
@@ -6615,11 +6285,6 @@ function renderWorkshop(){
 
   '<tr><td colspan="9">Sin OTs.</td></tr>';
 
-
- /* =====================================================
- PRODUCCIÓN DEL DÍA
- ===================================================== */
-
  var dia={
 
   "Línea A":{
@@ -6640,7 +6305,6 @@ function renderWorkshop(){
 
  };
 
-
  Object.keys(map)
  .forEach(function(k){
 
@@ -6648,49 +6312,27 @@ function renderWorkshop(){
 
   if(!dia[o.linea])return;
 
-
-  /*
-   PROGRAMADO:
-   solamente lo programado en la fecha.
-  */
-
   if(o.fecha===ref){
 
    dia[o.linea].programado+=
     N(o.programado);
 
-
    var inv=inventoryOT(k);
-
 
    dia[o.linea].proceso+=
     N(inv.Armado)+
     N(inv["Salida pespunte"]);
-
 
    dia[o.linea].clasificacion+=
     N(inv.Clasificación);
 
   }
 
-
-  /*
-   SALIDA PESPUNTE:
-   movimiento real del día.
-  */
-
   dia[o.linea].salida+=
    salidaPespunteEnFecha(
     k,
     ref
    );
-
-
-  /*
-   EMPAQUE:
-   movimiento real del día.
-   Incluye arrastre.
-  */
 
   dia[o.linea].empaque+=
    empacadoEnFecha(
@@ -6700,13 +6342,11 @@ function renderWorkshop(){
 
  });
 
-
  var pA=dia["Línea A"].programado;
  var sA=dia["Línea A"].salida;
  var eA=dia["Línea A"].empaque;
  var prA=dia["Línea A"].proceso;
  var cA=dia["Línea A"].clasificacion;
-
 
  var pB=dia["Línea B"].programado;
  var sB=dia["Línea B"].salida;
@@ -6714,23 +6354,14 @@ function renderWorkshop(){
  var prB=dia["Línea B"].proceso;
  var cB=dia["Línea B"].clasificacion;
 
-
- /*
- =====================================================
- INDICADORES DE TIEMPO
- =====================================================
- */
-
  function lineModels(linea){
 
   var lista=[];
-
 
   Object.keys(map)
   .forEach(function(k){
 
    var o=map[k];
-
 
    if(
     o.linea!==linea ||
@@ -6741,158 +6372,18 @@ function renderWorkshop(){
 
    }
 
-
    lista.push({
 
     modelo:o.modelo,
-
     piezas:N(o.programado)
 
    });
 
   });
 
-
   return lista;
 
  }
-
-
- function lineOutputModels(linea){
-
-  var lista=[];
-
-
-  Object.keys(map)
-  .forEach(function(k){
-
-   var o=map[k];
-
-
-   if(o.linea!==linea)return;
-
-
-   var q=
-    empacadoEnFecha(
-     k,
-     ref
-    );
-
-
-   if(q<=0)return;
-
-
-   lista.push({
-
-    modelo:o.modelo,
-
-    piezas:q
-
-   });
-
-  });
-
-
-  return lista;
-
- }
-
-
- function renderLineTime(
-  linea,
-  prefix,
-  programado
- ){
-
-  var mins=
-   productiveMinutesForDate(
-    ref
-   );
-
-
-  /*
-   Tiempo estándar según lo programado.
-  */
-
-  var planned=
-   lineModels(linea);
-
-
-  var std=
-   weightedStandardMinutes(
-    planned
-   );
-
-
-  /*
-   Capacidad teórica:
-
-   580 / min/pieza
-  */
-
-  var capacidad=
-   std>0
-   ?mins/std
-   :0;
-
-
-  /*
-   Piezas reales por hora:
-
-   Empaque / horas productivas.
-  */
-
-  var emp=
-   linea==="Línea A"
-   ?eA
-   :eB;
-
-
-  var horas=
-   mins/60;
-
-
-  var pph=
-   horas>0
-   ?emp/horas
-   :0;
-
-
-  $(prefix+"Min").textContent=
-   mins.toLocaleString()+
-   " min";
-
-
-  $(prefix+"Std").textContent=
-   std>0
-   ?std.toFixed(2)
-   :"—";
-
-
-  $(prefix+"Cap").textContent=
-   capacidad>0
-   ?Math.round(capacidad).toLocaleString()
-   :"—";
-
-
-  $(prefix+"Pph").textContent=
-   pph.toFixed(1);
-
-
- }
-
-
- renderLineTime(
-  "Línea A",
-  "ws",
-  pA
- );
-
-
- /*
- Como existen IDs wsMinA y wsMinB,
- ajustamos explícitamente cada línea.
- */
 
  function setTimeLine(
   linea,
@@ -6905,54 +6396,44 @@ function renderWorkshop(){
     ref
    );
 
-
   var planned=
    lineModels(linea);
-
 
   var std=
    weightedStandardMinutes(
     planned
    );
 
-
   var capacidad=
    std>0
    ?mins/std
    :0;
 
-
   var horas=
    mins/60;
-
 
   var pph=
    horas>0
    ?emp/horas
    :0;
 
-
   $("wsMin"+sufijo).textContent=
    mins.toLocaleString();
-
 
   $("wsStd"+sufijo).textContent=
    std>0
    ?std.toFixed(2)
    :"—";
 
-
   $("wsCap"+sufijo).textContent=
    capacidad>0
    ?Math.round(capacidad).toLocaleString()
    :"—";
 
-
   $("wsPph"+sufijo).textContent=
    pph.toFixed(1);
 
  }
-
 
  setTimeLine(
   "Línea A",
@@ -6960,13 +6441,11 @@ function renderWorkshop(){
   eA
  );
 
-
  setTimeLine(
   "Línea B",
   "B",
   eB
  );
-
 
  $("wsProgA").textContent=
   pA.toLocaleString();
@@ -6983,24 +6462,20 @@ function renderWorkshop(){
  $("wsEmpA").textContent=
   eA.toLocaleString();
 
-
  $("wsEfA").textContent=
   (
    pA?sA/pA*100:0
   ).toFixed(1)+"%";
-
 
  $("wsConvA").textContent=
   (
    sA?eA/sA*100:0
   ).toFixed(1)+"%";
 
-
  $("wsCumA").textContent=
   (
    pA?eA/pA*100:0
   ).toFixed(1)+"%";
-
 
  $("wsProgB").textContent=
   pB.toLocaleString();
@@ -7017,39 +6492,29 @@ function renderWorkshop(){
  $("wsEmpB").textContent=
   eB.toLocaleString();
 
-
  $("wsEfB").textContent=
   (
    pB?sB/pB*100:0
   ).toFixed(1)+"%";
-
 
  $("wsConvB").textContent=
   (
    sB?eB/sB*100:0
   ).toFixed(1)+"%";
 
-
  $("wsCumB").textContent=
   (
    pB?eB/pB*100:0
   ).toFixed(1)+"%";
 
-
- /* =====================================================
- GENERAL DE LA SEMANA
- ===================================================== */
-
  var progSemana=0;
 
  var empSemana=0;
-
 
  Object.keys(map)
  .forEach(function(k){
 
   var o=map[k];
-
 
   if(
    inWeekDate(
@@ -7063,7 +6528,6 @@ function renderWorkshop(){
 
   }
 
-
   empSemana+=
    empacadoEnSemana(
     k,
@@ -7072,13 +6536,11 @@ function renderWorkshop(){
 
  });
 
-
  $("wsProgSemana").textContent=
   progSemana.toLocaleString();
 
  $("wsEmpSemana").textContent=
   empSemana.toLocaleString();
-
 
  $("wsEfSemana").textContent=
   (
@@ -7086,7 +6548,6 @@ function renderWorkshop(){
    ?empSemana/progSemana*100
    :0
   ).toFixed(1)+"%";
-
 
  document
  .querySelectorAll(
@@ -7114,7 +6575,6 @@ function renderWorkshop(){
 
 }
 
-
 /* =====================================================
 RESUMEN
 ===================================================== */
@@ -7128,7 +6588,6 @@ function renderResumen(){
 
  var names=Object.keys(map);
 
-
  var weekOTs=
   names.filter(function(k){
 
@@ -7139,22 +6598,18 @@ function renderResumen(){
 
   });
 
-
  var totalProg=0;
 
  var laProg=0;
 
  var lbProg=0;
 
-
  weekOTs.forEach(function(k){
 
   var o=map[k];
 
-
   totalProg+=
    N(o.programado);
-
 
   if(o.linea==="Línea A"){
 
@@ -7170,19 +6625,13 @@ function renderResumen(){
 
  });
 
-
  var payrollOTs=
   getPayrollOTs(ref);
 
-
  var totalEmp=0;
-
  var totalAud=0;
-
  var dp=0;
-
  var dr=0;
-
 
  var la={
   p:laProg,
@@ -7192,7 +6641,6 @@ function renderResumen(){
   dr:0
  };
 
-
  var lb={
   p:lbProg,
   e:0,
@@ -7201,9 +6649,7 @@ function renderResumen(){
   dr:0
  };
 
-
  var groups=[];
-
 
  payrollOTs.forEach(function(x){
 
@@ -7211,10 +6657,8 @@ function renderResumen(){
 
   if(!o)return;
 
-
   var q=
    N(x.empaque);
-
 
   var aud=
    getAdvancesOT(x.ot)
@@ -7233,10 +6677,8 @@ function renderResumen(){
 
    },0);
 
-
   var c=
    cost[o.modelo]||{};
-
 
   var p=
    q*N(c.pes);
@@ -7244,30 +6686,20 @@ function renderResumen(){
   var r=
    q*N(c.pre);
 
-
   totalEmp+=q;
-
   totalAud+=aud;
-
   dp+=p;
-
   dr+=r;
-
 
   var z=
    o.linea==="Línea A"
    ?la
    :lb;
 
-
   z.e+=q;
-
   z.a+=aud;
-
   z.dp+=p;
-
   z.dr+=r;
-
 
   var programadoSemana=
    inWeekDate(
@@ -7277,45 +6709,32 @@ function renderResumen(){
    ?N(o.programado)
    :0;
 
-
   groups.push({
 
    ot:x.ot,
-
    linea:o.linea,
-
    modelo:o.modelo,
-
    p:programadoSemana,
-
    e:q,
-
    dp:p,
-
    dr:r,
-
    fechaProgramacion:o.fecha
 
   });
 
  });
 
-
  $("kProg").textContent=
   totalProg.toLocaleString();
-
 
  $("kEmp").textContent=
   totalEmp.toLocaleString();
 
-
  $("kAud").textContent=
   totalAud.toLocaleString();
 
-
  $("kReg").textContent=
   groups.length;
-
 
  $("eficiencia").textContent=
   (
@@ -7324,13 +6743,11 @@ function renderResumen(){
    :0
   ).toFixed(1)+"%";
 
-
  $("dPes").textContent=
   M(dp);
 
  $("dPre").textContent=
   M(dr);
-
 
  $("dPesA").textContent=
   M(la.dp);
@@ -7338,13 +6755,11 @@ function renderResumen(){
  $("dPesB").textContent=
   M(lb.dp);
 
-
  $("dPreA").textContent=
   M(la.dr);
 
  $("dPreB").textContent=
   M(lb.dr);
-
 
  function lineRow(name,z){
 
@@ -7352,7 +6767,6 @@ function renderResumen(){
    z.p
    ?z.e/z.p*100
    :0;
-
 
   return `
 
@@ -7378,11 +6792,9 @@ function renderResumen(){
 
  }
 
-
  $("tablaLineas").innerHTML=
   lineRow("Línea A",la)+
   lineRow("Línea B",lb);
-
 
  $("tablaOT").innerHTML=
 
@@ -7408,7 +6820,6 @@ function renderResumen(){
      g.fechaProgramacion,
      ref
     );
-
 
    return `
 
@@ -7476,7 +6887,6 @@ function renderResumen(){
 
 }
 
-
 /* =====================================================
 COSTOS
 ===================================================== */
@@ -7487,7 +6897,6 @@ function renderCosts(){
 
  var names=
   Object.keys(cost).sort();
-
 
  tb.innerHTML=
 
@@ -7505,7 +6914,6 @@ function renderCosts(){
     min>0
     ?60/min
     :0;
-
 
    return `
 
@@ -7567,7 +6975,6 @@ function renderCosts(){
 
   '<tr><td colspan="6">Sin modelos.</td></tr>';
 
-
  tb.querySelectorAll(
   "[data-edit-cost]"
  )
@@ -7585,7 +6992,6 @@ function renderCosts(){
 
  });
 
-
  tb.querySelectorAll(
   "[data-cost]"
  )
@@ -7598,18 +7004,15 @@ function renderCosts(){
      "data-cost"
     );
 
-
    if(!confirm(
     "¿Eliminar el costo de "+
     m+"?"
    ))return;
 
-
    delete cost[m];
 
    save();
    render();
-
 
    alert(
     "Costo eliminado. ✅"
@@ -7621,9 +7024,25 @@ function renderCosts(){
 
 }
 
-
 /* =====================================================
 EDITAR COSTO
+=====================================================
+
+IMPORTANTE:
+
+Aquí se mantiene la edición posterior.
+
+Puedes cambiar:
+
+• Modelo
+• Pespunte
+• Preliminar
+• Min/pieza
+
+Cuando actualizas un modelo NO se crean duplicados.
+
+El mismo modelo conserva su registro.
+
 ===================================================== */
 
 function editarCosto(modelo){
@@ -7632,26 +7051,26 @@ function editarCosto(modelo){
 
  if(!c)return;
 
-
  editingCostModel=modelo;
 
-
  $("cModelo").value=modelo;
- $("cPes").value=N(c.pes);
- $("cPre").value=N(c.pre);
- $("cMin").value=N(c.min);
 
+ $("cPes").value=
+  N(c.pes);
+
+ $("cPre").value=
+  N(c.pre);
+
+ $("cMin").value=
+  N(c.min);
 
  $("cModelo").readOnly=true;
-
 
  $("guardarCosto").textContent=
   "💾 Actualizar costo";
 
-
  $("cancelarCosto")
   .style.display="inline-block";
-
 
  $("costos")
  .scrollIntoView({
@@ -7661,30 +7080,24 @@ function editarCosto(modelo){
 
 }
 
-
 function cancelarEdicionCosto(){
 
  editingCostModel=null;
-
 
  $("cModelo").value="";
  $("cPes").value="";
  $("cPre").value="";
  $("cMin").value="";
 
-
  $("cModelo").readOnly=false;
-
 
  $("guardarCosto").textContent=
   "Guardar costo";
-
 
  $("cancelarCosto")
   .style.display="none";
 
 }
-
 
 /* =====================================================
 HISTORIAL
@@ -7693,7 +7106,6 @@ HISTORIAL
 function renderHistory(){
 
  var tb=$("tablaHistorial");
-
 
  tb.innerHTML=
 
@@ -7729,7 +7141,6 @@ function renderHistory(){
 
 }
 
-
 /* =====================================================
 RENDER
 ===================================================== */
@@ -7754,9 +7165,8 @@ function render(){
 
 }
 
-
 /* =====================================================
-FECHAS INICIALES
+FECHAS
 ===================================================== */
 
 $("fecha").value=today();
@@ -7766,7 +7176,6 @@ $("refSemana").value=today();
 $("wsFecha").value=today();
 
 $("avanceFecha").value=today();
-
 
 /* =====================================================
 TABS
@@ -7790,7 +7199,6 @@ document
 
    });
 
-
    document
    .querySelectorAll(".page")
    .forEach(function(x){
@@ -7801,9 +7209,7 @@ document
 
    });
 
-
    btn.classList.add("active");
-
 
    $(
     btn.getAttribute(
@@ -7811,14 +7217,12 @@ document
     )
    ).classList.add("active");
 
-
    render();
 
   }
  );
 
 });
-
 
 /* =====================================================
 CAPTURA
@@ -7829,7 +7233,6 @@ $("guardar")
  "click",
  guardarOT
 );
-
 
 $("limpiar")
 .addEventListener(
@@ -7849,7 +7252,6 @@ $("limpiar")
  }
 );
 
-
 /* =====================================================
 FILTRO AVANCES
 ===================================================== */
@@ -7860,13 +7262,11 @@ $("avanceFecha")
  renderDailyAdvances
 );
 
-
 $("avanceLinea")
 .addEventListener(
  "change",
  renderDailyAdvances
 );
-
 
 /* =====================================================
 BUSCAR OT
@@ -7878,7 +7278,6 @@ $("buscarOT")
  renderSearchOT
 );
 
-
 /* =====================================================
 AVANCES
 ===================================================== */
@@ -7889,13 +7288,11 @@ $("desdeProceso")
  fillToProcesses
 );
 
-
 $("hastaProceso")
 .addEventListener(
  "change",
  updateMovementAvailability
 );
-
 
 $("piezasMovimiento")
 .addEventListener(
@@ -7903,13 +7300,11 @@ $("piezasMovimiento")
  updateMovementAvailability
 );
 
-
 $("guardarMovimiento")
 .addEventListener(
  "click",
  guardarMovimiento
 );
-
 
 $("cancelarMovimiento")
 .addEventListener(
@@ -7926,7 +7321,6 @@ $("cancelarMovimiento")
  }
 );
 
-
 /* =====================================================
 WORK SHOP
 ===================================================== */
@@ -7937,13 +7331,11 @@ $("actualizarWS")
  renderWorkshop
 );
 
-
 $("wsFecha")
 .addEventListener(
  "change",
  renderWorkshop
 );
-
 
 $("cerrarWsDetalle")
 .addEventListener(
@@ -7956,7 +7348,6 @@ $("cerrarWsDetalle")
  }
 );
 
-
 /* =====================================================
 RESUMEN
 ===================================================== */
@@ -7967,13 +7358,11 @@ $("actualizar")
  renderResumen
 );
 
-
 $("refSemana")
 .addEventListener(
  "change",
  renderResumen
 );
-
 
 /* =====================================================
 COSTOS
@@ -7996,7 +7385,6 @@ $("guardarCosto")
   var t=
    N($("cMin").value);
 
-
   if(!m){
 
    return alert(
@@ -8004,7 +7392,6 @@ $("guardarCosto")
    );
 
   }
-
 
   if(p<0||r<0||t<0){
 
@@ -8014,23 +7401,36 @@ $("guardarCosto")
 
   }
 
+  /* ==========================================
+     ACTUALIZAR MODELO EXISTENTE
+     ========================================== */
 
   if(editingCostModel){
 
    /*
-    IMPORTANTE:
-    conservamos el mismo registro y solamente
-    agregamos el campo min.
+    MUY IMPORTANTE:
 
-    Esto NO cambia la clave de localStorage.
+    Conservamos el registro del mismo modelo.
+
+    Esto significa que las OTs históricas
+    que utilizan este modelo seguirán tomando
+    el costo actualizado.
+
+    No se crea un modelo duplicado.
    */
 
-   cost[editingCostModel]={
-    pes:p,
-    pre:r,
-    min:t
-   };
+   var anterior=
+    cost[editingCostModel]||{};
 
+   cost[editingCostModel]={
+
+    pes:p,
+
+    pre:r,
+
+    min:t
+
+   };
 
    save();
 
@@ -8038,15 +7438,18 @@ $("guardarCosto")
 
    render();
 
-
    alert(
-    "Costo y tiempo estándar actualizados correctamente. ✅"
+    "Costo y tiempo estándar actualizados correctamente. ✅\n\n"+
+    "Modelo: "+editingCostModel
    );
 
    return;
 
   }
 
+  /* ==========================================
+     EVITAR DUPLICADOS
+     ========================================== */
 
   if(cost[m]){
 
@@ -8057,25 +7460,28 @@ $("guardarCosto")
 
   }
 
+  /* ==========================================
+     NUEVO MODELO
+     ========================================== */
 
   cost[m]={
+
    pes:p,
+
    pre:r,
+
    min:t
+
   };
 
-
   save();
-
 
   $("cModelo").value="";
   $("cPes").value="";
   $("cPre").value="";
   $("cMin").value="";
 
-
   render();
-
 
   alert(
    "Costo y tiempo estándar guardados. ✅"
@@ -8084,13 +7490,11 @@ $("guardarCosto")
  }
 );
 
-
 $("cancelarCosto")
 .addEventListener(
  "click",
  cancelarEdicionCosto
 );
-
 
 /* =====================================================
 CERRAR SEMANA
@@ -8105,18 +7509,14 @@ $("cerrarSemana")
    $("refSemana").value||
    today();
 
-
   var map=getOTs();
 
-
   var programadoSemana=0;
-
 
   Object.keys(map)
   .forEach(function(k){
 
    var o=map[k];
-
 
    if(
     inWeekDate(
@@ -8132,10 +7532,8 @@ $("cerrarSemana")
 
   });
 
-
   var payrollOTs=
    getPayrollOTs(ref);
-
 
   var a={
    programado:programadoSemana,
@@ -8144,18 +7542,15 @@ $("cerrarSemana")
    pre:0
   };
 
-
   var la={
    pes:0,
    pre:0
   };
 
-
   var lb={
    pes:0,
    pre:0
   };
-
 
   payrollOTs.forEach(function(x){
 
@@ -8163,14 +7558,11 @@ $("cerrarSemana")
 
    if(!o)return;
 
-
    var q=
     N(x.empaque);
 
-
    var c=
     cost[o.modelo]||{};
-
 
    var p=
     q*N(c.pes);
@@ -8178,13 +7570,11 @@ $("cerrarSemana")
    var r=
     q*N(c.pre);
 
-
    a.empaque+=q;
 
    a.pes+=p;
 
    a.pre+=r;
-
 
    if(o.linea==="Línea A"){
 
@@ -8200,7 +7590,6 @@ $("cerrarSemana")
 
   });
 
-
   if(
    !a.programado &&
    !a.empaque
@@ -8212,10 +7601,8 @@ $("cerrarSemana")
 
   }
 
-
   var sat=
    range(ref)[1];
-
 
   hist.push({
 
@@ -8243,11 +7630,9 @@ $("cerrarSemana")
 
   });
 
-
   save();
 
   render();
-
 
   alert(
    "Semana cerrada correctamente. ✅\n\n"+
@@ -8262,7 +7647,6 @@ $("cerrarSemana")
 
  }
 );
-
 
 /* =====================================================
 BORRAR HISTORIAL
@@ -8288,7 +7672,6 @@ $("borrarHistorial")
  }
 );
 
-
 /* =====================================================
 EXPORTAR CSV
 ===================================================== */
@@ -8302,18 +7685,14 @@ $("exportar")
    $("refSemana").value||
    today();
 
-
   var map=getOTs();
 
-
   var keys={};
-
 
   Object.keys(map)
   .forEach(function(k){
 
    var o=map[k];
-
 
    if(
     inWeekDate(
@@ -8328,14 +7707,12 @@ $("exportar")
 
   });
 
-
   getPayrollOTs(ref)
   .forEach(function(x){
 
    keys[x.ot]=true;
 
   });
-
 
   var rows=[
 
@@ -8355,7 +7732,6 @@ $("exportar")
 
   ];
 
-
   Object.keys(keys)
   .sort(function(a,b){
 
@@ -8373,13 +7749,11 @@ $("exportar")
 
    if(!o)return;
 
-
    var q=
     empacadoEnSemana(
      k,
      ref
     );
-
 
    var programadoSemana=
     inWeekDate(
@@ -8389,13 +7763,11 @@ $("exportar")
     ?N(o.programado)
     :0;
 
-
    var arrastre=
     !inWeekDate(
      o.fecha,
      ref
     );
-
 
    if(
     !programadoSemana &&
@@ -8406,10 +7778,8 @@ $("exportar")
 
    }
 
-
    var c=
     cost[o.modelo]||{};
-
 
    rows.push([
 
@@ -8451,7 +7821,6 @@ $("exportar")
 
   });
 
-
   var csv=
    rows.map(function(row){
 
@@ -8470,10 +7839,8 @@ $("exportar")
 
    }).join("\n");
 
-
   var a=
    document.createElement("a");
-
 
   a.href=
    URL.createObjectURL(
@@ -8486,10 +7853,8 @@ $("exportar")
     )
    );
 
-
   a.download=
    "The_Studio_resumen.csv";
-
 
   document.body.appendChild(a);
 
@@ -8499,7 +7864,6 @@ $("exportar")
 
  }
 );
-
 
 /* =====================================================
 INICIAR
