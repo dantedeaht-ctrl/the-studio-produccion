@@ -1,6961 +1,2342 @@
 <!doctype html>
-<html lang="es">
-<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The Studio</title>
 
-<style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  background:#f4f6f8;
-  color:#202733;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-}
-
-header{
-  background:#101a2b;
-  color:#fff;
-  padding:22px 18px 18px;
-}
-
-header h1{
-  margin:0;
-  font-size:27px;
-  font-weight:900;
-}
-
-header p{
-  margin:8px 0 0;
-  color:#cbd5e1;
-  font-size:14px;
-  line-height:1.5;
-}
-
-nav{
-  display:flex;
-  gap:8px;
-  background:#fff;
-  padding:10px;
-  overflow-x:auto;
-  border-bottom:1px solid #ddd;
-  position:sticky;
-  top:0;
-  z-index:5;
-}
-
-nav button{
-  border:0;
-  border-radius:12px;
-  padding:12px 16px;
-  background:#edf2f7;
-  color:#354052;
-  font-weight:800;
-  font-size:15px;
-  white-space:nowrap;
-}
-
-nav button.active{
-  background:#1769ff;
-  color:#fff;
-}
-
-main{
-  max-width:1250px;
-  margin:auto;
-  padding:14px;
-}
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-.card,
-.dailyEfficiencyCard,
-.advanceFilterCard,
-.wsLineCard,
-.wsWeekCard,
-.wsDetailCard{
-  background:#fff;
-  border:1px solid #e0e4e9;
-  border-radius:18px;
-  padding:16px;
-  margin-bottom:14px;
-  box-shadow:0 3px 12px rgba(0,0,0,.04);
-}
-
-h2{
-  font-size:20px;
-  margin:0 0 12px;
-}
-
-h3{
-  margin:0 0 8px;
-}
-
-.note,
-.successNote,
-.warningNote{
-  padding:13px;
-  border-radius:9px;
-  line-height:1.45;
-  margin-bottom:14px;
-}
-
-.note{
-  background:#eef5ff;
-  border-left:5px solid #1769ff;
-}
-
-.successNote{
-  background:#eaf8f0;
-  border-left:5px solid #18a566;
-}
-
-.warningNote{
-  background:#fff7df;
-  border-left:5px solid #e5a700;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
-.field label{
-  display:block;
-  font-weight:800;
-  color:#555f6d;
-  font-size:13px;
-  margin:0 0 6px;
-}
-
-.field input,
-.field select{
-  width:100%;
-  height:48px;
-  border:2px solid #d6dbe2;
-  border-radius:11px;
-  padding:0 13px;
-  background:#fff;
-  font:inherit;
-  color:#202733;
-}
-
-.field input[readonly]{
-  background:#f1f4f7;
-  color:#596575;
-  font-weight:700;
-}
-
-.actions{
-  display:flex;
-  gap:9px;
-  flex-wrap:wrap;
-  margin-top:14px;
-}
-
-button.action{
-  border:0;
-  border-radius:10px;
-  padding:12px 17px;
-  font-weight:800;
-  font-size:14px;
-  cursor:pointer;
-}
-
-button:disabled{
-  opacity:.45;
-  cursor:not-allowed;
-}
-
-.primary{
-  background:#1769ff;
-  color:#fff;
-}
-
-.secondary{
-  background:#e9edf2;
-  color:#26313d;
-}
-
-.danger{
-  background:#ffe5e5;
-  color:#a32222;
-}
-
-.success{
-  background:#18a566;
-  color:#fff;
-}
-
-.editBtn{
-  background:#fff0d8;
-  color:#9a6200;
-}
-
-.kpis{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-bottom:14px;
-}
-
-.kpi{
-  background:#fff;
-  border:1px solid #e0e4e9;
-  border-radius:13px;
-  padding:14px;
-}
-
-.kpi small{
-  color:#707986;
-}
-
-.kpi strong{
-  display:block;
-  font-size:23px;
-  margin-top:4px;
-}
-
-.moneygrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-bottom:14px;
-}
-
-.moneybox{
-  padding:15px;
-  border:2px solid #dce3ec;
-  border-radius:13px;
-  background:#fff;
-}
-
-.moneybox h3{
-  margin:0 0 5px;
-  font-size:14px;
-}
-
-.money{
-  font-size:24px;
-  font-weight:900;
-}
-
-.tablewrap{
-  overflow:auto;
-  width:100%;
-  max-width:100%;
-  -webkit-overflow-scrolling:touch;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:12px;
-}
-
-th,
-td{
-  padding:9px 8px;
-  border-bottom:1px solid #e2e5e9;
-  text-align:left;
-  white-space:nowrap;
-}
-
-th{
-  background:#f7f8fa;
-  color:#5b6470;
-}
-
-.pill,
-.processPill,
-.arrastrePill{
-  font-size:11px;
-  font-weight:800;
-  padding:4px 8px;
-  border-radius:99px;
-}
-
-.a{
-  background:#eaf0ff;
-  color:#1769ff;
-}
-
-.b{
-  background:#e8f8ef;
-  color:#138a55;
-}
-
-.processPill{
-  background:#f1f3f6;
-  color:#344054;
-}
-
-.arrastrePill{
-  display:inline-block;
-  margin-top:4px;
-  background:#fff0d8;
-  color:#9a6200;
-}
-
-.otBox{
-  border:2px solid #e2e7ee;
-  border-radius:14px;
-  padding:14px;
-  margin-bottom:12px;
-}
-
-.otTitle{
-  font-size:18px;
-  font-weight:900;
-}
-
-.muted{
-  color:#6b7280;
-  font-size:13px;
-}
-
-.lead{
-  font-weight:900;
-  color:#1769ff;
-}
-
-.detailBox{
-  background:#f8fafc;
-  border:1px solid #e2e8f0;
-  border-radius:12px;
-  padding:12px;
-  margin-top:10px;
-}
-
-.effBox{
-  padding:18px;
-  border:2px solid #dce3ec;
-  border-radius:14px;
-  background:#fff;
-  text-align:center;
-}
-
-.eff{
-  font-size:36px;
-  font-weight:900;
-  color:#1769ff;
-}
-
-.dailyEfficiencyHeader,
-.wsDetailHeader{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-bottom:15px;
-}
-
-.dailyEfficiencyTitle{
-  font-size:21px;
-  font-weight:950;
-}
-
-.dailyEfficiencySub,
-.wsWeekSub{
-  font-size:12px;
-  color:#6b7280;
-  margin-top:3px;
-}
-
-.dailyEfficiencyBadge{
-  min-width:86px;
-  text-align:center;
-  padding:10px 8px;
-  border-radius:14px;
-  background:#eef5ff;
-  color:#1769ff;
-}
-
-.dailyEfficiencyBadge strong{
-  display:block;
-  font-size:25px;
-}
-
-.dailyEfficiencyBadge span{
-  font-size:9px;
-  font-weight:850;
-}
-
-.visualCompare,
-.wsDailyGrid,
-.wsWeekGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.compareBox{
-  border-radius:16px;
-  padding:15px;
-}
-
-.compareProgramado{
-  background:#eef5ff;
-  border:2px solid #d8e6ff;
-}
-
-.compareSalida{
-  background:#fff4e4;
-  border:2px solid #f1dfbf;
-}
-
-.compareTop{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:9px;
-}
-
-.compareName{
-  font-size:14px;
-  font-weight:900;
-}
-
-.compareNumber{
-  font-size:34px;
-  font-weight:950;
-}
-
-.bigBarLabel,
-.compareFooter{
-  display:flex;
-  justify-content:space-between;
-  margin-top:10px;
-  font-size:12px;
-  font-weight:900;
-}
-
-.bigBar{
-  width:100%;
-  height:22px;
-  background:#e8edf2;
-  border-radius:99px;
-  overflow:hidden;
-}
-
-.bigBarFill{
-  height:100%;
-  width:0;
-  border-radius:99px;
-  transition:.35s;
-}
-
-.barGood{
-  background:#18a566;
-}
-
-.barMedium{
-  background:#e5a700;
-}
-
-.barLow{
-  background:#e05252;
-}
-
-.visualStatus{
-  margin-top:14px;
-  padding:13px;
-  border-radius:13px;
-  font-weight:850;
-}
-
-.statusGood{
-  background:#eaf8f0;
-  color:#137d50;
-}
-
-.statusMedium{
-  background:#fff7df;
-  color:#8d6900;
-}
-
-.statusLow{
-  background:#ffeded;
-  color:#a83232;
-}
-
-.statusNone{
-  background:#f1f3f6;
-  color:#596575;
-}
-
-.advanceDashboard{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-top:14px;
-}
-
-.advanceDashBox{
-  border-radius:16px;
-  padding:16px;
-  border:2px solid #e1e6ec;
-}
-
-.blue{
-  background:#eef5ff;
-  border-color:#d8e6ff;
-}
-
-.orange{
-  background:#fff5e6;
-  border-color:#f2dfbd;
-}
-
-.green{
-  background:#eaf8f0;
-  border-color:#d5ecdf;
-}
-
-.purple{
-  background:#f1edff;
-  border-color:#ddd5fa;
-}
-
-.advanceDashLabel{
-  font-size:13px;
-  font-weight:850;
-  color:#5d6875;
-}
-
-.advanceDashValue{
-  font-size:30px;
-  font-weight:950;
-  margin-top:3px;
-}
-
-.advanceDashSub{
-  font-size:11px;
-  color:#707986;
-  margin-top:3px;
-}
-
-.advanceProgress{
-  margin-top:14px;
-  background:#e8edf2;
-  height:14px;
-  border-radius:99px;
-  overflow:hidden;
-}
-
-.advanceProgressBar{
-  height:100%;
-  width:0;
-  border-radius:99px;
-}
-
-.advanceProgressText{
-  display:flex;
-  justify-content:space-between;
-  margin-top:7px;
-  font-size:12px;
-  font-weight:850;
-}
-
-.dailyOTGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.dailyOTCard{
-  background:#fff;
-  border:2px solid #e0e5eb;
-  border-radius:18px;
-  padding:15px;
-}
-
-.dailyOTTop{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.dailyOTNumber{
-  font-size:21px;
-  font-weight:950;
-}
-
-.dailyOTModel{
-  color:#6b7280;
-  font-size:12px;
-  margin-top:3px;
-}
-
-.dailyOTProgrammed{
-  background:#eef5ff;
-  border-radius:12px;
-  padding:10px;
-  text-align:center;
-}
-
-.dailyOTProgrammed strong{
-  display:block;
-  font-size:24px;
-}
-
-.dailyOTProgrammed span{
-  font-size:10px;
-  color:#697586;
-  font-weight:800;
-}
-
-.dailyOTStatus{
-  margin-top:10px;
-  padding:12px;
-  border-radius:13px;
-}
-
-.statusProgramado{
-  background:#eef5ff;
-  color:#1769ff;
-}
-
-.statusArmado{
-  background:#fff7df;
-  color:#946c00;
-}
-
-.statusSalida{
-  background:#fff0df;
-  color:#a55a00;
-}
-
-.statusClasificacion{
-  background:#f1edff;
-  color:#6b4dd8;
-}
-
-.statusEmpaque{
-  background:#eaf8f0;
-  color:#138a55;
-}
-
-.statusAuditoria{
-  background:#e8f7f5;
-  color:#087c74;
-}
-
-.statusLabel{
-  font-size:11px;
-  font-weight:850;
-  text-transform:uppercase;
-}
-
-.statusValue{
-  font-size:18px;
-  font-weight:950;
-}
-
-.dailyOTStats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:10px;
-}
-
-.dailyOTStat{
-  background:#f6f8fa;
-  border-radius:10px;
-  padding:9px;
-}
-
-.dailyOTStat span{
-  display:block;
-  font-size:10px;
-  color:#737d89;
-  font-weight:750;
-}
-
-.dailyOTStat strong{
-  display:block;
-  font-size:16px;
-  margin-top:2px;
-}
-
-.dailyOTButton{
-  width:100%;
-  border:0;
-  background:#edf2f7;
-  color:#26313d;
-  border-radius:10px;
-  padding:11px;
-  margin-top:10px;
-  font-weight:850;
-}
-
-.wsLineCard{
-  border:2px solid #dfe5ed;
-}
-
-.lineA{
-  border-color:#d8e6ff;
-}
-
-.lineB{
-  border-color:#d9eee3;
-}
-
-.wsLineHeader{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding-bottom:14px;
-  border-bottom:1px solid #e5e9ee;
-  margin-bottom:12px;
-}
-
-.wsFactory{
-  font-size:38px;
-}
-
-.wsLineName{
-  font-size:29px;
-  font-weight:950;
-}
-
-.wsMetric{
-  border-radius:15px;
-  padding:14px;
-  margin-bottom:10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.wsMetricBlue{
-  background:#eef5ff;
-}
-
-.wsMetricYellow{
-  background:#fff7e7;
-}
-
-.wsMetricPurple{
-  background:#f1edff;
-}
-
-.wsMetricGreen{
-  background:#e9f8f0;
-}
-
-.wsMetricOrange{
-  background:#fff1df;
-}
-
-.wsMetricLeft{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.wsIcon{
-  font-size:25px;
-}
-
-.wsLabel{
-  font-weight:900;
-  font-size:15px;
-}
-
-.wsSub{
-  font-size:12px;
-  color:#707986;
-  margin-top:2px;
-}
-
-.wsValue{
-  font-size:26px;
-  font-weight:950;
-}
-
-.wsClickable{
-  cursor:pointer;
-  text-decoration:underline;
-  text-decoration-style:dotted;
-}
-
-.wsEfficiency{
-  margin-top:12px;
-  padding-top:14px;
-  border-top:2px solid #e2e6eb;
-}
-
-.wsEffValue{
-  font-size:27px;
-  font-weight:950;
-  color:#138a55;
-}
-
-.wsWeekTitle{
-  font-size:27px;
-  font-weight:950;
-}
-
-.wsWeekMetric{
-  border-radius:16px;
-  padding:18px;
-  background:#eef5ff;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.wsWeekMetric.green{
-  background:#e9f8f0;
-}
-
-.wsWeekLabel{
-  font-size:16px;
-  font-weight:900;
-}
-
-.wsWeekSmall{
-  color:#707986;
-  font-size:12px;
-}
-
-.wsWeekValue{
-  font-size:31px;
-  font-weight:950;
-}
-
-.wsDetailTitle{
-  font-size:20px;
-  font-weight:950;
-}
-
-.wsDetailClose{
-  border:0;
-  background:#edf2f7;
-  border-radius:10px;
-  padding:9px 13px;
-  font-weight:800;
-}
-
-.wsDetailTotal{
-  background:#eef5ff;
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:12px;
-  font-weight:900;
-}
-
-.wsDetailOT{
-  border:1px solid #e1e6ec;
-  border-radius:13px;
-  padding:13px;
-  margin-bottom:9px;
-  background:#fafbfc;
-}
-
-.wsDetailOTHead{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.wsDetailOTName{
-  font-size:17px;
-  font-weight:950;
-}
-
-.wsDetailPieces{
-  font-size:22px;
-  font-weight:950;
-}
-
-.wsDetailInfo{
-  color:#6b7280;
-  font-size:12px;
-  margin-top:5px;
-}
-
-.noDailyData{
-  text-align:center;
-  padding:25px 12px;
-  color:#6b7280;
-  background:#f8fafc;
-  border-radius:14px;
-}
-
-.hourGrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.hourCard{
-  border:2px solid #e0e5eb;
-  border-radius:14px;
-  padding:12px;
-  background:#fff;
-}
-
-.hourTitle{
-  font-weight:900;
-}
-
-.hourValue{
-  font-size:24px;
-  font-weight:950;
-  margin:5px 0;
-}
-
-.miniBar{
-  height:10px;
-  background:#e8edf2;
-  border-radius:99px;
-  overflow:hidden;
-}
-
-.miniFill{
-  height:100%;
-  border-radius:99px;
-}
-
-.metricGrid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-}
-
-.metricMini{
-  border-radius:14px;
-  padding:13px;
-  background:#f7f9fb;
-}
-
-.metricMini b{
-  display:block;
-  font-size:21px;
-  margin-top:3px;
-}
-
-@media(max-width:700px){
-  .grid,
-  .moneygrid,
-  .wsDailyGrid,
-  .wsWeekGrid,
-  .visualCompare,
-  .dailyOTGrid{
-    grid-template-columns:1fr;
-  }
-
-  .kpis{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .advanceDashboard{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .hourGrid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .metricGrid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .wsLineName{
-    font-size:26px;
-  }
-}
-
-@media(max-width:420px){
-  .advanceDashboard,
-  .hourGrid,
-  .metricGrid{
-    grid-template-columns:1fr;
-  }
-}
-
-/* =========================================================
-   FIX DEFINITIVO DE ANCHO EN MÓVIL / WORK SHOP
-   ========================================================= */
-
-html,
-body{
-  width:100%;
-  max-width:100%;
-  margin:0;
-  overflow-x:hidden!important;
-}
-
-body{
-  min-width:0!important;
-}
-
-main,
-header,
-nav,
-.page,
-.card,
-.wsLineCard,
-.wsWeekCard,
-.wsDetailCard{
-  width:100%;
-  max-width:100%;
-  min-width:0;
-}
-
-main{
-  overflow-x:hidden!important;
-}
-
-/* Ningún elemento interno puede imponer
-   el ancho de escritorio */
-.wsLineCard,
-.wsLineCard *,
-.wsWeekCard,
-.wsWeekCard *,
-.wsDetailCard,
-.wsDetailCard *{
-  min-width:0;
-}
-
-.wsLineCard img,
-.wsLineCard svg,
-.wsLineCard canvas{
-  max-width:100%;
-  height:auto;
-}
-
-/* Indicadores del Work Shop */
-.flowKpiGrid,
-.productionSpeedGrid,
-.metricGrid{
-  width:100%;
-  max-width:100%;
-  min-width:0;
-}
-
-.flowKpiGrid>*,
-.productionSpeedGrid>*,
-.metricGrid>*{
-  min-width:0;
-  max-width:100%;
-}
-
-@media(max-width:700px){
-
-  main{
-    padding:10px!important;
-  }
-
-  .wsDailyGrid{
-    display:grid!important;
-    grid-template-columns:minmax(0,1fr)!important;
-    width:100%!important;
-    gap:10px!important;
-  }
-
-  .wsLineCard{
-    grid-column:1!important;
-    width:100%!important;
-    max-width:100%!important;
-    overflow:hidden!important;
-    padding:12px!important;
-  }
-
-  .wsMetric{
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-  }
-
-  .wsMetricLeft{
-    min-width:0!important;
-    max-width:calc(100% - 55px)!important;
-  }
-
-  .wsLabel,
-  .wsSub,
-  .wsValue{
-    min-width:0!important;
-    max-width:100%!important;
-    overflow-wrap:anywhere!important;
-  }
-
-  .wsValue{
-    font-size:22px!important;
-    flex:0 0 auto;
-  }
-
-  .wsEfficiency{
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-    overflow:hidden!important;
-  }
-
-  .metricGrid{
-    display:grid!important;
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:8px!important;
-  }
-
-  .metricMini{
-    min-width:0!important;
-    width:100%!important;
-    overflow:hidden!important;
-  }
-
-  .metricMini small,
-  .metricMini b{
-    max-width:100%;
-    overflow-wrap:anywhere;
-  }
-
-  .flowKpiGrid,
-  .productionSpeedGrid{
-    display:grid!important;
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:8px!important;
-  }
-
-  .flowKpiGrid>*,
-  .productionSpeedGrid>*{
-    width:100%!important;
-    min-width:0!important;
-    max-width:100%!important;
-  }
-
-  .wsWeekGrid{
-    grid-template-columns:minmax(0,1fr)!important;
-  }
-
-  .wsWeekMetric{
-    min-width:0!important;
-    width:100%!important;
-  }
-
-  .wsDetailHeader{
-    min-width:0;
-  }
-
-  .wsDetailHeader>div{
-    min-width:0;
-  }
-}
-
-@media(max-width:380px){
-
-  .metricGrid,
-  .flowKpiGrid,
-  .productionSpeedGrid{
-    grid-template-columns:minmax(0,1fr)!important;
-  }
-
-  .wsLabel{
-    font-size:13px!important;
-  }
-
-  .wsSub{
-    font-size:10px!important;
-  }
-}
-
-/* =========================================================
-   BMW M THEME
-   ========================================================= */
-
-body{
-  background:#07111f;
-  color:#eef4fb;
-}
-
-header{
-  background:linear-gradient(
-    135deg,
-    #050a12 0%,
-    #0b1b32 55%,
-    #123d72 100%
-  );
-  border-bottom:2px solid #1769ff;
-}
-
-header p{
-  color:#aebed2;
-}
-
-nav{
-  background:#080f1a;
-  border-bottom:1px solid #1d3047;
-}
-
-nav button{
-  background:#111d2d;
-  color:#b9c8d9;
-  border:1px solid #23364d;
-}
-
-nav button.active{
-  background:linear-gradient(135deg,#1769ff,#0b4fc4);
-  color:#fff;
-  box-shadow:0 0 14px rgba(23,105,255,.35);
-}
-
-.card,
-.dailyEfficiencyCard,
-.advanceFilterCard,
-.wsLineCard,
-.wsWeekCard,
-.wsDetailCard,
-.kpi{
-  background:#0d1725;
-  border-color:#24364c;
-  box-shadow:0 5px 18px rgba(0,0,0,.25);
-}
-
-h2,
-h3{
-  color:#f4f8fc;
-}
-
-.field label{
-  color:#9fb0c3;
-}
-
-.field input,
-.field select{
-  background:#111e2e;
-  border-color:#30445c;
-  color:#f4f8fc;
-}
-
-.field input[readonly]{
-  background:#182638;
-  color:#91a4b9;
-}
-
-.note{
-  background:#0d2340;
-  border-left-color:#1769ff;
-  color:#dceaff;
-}
-
-.successNote{
-  background:#0c2a23;
-  border-left-color:#00a878;
-  color:#d9fff2;
-}
-
-.warningNote{
-  background:#30250d;
-  border-left-color:#e5a700;
-  color:#ffeab0;
-}
-
-.primary{
-  background:linear-gradient(135deg,#1769ff,#0b4fc4);
-  color:#fff;
-}
-
-.secondary{
-  background:#1a2839;
-  color:#d7e1ec;
-  border:1px solid #30445c;
-}
-
-.danger{
-  background:#351619;
-  color:#ff8f8f;
-}
-
-.success{
-  background:linear-gradient(135deg,#00a878,#087d60);
-  color:#fff;
-}
-
-.editBtn{
-  background:#30250f;
-  color:#ffc95c;
-}
-
-.kpi{
-  color:#eef4fb;
-}
-
-.kpi small,
-.muted,
-.dailyEfficiencySub,
-.wsWeekSub,
-.dailyOTModel,
-.wsSub,
-.wsDetailInfo,
-.advanceDashSub,
-.compareSmall{
-  color:#8293a7;
-}
-
-.kpi strong,
-.money,
-.compareNumber,
-.advanceDashValue,
-.wsValue,
-.wsWeekValue,
-.wsDetailPieces{
-  color:#f7fbff;
-}
-
-.moneybox{
-  background:#0d1725;
-  border-color:#2a4059;
-}
-
-.moneybox h3{
-  color:#aebed2;
-}
-
-.tablewrap{
-  width:100%;
-  max-width:100%;
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-}
-
-table{
-  color:#dce5ef;
-}
-
-th{
-  background:#111e2e;
-  color:#91a4b9;
-  border-bottom-color:#2a3d54;
-}
-
-td{
-  border-bottom-color:#213348;
-}
-
-.a{
-  background:#0d2d58;
-  color:#4d9aff;
-}
-
-.b{
-  background:#0c3028;
-  color:#45d6a8;
-}
-
-.processPill{
-  background:#1a2839;
-  color:#b7c7d8;
-}
-
-.arrastrePill{
-  background:#30250d;
-  color:#ffc95c;
-}
-
-.otBox,
-.dailyOTCard,
-.hourCard{
-  background:#0d1725;
-  border-color:#293e56;
-}
-
-.detailBox,
-.metricMini{
-  background:#101d2d;
-  border-color:#263b53;
-}
-
-.effBox{
-  background:#0d1725;
-  border-color:#2a4059;
-}
-
-.eff{
-  color:#4d9aff;
-}
-
-.dailyEfficiencyBadge{
-  background:#0d2d58;
-  color:#4d9aff;
-}
-
-.compareProgramado{
-  background:#0d2748;
-  border-color:#174c87;
-}
-
-.compareSalida{
-  background:#30220d;
-  border-color:#75551a;
-}
-
-.bigBar{
-  background:#172537;
-}
-
-.barGood{
-  background:#00a878;
-}
-
-.barMedium{
-  background:#e5a700;
-}
-
-.barLow{
-  background:#e05252;
-}
-
-.statusGood{
-  background:#0b3027;
-  color:#4cddb0;
-}
-
-.statusMedium{
-  background:#30250d;
-  color:#ffd15c;
-}
-
-.statusLow{
-  background:#351719;
-  color:#ff8d8d;
-}
-
-.statusNone{
-  background:#182536;
-  color:#93a5b8;
-}
-
-.advanceDashBox{
-  border-color:#293e56;
-}
-
-.blue{
-  background:#0d2748;
-  border-color:#174c87;
-}
-
-.orange{
-  background:#30220d;
-  border-color:#75551a;
-}
-
-.green{
-  background:#0b2d25;
-  border-color:#176b55;
-}
-
-.purple{
-  background:#211b3d;
-  border-color:#493d78;
-}
-
-.advanceProgress{
-  background:#172537;
-}
-
-.dailyOTProgrammed{
-  background:#0d2748;
-}
-
-.statusProgramado{
-  background:#0d2748;
-  color:#4d9aff;
-}
-
-.statusArmado{
-  background:#30250d;
-  color:#ffd15c;
-}
-
-.statusSalida{
-  background:#33210d;
-  color:#ffb44d;
-}
-
-.statusClasificacion{
-  background:#211b3d;
-  color:#a995ff;
-}
-
-.statusEmpaque{
-  background:#0b3027;
-  color:#4cddb0;
-}
-
-.statusAuditoria{
-  background:#0b2d31;
-  color:#43d4d0;
-}
-
-.dailyOTStat{
-  background:#111e2e;
-}
-
-.dailyOTButton{
-  background:#172638;
-  color:#d9e4ef;
-  border:1px solid #30455d;
-}
-
-.wsLineCard.lineA{
-  border-color:#1769ff;
-}
-
-.wsLineCard.lineB{
-  border-color:#00a878;
-}
-
-.wsLineHeader{
-  border-bottom-color:#26394f;
-}
-
-.wsLineName{
-  color:#f5f9fd;
-}
-
-.wsMetricBlue{
-  background:#0d2748;
-}
-
-.wsMetricYellow{
-  background:#30250d;
-}
-
-.wsMetricPurple{
-  background:#211b3d;
-}
-
-.wsMetricGreen{
-  background:#0b3027;
-}
-
-.wsMetricOrange{
-  background:#33210d;
-}
-
-.wsLabel{
-  color:#edf4fb;
-}
-
-.wsEfficiency{
-  border-top-color:#293d54;
-}
-
-.wsEffValue{
-  color:#00c894;
-}
-
-.wsWeekMetric{
-  background:#0d2748;
-}
-
-.wsWeekMetric.green{
-  background:#0b3027;
-}
-
-.wsWeekLabel{
-  color:#edf4fb;
-}
-
-.wsDetailClose{
-  background:#182638;
-  color:#d7e2ed;
-}
-
-.wsDetailTotal{
-  background:#0d2748;
-  color:#dceaff;
-}
-
-.wsDetailOT{
-  background:#101d2d;
-  border-color:#293e56;
-}
-
-.noDailyData{
-  background:#101d2d;
-  color:#8293a7;
-}
-
-.hourCard{
-  border-color:#293e56;
-}
-
-.miniBar{
-  background:#172537;
-}
-
-.metricMini{
-  background:#111e2e;
-}
-
-.metricMini small{
-  color:#8293a7;
-}
-
-/* Segunda protección contra desbordamiento */
-html,
-body{
-  width:100%;
-  max-width:100%;
-  overflow-x:hidden;
-}
-
-main{
-  width:100%;
-  max-width:1250px;
-  min-width:0;
-  overflow-x:hidden;
-}
-
-.wsDailyGrid{
-  width:100%;
-  min-width:0;
-  grid-template-columns:1fr!important;
-}
-
-.wsLineCard{
-  width:100%;
-  min-width:0;
-  max-width:100%;
-  overflow:hidden;
-}
-
-.wsMetric,
-.wsMetricLeft,
-.wsWeekCard,
-.wsDetailCard,
-.hourGrid,
-.metricGrid{
-  min-width:0;
-}
-
-@media(max-width:700px){
-
-  .wsDailyGrid{
-    grid-template-columns:1fr!important;
-    gap:12px;
-  }
-
-  .wsLineCard{
-    grid-column:1!important;
-    display:block!important;
-  }
-
-  .wsLineName{
-    font-size:24px;
-  }
-
-  .wsMetric{
-    padding:11px;
-  }
-
-  .wsValue{
-    font-size:22px;
-  }
-
-  .wsSub{
-    font-size:10px;
-  }
-
-  .wsWeekGrid,
-  .visualCompare,
-  .dailyOTGrid{
-    grid-template-columns:1fr;
-  }
-
-  .advanceDashboard{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-@media(max-width:430px){
-
-  .flowKpiGrid,
-  .productionSpeedGrid,
-  .metricGrid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .wsLineCard{
-    padding:12px;
-  }
-
-  .wsLabel{
-    font-size:13px;
-  }
-}
-
-::-webkit-scrollbar{
-  width:8px;
-  height:8px;
-}
-
-::-webkit-scrollbar-track{
-  background:#07111f;
-}
-
-::-webkit-scrollbar-thumb{
-  background:#29405a;
-  border-radius:99px;
-}
-
-::-webkit-scrollbar-thumb:hover{
-  background:#1769ff;
-}
-
-::selection{
-  background:#1769ff;
-  color:#fff;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-<h1>THE STUDIO · CONTROL DE PRODUCCIÓN</h1>
-<p>OT · Programación · Avances · Work Shop · Destajo · Eficiencia · Minutos · Cierre lunes–sábado</p>
-</header>
-
-<nav>
-<button class="tab active" data-target="captura">➕ Captura</button>
-<button class="tab" data-target="avances">🔄 Avances OT</button>
-<button class="tab" data-target="workshop">🏭 Work Shop</button>
-<button class="tab" data-target="resumen">📊 Resumen</button>
-<button class="tab" data-target="costos">💰 Costos</button>
-<button class="tab" data-target="historial">📅 Historial</button>
-</nav>
-
-<main>
-
-<section id="captura" class="page active">
-
-<div class="card">
-
-<h2>Registrar nueva OT</h2>
-
-<div class="note">
-<b>Los minutos requeridos se calculan automáticamente.</b>
-Al seleccionar el modelo, The Studio toma sus minutos estándar por pieza desde Costos.
-</div>
-
-<div class="grid">
-
-<div class="field">
-<label>Fecha</label>
-<input id="fecha" type="date">
-</div>
-
-<div class="field">
-<label>Línea</label>
-<select id="linea">
-<option>Línea A</option>
-<option>Línea B</option>
-</select>
-</div>
-
-<div class="field">
-<label>OT / Orden de trabajo</label>
-<input id="ot" placeholder="Ej. 20-A">
-</div>
-
-<div class="field">
-<label>Modelo</label>
-<select id="modelo"></select>
-</div>
-
-<div class="field">
-<label>Programado · piezas</label>
-<input id="programado" type="number" min="0" value="0">
-</div>
-
-<div class="field">
-<label>Minutos requeridos</label>
-<input id="minReq" type="number" readonly value="0">
-</div>
-
-<div class="field">
-<label>% carga de la línea</label>
-<input id="pctCarga" type="text" readonly value="0.0%">
-</div>
-
-<div class="field">
-<label>Observaciones</label>
-<input id="obs" placeholder="Opcional">
-</div>
-
-</div>
-
-<div class="actions">
-<button id="guardar" class="action primary">Guardar OT</button>
-<button id="limpiar" class="action secondary">Limpiar</button>
-</div>
-
-</div>
-
-<div class="card">
-
-<h2>OT registradas</h2>
-
-<div class="tablewrap">
-
-<table>
-
-<thead>
-<tr>
-<th>Fecha</th>
-<th>Línea</th>
-<th>OT</th>
-<th>Modelo</th>
-<th>Piezas</th>
-<th>Min. requeridos</th>
-<th>% carga</th>
-<th>Acción</th>
-</tr>
-</thead>
-
-<tbody id="tablaCaptura"></tbody>
-
-</table>
-
-</div>
-</div>
-
-</section>
-
-
-<section id="avances" class="page">
-
-<div class="card">
-
-<h2>🔄 Avance de OT</h2>
-
-<div class="note">
-<b>Flujo:</b>
-Programado → Armado → Salida pespunte → Clasificación → Empaque → Auditoría.
-<br><br>
-Puedes avanzar directamente entre procesos y The Studio registra los pasos intermedios.
-</div>
-
-<div class="grid">
-
-<div class="field">
-<label>Buscar OT</label>
-<input id="buscarOT" placeholder="Teclea la OT">
-</div>
-
-<div class="field">
-<label>OT seleccionada</label>
-<input id="otSeleccionada" readonly placeholder="Ninguna">
-</div>
-
-</div>
-
-<div id="resultadosOT" style="margin-top:12px"></div>
-
-</div>
-
-
-<div class="advanceFilterCard">
-
-<h2>📅 OTs programadas por día</h2>
-
-<div class="grid">
-
-<div class="field">
-<label>Día de programación</label>
-<input id="avanceFecha" type="date">
-</div>
-
-<div class="field">
-<label>Línea</label>
-<select id="avanceLinea">
-<option value="Todas">🏭 Todas</option>
-<option>Línea A</option>
-<option>Línea B</option>
-</select>
-</div>
-
-</div>
-
-
-<div class="advanceDashboard">
-
-<div class="advanceDashBox blue">
-<div class="advanceDashLabel">📋 PROGRAMADO</div>
-<div id="avanceDiaProgramado" class="advanceDashValue">0</div>
-<div class="advanceDashSub">Piezas</div>
-</div>
-
-<div class="advanceDashBox orange">
-<div class="advanceDashLabel">⚙️ SALIDA PESPUNTE</div>
-<div id="avanceDiaSalida" class="advanceDashValue">0</div>
-<div class="advanceDashSub">Piezas que salieron</div>
-</div>
-
-<div class="advanceDashBox purple">
-<div class="advanceDashLabel">⏱️ MIN. GANADOS</div>
-<div id="avanceDiaMinGanados" class="advanceDashValue">0</div>
-<div class="advanceDashSub">Según modelo</div>
-</div>
-
-<div class="advanceDashBox green">
-<div class="advanceDashLabel">🎯 CUMPLIMIENTO</div>
-<div id="avanceDiaPorcentaje" class="advanceDashValue">0.0%</div>
-<div class="advanceDashSub">Salida ÷ programado</div>
-</div>
-
-</div>
-
-<div class="advanceProgress">
-<div id="avanceDiaBarra" class="advanceProgressBar"></div>
-</div>
-
-<div class="advanceProgressText">
-<span>Programado → Salida</span>
-<span id="avanceDiaTexto">0 / 0 piezas</span>
-</div>
-
-</div>
-
-
-<div class="dailyEfficiencyCard">
-
-<div class="dailyEfficiencyHeader">
-
-<div>
-<div class="dailyEfficiencyTitle">📊 Comparación del día</div>
-<div id="graficaDiaSub" class="dailyEfficiencySub"></div>
-</div>
-
-<div class="dailyEfficiencyBadge">
-<strong id="graficaDiaPorcentaje">0%</strong>
-<span>CUMPLIMIENTO</span>
-</div>
-
-</div>
-
-<div class="visualCompare">
-
-<div class="compareBox compareProgramado">
-
-<div class="compareTop">
-<b>📋 PROGRAMADO</b>
-</div>
-
-<div id="graficaProgramado" class="compareNumber">0</div>
-<div class="compareSmall">Piezas programadas</div>
-
-</div>
-
-<div class="compareBox compareSalida">
-
-<div class="compareTop">
-<b>⚙️ SALIDA PESPUNTE</b>
-</div>
-
-<div id="graficaSalida" class="compareNumber">0</div>
-<div class="compareSmall">Piezas que entraron a salida</div>
-
-</div>
-
-</div>
-
-<div class="bigBarLabel">
-<span>PROGRAMADO → SALIDA PESPUNTE</span>
-<strong id="graficaBarraTexto">0%</strong>
-</div>
-
-<div class="bigBar">
-<div id="graficaBarra" class="bigBarFill"></div>
-</div>
-
-<div class="compareFooter">
-<span>Minutos ganados: <b id="graficaMinGanados">0</b></span>
-<span id="graficaFaltante">Faltan 0 piezas</span>
-</div>
-
-<div id="graficaStatus" class="visualStatus statusNone">
-<b id="graficaStatusTitulo">Sin programación</b>
-·
-<span id="graficaStatusTexto">Selecciona una fecha.</span>
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>📋 OTs del día</h2>
-
-<div id="avanceListaSub" class="muted"></div>
-
-<br>
-
-<div id="avanceListaOT" class="dailyOTGrid"></div>
-
-</div>
-
-
-<div class="card" id="panelMovimiento" style="display:none">
-
-<h2>Registrar avance</h2>
-
-<div class="successNote">
-OT: <b id="movOT"></b>
-· Modelo: <b id="movModelo"></b>
-· Línea: <b id="movLinea"></b>
-</div>
-
-<div class="grid">
-
-<div class="field">
-<label>Desde proceso</label>
-<select id="desdeProceso"></select>
-</div>
-
-<div class="field">
-<label>Hasta proceso</label>
-<select id="hastaProceso"></select>
-</div>
-
-<div class="field">
-<label>Piezas que avanzan</label>
-<input id="piezasMovimiento" type="number" min="0" value="0">
-</div>
-
-<div class="field">
-<label>Fecha y hora</label>
-<input id="fechaMovimiento" type="datetime-local">
-</div>
-
-</div>
-
-<div id="disponibleMovimiento" class="warningNote">
-Disponible: 0 piezas
-</div>
-
-<div class="actions">
-
-<button id="guardarMovimiento" class="action success">
-Registrar avance
-</button>
-
-<button id="cancelarMovimiento" class="action secondary">
-Cancelar
-</button>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>Lead Time por OT</h2>
-
-<div class="tablewrap">
-
-<table>
-
-<thead>
-<tr>
-<th>OT</th>
-<th>Línea</th>
-<th>Modelo</th>
-<th>Programado</th>
-<th>Proceso</th>
-<th>Último avance</th>
-<th>Lead Time</th>
-<th></th>
-</tr>
-</thead>
-
-<tbody id="tablaLead"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-<div class="card" id="detalleLead" style="display:none">
-
-<h2>Historial de procesos</h2>
-
-<div id="detalleOT"></div>
-
-</div>
-
-</section>
-
-
-<section id="workshop" class="page">
-
-<div class="card">
-
-<h2>🏭 Work Shop</h2>
-
-<div class="note">
-<b>Nuevo:</b> los minutos permiten medir la línea aunque trabaje modelos diferentes.
-<b>Programación %</b> = minutos requeridos ÷ minutos disponibles.
-<b>Eficiencia %</b> = minutos ganados ÷ minutos disponibles.
-<b>Cumplimiento %</b> = minutos ganados ÷ minutos programados.
-</div>
-
-<div class="grid">
-
-<div class="field">
-<label>Fecha de referencia</label>
-<input id="wsFecha" type="date">
-</div>
-
-<div class="field">
-<label>Vista</label>
-<select id="wsLineaFiltro">
-<option>Todas</option>
-<option>Línea A</option>
-<option>Línea B</option>
-</select>
-</div>
-
-</div>
-
-<div class="actions">
-<button id="actualizarWS" class="action secondary">
-Actualizar Work Shop
-</button>
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>📅 Producción del día</h2>
-
-<div class="wsDailyGrid">
-
-
-<div class="wsLineCard lineA" id="lineCardA">
-
-<div class="wsLineHeader">
-
-<div class="wsFactory">🏭</div>
-
-<div>
-<div class="wsLineName">Línea A</div>
-<div class="wsWeekSub">5 pespuntadores · 6 preliminares</div>
-</div>
-
-</div>
-
-
-<div class="wsMetric wsMetricBlue">
-
-<div class="wsMetricLeft">
-<div class="wsIcon">📋</div>
-<div>
-<div class="wsLabel">Programado</div>
-<div class="wsSub">Piezas del día</div>
-</div>
-</div>
-
-<div id="wsProgA"
-class="wsValue wsClickable"
-data-ws-detail="programado"
-data-ws-line="Línea A">
-0
-</div>
-
-</div>
-
-
-<div class="wsMetric wsMetricOrange">
-
-<div class="wsMetricLeft">
-<div class="wsIcon">⏱️</div>
-<div>
-<div class="wsLabel">Min. programados</div>
-<div class="wsSub">Carga de las OTs</div>
-</div>
-</div>
-
-<div id="wsMinProgA" class="wsValue">0</div>
-
-</div>
-
-
-<div class="wsMetric wsMetricYellow">
-
-<div class="wsMetricLeft">
-<div class="wsIcon">⚙️</div>
-<div>
-<div class="wsLabel">En proceso</div>
-<div class="wsSub">Armado + Salida</div>
-</div>
-</div>
-
-<div id="wsProcA"
-class="wsValue wsClickable"
-data-ws-detail="proceso"
-data-ws-line="Línea A">
-0
-</div>
-
-</div>
-
-
-<div class="wsMetric wsMetricPurple">
-
-<div class="wsMetricLeft">
-<div class="wsIcon">📦</div>
-<div>
-<div class="wsLabel">Clasificación</div>
-<div class="wsSub">Inventario actual</div>
-</div>
-</div>
-
-<div id="wsClasA" class="wsValue">0</div>
-
-</div>
-
-
-<div class="wsMetric wsMetricGreen">
-
-<div class="wsMetricLeft">
-<div class="wsIcon">📦</div>
-<div>
-<div class="wsLabel">Salida pespunte</div>
-<div class="wsSub">Piezas que salieron hoy</div>
-</div>
-</div>
-
-<div id="wsSalidaA"
-class="wsValue wsClickable"
-data-ws-detail="salida"
-data-ws-line="Línea A">
-0
-</div>
-
-</div>
-
-
-<div class="wsEfficiency">
-
-<div class="metricGrid">
-
-<div class="metricMini">
-<small>Disponibles</small>
-<b id="wsMinDispA">0</b>
-</div>
-
-<div class="metricMini">
-<small>Ganados</small>
-<b id="wsMinGanA">0</b>
-</div>
-
-<div class="metricMini">
-<small>Programación</small>
-<b id="wsProgPctA">0%</b>
-</div>
-
-<div class="metricMini">
-<small>Eficiencia</small>
-<b id="wsEfA">0%</b>
-</div>
-
-</div>
-
-<div class="successNote" style="margin-top:10px;margin-bottom:0">
-🎯 Cumplimiento del programa:
-<b id="wsCumA">0%</b>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="wsLineCard lineB" id="lineCardB">
-
-<div class="wsLineHeader">
-
-<div class="wsFactory">🏭</div>
-
-<div>
-<div class="wsLineName">Línea B</div>
-<div class="wsWeekSub">5 pespuntadores · 6 preliminares</div>
-</div>
-
-</div>
-
-
-<div class="wsMetric wsMetricBlue">
-
-<div class="wsMetricLeft">
-<div class="wsIcon">📋</div>
-<div>
-<div class="wsLabel">Programado</div>
-<div class="wsSub">Piezas del día</div>
-</div>
-</div>
-
-<div id="wsProgB"
-class="wsValue wsClickable"
-data-ws-detail="programado"
-data-ws-line="Línea B">
-0
-</div>
-
-</div>
-
-
-<div class="wsMetric wsMetricOrange">
-
-<div class="wsMetricLeft">
-<div class="wsIcon">⏱️</div>
-<div>
-<div class="wsLabel">Min. programados</div>
-<div class="wsSub">Carga de las OTs</div>
-</div>
-</div>
-
-<div id="wsMinProgB" class="wsValue">0</div>
-
-</div>
-
-
-<div class="wsMetric wsMetricYellow">
-
-<div class="wsMetricLeft">
-<div class="wsIcon">⚙️</div>
-<div>
-<div class="wsLabel">En proceso</div>
-<div class="wsSub">Armado + Salida</div>
-</div>
-</div>
-
-<div id="wsProcB"
-class="wsValue wsClickable"
-data-ws-detail="proceso"
-data-ws-line="Línea B">
-0
-</div>
-
-</div>
-
-
-<div class="wsMetric wsMetricPurple">
-
-<div class="wsMetricLeft">
-<div class="wsIcon">📦</div>
-<div>
-<div class="wsLabel">Clasificación</div>
-<div class="wsSub">Inventario actual</div>
-</div>
-</div>
-
-<div id="wsClasB" class="wsValue">0</div>
-
-</div>
-
-
-<div class="wsMetric wsMetricGreen">
-
-<div class="wsMetricLeft">
-<div class="wsIcon">📦</div>
-<div>
-<div class="wsLabel">Salida pespunte</div>
-<div class="wsSub">Piezas que salieron hoy</div>
-</div>
-</div>
-
-<div id="wsSalidaB"
-class="wsValue wsClickable"
-data-ws-detail="salida"
-data-ws-line="Línea B">
-0
-</div>
-
-</div>
-
-
-<div class="wsEfficiency">
-
-<div class="metricGrid">
-
-<div class="metricMini">
-<small>Disponibles</small>
-<b id="wsMinDispB">0</b>
-</div>
-
-<div class="metricMini">
-<small>Ganados</small>
-<b id="wsMinGanB">0</b>
-</div>
-
-<div class="metricMini">
-<small>Programación</small>
-<b id="wsProgPctB">0%</b>
-</div>
-
-<div class="metricMini">
-<small>Eficiencia</small>
-<b id="wsEfB">0%</b>
-</div>
-
-</div>
-
-<div class="successNote" style="margin-top:10px;margin-bottom:0">
-🎯 Cumplimiento del programa:
-<b id="wsCumB">0%</b>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>⏱️ Control hora por hora</h2>
-
-<div class="note">
-La meta de cada hora se reparte según el tiempo efectivo de la jornada.
-La producción real se toma de las piezas que <b>entran a Salida pespunte</b>
-en esa hora y se convierte a minutos estándar del modelo.
-</div>
-
-<div class="field">
-
-<label>Línea para ver por hora</label>
-
-<select id="horaLinea">
-<option>Línea A</option>
-<option>Línea B</option>
-</select>
-
-</div>
-
-<br>
-
-<div id="hourBoard" class="hourGrid"></div>
-
-</div>
-
-
-<div id="wsDetalleCard"
-class="wsDetailCard"
-style="display:none">
-
-<div class="wsDetailHeader">
-
-<div>
-
-<div id="wsDetalleTitulo"
-class="wsDetailTitle">
-Detalle
-</div>
-
-<div id="wsDetalleSub"
-class="muted">
-OTs
-</div>
-
-</div>
-
-<button id="cerrarWsDetalle"
-class="wsDetailClose">
-✕ Cerrar
-</button>
-
-</div>
-
-<div id="wsDetalleContenido"></div>
-
-</div>
-
-
-<div class="card">
-
-<div class="wsWeekCard">
-
-<div class="wsWeekTitle">
-📊 General de la semana
-</div>
-
-<div class="wsWeekSub">
-Programado lunes-sábado · producción de Salida pespunte
-</div>
-
-<div class="wsWeekGrid" style="margin-top:12px">
-
-<div class="wsWeekMetric">
-
-<div>
-<div class="wsWeekLabel">📋 Programado</div>
-<div class="wsWeekSmall">Piezas</div>
-</div>
-
-<div id="wsProgSemana" class="wsWeekValue">
-0
-</div>
-
-</div>
-
-
-<div class="wsWeekMetric green">
-
-<div>
-<div class="wsWeekLabel">⚙️ Salida pespunte</div>
-<div class="wsWeekSmall">Piezas que salieron</div>
-</div>
-
-<div id="wsSalidaSemana" class="wsWeekValue">
-0
-</div>
-
-</div>
-
-</div>
-
-
-<div class="metricGrid" style="margin-top:12px">
-
-<div class="metricMini">
-<small>Min. disponibles</small>
-<b id="wsMinDispSemana">0</b>
-</div>
-
-<div class="metricMini">
-<small>Min. programados</small>
-<b id="wsMinProgSemana">0</b>
-</div>
-
-<div class="metricMini">
-<small>Min. ganados</small>
-<b id="wsMinGanSemana">0</b>
-</div>
-
-<div class="metricMini">
-<small>Eficiencia</small>
-<b id="wsEfSemana">0%</b>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>Inventario actual por proceso</h2>
-
-<div class="tablewrap">
-
-<table>
-
-<thead>
-<tr>
-<th>Línea</th>
-<th>Programado</th>
-<th>Armado</th>
-<th>Salida pespunte</th>
-<th>Clasificación</th>
-<th>Empaque</th>
-<th>Auditoría</th>
-<th>Total</th>
-</tr>
-</thead>
-
-<tbody id="tablaWS"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>Detalle por OT</h2>
-
-<div class="tablewrap">
-
-<table>
-
-<thead>
-<tr>
-<th>OT</th>
-<th>Línea</th>
-<th>Modelo</th>
-<th>Programado</th>
-<th>Armado</th>
-<th>Salida</th>
-<th>Clasificación</th>
-<th>Empaque</th>
-<th>Auditoría</th>
-</tr>
-</thead>
-
-<tbody id="tablaWSOT"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section id="resumen" class="page">
-
-<div class="card">
-
-<h2>Resumen semanal</h2>
-
-<div class="field">
-<label>Fecha de referencia</label>
-<input id="refSemana" type="date">
-</div>
-
-<div class="actions">
-
-<button id="actualizar" class="action secondary">
-Actualizar
-</button>
-
-<button id="exportar" class="action secondary">
-Exportar CSV
-</button>
-
-</div>
-
-</div>
-
-
-<div class="note">
-
-<b>Programado</b> = OTs programadas lunes-sábado.
-
-<b>Empaque</b> = piezas que entraron a Empaque lunes-sábado.
-
-Los arrastres siguen contando para nómina.
-
-</div>
-
-
-<div class="kpis">
-
-<div class="kpi">
-<small>Programado</small>
-<strong id="kProg">0</strong>
-</div>
-
-<div class="kpi">
-<small>Empaque para nómina</small>
-<strong id="kEmp">0</strong>
-</div>
-
-<div class="kpi">
-<small>Auditoría</small>
-<strong id="kAud">0</strong>
-</div>
-
-<div class="kpi">
-<small>OTs con Empaque</small>
-<strong id="kReg">0</strong>
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>📈 Indicadores</h2>
-
-<div class="metricGrid">
-
-<div class="metricMini">
-<small>Programación semanal</small>
-<b id="eficiencia">0%</b>
-</div>
-
-<div class="metricMini">
-<small>Min. programados</small>
-<b id="resMinProg">0</b>
-</div>
-
-<div class="metricMini">
-<small>Min. disponibles</small>
-<b id="resMinDisp">0</b>
-</div>
-
-<div class="metricMini">
-<small>Eficiencia pespunte</small>
-<b id="resEf">0%</b>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="moneygrid">
-
-<div class="moneybox">
-
-<h3>💰 Destajo Pespunte · Empaque</h3>
-
-<div class="money" id="dPes">
-$0.00
-</div>
-
-<small>
-Línea A:
-<b id="dPesA">$0.00</b>
-·
-Línea B:
-<b id="dPesB">$0.00</b>
-</small>
-
-</div>
-
-
-<div class="moneybox">
-
-<h3>💰 Destajo Preliminar · Empaque</h3>
-
-<div class="money" id="dPre">
-$0.00
-</div>
-
-<small>
-Línea A:
-<b id="dPreA">$0.00</b>
-·
-Línea B:
-<b id="dPreB">$0.00</b>
-</small>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>Totales por línea</h2>
-
-<div class="tablewrap">
-
-<table>
-
-<thead>
-<tr>
-<th>Línea</th>
-<th>Programado</th>
-<th>Empaque</th>
-<th>Auditoría</th>
-<th>Min. programados</th>
-<th>Min. disponibles</th>
-<th>Min. ganados</th>
-<th>Eficiencia</th>
-<th>Destajo Pespunte</th>
-<th>Destajo Preliminar</th>
-</tr>
-</thead>
-
-<tbody id="tablaLineas"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>Detalle por OT · Nómina</h2>
-
-<div class="tablewrap">
-
-<table>
-
-<thead>
-<tr>
-<th>OT</th>
-<th>Línea</th>
-<th>Modelo</th>
-<th>Programado semana</th>
-<th>Empaque semana</th>
-<th>Min. estándar</th>
-<th>Min. ganados</th>
-<th>Pespunte</th>
-<th>Preliminar</th>
-</tr>
-</thead>
-
-<tbody id="tablaOT"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section id="costos" class="page">
-
-<div class="card">
-
-<h2>💰 Costos y tiempos por modelo</h2>
-
-<div class="note">
-
-<b>Nuevo:</b>
-captura aquí los <b>minutos estándar por pieza</b>.
-The Studio los usará automáticamente para calcular minutos requeridos,
-carga de programación y minutos ganados.
-
-</div>
-
-
-<div class="grid">
-
-<div class="field">
-<label>Modelo</label>
-<input id="cModelo" placeholder="Ej. Verona">
-</div>
-
-<div class="field">
-<label>Costo pieza pespunte</label>
-<input id="cPes" type="number" min="0" step="0.01">
-</div>
-
-<div class="field">
-<label>Costo pieza preliminar</label>
-<input id="cPre" type="number" min="0" step="0.01">
-</div>
-
-<div class="field">
-<label>Minutos estándar por pieza</label>
-<input id="cMin"
-type="number"
-min="0"
-step="0.01"
-placeholder="Ej. 15.76">
-</div>
-
-</div>
-
-
-<div class="actions">
-
-<button id="guardarCosto"
-class="action primary">
-Guardar modelo
-</button>
-
-<button id="cancelarCosto"
-class="action secondary"
-style="display:none">
-↩️ Cancelar edición
-</button>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="tablewrap">
-
-<table>
-
-<thead>
-<tr>
-<th>Modelo</th>
-<th>Pespunte</th>
-<th>Preliminar</th>
-<th>Min./pieza</th>
-<th>Acción</th>
-</tr>
-</thead>
-
-<tbody id="tablaCostos"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section id="historial" class="page">
-
-<div class="card">
-
-<h2>Cierre semanal</h2>
-
-<div class="note">
-
-Nómina lunes-sábado.
-El domingo queda fuera.
-El destajo continúa calculándose con las piezas que entraron a Empaque durante la semana.
-
-</div>
-
-<div class="actions">
-
-<button id="cerrarSemana"
-class="action primary">
-Cerrar semana actual
-</button>
-
-<button id="borrarHistorial"
-class="action danger">
-Borrar historial
-</button>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="tablewrap">
-
-<table>
-
-<thead>
-<tr>
-<th>Cierre</th>
-<th>Programado</th>
-<th>Empaque</th>
-<th>Pespunte</th>
-<th>Preliminar</th>
-<th>Destajo A</th>
-<th>Destajo B</th>
-</tr>
-</thead>
-
-<tbody id="tablaHistorial"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-
 <script>
-
-(function(){
-
-"use strict";
-
-var KPROD="theStudioProduccion_v4",
-    KCOST="theStudioCostos_v4",
-    KHIST="theStudioHistorial_v4",
-    KADV="theStudioAvances_v4",
-    KCONF="theStudioConfiguracion_v1";
-
-var FLOW=[
-  "Programado",
-  "Armado",
-  "Salida pespunte",
-  "Clasificación",
-  "Empaque",
-  "Auditoría"
-];
-
-var DEFAULT={
-  entrada:"08:00",
-  salida:"19:00",
-  comida:60,
-  otros:0,
-  pespuntadores:5,
-  preliminares:6,
-  manualDispA:0,
-  manualDispB:0
-};
-
-function $(id){
-  return document.getElementById(id);
-}
-
-function N(v){
-  var n=Number(v);
-  return isFinite(n)?n:0;
-}
-
-function M(v){
-  return N(v).toLocaleString(
-    "es-MX",
-    {
-      style:"currency",
-      currency:"MXN"
-    }
-  );
-}
-
-function esc(v){
-  return String(v==null?"":v).replace(
-    /[&<>"']/g,
-    function(c){
-      return {
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#39;"
-      }[c];
-    }
-  );
-}
-
-function today(){
-  var d=new Date();
-  d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
-  return d.toISOString().slice(0,10);
-}
-
-function nowLocal(){
-  var d=new Date();
-  d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
-  return d.toISOString().slice(0,16);
-}
-
-function load(k,def){
+(async()=>{
   try{
-    var x=JSON.parse(localStorage.getItem(k));
-    return x==null?def:x;
-  }catch(e){
-    return def;
-  }
-}
 
-var prod=load(KPROD,[]);
-var cost=load(KCOST,{});
-var hist=load(KHIST,[]);
-var avances=load(KADV,[]);
-var conf=Object.assign(
-  {},
-  DEFAULT,
-  load(KCONF,{})
-);
+    const ORIGINAL_URL="https://raw.githubusercontent.com/dantedeaht-ctrl/the-studio-produccion/f07dc9e5221a9b207d205d143d68c0b917ee0e0e/index.html";
 
-var selectedOT=null;
-var editingId=null;
-var editingCostModel=null;
+    const src=await (await fetch(ORIGINAL_URL,{cache:"no-store"})).text();
 
-
-function save(){
-
-  localStorage.setItem(
-    KPROD,
-    JSON.stringify(prod)
-  );
-
-  localStorage.setItem(
-    KCOST,
-    JSON.stringify(cost)
-  );
-
-  localStorage.setItem(
-    KHIST,
-    JSON.stringify(hist)
-  );
-
-  localStorage.setItem(
-    KADV,
-    JSON.stringify(avances)
-  );
-
-  localStorage.setItem(
-    KCONF,
-    JSON.stringify(conf)
-  );
-}
-
-
-function range(ref){
-
-  var d=new Date(
-    (ref||today())+"T12:00:00"
-  );
-
-  var day=d.getDay();
-
-  var diff=day===0?-6:1-day;
-
-  var mon=new Date(d);
-
-  mon.setDate(
-    d.getDate()+diff
-  );
-
-  var sat=new Date(mon);
-
-  sat.setDate(
-    mon.getDate()+5
-  );
-
-  function iso(x){
-    return x.toISOString().slice(0,10);
-  }
-
-  return[
-    iso(mon),
-    iso(sat)
-  ];
-}
-
-
-function inWeekDate(date,ref){
-  var x=range(ref);
-  return date>=x[0]&&date<=x[1];
-}
-
-
-function inWeekAdvance(a,ref){
-  return inWeekDate(
-    a.fecha,
-    ref
-  );
-}
-
-
-function effectiveMinutes(){
-
-  var a=conf.entrada.split(":");
-  var b=conf.salida.split(":");
-
-  var mins=
-    (N(b[0])*60+N(b[1]))-
-    (N(a[0])*60+N(a[1]))-
-    N(conf.comida)-
-    N(conf.otros);
-
-  return Math.max(0,mins);
-}
-
-
-function availableMinutes(linea){
-
-  var manual=
-    linea==="Línea A"
-    ?N(conf.manualDispA)
-    :N(conf.manualDispB);
-
-  if(manual>0){
-    return manual;
-  }
-
-  return effectiveMinutes()*
-    (
-      N(conf.pespuntadores)+
-      N(conf.preliminares)
-    );
-}
-
-
-function availablePespunte(linea){
-  return effectiveMinutes()*
-    N(conf.pespuntadores);
-}
-
-
-function availablePreliminar(linea){
-  return effectiveMinutes()*
-    N(conf.preliminares);
-}
-
-
-function modelMin(modelo){
-  return N(
-    (cost[modelo]||{}).min
-  );
-}
-
-
-function reqMinutes(modelo,piezas){
-  return modelMin(modelo)*
-    N(piezas);
-}
-
-
-function fillModels(){
-
-  var s=$("modelo");
-
-  var old=s.value;
-
-  var names=Object.keys(cost).sort();
-
-  s.innerHTML="";
-
-  var f=document.createElement("option");
-
-  f.value="";
-
-  f.textContent=
-    names.length
-    ?"Selecciona modelo"
-    :"Primero agrega un modelo en Costos";
-
-  s.appendChild(f);
-
-  names.forEach(function(m){
-
-    var o=document.createElement("option");
-
-    o.value=m;
-    o.textContent=m;
-
-    s.appendChild(o);
-
-  });
-
-  if(old&&cost[old]){
-    s.value=old;
-  }
-}
-
-
-function getOTs(){
-
-  var map={};
-
-  prod.forEach(function(r){
-
-    var key=String(
-      r.ot||""
-    ).trim();
-
-    if(!key){
-      return;
-    }
-
-    if(!map[key]){
-
-      map[key]={
-        ot:key,
-        linea:r.linea,
-        modelo:r.modelo,
-        programado:0,
-        fecha:r.fecha,
-        obs:r.obs||""
-      };
-
-    }
-
-    map[key].programado+=N(
-      r.programado
-    );
-
-    if(r.fecha<map[key].fecha){
-      map[key].fecha=r.fecha;
-    }
-
-  });
-
-  return map;
-}
-
-
-function getAdvancesOT(ot){
-
-  return avances
-    .filter(function(a){
-      return String(a.ot)===String(ot);
-    })
-    .sort(function(a,b){
-      return String(a.fechaHora)
-        .localeCompare(
-          String(b.fechaHora)
-        );
-    });
-}
-
-
-function inventoryOT(ot){
-
-  var map={};
-
-  FLOW.forEach(function(p){
-    map[p]=0;
-  });
-
-  var o=getOTs()[ot];
-
-  if(!o){
-    return map;
-  }
-
-  map.Programado=o.programado;
-
-  getAdvancesOT(ot).forEach(function(a){
-
-    var f=a.procesoAnterior;
-    var t=a.siguienteProceso;
-    var q=N(a.piezas);
-
-    if(map[f]!=null){
-      map[f]-=q;
-    }
-
-    if(map[t]!=null){
-      map[t]+=q;
-    }
-
-  });
-
-  FLOW.forEach(function(p){
-
-    if(map[p]<0){
-      map[p]=0;
-    }
-
-  });
-
-  return map;
-}
-
-
-function piezasYaAvanzadas(ot){
-
-  return getAdvancesOT(ot)
-    .filter(function(a){
-      return a.procesoAnterior==="Programado";
-    })
-    .reduce(function(t,a){
-      return t+N(a.piezas);
-    },0);
-}
-
-
-function currentIndex(ot){
-
-  var inv=inventoryOT(ot);
-
-  for(
-    var i=FLOW.length-1;
-    i>=0;
-    i--
-  ){
-
-    if(inv[FLOW[i]]>0){
-      return i;
-    }
-
-  }
-
-  var arr=getAdvancesOT(ot);
-
-  if(arr.length){
-
-    var idx=FLOW.indexOf(
-      arr[arr.length-1].siguienteProceso
-    );
-
-    if(idx>=0){
-      return idx;
-    }
-
-  }
-
-  return 0;
-}
-
-
-function currentProcess(ot){
-  return FLOW[
-    currentIndex(ot)
-  ]||"Programado";
-}
-
-
-function availableProcess(ot,p){
-  return N(
-    inventoryOT(ot)[p]
-  );
-}
-
-
-function formatDateTime(v){
-
-  if(!v){
-    return "";
-  }
-
-  var d=new Date(v);
-
-  if(isNaN(d.getTime())){
-    return v;
-  }
-
-  return d.toLocaleString(
-    "es-MX",
-    {
-      dateStyle:"short",
-      timeStyle:"short"
-    }
-  );
-}
-
-
-function diffMs(a,b){
-  return new Date(b)-new Date(a);
-}
-
-
-function formatDuration(ms){
-
-  if(!isFinite(ms)||ms<0){
-    return "0h 0m";
-  }
-
-  var min=Math.floor(
-    ms/60000
-  );
-
-  var days=Math.floor(
-    min/1440
-  );
-
-  min%=1440;
-
-  var h=Math.floor(
-    min/60
-  );
-
-  min%=60;
-
-  return(
-    days?days+"d ":""
-  )+
-  h+"h "+
-  min+"m";
-}
-
-
-function getStartDateTime(ot){
-
-  var o=getOTs()[ot];
-
-  return o
-    ?o.fecha+"T"+conf.entrada
-    :null;
-}
-
-
-function getLastAdvance(ot){
-
-  var a=getAdvancesOT(ot);
-
-  return a.length
-    ?a[a.length-1]
-    :null;
-}
-
-
-function totalLeadTime(ot){
-
-  var s=getStartDateTime(ot);
-
-  var l=getLastAdvance(ot);
-
-  return s&&l
-    ?formatDuration(
-      diffMs(s,l.fechaHora)
-    )
-    :"0h 0m";
-}
-
-
-function empacadoEnFecha(ot,fecha){
-
-  return getAdvancesOT(ot)
-    .filter(function(a){
-      return(
-        a.siguienteProceso==="Empaque"&&
-        a.fecha===fecha
-      );
-    })
-    .reduce(function(t,a){
-      return t+N(a.piezas);
-    },0);
-}
-
-
-function empacadoEnSemana(ot,ref){
-
-  return getAdvancesOT(ot)
-    .filter(function(a){
-
-      return(
-        a.siguienteProceso==="Empaque"&&
-        inWeekAdvance(a,ref)
-      );
-
-    })
-    .reduce(function(t,a){
-      return t+N(a.piezas);
-    },0);
-}
-
-
-function salidaEnFecha(ot,fecha){
-
-  return getAdvancesOT(ot)
-    .filter(function(a){
-
-      return(
-        a.siguienteProceso==="Salida pespunte"&&
-        a.fecha===fecha
-      );
-
-    })
-    .reduce(function(t,a){
-      return t+N(a.piezas);
-    },0);
-}
-
-
-function salidaEnSemana(ot,ref){
-
-  return getAdvancesOT(ot)
-    .filter(function(a){
-
-      return(
-        a.siguienteProceso==="Salida pespunte"&&
-        inWeekAdvance(a,ref)
-      );
-
-    })
-    .reduce(function(t,a){
-      return t+N(a.piezas);
-    },0);
-}
-
-
-function payrollOTs(ref){
-
-  var map=getOTs();
-
-  var lista=[];
-
-  Object.keys(map).forEach(function(k){
-
-    var o=map[k];
-
-    var e=empacadoEnSemana(
-      k,
-      ref
-    );
-
-    if(e>0){
-
-      lista.push({
-        ot:k,
-        linea:o.linea,
-        modelo:o.modelo,
-        fechaProgramacion:o.fecha,
-        programado:o.programado,
-        empaque:e
-      });
-
-    }
-
-  });
-
-  return lista;
-}
-
-
-function renderCapture(){
-
-  var tb=$("tablaCaptura");
-
-  var rows=prod.slice().sort(
-    function(a,b){
-      return String(b.fecha)
-        .localeCompare(
-          String(a.fecha)
-        );
-    }
-  );
-
-  if(!rows.length){
-
-    tb.innerHTML=
-      '<tr><td colspan="8">Sin registros.</td></tr>';
-
-    return;
-  }
-
-  tb.innerHTML=rows.map(
-    function(r){
-
-      var mr=reqMinutes(
-        r.modelo,
-        r.programado
-      );
-
-      var cap=availableMinutes(
-        r.linea
-      );
-
-      var pct=cap
-        ?mr/cap*100
-        :0;
-
-      return(
-        '<tr>'+
-        '<td>'+esc(r.fecha)+'</td>'+
-        '<td><span class="pill '+
-        (r.linea==="Línea A"?"a":"b")+
-        '">'+esc(r.linea)+'</span></td>'+
-        '<td><b>'+esc(r.ot)+'</b></td>'+
-        '<td>'+esc(r.modelo)+'</td>'+
-        '<td>'+N(r.programado).toLocaleString()+'</td>'+
-        '<td>'+
-        mr.toLocaleString(
-          "es-MX",
-          {maximumFractionDigits:2}
-        )+
-        '</td>'+
-        '<td>'+pct.toFixed(1)+'%</td>'+
-        '<td>'+
-        '<button class="action editBtn" data-edit="'+
-        esc(r.id)+
-        '">✏️ Editar</button> '+
-        '<button class="action danger" data-del="'+
-        esc(r.id)+
-        '">Eliminar</button>'+
-        '</td>'+
-        '</tr>'
-      );
-
-    }
-  ).join("");
-
-  tb.querySelectorAll(
-    "[data-edit]"
-  ).forEach(function(b){
-
-    b.onclick=function(){
-      editarOT(
-        b.dataset.edit
-      );
-    };
-
-  });
-
-  tb.querySelectorAll(
-    "[data-del]"
-  ).forEach(function(b){
-
-    b.onclick=function(){
-
-      var id=b.dataset.del;
-
-      var r=prod.find(
-        function(x){
-          return String(x.id)===String(id);
-        }
-      );
-
-      if(!r){
-        return;
-      }
-
-      if(
-        avances.some(
-          function(a){
-            return String(a.ot)===String(r.ot);
-          }
-        )
-      ){
-
-        return alert(
-          "Esta OT ya tiene avances. Puedes editar sus datos, pero no eliminarla."
-        );
-
-      }
-
-      if(
-        confirm(
-          "¿Eliminar la OT "+r.ot+"?"
-        )
-      ){
-
-        prod=prod.filter(
-          function(x){
-            return String(x.id)!==String(id);
-          }
-        );
-
-        save();
-        render();
-
-      }
-
-    };
-
-  });
-
-}
-
-
-function updateOTMinutes(){
-
-  var m=$("modelo").value;
-
-  var p=N(
-    $("programado").value
-  );
-
-  var linea=$("linea").value;
-
-  var mr=reqMinutes(
-    m,
-    p
-  );
-
-  var cap=availableMinutes(
-    linea
-  );
-
-  $("minReq").value=
-    mr.toFixed(2);
-
-  $("pctCarga").value=
-    (cap?mr/cap*100:0)
-    .toFixed(1)+"%";
-}
-
-
-function editarOT(id){
-
-  var r=prod.find(
-    function(x){
-      return String(x.id)===String(id);
-    }
-  );
-
-  if(!r){
-    return;
-  }
-
-  editingId=id;
-
-  $("fecha").value=r.fecha;
-  $("linea").value=r.linea;
-  $("ot").value=r.ot;
-  $("modelo").value=r.modelo;
-  $("programado").value=N(
-    r.programado
-  );
-  $("obs").value=r.obs||"";
-
-  $("guardar").textContent=
-    "💾 Guardar cambios";
-
-  $("limpiar").textContent=
-    "↩️ Cancelar edición";
-
-  $("programado").min=
-    piezasYaAvanzadas(r.ot);
-
-  updateOTMinutes();
-
-  $("captura").scrollIntoView({
-    behavior:"smooth"
-  });
-}
-
-
-function clearForm(){
-
-  $("fecha").value=today();
-  $("linea").value="Línea A";
-  $("ot").value="";
-  $("modelo").selectedIndex=0;
-  $("programado").value=0;
-  $("obs").value="";
-
-  $("guardar").textContent=
-    "Guardar OT";
-
-  $("limpiar").textContent=
-    "Limpiar";
-
-  $("programado").min=0;
-
-  editingId=null;
-
-  updateOTMinutes();
-}
-
-
-function guardarOT(){
-
-  var m=$("modelo").value;
-
-  var ot=$("ot").value.trim();
-
-  var p=N(
-    $("programado").value
-  );
-
-  var fecha=
-    $("fecha").value||today();
-
-  var linea=$("linea").value;
-
-  var obs=$("obs").value.trim();
-
-  if(!ot){
-    return alert(
-      "Escribe la OT."
-    );
-  }
-
-  if(!m){
-    return alert(
-      "Selecciona un modelo."
-    );
-  }
-
-  if(p<=0){
-    return alert(
-      "Escribe las piezas programadas."
-    );
-  }
-
-  if(modelMin(m)<=0){
-    return alert(
-      "Este modelo no tiene minutos estándar. Ve a Costos y captura sus minutos por pieza."
-    );
-  }
-
-  if(editingId){
-
-    var r=prod.find(
-      function(x){
-        return String(x.id)===String(editingId);
-      }
-    );
-
-    var adv=piezasYaAvanzadas(
-      r.ot
-    );
-
-    if(p<adv){
-
-      return alert(
-        "No puedes dejar la OT en "+
-        p+
-        " piezas. Ya existen "+
-        adv+
-        " piezas avanzadas."
-      );
-
-    }
-
-    var dup=prod.some(
-      function(x){
-
-        return(
-          String(x.id)!==
-          String(editingId)&&
-          String(x.ot)
-            .trim()
-            .toLowerCase()===
-          ot.toLowerCase()
-        );
-
-      }
-    );
-
-    if(dup){
-
-      return alert(
-        "Ya existe otra OT con ese número."
-      );
-
-    }
-
-    var old=r.ot;
-
-    r.fecha=fecha;
-    r.linea=linea;
-    r.ot=ot;
-    r.modelo=m;
-    r.programado=p;
-    r.obs=obs;
-
-    if(String(old)!==String(ot)){
-
-      avances.forEach(
-        function(a){
-
-          if(String(a.ot)===String(old)){
-            a.ot=ot;
-          }
-
-        }
-      );
-
-    }
-
-    avances.forEach(
-      function(a){
-
-        if(String(a.ot)===String(ot)){
-
-          a.linea=linea;
-          a.modelo=m;
-
-        }
-
-      }
-    );
-
-    save();
-    clearForm();
-    render();
-
-    return alert(
-      "OT actualizada correctamente. ✅"
-    );
-
-  }
-
-  if(
-    prod.some(
-      function(x){
-        return(
-          String(x.ot)
-            .trim()
-            .toLowerCase()===
-          ot.toLowerCase()
-        );
-      }
-    )
-  ){
-
-    return alert(
-      "Esta OT ya está registrada."
-    );
-
-  }
-
-  prod.push({
-    id:String(
-      Date.now()+Math.random()
-    ),
-    fecha:fecha,
-    linea:linea,
-    ot:ot,
-    modelo:m,
-    programado:p,
-    obs:obs
-  });
-
-  save();
-  clearForm();
-  render();
-
-  alert(
-    "OT registrada correctamente. ✅"
-  );
-}
-
-
-function renderSearchOT(){
-
-  var text=$("buscarOT")
-    .value
-    .trim()
-    .toLowerCase();
-
-  var box=$("resultadosOT");
-
-  var map=getOTs();
-
-  if(!text){
-
-    box.innerHTML=
-      '<div class="muted">Teclea una OT para buscar.</div>';
-
-    return;
-  }
-
-  var found=Object.keys(map)
-    .filter(
-      function(k){
-        return k.toLowerCase()
-          .includes(text);
-      }
-    );
-
-  if(!found.length){
-
-    box.innerHTML=
-      '<div class="note">No se encontró la OT.</div>';
-
-    return;
-  }
-
-  box.innerHTML=found
-    .slice(0,20)
-    .map(function(k){
-
-      var o=map[k];
-
-      var inv=inventoryOT(k);
-
-      var mr=reqMinutes(
-        o.modelo,
-        o.programado
-      );
-
-      return(
-        '<div class="otBox">'+
-
-        '<div class="otTitle">'+
-        'OT '+esc(o.ot)+
-        '</div>'+
-
-        '<div class="muted">'+
-        'Modelo: <b>'+esc(o.modelo)+'</b> · '+
-        esc(o.linea)+
-        ' · Programada: <b>'+
-        esc(o.fecha)+
-        '</b>'+
-        '</div>'+
-
-        '<div class="muted" style="margin-top:7px">'+
-        'Piezas: <b>'+
-        o.programado.toLocaleString()+
-        '</b> · Min. requeridos: <b>'+
-        mr.toLocaleString(
-          "es-MX",
-          {maximumFractionDigits:2}
-        )+
-        '</b>'+
-        '</div>'+
-
-        '<div class="muted" style="margin-top:7px">'+
-        'Inventario: Programado '+
-        inv.Programado+
-        ' · Armado '+
-        inv.Armado+
-        ' · Salida '+
-        inv["Salida pespunte"]+
-        ' · Clasificación '+
-        inv.Clasificación+
-        ' · Empaque '+
-        inv.Empaque+
-        ' · Auditoría '+
-        inv.Auditoría+
-        '</div>'+
-
-        '<div class="actions">'+
-
-        '<button class="action primary" '+
-        'data-select-ot="'+
-        esc(o.ot)+
-        '">'+
-        'Seleccionar OT'+
-        '</button>'+
-
-        '</div>'+
-
-        '</div>'
-      );
-
-    })
-    .join("");
-
-  box.querySelectorAll(
-    "[data-select-ot]"
-  ).forEach(function(b){
-
-    b.onclick=function(){
-
-      selectMovementOT(
-        b.dataset.selectOt
-      );
-
-    };
-
-  });
-}
-
-
-function selectMovementOT(ot){
-
-  var o=getOTs()[ot];
-
-  if(!o){
-    return;
-  }
-
-  selectedOT=ot;
-
-  $("otSeleccionada").value=o.ot;
-  $("movOT").textContent=o.ot;
-  $("movModelo").textContent=o.modelo;
-  $("movLinea").textContent=o.linea;
-
-  $("panelMovimiento").style.display=
-    "block";
-
-  fillFromProcesses();
-
-  $("fechaMovimiento").value=
-    nowLocal();
-
-  $("piezasMovimiento").value=0;
-
-  updateMovementAvailability();
-
-  $("panelMovimiento").scrollIntoView({
-    behavior:"smooth"
-  });
-}
-
-
-function fillFromProcesses(){
-
-  var s=$("desdeProceso");
-
-  s.innerHTML="";
-
-  FLOW.forEach(function(p){
-
-    var o=document.createElement(
-      "option"
-    );
-
-    o.value=p;
-    o.textContent=p;
-
-    s.appendChild(o);
-
-  });
-
-  if(selectedOT){
-    s.value=currentProcess(
-      selectedOT
-    );
-  }
-
-  fillToProcesses();
-}
-
-
-function fillToProcesses(){
-
-  var from=$("desdeProceso").value;
-
-  var idx=FLOW.indexOf(from);
-
-  var to=$("hastaProceso");
-
-  to.innerHTML="";
-
-  for(
-    var i=idx+1;
-    i<FLOW.length;
-    i++
-  ){
-
-    var o=document.createElement(
-      "option"
-    );
-
-    o.value=FLOW[i];
-    o.textContent=FLOW[i];
-
-    to.appendChild(o);
-
-  }
-
-  updateMovementAvailability();
-}
-
-
-function updateMovementAvailability(){
-
-  if(!selectedOT){
-    return;
-  }
-
-  var from=$("desdeProceso").value;
-
-  var q=availableProcess(
-    selectedOT,
-    from
-  );
-
-  $("disponibleMovimiento").innerHTML=
-    "Disponible en <b>"+
-    esc(from)+
-    ":</b> "+
-    q.toLocaleString()+
-    " piezas";
-
-  $("piezasMovimiento").max=q;
-}
-
-
-function guardarMovimiento(){
-
-  if(!selectedOT){
-
-    return alert(
-      "Selecciona una OT."
-    );
-
-  }
-
-  var from=$("desdeProceso").value;
-  var to=$("hastaProceso").value;
-
-  var q=N(
-    $("piezasMovimiento").value
-  );
-
-  var disp=availableProcess(
-    selectedOT,
-    from
-  );
-
-  var fi=FLOW.indexOf(from);
-  var ti=FLOW.indexOf(to);
-
-  if(ti<=fi){
-
-    return alert(
-      "El destino debe estar después del origen."
-    );
-
-  }
-
-  if(q<=0){
-
-    return alert(
-      "Escribe las piezas."
-    );
-
-  }
-
-  if(q>disp){
-
-    return alert(
-      "Solo hay "+
-      disp+
-      " piezas disponibles en "+
-      from+
-      "."
-    );
-
-  }
-
-  var o=getOTs()[selectedOT];
-
-  var fh=
-    $("fechaMovimiento").value||
-    nowLocal();
-
-  for(
-    var i=fi;
-    i<ti;
-    i++
-  ){
-
-    avances.push({
-
-      id:String(
-        Date.now()+
-        Math.random()+
-        i
-      ),
-
-      ot:o.ot,
-      linea:o.linea,
-      modelo:o.modelo,
-
-      procesoAnterior:
-        FLOW[i],
-
-      siguienteProceso:
-        FLOW[i+1],
-
-      piezas:q,
-
-      fechaHora:fh,
-
-      fecha:fh.slice(0,10)
-
-    });
-
-  }
-
-  save();
-
-  selectedOT=null;
-
-  $("panelMovimiento").style.display=
-    "none";
-
-  $("buscarOT").value="";
-  $("otSeleccionada").value="";
-
-  render();
-
-  alert(
-    "Avance registrado correctamente. ✅"
-  );
-}
-
-
-function getDailyOTs(){
-
-  var fecha=
-    $("avanceFecha").value||
-    today();
-
-  var linea=
-    $("avanceLinea").value||
-    "Todas";
-
-  var map=getOTs();
-
-  var lista=[];
-
-  Object.keys(map).forEach(
-    function(k){
-
-      var o=map[k];
-
-      if(
-        o.fecha!==fecha||
-        (
-          linea!=="Todas"&&
-          o.linea!==linea
-        )
-      ){
-
-        return;
-      }
-
-      var inv=inventoryOT(k);
-
-      lista.push({
-
-        ot:o.ot,
-        modelo:o.modelo,
-        linea:o.linea,
-        fecha:o.fecha,
-        programado:o.programado,
-        armado:inv.Armado,
-        salida:inv["Salida pespunte"],
-        clasificacion:inv.Clasificación,
-        empaque:inv.Empaque,
-        auditoria:inv.Auditoría,
-        ultimo:currentProcess(k)
-
-      });
-
-    }
-  );
-
-  return lista.sort(
-    function(a,b){
-      return String(a.ot)
-        .localeCompare(
-          String(b.ot),
-          undefined,
-          {numeric:true}
-        );
-    }
-  );
-}
-
-
-function salidaDiaPorLinea(linea,fecha){
-
-  var map=getOTs();
-
-  var r=[];
-
-  Object.keys(map).forEach(
-    function(k){
-
-      var o=map[k];
-
-      if(o.linea===linea){
-
-        var q=salidaEnFecha(
-          k,
-          fecha
-        );
-
-        if(q){
-
-          r.push({
-            ot:k,
-            modelo:o.modelo,
-            piezas:q
-          });
-
-        }
-
-      }
-
-    }
-  );
-
-  return r;
-}
-
-
-function dailyMetrics(linea,fecha){
-
-  var map=getOTs();
-
-  var p=0;
-  var m=0;
-  var s=0;
-  var g=0;
-
-  Object.keys(map).forEach(
-    function(k){
-
-      var o=map[k];
-
-      if(o.linea!==linea){
-        return;
-      }
-
-      if(o.fecha===fecha){
-
-        p+=o.programado;
-
-        m+=reqMinutes(
-          o.modelo,
-          o.programado
-        );
-
-      }
-
-      var q=salidaEnFecha(
-        k,
-        fecha
-      );
-
-      if(q){
-
-        s+=q;
-
-        g+=q*
-          modelMin(o.modelo);
-
-      }
-
-    }
-  );
-
-  return{
-    p:p,
-    m:m,
-    s:s,
-    g:g
-  };
-}
-
-
-function renderDailyAdvances(){
-
-  var fecha=
-    $("avanceFecha").value||
-    today();
-
-  var linea=
-    $("avanceLinea").value||
-    "Todas";
-
-  var lista=getDailyOTs();
-
-  var p=lista.reduce(
-    function(t,x){
-      return t+x.programado;
-    },
-    0
-  );
-
-  var s=0;
-  var g=0;
-
-  lista.forEach(
-    function(x){
-
-      s+=salidaEnFecha(
-        x.ot,
-        fecha
-      );
-
-      g+=
-        salidaEnFecha(
-          x.ot,
-          fecha
-        )*
-        modelMin(x.modelo);
-
-    }
-  );
-
-  var pct=p?s/p*100:0;
-
-  $("avanceDiaProgramado")
-    .textContent=
-    p.toLocaleString();
-
-  $("avanceDiaSalida")
-    .textContent=
-    s.toLocaleString();
-
-  $("avanceDiaMinGanados")
-    .textContent=
-    g.toLocaleString(
-      "es-MX",
-      {maximumFractionDigits:1}
-    );
-
-  $("avanceDiaPorcentaje")
-    .textContent=
-    pct.toFixed(1)+"%";
-
-  $("avanceDiaBarra")
-    .style.width=
-    Math.min(
-      100,
-      Math.max(0,pct)
-    )+"%";
-
-  $("avanceDiaBarra")
-    .style.background=
-    pct>=80
-      ?" #18a566".trim()
-      :pct>=50
-        ?" #e5a700".trim()
-        :" #e05252".trim();
-
-  $("avanceDiaTexto")
-    .textContent=
-    s.toLocaleString()+
-    " / "+
-    p.toLocaleString()+
-    " piezas";
-
-  $("graficaProgramado")
-    .textContent=
-    p.toLocaleString();
-
-  $("graficaSalida")
-    .textContent=
-    s.toLocaleString();
-
-  $("graficaMinGanados")
-    .textContent=
-    g.toLocaleString(
-      "es-MX",
-      {maximumFractionDigits:1}
-    );
-
-  $("graficaDiaPorcentaje")
-    .textContent=
-    pct.toFixed(1)+"%";
-
-  $("graficaBarraTexto")
-    .textContent=
-    pct.toFixed(1)+"%";
-
-  $("graficaBarra")
-    .style.width=
-    Math.min(
-      100,
-      Math.max(0,pct)
-    )+"%";
-
-  $("graficaBarra")
-    .className=
-    "bigBarFill "+
-    (
-      pct>=80
-      ?"barGood"
-      :pct>=50
-        ?"barMedium"
-        :"barLow"
-    );
-
-  $("graficaDiaSub")
-    .textContent=
-    fecha+
-    " · "+
-    linea+
-    " · Programado contra salida de pespunte";
-
-  $("graficaFaltante")
-    .textContent=
-    "Faltan "+
-    Math.max(0,p-s)
-      .toLocaleString()+
-    " piezas";
-
-  $("graficaStatus")
-    .className=
-    "visualStatus "+
-    (
-      p
-      ?(
-        pct>=80
-        ?"statusGood"
-        :pct>=50
-          ?"statusMedium"
-          :"statusLow"
-      )
-      :"statusNone"
-    );
-
-  $("graficaStatusTitulo")
-    .textContent=
-    p
-    ?(
-      pct>=80
-      ?"Buen avance"
-      :pct>=50
-        ?"Avance medio"
-        :"Atención"
-    )
-    :"Sin programación";
-
-  $("graficaStatusTexto")
-    .textContent=
-    p
-    ?"Salida pespunte: "+
-      s+
-      " piezas."
-    :"Selecciona una fecha con programación.";
-
-  var box=$("avanceListaOT");
-
-  $("avanceListaSub")
-    .textContent=
-    fecha+
-    " · "+
-    linea+
-    " · "+
-    lista.length+
-    " OT"+
-    (
-      lista.length===1
-      ?""
-      :"s"
-    );
-
-  if(!lista.length){
-
-    box.innerHTML=
-      '<div class="noDailyData">'+
-      '📭<br><br>'+
-      '<b>No hay OTs programadas.</b>'+
-      '</div>';
-
-    return;
-  }
-
-  box.innerHTML=
-    lista.map(
-      function(x){
-
-        var out=
-          salidaEnFecha(
-            x.ot,
-            fecha
-          );
-
-        return(
-          '<div class="dailyOTCard">'+
-
-          '<div class="dailyOTTop">'+
-
-          '<div>'+
-
-          '<div class="dailyOTNumber">'+
-          'OT '+esc(x.ot)+
-          '</div>'+
-
-          '<div class="dailyOTModel">'+
-          esc(x.modelo)+
-          ' · '+
-          '<span class="pill '+
-          (
-            x.linea==="Línea A"
-            ?"a"
-            :"b"
-          )+
-          '">'+
-          x.linea+
-          '</span>'+
-          '</div>'+
-
-          '</div>'+
-
-          '<div class="dailyOTProgrammed">'+
-
-          '<strong>'+
-          x.programado.toLocaleString()+
-          '</strong>'+
-
-          '<span>PROGRAMADO</span>'+
-
-          '</div>'+
-
-          '</div>'+
-
-          '<div class="dailyOTStatus statusSalida">'+
-
-          '<div class="statusLabel">'+
-          'SALIDA PESPUNTE HOY'+
-          '</div>'+
-
-          '<div class="statusValue">'+
-          out.toLocaleString()+
-          ' piezas · '+
-          (
-            out*
-            modelMin(x.modelo)
-          ).toLocaleString(
-            "es-MX",
-            {maximumFractionDigits:1}
-          )+
-          ' min'+
-          '</div>'+
-
-          '</div>'+
-
-          '<div class="dailyOTStats">'+
-
-          '<div class="dailyOTStat">'+
-          '<span>⚙️ Armado</span>'+
-          '<strong>'+x.armado+'</strong>'+
-          '</div>'+
-
-          '<div class="dailyOTStat">'+
-          '<span>🟠 Salida</span>'+
-          '<strong>'+out+'</strong>'+
-          '</div>'+
-
-          '<div class="dailyOTStat">'+
-          '<span>🟣 Clasificación</span>'+
-          '<strong>'+x.clasificacion+'</strong>'+
-          '</div>'+
-
-          '<div class="dailyOTStat">'+
-          '<span>🟢 Empaque</span>'+
-          '<strong>'+x.empaque+'</strong>'+
-          '</div>'+
-
-          '</div>'+
-
-          '<button class="dailyOTButton" '+
-          'data-daily-avance="'+
-          esc(x.ot)+
-          '">'+
-          '🔄 Ver / registrar avance'+
-          '</button>'+
-
-          '</div>'
-        );
-
-      }
-    ).join("");
-
-  box.querySelectorAll(
-    "[data-daily-avance]"
-  ).forEach(function(b){
-
-    b.onclick=function(){
-
-      selectMovementOT(
-        b.dataset.dailyAvance
-      );
-
-      $("buscarOT").value=
-        b.dataset.dailyAvance;
-
-      renderSearchOT();
-
-    };
-
-  });
-}
-
-
-function renderLead(){
-
-  var tb=$("tablaLead");
-
-  var map=getOTs();
-
-  var names=Object.keys(map)
-    .sort();
-
-  if(!names.length){
-
-    tb.innerHTML=
-      '<tr><td colspan="8">Sin OTs.</td></tr>';
-
-    return;
-  }
-
-  tb.innerHTML=
-    names.map(
-      function(k){
-
-        var o=map[k];
-
-        var l=getLastAdvance(k);
-
-        return(
-          '<tr>'+
-
-          '<td><b>'+
-          esc(k)+
-          '</b></td>'+
-
-          '<td>'+
-          esc(o.linea)+
-          '</td>'+
-
-          '<td>'+
-          esc(o.modelo)+
-          '</td>'+
-
-          '<td>'+
-          o.programado+
-          '</td>'+
-
-          '<td>'+
-          '<span class="processPill">'+
-          currentProcess(k)+
-          '</span>'+
-          '</td>'+
-
-          '<td>'+
-          (
-            l
-            ?formatDateTime(l.fechaHora)
-            :"Sin avance"
-          )+
-          '</td>'+
-
-          '<td class="lead">'+
-          totalLeadTime(k)+
-          '</td>'+
-
-          '<td>'+
-          '<button class="action secondary" '+
-          'data-lead="'+
-          esc(k)+
-          '">'+
-          'Ver detalle'+
-          '</button>'+
-          '</td>'+
-
-          '</tr>'
-        );
-
-      }
-    ).join("");
-
-  tb.querySelectorAll(
-    "[data-lead]"
-  ).forEach(function(b){
-
-    b.onclick=function(){
-
-      showLeadDetail(
-        b.dataset.lead
-      );
-
-    };
-
-  });
-}
-
-
-function showLeadDetail(ot){
-
-  var o=getOTs()[ot];
-
-  var arr=getAdvancesOT(ot);
-
-  var html=
-    '<div class="detailBox">'+
-
-    '<h3>OT '+
-    esc(ot)+
-    '</h3>'+
-
-    '<div class="muted">'+
-    'Programada: <b>'+
-    o.fecha+
-    '</b> · Modelo: <b>'+
-    esc(o.modelo)+
-    '</b> · Línea: <b>'+
-    esc(o.linea)+
-    '</b> · Piezas: <b>'+
-    o.programado+
-    '</b>'+
-    '</div>'+
-
-    '<div style="margin-top:6px">'+
-    'Lead Time: '+
-    '<span class="lead">'+
-    totalLeadTime(ot)+
-    '</span>'+
-    '</div>'+
-
-    '</div>';
-
-  if(arr.length){
-
-    var prev=
-      getStartDateTime(ot);
-
-    html+=
-      '<div class="tablewrap" style="margin-top:12px">'+
-      '<table>'+
-      '<thead>'+
-      '<tr>'+
-      '<th>Anterior</th>'+
-      '<th>Siguiente</th>'+
-      '<th>Piezas</th>'+
-      '<th>Fecha/hora</th>'+
-      '<th>Tiempo</th>'+
-      '</tr>'+
-      '</thead>'+
-      '<tbody>';
-
-    arr.forEach(
-      function(a){
-
-        html+=
-          '<tr>'+
-          '<td>'+
-          esc(a.procesoAnterior)+
-          '</td>'+
-          '<td>'+
-          esc(a.siguienteProceso)+
-          '</td>'+
-          '<td>'+
-          a.piezas+
-          '</td>'+
-          '<td>'+
-          formatDateTime(
-            a.fechaHora
-          )+
-          '</td>'+
-          '<td class="lead">'+
-          formatDuration(
-            diffMs(
-              prev,
-              a.fechaHora
-            )
-          )+
-          '</td>'+
-          '</tr>';
-
-        prev=a.fechaHora;
-
-      }
-    );
-
-    html+=
-      '</tbody>'+
-      '</table>'+
-      '</div>';
-
-  }else{
-
-    html+=
-      '<div class="note">Sin movimientos.</div>';
-
-  }
-
-  $("detalleLead").style.display=
-    "block";
-
-  $("detalleOT").innerHTML=
-    html;
-
-  $("detalleLead").scrollIntoView({
-    behavior:"smooth"
-  });
-}
-
-
-function renderWorkshop(){
-
-  var ref=
-    $("wsFecha").value||
-    today();
-
-  var filter=
-    $("wsLineaFiltro").value||
-    "Todas";
-
-  var map=getOTs();
-
-  var lines=[
-    "Línea A",
-    "Línea B"
-  ];
-
-  lines.forEach(
-    function(l){
-
-      var d=
-        dailyMetrics(
-          l,
-          ref
-        );
-
-      var disp=
-        availableMinutes(l);
-
-      var pp=
-        disp
-        ?d.m/disp*100
-        :0;
-
-      var ef=
-        disp
-        ?d.g/disp*100
-        :0;
-
-      var cum=
-        d.m
-        ?d.g/d.m*100
-        :0;
-
-      [
-        "wsProg",
-        "wsMinProg",
-        "wsSalida",
-        "wsMinDisp",
-        "wsMinGan",
-        "wsProgPct",
-        "wsEf",
-        "wsCum"
-      ].forEach(
-        function(prefix){
-
-          var id=
-            prefix+
-            (
-              l==="Línea A"
-              ?"A"
-              :"B"
-            );
-
-          if($(id)){
-            $(id).textContent="0";
-          }
-
-        }
-      );
-
-      var suffix=
-        l==="Línea A"
-        ?"A"
-        :"B";
-
-      $("wsProg"+suffix)
-        .textContent=
-        d.p.toLocaleString();
-
-      $("wsMinProg"+suffix)
-        .textContent=
-        d.m.toLocaleString(
-          "es-MX",
-          {maximumFractionDigits:1}
-        );
-
-      $("wsSalida"+suffix)
-        .textContent=
-        d.s.toLocaleString();
-
-      $("wsMinDisp"+suffix)
-        .textContent=
-        disp.toLocaleString(
-          "es-MX",
-          {maximumFractionDigits:1}
-        );
-
-      $("wsMinGan"+suffix)
-        .textContent=
-        d.g.toLocaleString(
-          "es-MX",
-          {maximumFractionDigits:1}
-        );
-
-      $("wsProgPct"+suffix)
-        .textContent=
-        pp.toFixed(1)+"%";
-
-      $("wsEf"+suffix)
-        .textContent=
-        ef.toFixed(1)+"%";
-
-      $("wsCum"+suffix)
-        .textContent=
-        cum.toFixed(1)+"%";
-
-      $("lineCard"+suffix)
-        .style.display=
-        filter==="Todas"||
-        filter===l
-        ?"block"
-        :"none";
-
-    }
-  );
-
-
-  var byLine={};
-
-  lines.forEach(
-    function(l){
-
-      byLine[l]={
-        Programado:0,
-        Armado:0,
-        "Salida pespunte":0,
-        Clasificación:0,
-        Empaque:0,
-        Auditoría:0
-      };
-
-    }
-  );
-
-
-  Object.keys(map).forEach(
-    function(k){
-
-      var o=map[k];
-
-      var inv=inventoryOT(k);
-
-      FLOW.forEach(
-        function(p){
-
-          byLine[o.linea][p]+=
-            N(inv[p]);
-
-        }
-      );
-
-    }
-  );
-
-
-  $("tablaWS").innerHTML=
-    lines.map(
-      function(l){
-
-        var z=byLine[l];
-
-        var t=
-          Object.keys(z).reduce(
-            function(a,k){
-              return a+z[k];
-            },
-            0
-          );
-
-        return(
-          '<tr>'+
-
-          '<td>'+
-          '<span class="pill '+
-          (
-            l==="Línea A"
-            ?"a"
-            :"b"
-          )+
-          '">'+
-          l+
-          '</span>'+
-          '</td>'+
-
-          '<td>'+z.Programado+'</td>'+
-          '<td>'+z.Armado+'</td>'+
-          '<td>'+z["Salida pespunte"]+'</td>'+
-          '<td>'+z.Clasificación+'</td>'+
-          '<td>'+z.Empaque+'</td>'+
-          '<td>'+z.Auditoría+'</td>'+
-
-          '<td><b>'+t+'</b></td>'+
-
-          '</tr>'
-        );
-
-      }
-    ).join("");
-
-
-  $("tablaWSOT").innerHTML=
-    Object.keys(map)
-    .sort()
-    .map(
-      function(k){
-
-        var o=map[k];
-
-        var i=inventoryOT(k);
-
-        return(
-          '<tr>'+
-          '<td><b>'+esc(k)+'</b></td>'+
-          '<td>'+o.linea+'</td>'+
-          '<td>'+esc(o.modelo)+'</td>'+
-          '<td>'+i.Programado+'</td>'+
-          '<td>'+i.Armado+'</td>'+
-          '<td>'+i["Salida pespunte"]+'</td>'+
-          '<td>'+i.Clasificación+'</td>'+
-          '<td>'+i.Empaque+'</td>'+
-          '<td>'+i.Auditoría+'</td>'+
-          '</tr>'
-        );
-
-      }
-    ).join("")||
-    '<tr><td colspan="9">Sin OTs.</td></tr>';
-
-
-  var ps=0;
-  var ms=0;
-  var gs=0;
-  var ss=0;
-
-  Object.keys(map).forEach(
-    function(k){
-
-      var o=map[k];
-
-      if(
-        inWeekDate(
-          o.fecha,
-          ref
-        )
-      ){
-
-        ps+=o.programado;
-
-        ms+=reqMinutes(
-          o.modelo,
-          o.programado
-        );
-
-      }
-
-      var q=
-        salidaEnSemana(
-          k,
-          ref
-        );
-
-      ss+=q;
-
-      gs+=
-        q*
-        modelMin(o.modelo);
-
-    }
-  );
-
-
-  $("wsProgSemana")
-    .textContent=
-    ps.toLocaleString();
-
-  $("wsSalidaSemana")
-    .textContent=
-    ss.toLocaleString();
-
-  $("wsMinProgSemana")
-    .textContent=
-    ms.toLocaleString(
-      "es-MX",
-      {maximumFractionDigits:1}
-    );
-
-  $("wsMinGanSemana")
-    .textContent=
-    gs.toLocaleString(
-      "es-MX",
-      {maximumFractionDigits:1}
-    );
-
-  $("wsMinDispSemana")
-    .textContent=
-    (
-      availableMinutes("Línea A")+
-      availableMinutes("Línea B")
-    ).toLocaleString(
-      "es-MX",
-      {maximumFractionDigits:1}
-    );
-
-  $("wsEfSemana")
-    .textContent=
-    (
-      (
-        availableMinutes("Línea A")+
-        availableMinutes("Línea B")
-      )
-      ?
-      gs/
-      (
-        availableMinutes("Línea A")+
-        availableMinutes("Línea B")
-      )*
-      100
-      :0
-    ).toFixed(1)+"%";
-
-  renderHourBoard();
-}
-
-
-function renderHourBoard(){
-
-  var fecha=
-    $("wsFecha").value||
-    today();
-
-  var linea=
-    $("horaLinea").value||
-    "Línea A";
-
-  var disp=
-    availableMinutes(linea);
-
-  var eff=
-    effectiveMinutes();
-
-  var hours=[];
-
-  var a=
-    conf.entrada.split(":");
-
-  var start=
-    N(a[0])*60+
-    N(a[1]);
-
-  var b=
-    conf.salida.split(":");
-
-  var end=
-    N(b[0])*60+
-    N(b[1]);
-
-  for(
-    var h=start;
-    h<end;
-    h+=60
-  ){
-
-    var h2=
-      Math.min(
-        h+60,
-        end
-      );
-
-    var label=
-      (
-        String(
-          Math.floor(h/60)
-        ).padStart(2,"0")+
-        ":00"
-      )+
-      "–"+
-      (
-        String(
-          Math.floor(h2/60)
-        ).padStart(2,"0")+
-        ":"+
-        (h2%60)
-          .toString()
-          .padStart(2,"0")
-      );
-
-    var real=0;
-
-    Object.keys(getOTs())
-      .forEach(
-        function(k){
-
-          var o=getOTs()[k];
-
-          if(o.linea!==linea){
-            return;
-          }
-
-          getAdvancesOT(k)
-            .forEach(
-              function(x){
-
-                if(
-                  x.siguienteProceso===
-                  "Salida pespunte"
-                ){
-
-                  var d=
-                    new Date(
-                      x.fechaHora
-                    );
-
-                  var mins=
-                    d.getHours()*60+
-                    d.getMinutes();
-
-                  if(
-                    x.fecha===fecha&&
-                    mins>=h&&
-                    mins<h2
-                  ){
-
-                    real+=
-                      N(x.piezas)*
-                      modelMin(o.modelo);
-
-                  }
-
-                }
-
-              }
-            );
-
-        }
-      );
-
-    var hourAvail=
-      N(conf.pespuntadores)*
-      Math.max(
-        0,
-        h2-h
-      );
-
-    hours.push({
-      label:label,
-      real:real,
-      avail:hourAvail
-    });
-
-  }
-
-
-  $("hourBoard").innerHTML=
-    hours.map(
-      function(x){
-
-        var pct=
-          x.avail
-          ?x.real/x.avail*100
-          :0;
-
-        return(
-          '<div class="hourCard">'+
-
-          '<div class="hourTitle">'+
-          '🕐 '+
-          x.label+
-          '</div>'+
-
-          '<div class="muted">'+
-          'Meta: '+
-          x.avail.toFixed(0)+
-          ' min'+
-          '</div>'+
-
-          '<div class="hourValue">'+
-          x.real.toFixed(1)+
-          ' min'+
-          '</div>'+
-
-          '<div class="miniBar">'+
-
-          '<div class="miniFill" '+
-          'style="width:'+
-          Math.min(
-            100,
-            Math.max(0,pct)
-          )+
-          '%;background:'+
-          (
-            pct>=100
-            ?" #18a566".trim()
-            :pct>=80
-              ?" #e5a700".trim()
-              :" #e05252".trim()
-          )+
-          '"></div>'+
-
-          '</div>'+
-
-          '<div style="margin-top:7px;font-weight:850">'+
-          pct.toFixed(1)+
-          '% eficiencia'+
-          '</div>'+
-
-          '</div>'
-        );
-
-      }
-    ).join("");
-}
-
-
-function mostrarDetalleWS(tipo,linea){
-
-  var ref=
-    $("wsFecha").value||
-    today();
-
-  var map=getOTs();
-
-  var lista=[];
-
-  Object.keys(map).forEach(
-    function(k){
-
-      var o=map[k];
-
-      if(o.linea!==linea){
-        return;
-      }
-
-      var i=inventoryOT(k);
-
-      var q=
-        tipo==="programado"
-        ?(
-          o.fecha===ref
-          ?o.programado
-          :0
-        )
-        :tipo==="proceso"
-          ?i.Armado+
-           i["Salida pespunte"]
-          :tipo==="salida"
-            ?salidaEnFecha(
-              k,
-              ref
-            )
-            :i.Clasificación;
-
-      if(q>0){
-
-        lista.push({
-          ot:k,
-          modelo:o.modelo,
-          piezas:q,
-          programado:o.programado,
-          fecha:o.fecha
-        });
-
-      }
-
-    }
-  );
-
-
-  $("wsDetalleTitulo")
-    .textContent=
-    (
-      {
-        programado:"📋 Programado",
-        proceso:"⚙️ En proceso",
-        salida:"⚙️ Salida pespunte",
-        clasificacion:"📦 Clasificación"
-      }[tipo]
-    )+
-    " · "+
-    linea;
-
-
-  $("wsDetalleSub")
-    .textContent=
-    "Fecha: "+
-    ref+
-    " · "+
-    lista.length+
-    " OTs";
-
-
-  var total=
-    lista.reduce(
-      function(t,x){
-        return t+x.piezas;
-      },
-      0
-    );
-
-
-  $("wsDetalleContenido")
-    .innerHTML=
-    '<div class="wsDetailTotal">'+
-    'TOTAL: <b>'+
-    total.toLocaleString()+
-    '</b> piezas'+
-    '</div>'+
-    (
-      lista.length
-      ?
-      lista.map(
-        function(x){
-
-          return(
-            '<div class="wsDetailOT">'+
-
-            '<div class="wsDetailOTHead">'+
-
-            '<div>'+
-
-            '<div class="wsDetailOTName">'+
-            'OT '+esc(x.ot)+
-            '</div>'+
-
-            '<div class="wsDetailInfo">'+
-            'Modelo: <b>'+
-            esc(x.modelo)+
-            '</b>'+
-            '</div>'+
-
-            '</div>'+
-
-            '<div class="wsDetailPieces">'+
-            x.piezas.toLocaleString()+
-            '</div>'+
-
-            '</div>'+
-
-            '<div class="wsDetailInfo">'+
-            'Min. estándar: <b>'+
-            modelMin(x.modelo).toFixed(2)+
-            '</b> · Min. equivalentes: <b>'+
-            (
-              x.piezas*
-              modelMin(x.modelo)
-            ).toFixed(1)+
-            '</b>'+
-            '</div>'+
-
-            '<div class="actions">'+
-
-            '<button class="action secondary" '+
-            'data-ws-avance="'+
-            esc(x.ot)+
-            '">'+
-            '🔄 Ver avance'+
-            '</button>'+
-
-            '</div>'+
-
-            '</div>'
-          );
-
-        }
-      ).join("")
-      :
-      '<div class="note">No hay piezas.</div>'
-    );
-
-
-  $("wsDetalleCard")
-    .style.display=
-    "block";
-
-
-  $("wsDetalleContenido")
-    .querySelectorAll(
-      "[data-ws-avance]"
-    )
-    .forEach(
-      function(b){
-
-        b.onclick=function(){
-
-          var ot=
-            b.dataset.wsAvance;
-
-          document.querySelector(
-            '[data-target="avances"]'
-          ).click();
-
-          $("buscarOT").value=ot;
-
-          renderSearchOT();
-
-        };
-
-      }
-    );
-
-
-  $("wsDetalleCard")
-    .scrollIntoView({
-      behavior:"smooth"
-    });
-}
-
-
-function renderResumen(){
-
-  var ref=
-    $("refSemana").value||
-    today();
-
-  var map=getOTs();
-
-  var la={
-    p:0,
-    e:0,
-    a:0,
-    mp:0,
-    mg:0,
-    dp:0,
-    dr:0
-  };
-
-  var lb={
-    p:0,
-    e:0,
-    a:0,
-    mp:0,
-    mg:0,
-    dp:0,
-    dr:0
-  };
-
-  var tp=0;
-  var te=0;
-  var ta=0;
-  var tmp=0;
-  var tmd=0;
-  var tmg=0;
-  var dp=0;
-  var dr=0;
-
-
-  Object.keys(map).forEach(
-    function(k){
-
-      var o=map[k];
-
-      var z=
-        o.linea==="Línea A"
-        ?la
-        :lb;
-
-      if(
-        inWeekDate(
-          o.fecha,
-          ref
-        )
-      ){
-
-        z.p+=o.programado;
-
-        z.mp+=reqMinutes(
-          o.modelo,
-          o.programado
-        );
-
-        tp+=o.programado;
-
-        tmp+=reqMinutes(
-          o.modelo,
-          o.programado
-        );
-
-      }
-
-
-      var e=
-        empacadoEnSemana(
-          k,
-          ref
-        );
-
-
-      var aud=
-        getAdvancesOT(k)
-        .filter(
-          function(a){
-
-            return(
-              a.siguienteProceso===
-              "Auditoría"&&
-              inWeekAdvance(
-                a,
-                ref
-              )
-            );
-
-          }
-        )
-        .reduce(
-          function(t,a){
-            return t+N(a.piezas);
-          },
-          0
-        );
-
-
-      z.e+=e;
-      z.a+=aud;
-
-
-      var c=
-        cost[o.modelo]||{};
-
-
-      z.dp+=
-        e*N(c.pes);
-
-      z.dr+=
-        e*N(c.pre);
-
-
-      var out=
-        salidaEnSemana(
-          k,
-          ref
-        );
-
-      z.mg+=
-        out*
-        modelMin(o.modelo);
-
-      te+=e;
-      ta+=aud;
-
-      dp+=
-        e*N(c.pes);
-
-      dr+=
-        e*N(c.pre);
-
-      tmg+=
-        out*
-        modelMin(o.modelo);
-
-    }
-  );
-
-
-  tmd=
-    availableMinutes("Línea A")+
-    availableMinutes("Línea B");
-
-
-  $("kProg").textContent=
-    tp.toLocaleString();
-
-  $("kEmp").textContent=
-    te.toLocaleString();
-
-  $("kAud").textContent=
-    ta.toLocaleString();
-
-  $("kReg").textContent=
-    Object.keys(map)
-    .filter(
-      function(k){
-        return empacadoEnSemana(
-          k,
-          ref
-        )>0;
-      }
-    ).length;
-
-
-  $("eficiencia")
-    .textContent=
-    (
-      tp
-      ?te/tp*100
-      :0
-    ).toFixed(1)+"%";
-
-
-  $("resMinProg")
-    .textContent=
-    tmp.toLocaleString(
-      "es-MX",
-      {maximumFractionDigits:1}
-    );
-
-  $("resMinDisp")
-    .textContent=
-    tmd.toLocaleString(
-      "es-MX",
-      {maximumFractionDigits:1}
-    );
-
-  $("resEf")
-    .textContent=
-    (
-      tmd
-      ?tmg/tmd*100
-      :0
-    ).toFixed(1)+"%";
-
-
-  $("dPes").textContent=M(dp);
-  $("dPre").textContent=M(dr);
-
-  $("dPesA").textContent=M(la.dp);
-  $("dPesB").textContent=M(lb.dp);
-
-  $("dPreA").textContent=M(la.dr);
-  $("dPreB").textContent=M(lb.dr);
-
-
-  function row(n,z){
-
-    return(
-      '<tr>'+
-
-      '<td>'+n+'</td>'+
-
-      '<td>'+
-      z.p.toLocaleString()+
-      '</td>'+
-
-      '<td>'+
-      z.e.toLocaleString()+
-      '</td>'+
-
-      '<td>'+
-      z.a.toLocaleString()+
-      '</td>'+
-
-      '<td>'+
-      z.mp.toLocaleString(
-        "es-MX",
-        {maximumFractionDigits:1}
-      )+
-      '</td>'+
-
-      '<td>'+
-      availableMinutes(n)
-        .toLocaleString(
-          "es-MX",
-          {maximumFractionDigits:1}
-        )+
-      '</td>'+
-
-      '<td>'+
-      z.mg.toLocaleString(
-        "es-MX",
-        {maximumFractionDigits:1}
-      )+
-      '</td>'+
-
-      '<td>'+
-      (
-        availableMinutes(n)
-        ?z.mg/
-         availableMinutes(n)*
-         100
-        :0
-      ).toFixed(1)+
-      '%</td>'+
-
-      '<td>'+
-      M(z.dp)+
-      '</td>'+
-
-      '<td>'+
-      M(z.dr)+
-      '</td>'+
-
-      '</tr>'
-    );
-
-  }
-
-
-  $("tablaLineas").innerHTML=
-    row("Línea A",la)+
-    row("Línea B",lb);
-
-
-  var groups=[];
-
-
-  Object.keys(map).forEach(
-    function(k){
-
-      var o=map[k];
-
-      var e=
-        empacadoEnSemana(
-          k,
-          ref
-        );
-
-      if(!e){
-        return;
-      }
-
-      var out=
-        salidaEnSemana(
-          k,
-          ref
-        );
-
-      groups.push({
-
-        ot:k,
-        linea:o.linea,
-        modelo:o.modelo,
-
-        p:
-          inWeekDate(
-            o.fecha,
-            ref
-          )
-          ?o.programado
-          :0,
-
-        e:e,
-
-        mg:
-          out*
-          modelMin(o.modelo),
-
-        dp:
-          e*
-          N(
-            (cost[o.modelo]||{}).pes
-          ),
-
-        dr:
-          e*
-          N(
-            (cost[o.modelo]||{}).pre
-          ),
-
-        arr:
-          !inWeekDate(
-            o.fecha,
-            ref
-          ),
-
-        fecha:o.fecha
-
-      });
-
-    }
-  );
-
-
-  $("tablaOT").innerHTML=
-    groups.length
-    ?
-    groups
-      .sort(
-        function(a,b){
-
-          return String(a.ot)
-            .localeCompare(
-              String(b.ot),
-              undefined,
-              {numeric:true}
-            );
-
-        }
-      )
-      .map(
-        function(g){
-
-          return(
-            '<tr>'+
-
-            '<td><b>'+
-            esc(g.ot)+
-            '</b>'+
-            (
-              g.arr
-              ?
-              '<br><span class="arrastrePill">'+
-              '🟠 ARRASTRE'+
-              '</span>'
-              :""
-            )+
-            '</td>'+
-
-            '<td>'+
-            g.linea+
-            '</td>'+
-
-            '<td>'+
-            esc(g.modelo)+
-            '</td>'+
-
-            '<td>'+
-            g.p+
-            '</td>'+
-
-            '<td>'+
-            g.e+
-            '</td>'+
-
-            '<td>'+
-            modelMin(g.modelo)
-              .toFixed(2)+
-            '</td>'+
-
-            '<td>'+
-            g.mg.toFixed(1)+
-            '</td>'+
-
-            '<td>'+
-            M(g.dp)+
-            '</td>'+
-
-            '<td>'+
-            M(g.dr)+
-            '</td>'+
-
-            '</tr>'
-          );
-
-        }
-      )
-      .join("")
-    :
-    '<tr><td colspan="9">Sin piezas de Empaque.</td></tr>';
-
-}
-
-
-function renderCosts(){
-
-  var tb=$("tablaCostos");
-
-  var names=
-    Object.keys(cost).sort();
-
-  tb.innerHTML=
-    names.length
-    ?
-    names.map(
-      function(m){
-
-        var c=
-          cost[m]||{};
-
-        return(
-          '<tr>'+
-
-          '<td><b>'+
-          esc(m)+
-          '</b></td>'+
-
-          '<td>'+
-          M(c.pes)+
-          '</td>'+
-
-          '<td>'+
-          M(c.pre)+
-          '</td>'+
-
-          '<td>'+
-          N(c.min).toFixed(2)+
-          '</td>'+
-
-          '<td>'+
-
-          '<button class="action editBtn" '+
-          'data-edit-cost="'+
-          esc(m)+
-          '">'+
-          '✏️ Editar'+
-          '</button> '+
-
-          '<button class="action danger" '+
-          'data-cost="'+
-          esc(m)+
-          '">'+
-          '🗑️ Eliminar'+
-          '</button>'+
-
-          '</td>'+
-
-          '</tr>'
-        );
-
-      }
-    ).join("")
-    :
-    '<tr><td colspan="5">Sin modelos.</td></tr>';
-
-
-  tb.querySelectorAll(
-    "[data-edit-cost]"
-  ).forEach(
-    function(b){
-
-      b.onclick=function(){
-
-        editarCosto(
-          b.dataset.editCost
-        );
-
-      };
-
-    }
-  );
-
-
-  tb.querySelectorAll(
-    "[data-cost]"
-  ).forEach(
-    function(b){
-
-      b.onclick=function(){
-
-        if(
-          confirm(
-            "¿Eliminar el modelo "+
-            b.dataset.cost+
-            "?"
-          )
-        ){
-
-          delete cost[
-            b.dataset.cost
-          ];
-
-          save();
-          render();
-
-        }
-
-      };
-
-    }
-  );
-
-}
-
-
-function editarCosto(m){
-
-  var c=cost[m];
-
-  editingCostModel=m;
-
-  $("cModelo").value=m;
-  $("cPes").value=N(c.pes);
-  $("cPre").value=N(c.pre);
-  $("cMin").value=N(c.min);
-
-  $("cModelo").readOnly=true;
-
-  $("guardarCosto").textContent=
-    "💾 Actualizar modelo";
-
-  $("cancelarCosto")
-    .style.display=
-    "inline-block";
-
-  $("costos").scrollIntoView({
-    behavior:"smooth"
-  });
-}
-
-
-function cancelarEdicionCosto(){
-
-  editingCostModel=null;
-
-  $("cModelo").value="";
-  $("cPes").value="";
-  $("cPre").value="";
-  $("cMin").value="";
-
-  $("cModelo").readOnly=false;
-
-  $("guardarCosto").textContent=
-    "Guardar modelo";
-
-  $("cancelarCosto")
-    .style.display=
-    "none";
-}
-
-
-function renderHistory(){
-
-  var tb=$("tablaHistorial");
-
-  tb.innerHTML=
-    hist.length
-    ?
-    hist
-      .slice()
-      .reverse()
-      .map(
-        function(h){
-
-          return(
-            '<tr>'+
-
-            '<td>'+
-            esc(h.cierre)+
-            '</td>'+
-
-            '<td>'+
-            h.programado+
-            '</td>'+
-
-            '<td>'+
-            h.empaque+
-            '</td>'+
-
-            '<td>'+
-            M(h.pes)+
-            '</td>'+
-
-            '<td>'+
-            M(h.pre)+
-            '</td>'+
-
-            '<td>'+
-            M(h.a)+
-            '</td>'+
-
-            '<td>'+
-            M(h.b)+
-            '</td>'+
-
-            '</tr>'
-          );
-
-        }
-      )
-      .join("")
-    :
-    '<tr><td colspan="7">Sin cierres.</td></tr>';
-
-}
-
-
-function cerrarSemana(){
-
-  var ref=
-    $("refSemana").value||
-    today();
-
-  var map=getOTs();
-
-  var ps=0;
-  var e=0;
-  var pes=0;
-  var pre=0;
-  var a=0;
-  var b=0;
-
-
-  Object.keys(map).forEach(
-    function(k){
-
-      var o=map[k];
-
-      if(
-        inWeekDate(
-          o.fecha,
-          ref
-        )
-      ){
-
-        ps+=o.programado;
-
-      }
-
-      var q=
-        empacadoEnSemana(
-          k,
-          ref
-        );
-
-      if(q){
-
-        var c=
-          cost[o.modelo]||{};
-
-        var x=
-          q*N(c.pes);
-
-        var y=
-          q*N(c.pre);
-
-        e+=q;
-        pes+=x;
-        pre+=y;
-
-        if(
-          o.linea==="Línea A"
-        ){
-
-          a+=x+y;
-
-        }else{
-
-          b+=x+y;
-
-        }
-
-      }
-
-    }
-  );
-
-
-  if(!ps&&!e){
-
-    return alert(
-      "No hay producción en la semana seleccionada."
-    );
-
-  }
-
-
-  hist.push({
-
-    cierre:
-      range(ref)[1],
-
-    programado:ps,
-    empaque:e,
-    pes:pes,
-    pre:pre,
-    a:a,
-    b:b
-
-  });
-
-
-  save();
-  render();
-
-  alert(
-    "Semana cerrada correctamente. ✅"
-  );
-}
-
-
-function exportCSV(){
-
-  var ref=
-    $("refSemana").value||
-    today();
-
-  var map=getOTs();
-
-  var rows=[
-    [
-      "OT",
-      "Linea",
-      "Modelo",
-      "Fecha Programacion",
-      "Programado Semana",
-      "Empaque Semana",
-      "Min Est/Pieza",
-      "Min Ganados",
-      "Tipo",
-      "Destajo Pespunte",
-      "Destajo Preliminar"
-    ]
-  ];
-
-
-  Object.keys(map)
-    .sort()
-    .forEach(
-      function(k){
-
-        var o=map[k];
-
-        var e=
-          empacadoEnSemana(
-            k,
-            ref
-          );
-
-        var p=
-          inWeekDate(
-            o.fecha,
-            ref
-          )
-          ?o.programado
-          :0;
-
-        if(!p&&!e){
-          return;
-        }
-
-        var c=
-          cost[o.modelo]||{};
-
-        var out=
-          salidaEnSemana(
-            k,
-            ref
-          );
-
-
-        rows.push([
-
-          o.ot,
-          o.linea,
-          o.modelo,
-          o.fecha,
-          p,
-          e,
-          N(c.min).toFixed(2),
-          (
-            out*N(c.min)
-          ).toFixed(1),
-          p
-            ?"PROGRAMADA"
-            :"ARRASTRE",
-          (
-            e*N(c.pes)
-          ).toFixed(2),
-          (
-            e*N(c.pre)
-          ).toFixed(2)
-
-        ]);
-
-      }
-    );
-
-
-  var csv=
-    rows
-      .map(
-        function(r){
-
-          return r
-            .map(
-              function(v){
-
-                return(
-                  '"'+
-                  String(
-                    v==null
-                    ?""
-                    :v
-                  ).replace(
-                    /"/g,
-                    '""'
-                  )+
-                  '"'
-                );
-
-              }
-            )
-            .join(",");
-
-        }
-      )
-      .join("\n");
-
-
-  var a=
-    document.createElement("a");
-
-  a.href=
-    URL.createObjectURL(
-      new Blob(
-        [csv],
-        {
-          type:
-            "text/csv;charset=utf-8"
-        }
-      )
-    );
-
-  a.download=
-    "The_Studio_resumen.csv";
-
-  a.click();
-
-}
-
-
-function render(){
-
-  fillModels();
-
-  renderCapture();
-
-  renderLead();
-
-  renderDailyAdvances();
-
-  renderWorkshop();
-
-  renderResumen();
-
-  renderCosts();
-
-  renderHistory();
-
-}
-
-
-$("fecha").value=today();
-
-$("refSemana").value=today();
-
-$("wsFecha").value=today();
-
-$("avanceFecha").value=today();
-
-
-document
-.querySelectorAll(".tab")
-.forEach(
-  function(btn){
-
-    btn.onclick=function(){
-
-      document
-      .querySelectorAll(".tab")
-      .forEach(
-        function(x){
-          x.classList.remove(
-            "active"
-          );
-        }
-      );
-
-      document
-      .querySelectorAll(".page")
-      .forEach(
-        function(x){
-          x.classList.remove(
-            "active"
-          );
-        }
-      );
-
-      btn.classList.add(
-        "active"
-      );
-
-      $(
-        btn.dataset.target
-      ).classList.add(
-        "active"
-      );
-
-      render();
-
-    };
-
-  }
-);
-
-
-$("guardar").onclick=
-  guardarOT;
-
-$("limpiar").onclick=
-  function(){
-    editingId
-      ?clearForm()
-      :clearForm();
-  };
-
-$("modelo").onchange=
-  updateOTMinutes;
-
-$("programado").oninput=
-  updateOTMinutes;
-
-$("linea").onchange=
-  updateOTMinutes;
-
-
-$("avanceFecha").onchange=
-  renderDailyAdvances;
-
-$("avanceLinea").onchange=
-  renderDailyAdvances;
-
-$("buscarOT").oninput=
-  renderSearchOT;
-
-$("desdeProceso").onchange=
-  fillToProcesses;
-
-$("hastaProceso").onchange=
-  updateMovementAvailability;
-
-$("piezasMovimiento").oninput=
-  updateMovementAvailability;
-
-$("guardarMovimiento").onclick=
-  guardarMovimiento;
-
-$("cancelarMovimiento").onclick=
-  function(){
-
-    $("panelMovimiento")
-      .style.display="none";
-
-    selectedOT=null;
-
-  };
-
-
-$("actualizarWS").onclick=
-  renderWorkshop;
-
-$("wsFecha").onchange=
-  renderWorkshop;
-
-$("wsLineaFiltro").onchange=
-  renderWorkshop;
-
-$("horaLinea").onchange=
-  renderHourBoard;
-
-$("cerrarWsDetalle").onclick=
-  function(){
-    $("wsDetalleCard")
-      .style.display="none";
-  };
-
-
-$("actualizar").onclick=
-  renderResumen;
-
-$("refSemana").onchange=
-  renderResumen;
-
-$("exportar").onclick=
-  exportCSV;
-
-
-$("guardarCosto").onclick=
-  function(){
-
-    var m=
-      $("cModelo").value.trim();
-
-    var p=
-      N($("cPes").value);
-
-    var r=
-      N($("cPre").value);
-
-    var mi=
-      N($("cMin").value);
-
+    const m=src.match(/const b="([^"]+)"/);
 
     if(!m){
-
-      return alert(
-        "Escribe el modelo."
-      );
-
+      throw new Error("No se encontró la versión base de The Studio");
     }
 
-
-    if(
-      p<0||
-      r<0||
-      mi<=0
-    ){
-
-      return alert(
-        "Captura costos válidos y minutos estándar mayores a 0."
-      );
-
-    }
-
-
-    if(editingCostModel){
-
-      cost[
-        editingCostModel
-      ]={
-        pes:p,
-        pre:r,
-        min:mi
-      };
-
-      save();
-
-      cancelarEdicionCosto();
-
-      render();
-
-      return alert(
-        "Modelo actualizado. ✅"
-      );
-
-    }
-
-
-    if(cost[m]){
-
-      return alert(
-        "Ese modelo ya existe. Usa Editar."
-      );
-
-    }
-
-
-    cost[m]={
-      pes:p,
-      pre:r,
-      min:mi
-    };
-
-    save();
-
-    $("cModelo").value="";
-    $("cPes").value="";
-    $("cPre").value="";
-    $("cMin").value="";
-
-    render();
-
-    alert(
-      "Modelo guardado. ✅"
+    const a=Uint8Array.from(
+      atob(m[1]),
+      c=>c.charCodeAt(0)
     );
 
-  };
+    const ds=new DecompressionStream("gzip");
+
+    const t=await new Response(
+      new Response(a).body.pipeThrough(ds)
+    ).text();
+
+    document.open();
+    document.write(t);
+    document.close();
+
+    setTimeout(()=>{
+      try{
+        fixResponsive();
+        installDestajo();
+      }catch(e){
+        console.error(e);
+      }
+    },80);
+
+  }catch(e){
+
+    document.body.innerHTML=
+      '<div style="font:18px system-ui;padding:30px;max-width:100%;box-sizing:border-box">'+
+      'Error al cargar The Studio<br>'+
+      '<small style="overflow-wrap:anywhere">'+e+'</small>'+
+      '</div>';
+
+  }
+})();
 
 
-$("cancelarCosto").onclick=
-  cancelarEdicionCosto;
+/* =========================================================
+   CORRECCIÓN RESPONSIVE
+   Evita que la pantalla se haga más ancha que el celular.
+   ========================================================= */
 
-$("cerrarSemana").onclick=
-  cerrarSemana;
+function fixResponsive(){
 
-$("borrarHistorial").onclick=
-  function(){
+  if(document.getElementById('tsResponsiveFix')) return;
 
-    if(
-      confirm(
-        "¿Borrar todo el historial?"
-      )
-    ){
+  const style=document.createElement('style');
 
-      hist=[];
+  style.id='tsResponsiveFix';
 
-      save();
+  style.textContent=`
 
-      render();
+    /* BASE */
+    html,
+    body{
+      width:100%;
+      max-width:100%;
+      margin:0;
+      padding:0;
+      overflow-x:hidden !important;
+    }
+
+    *,
+    *::before,
+    *::after{
+      box-sizing:border-box;
+    }
+
+    /* ELEMENTOS VISUALES */
+    img,
+    video,
+    canvas,
+    svg{
+      max-width:100%;
+      height:auto;
+    }
+
+    /* TABLAS */
+    table{
+      max-width:100%;
+    }
+
+    table{
+      display:block;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    /* TEXTO LARGO */
+    pre,
+    code{
+      max-width:100%;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+
+    /* CAMPOS */
+    input,
+    select,
+    textarea,
+    button{
+      max-width:100%;
+    }
+
+    textarea{
+      resize:vertical;
+    }
+
+    /* CONTENEDORES */
+    main,
+    #app,
+    .app,
+    .container,
+    .content,
+    .page,
+    .panel,
+    .card,
+    .section,
+    .wrap,
+    .wrapper{
+      max-width:100%;
+      min-width:0;
+    }
+
+    body > *{
+      min-width:0;
+      max-width:100vw;
+    }
+
+    /* CUALQUIER ELEMENTO QUE TENGA 100VW */
+    [style*="width:100vw"],
+    [style*='width:100vw']{
+      max-width:100% !important;
+    }
+
+    /* EVITA MIN-WIDTH QUE ROMPA EL CELULAR */
+    [style*='min-width']{
+      min-width:0 !important;
+    }
+
+    /* GRID / FLEX */
+    .row,
+    .grid,
+    .grid2,
+    .grid3,
+    .grid4,
+    .kpis,
+    .cards,
+    .toolbar,
+    .actions,
+    .form-grid{
+      min-width:0;
+    }
+
+    .row > *,
+    .grid > *,
+    .grid2 > *,
+    .grid3 > *,
+    .grid4 > *,
+    .kpis > *,
+    .cards > *,
+    .toolbar > *,
+    .actions > *,
+    .form-grid > *{
+      min-width:0;
+      max-width:100%;
+    }
+
+
+    /* =====================================================
+       CELULAR
+       ===================================================== */
+
+    @media(max-width:720px){
+
+      html,
+      body{
+        font-size:15px;
+        width:100%;
+        max-width:100vw;
+        overflow-x:hidden !important;
+      }
+
+      table{
+        font-size:12px;
+      }
+
+      /* UNA COLUMNA EN CELULAR */
+      .grid,
+      .grid2,
+      .grid3,
+      .grid4,
+      .kpis,
+      .cards,
+      .form-grid{
+        grid-template-columns:minmax(0,1fr) !important;
+      }
+
+      .row{
+        grid-template-columns:minmax(0,1fr) !important;
+      }
+
+      /* BOTONES */
+      .toolbar,
+      .actions{
+        flex-wrap:wrap !important;
+      }
+
+      .toolbar > *,
+      .actions > *{
+        flex:1 1 140px;
+        min-width:0;
+      }
+
+      /* HEADER */
+      header{
+        max-width:100vw !important;
+        overflow:hidden;
+      }
+
+      /* MENÚ */
+      nav{
+        max-width:100vw !important;
+        overflow-x:auto !important;
+        overflow-y:hidden !important;
+        -webkit-overflow-scrolling:touch;
+      }
 
     }
 
+
+    /* =====================================================
+       CELULARES PEQUEÑOS
+       ===================================================== */
+
+    @media(max-width:420px){
+
+      body{
+        font-size:14px;
+      }
+
+      button,
+      input,
+      select,
+      textarea{
+        font-size:16px;
+      }
+
+    }
+
+  `;
+
+  document.head.appendChild(style);
+}
+
+
+/* =========================================================
+   MÓDULO DESTAJO
+   ========================================================= */
+
+function installDestajo(){
+
+  if(document.getElementById('tsDestajoBtn')) return;
+
+  const KEYC='ts_costos_v1';
+  const KEYR='ts_destajo_v1';
+  const KEYW='ts_cierres_v1';
+
+
+  /* =========================
+     FUNCIONES GENERALES
+     ========================= */
+
+  const money=n=>
+    new Intl.NumberFormat(
+      'es-MX',
+      {
+        style:'currency',
+        currency:'MXN'
+      }
+    ).format(Number(n)||0);
+
+
+  const esc=s=>
+    String(s??'').replace(
+      /[&<>"']/g,
+      m=>({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#39;'
+      }[m])
+    );
+
+
+  const read=(k,d)=>{
+    try{
+      return JSON.parse(
+        localStorage.getItem(k) ||
+        JSON.stringify(d)
+      );
+    }catch{
+      return d;
+    }
   };
 
 
-document
-.querySelectorAll(
-  "[data-ws-detail]"
-)
-.forEach(
-  function(btn){
+  const save=(k,v)=>
+    localStorage.setItem(
+      k,
+      JSON.stringify(v)
+    );
 
-    btn.onclick=function(){
 
-      mostrarDetalleWS(
-        btn.dataset.wsDetail,
-        btn.dataset.wsLine
+  const today=()=>{
+    const d=new Date();
+    return d.toISOString().slice(0,10);
+  };
+
+
+  const mondayOf=d=>{
+
+    const x=new Date(
+      d+'T12:00:00'
+    );
+
+    const day=x.getDay();
+
+    const diff=
+      day===0
+      ? -6
+      : 1-day;
+
+    x.setDate(
+      x.getDate()+diff
+    );
+
+    return x.toISOString().slice(0,10);
+  };
+
+
+  const addDays=(s,n)=>{
+
+    const d=new Date(
+      s+'T12:00:00'
+    );
+
+    d.setDate(
+      d.getDate()+n
+    );
+
+    return d.toISOString().slice(0,10);
+  };
+
+
+  const weekKey=d=>
+    mondayOf(d);
+
+
+  const costs=()=>
+    read(KEYC,[]);
+
+
+  const records=()=>
+    read(KEYR,[]);
+
+
+  const closes=()=>
+    read(KEYW,[]);
+
+
+  /* =========================
+     ESTILOS DE DESTAJO
+     ========================= */
+
+  const style=document.createElement('style');
+
+  style.textContent=`
+
+    #tsDestajoBtn{
+      position:fixed;
+      right:14px;
+      bottom:14px;
+      z-index:2147483646;
+      border:0;
+      border-radius:999px;
+      padding:13px 17px;
+      background:#111827;
+      color:#fff;
+      font:700 14px system-ui;
+      box-shadow:0 8px 30px #0004;
+      max-width:calc(100vw - 28px);
+    }
+
+
+    #tsDestajoShade{
+      position:fixed;
+      inset:0;
+      background:#0006;
+      z-index:2147483645;
+      display:none;
+      width:100%;
+      height:100%;
+    }
+
+
+    #tsDestajo{
+
+      position:fixed;
+
+      right:12px;
+      bottom:70px;
+
+      width:min(
+        620px,
+        calc(100vw - 24px)
       );
+
+      max-width:
+        calc(100vw - 24px);
+
+      max-height:82vh;
+
+      overflow:auto;
+
+      -webkit-overflow-scrolling:touch;
+
+      background:#fff;
+      color:#111827;
+
+      border-radius:18px;
+
+      z-index:2147483647;
+
+      box-shadow:
+        0 20px 70px #0006;
+
+      font:14px system-ui;
+
+      box-sizing:border-box;
+    }
+
+
+    #tsDestajo *{
+      box-sizing:border-box;
+      max-width:100%;
+    }
+
+
+    .tsHead{
+
+      position:sticky;
+      top:0;
+
+      background:#fff;
+
+      border-bottom:
+        1px solid #e5e7eb;
+
+      padding:14px 16px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap:10px;
+
+      z-index:2;
+    }
+
+
+    .tsHead b{
+      font-size:18px;
+      min-width:0;
+    }
+
+
+    .tsClose{
+      border:0;
+      background:#f3f4f6;
+      border-radius:10px;
+      padding:8px 11px;
+      font-size:18px;
+      flex:0 0 auto;
+    }
+
+
+    .tsTabs{
+
+      display:flex;
+
+      gap:7px;
+
+      padding:10px 14px;
+
+      border-bottom:
+        1px solid #eee;
+
+      overflow-x:auto;
+
+      overflow-y:hidden;
+
+      -webkit-overflow-scrolling:touch;
+
+      min-width:0;
+    }
+
+
+    .tsTab{
+
+      border:0;
+
+      background:#f3f4f6;
+
+      border-radius:10px;
+
+      padding:9px 12px;
+
+      white-space:nowrap;
+
+      font-weight:700;
+
+      flex:0 0 auto;
+    }
+
+
+    .tsTab.on{
+      background:#111827;
+      color:#fff;
+    }
+
+
+    .tsPane{
+      display:none;
+      padding:14px;
+      min-width:0;
+    }
+
+
+    .tsPane.on{
+      display:block;
+    }
+
+
+    .tsGrid{
+
+      display:grid;
+
+      grid-template-columns:
+        minmax(0,1fr)
+        minmax(0,1fr);
+
+      gap:9px;
+
+      min-width:0;
+    }
+
+
+    .tsGrid3{
+
+      display:grid;
+
+      grid-template-columns:
+        minmax(0,1fr)
+        minmax(0,1fr)
+        minmax(0,1fr);
+
+      gap:9px;
+
+      min-width:0;
+    }
+
+
+    .tsField{
+      min-width:0;
+    }
+
+
+    .tsField label{
+
+      display:block;
+
+      font-size:11px;
+
+      font-weight:800;
+
+      color:#6b7280;
+
+      margin:0 0 4px;
+    }
+
+
+    .tsField input,
+    .tsField select{
+
+      width:100%;
+
+      max-width:100%;
+
+      min-width:0;
+
+      border:
+        1px solid #d1d5db;
+
+      border-radius:9px;
+
+      padding:10px;
+
+      background:#fff;
+
+      font:inherit;
+
+      box-sizing:border-box;
+    }
+
+
+    .tsBtn{
+
+      border:0;
+
+      border-radius:10px;
+
+      padding:10px 13px;
+
+      font-weight:800;
+
+      background:#111827;
+
+      color:#fff;
+
+      max-width:100%;
+    }
+
+
+    .tsBtn.alt{
+
+      background:#e5e7eb;
+
+      color:#111827;
+    }
+
+
+    .tsBtn.good{
+      background:#166534;
+    }
+
+
+    .tsCard{
+
+      border:
+        1px solid #e5e7eb;
+
+      border-radius:13px;
+
+      padding:12px;
+
+      margin:10px 0;
+
+      min-width:0;
+
+      overflow:hidden;
+    }
+
+
+    .tsMoney{
+      font-size:21px;
+      font-weight:900;
+      overflow-wrap:anywhere;
+    }
+
+
+    .tsKpis{
+
+      display:grid;
+
+      grid-template-columns:
+        repeat(3,minmax(0,1fr));
+
+      gap:8px;
+
+      min-width:0;
+    }
+
+
+    .tsKpi{
+
+      background:#f8fafc;
+
+      border-radius:12px;
+
+      padding:10px;
+
+      min-width:0;
+
+      overflow:hidden;
+    }
+
+
+    .tsKpi small{
+
+      display:block;
+
+      color:#6b7280;
+
+      overflow-wrap:anywhere;
+    }
+
+
+    .tsTable{
+
+      width:100%;
+
+      max-width:100%;
+
+      border-collapse:collapse;
+
+      margin-top:9px;
+
+      font-size:12px;
+    }
+
+
+    .tsTable th,
+    .tsTable td{
+
+      padding:7px 5px;
+
+      border-bottom:
+        1px solid #eee;
+
+      text-align:left;
+
+      font-size:12px;
+
+      white-space:nowrap;
+    }
+
+
+    .tsTable th{
+      color:#6b7280;
+    }
+
+
+    .tsRight{
+      text-align:right !important;
+    }
+
+
+    .tsLine{
+
+      display:flex;
+
+      justify-content:space-between;
+
+      gap:8px;
+
+      padding:8px 0;
+
+      border-bottom:
+        1px solid #eee;
+
+      min-width:0;
+    }
+
+
+    .tsLine > *{
+      min-width:0;
+      overflow-wrap:anywhere;
+    }
+
+
+    .tsMuted{
+      color:#6b7280;
+      font-size:12px;
+    }
+
+
+    .tsDanger{
+      color:#b91c1c;
+    }
+
+
+    .tsPill{
+
+      display:inline-block;
+
+      padding:3px 7px;
+
+      border-radius:999px;
+
+      background:#eef2ff;
+
+      font-weight:800;
+
+      font-size:11px;
+    }
+
+
+    /* =========================
+       DESTAJO EN CELULAR
+       ========================= */
+
+    @media(max-width:520px){
+
+      #tsDestajo{
+
+        right:8px;
+
+        bottom:
+          calc(62px + env(safe-area-inset-bottom));
+
+        width:
+          calc(100vw - 16px);
+
+        max-width:
+          calc(100vw - 16px);
+
+        max-height:
+          calc(100vh - 80px);
+
+        border-radius:16px;
+      }
+
+
+      .tsGrid,
+      .tsGrid3{
+
+        grid-template-columns:
+          minmax(0,1fr)
+          minmax(0,1fr);
+      }
+
+
+      .tsKpis{
+
+        grid-template-columns:
+          minmax(0,1fr)
+          minmax(0,1fr);
+      }
+
+
+      .tsKpi:last-child{
+
+        grid-column:
+          1/-1;
+      }
+
+
+      .tsPane{
+        padding:10px;
+      }
+
+
+      .tsCard{
+        padding:10px;
+      }
+
+
+      .tsHead{
+        padding:12px;
+      }
+
+
+      .tsHead b{
+        font-size:16px;
+      }
+
+
+      .tsLine{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+      }
+
+    }
+
+
+    @media(max-width:380px){
+
+      .tsGrid,
+      .tsGrid3,
+      .tsKpis{
+
+        grid-template-columns:
+          minmax(0,1fr);
+      }
+
+
+      .tsKpi:last-child{
+        grid-column:auto;
+      }
+
+    }
+
+  `;
+
+  document.head.appendChild(style);
+
+
+  /* =========================
+     HTML DEL MÓDULO
+     ========================= */
+
+  document.body.insertAdjacentHTML(
+    'beforeend',
+
+    `
+    <button
+      id="tsDestajoBtn"
+      aria-label="Abrir Destajo"
+    >
+      💰 Destajo
+    </button>
+
+    <div
+      id="tsDestajoShade"
+    ></div>
+
+    <section
+      id="tsDestajo"
+      aria-label="Destajo The Studio"
+    >
+
+      <div class="tsHead">
+
+        <b>
+          💰 Destajo · Nómina
+        </b>
+
+        <button
+          class="tsClose"
+          id="tsClose"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div class="tsTabs">
+
+        <button
+          class="tsTab on"
+          data-tab="cap"
+        >
+          Captura
+        </button>
+
+        <button
+          class="tsTab"
+          data-tab="cost"
+        >
+          Costos por modelo
+        </button>
+
+        <button
+          class="tsTab"
+          data-tab="res"
+        >
+          Resumen semanal
+        </button>
+
+      </div>
+
+
+      <div
+        id="tsCap"
+        class="tsPane on"
+      ></div>
+
+
+      <div
+        id="tsCost"
+        class="tsPane"
+      ></div>
+
+
+      <div
+        id="tsRes"
+        class="tsPane"
+      ></div>
+
+    </section>
+    `
+  );
+
+
+  const btn=
+    document.getElementById(
+      'tsDestajoBtn'
+    );
+
+  const shade=
+    document.getElementById(
+      'tsDestajoShade'
+    );
+
+  const panel=
+    document.getElementById(
+      'tsDestajo'
+    );
+
+
+  const open=()=>{
+
+    shade.style.display='block';
+
+    panel.style.display='block';
+
+    renderAll();
+
+  };
+
+
+  const close=()=>{
+
+    shade.style.display='none';
+
+    panel.style.display='none';
+
+  };
+
+
+  btn.onclick=open;
+
+  shade.onclick=close;
+
+  document.getElementById(
+    'tsClose'
+  ).onclick=close;
+
+
+  document
+    .querySelectorAll('.tsTab')
+    .forEach(t=>{
+
+      t.onclick=()=>{
+
+        document
+          .querySelectorAll('.tsTab')
+          .forEach(x=>
+            x.classList.remove('on')
+          );
+
+        t.classList.add('on');
+
+
+        document
+          .querySelectorAll('.tsPane')
+          .forEach(x=>
+            x.classList.remove('on')
+          );
+
+
+        document
+          .getElementById(
+            'ts'+
+            ({
+              cap:'Cap',
+              cost:'Cost',
+              res:'Res'
+            }[t.dataset.tab])
+          )
+          .classList.add('on');
+
+
+        renderAll();
+
+      };
+
+    });
+
+
+  /* =========================
+     MODELOS
+     ========================= */
+
+  function modelOptions(){
+
+    return costs()
+      .map((c,i)=>
+
+        `<option value="${esc(c.modelo)}">
+          ${esc(c.modelo)}
+          · P ${money(c.pespunte)}
+          · Pre ${money(c.preliminar)}
+        </option>`
+
+      )
+      .join('');
+
+  }
+
+
+  /* =========================
+     CAPTURA
+     ========================= */
+
+  function renderCap(){
+
+    const c=costs();
+
+    document.getElementById(
+      'tsCap'
+    ).innerHTML=`
+
+      <div class="tsCard">
+
+        <b>
+          Registrar producción
+        </b>
+
+        <div class="tsMuted">
+
+          El destajo se calcula con
+          los pares capturados como salida.
+
+          Semana:
+          lunes a sábado.
+
+        </div>
+
+
+        <div
+          class="tsGrid"
+          style="margin-top:10px"
+        >
+
+          <div class="tsField">
+
+            <label>
+              Fecha
+            </label>
+
+            <input
+              id="tsDate"
+              type="date"
+              value="${today()}"
+            >
+
+          </div>
+
+
+          <div class="tsField">
+
+            <label>
+              Línea
+            </label>
+
+            <select id="tsLine">
+
+              <option>
+                Línea A
+              </option>
+
+              <option>
+                Línea B
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="tsField">
+
+            <label>
+              Modelo
+            </label>
+
+            <select id="tsModel">
+
+              ${
+                modelOptions() ||
+                '<option value="">Primero agrega un modelo</option>'
+              }
+
+            </select>
+
+          </div>
+
+
+          <div class="tsField">
+
+            <label>
+              Pares salidos
+            </label>
+
+            <input
+              id="tsPairs"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="0"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="tsGrid3"
+          style="margin-top:10px"
+        >
+
+          <div class="tsKpi">
+
+            <small>
+              Pespunte/par
+            </small>
+
+            <b id="tsCP">
+              $0.00
+            </b>
+
+          </div>
+
+
+          <div class="tsKpi">
+
+            <small>
+              Preliminar/par
+            </small>
+
+            <b id="tsCR">
+              $0.00
+            </b>
+
+          </div>
+
+
+          <div class="tsKpi">
+
+            <small>
+              Destajo registro
+            </small>
+
+            <b id="tsCT">
+              $0.00
+            </b>
+
+          </div>
+
+        </div>
+
+
+        <div
+          style="
+            display:flex;
+            gap:8px;
+            margin-top:10px;
+            flex-wrap:wrap;
+          "
+        >
+
+          <button
+            class="tsBtn"
+            id="tsAdd"
+          >
+            Agregar
+          </button>
+
+          <button
+            class="tsBtn alt"
+            id="tsClear"
+          >
+            Limpiar
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="tsCard">
+
+        <b>
+          Registros recientes
+        </b>
+
+        <div id="tsRecent"></div>
+
+      </div>
+
+    `;
+
+
+    const update=()=>{
+
+      const x=c.find(
+        v=>
+          v.modelo===
+          (
+            document.getElementById(
+              'tsModel'
+            )?.value
+          )
+      );
+
+
+      const p=
+        Number(
+          document.getElementById(
+            'tsPairs'
+          )?.value
+        )||0;
+
+
+      document.getElementById(
+        'tsCP'
+      ).textContent=
+        money(x?.pespunte);
+
+
+      document.getElementById(
+        'tsCR'
+      ).textContent=
+        money(x?.preliminar);
+
+
+      document.getElementById(
+        'tsCT'
+      ).textContent=
+        money(
+          p*
+          (
+            (x?.pespunte||0)+
+            (x?.preliminar||0)
+          )
+        );
 
     };
 
+
+    document
+      .getElementById('tsModel')
+      ?.addEventListener(
+        'change',
+        update
+      );
+
+
+    document
+      .getElementById('tsPairs')
+      ?.addEventListener(
+        'input',
+        update
+      );
+
+
+    update();
+
+
+    document
+      .getElementById('tsAdd')
+      ?.addEventListener(
+        'click',
+        ()=>{
+
+          const model=
+            c.find(
+              v=>
+                v.modelo===
+                document.getElementById(
+                  'tsModel'
+                ).value
+            );
+
+
+          const pairs=
+            Number(
+              document.getElementById(
+                'tsPairs'
+              ).value
+            )||0;
+
+
+          if(
+            !model||
+            pairs<=0
+          ){
+
+            return alert(
+              'Selecciona un modelo y captura los pares salidos.'
+            );
+
+          }
+
+
+          const r=records();
+
+
+          r.push({
+
+            id:Date.now(),
+
+            date:
+              document.getElementById(
+                'tsDate'
+              ).value,
+
+            line:
+              document.getElementById(
+                'tsLine'
+              ).value,
+
+            modelo:
+              model.modelo,
+
+            pares:
+              pairs,
+
+            pespunte:
+              Number(
+                model.pespunte
+              )||0,
+
+            preliminar:
+              Number(
+                model.preliminar
+              )||0
+
+          });
+
+
+          save(
+            KEYR,
+            r
+          );
+
+
+          renderAll();
+
+        }
+      );
+
+
+    document
+      .getElementById('tsClear')
+      ?.addEventListener(
+        'click',
+        ()=>{
+
+          document.getElementById(
+            'tsPairs'
+          ).value='';
+
+          update();
+
+        }
+      );
+
+
+    const rr=
+      records()
+        .slice(-12)
+        .reverse();
+
+
+    document.getElementById(
+      'tsRecent'
+    ).innerHTML=
+
+      rr.length
+
+      ?
+
+      `
+      <div
+        style="
+          width:100%;
+          overflow-x:auto;
+          -webkit-overflow-scrolling:touch;
+        "
+      >
+
+        <table
+          class="tsTable"
+          style="min-width:520px"
+        >
+
+          <tr>
+
+            <th>
+              Fecha
+            </th>
+
+            <th>
+              Línea
+            </th>
+
+            <th>
+              Modelo
+            </th>
+
+            <th class="tsRight">
+              Pares
+            </th>
+
+            <th class="tsRight">
+              Destajo
+            </th>
+
+          </tr>
+
+
+          ${
+            rr.map(r=>
+
+              `<tr>
+
+                <td>
+                  ${r.date}
+                </td>
+
+                <td>
+                  ${esc(
+                    r.line.replace(
+                      'Línea ',
+                      ''
+                    )
+                  )}
+                </td>
+
+                <td>
+                  ${esc(r.modelo)}
+                </td>
+
+                <td class="tsRight">
+                  ${r.pares}
+                </td>
+
+                <td class="tsRight">
+                  ${
+                    money(
+                      r.pares*
+                      (
+                        r.pespunte+
+                        r.preliminar
+                      )
+                    )
+                  }
+                </td>
+
+              </tr>`
+
+            ).join('')
+          }
+
+        </table>
+
+      </div>
+      `
+
+      :
+
+      `
+      <div
+        class="tsMuted"
+        style="padding:10px 0"
+      >
+        Aún no hay registros.
+      </div>
+      `;
+
   }
-);
 
 
-render();
+  /* =========================
+     COSTOS
+     ========================= */
 
-})();
+  function renderCost(){
 
+    const c=costs();
+
+
+    document.getElementById(
+      'tsCost'
+    ).innerHTML=`
+
+      <div class="tsCard">
+
+        <b>
+          Catálogo de costos
+        </b>
+
+        <div class="tsMuted">
+
+          Captura una vez el costo
+          por modelo; al registrar
+          salida se toma automáticamente.
+
+        </div>
+
+
+        <div
+          class="tsGrid3"
+          style="margin-top:10px"
+        >
+
+          <div class="tsField">
+
+            <label>
+              Modelo
+            </label>
+
+            <input
+              id="tsNewM"
+              placeholder="Verona"
+            >
+
+          </div>
+
+
+          <div class="tsField">
+
+            <label>
+              Costo pespunte $
+            </label>
+
+            <input
+              id="tsNewP"
+              type="number"
+              min="0"
+              step="0.01"
+              placeholder="12"
+            >
+
+          </div>
+
+
+          <div class="tsField">
+
+            <label>
+              Costo preliminar $
+            </label>
+
+            <input
+              id="tsNewR"
+              type="number"
+              min="0"
+              step="0.01"
+              placeholder="8"
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="tsBtn"
+          id="tsSaveC"
+          style="margin-top:10px"
+        >
+          Guardar / actualizar modelo
+        </button>
+
+      </div>
+
+
+      <div class="tsCard">
+
+        ${
+          c.length
+
+          ?
+
+          `
+          <div
+            style="
+              width:100%;
+              overflow-x:auto;
+              -webkit-overflow-scrolling:touch;
+            "
+          >
+
+            <table
+              class="tsTable"
+              style="min-width:480px"
+            >
+
+              <tr>
+
+                <th>
+                  Modelo
+                </th>
+
+                <th class="tsRight">
+                  Pespunte
+                </th>
+
+                <th class="tsRight">
+                  Preliminar
+                </th>
+
+                <th></th>
+
+              </tr>
+
+
+              ${
+                c.map((x,i)=>
+
+                  `<tr>
+
+                    <td>
+                      ${esc(x.modelo)}
+                    </td>
+
+                    <td class="tsRight">
+                      ${money(x.pespunte)}
+                    </td>
+
+                    <td class="tsRight">
+                      ${money(x.preliminar)}
+                    </td>
+
+                    <td class="tsRight">
+
+                      <button
+                        class="tsBtn alt"
+                        data-del="${i}"
+                      >
+                        ×
+                      </button>
+
+                    </td>
+
+                  </tr>`
+
+                ).join('')
+              }
+
+            </table>
+
+          </div>
+          `
+
+          :
+
+          `
+          <div class="tsMuted">
+            No hay modelos capturados.
+          </div>
+          `
+        }
+
+      </div>
+
+    `;
+
+
+    document
+      .getElementById('tsSaveC')
+      ?.addEventListener(
+        'click',
+        ()=>{
+
+          const m=
+            document.getElementById(
+              'tsNewM'
+            ).value.trim();
+
+
+          if(!m){
+
+            return alert(
+              'Escribe el modelo.'
+            );
+
+          }
+
+
+          const p=
+            Number(
+              document.getElementById(
+                'tsNewP'
+              ).value
+            )||0;
+
+
+          const r=
+            Number(
+              document.getElementById(
+                'tsNewR'
+              ).value
+            )||0;
+
+
+          const arr=costs();
+
+
+          const i=
+            arr.findIndex(
+              x=>
+                x.modelo.toLowerCase()===
+                m.toLowerCase()
+            );
+
+
+          const item={
+            modelo:m,
+            pespunte:p,
+            preliminar:r
+          };
+
+
+          if(i>=0){
+
+            arr[i]=item;
+
+          }else{
+
+            arr.push(item);
+
+          }
+
+
+          save(
+            KEYC,
+            arr
+          );
+
+
+          renderAll();
+
+        }
+      );
+
+
+    document
+      .querySelectorAll('[data-del]')
+      .forEach(
+        b=>
+
+          b.onclick=()=>{
+
+            const arr=costs();
+
+            arr.splice(
+              Number(
+                b.dataset.del
+              ),
+              1
+            );
+
+            save(
+              KEYC,
+              arr
+            );
+
+            renderAll();
+
+          }
+
+      );
+
+  }
+
+
+  /* =========================
+     RESUMEN SEMANAL
+     ========================= */
+
+  function renderRes(){
+
+    const start=
+      mondayOf(
+        today()
+      );
+
+
+    const end=
+      addDays(
+        start,
+        5
+      );
+
+
+    const rr=
+      records()
+        .filter(
+          r=>
+            r.date>=start &&
+            r.date<=end
+        );
+
+
+    const sum=arr=>
+      arr.reduce(
+        (a,r)=>
+          a+r.pares,
+        0
+      );
+
+
+    const calc=(arr,k)=>
+      arr.reduce(
+        (a,r)=>
+          a+
+          r.pares*
+          (r[k]||0),
+        0
+      );
+
+
+    const A=
+      rr.filter(
+        r=>
+          r.line===
+          'Línea A'
+      );
+
+
+    const B=
+      rr.filter(
+        r=>
+          r.line===
+          'Línea B'
+      );
+
+
+    const pA=
+      calc(
+        A,
+        'pespunte'
+      );
+
+
+    const pB=
+      calc(
+        B,
+        'pespunte'
+      );
+
+
+    const rA=
+      calc(
+        A,
+        'preliminar'
+      );
+
+
+    const rB=
+      calc(
+        B,
+        'preliminar'
+      );
+
+
+    const total=
+      pA+
+      pB+
+      rA+
+      rB;
+
+
+    document.getElementById(
+      'tsRes'
+    ).innerHTML=`
+
+      <div class="tsCard">
+
+        <b>
+          Semana de nómina
+        </b>
+
+        <div class="tsMuted">
+
+          ${start}
+          →
+          ${end}
+
+          · cierre el sábado
+
+        </div>
+
+
+        <div
+          class="tsKpis"
+          style="margin-top:10px"
+        >
+
+          <div class="tsKpi">
+
+            <small>
+              Línea A · destajo
+            </small>
+
+            <div class="tsMoney">
+              ${money(pA+rA)}
+            </div>
+
+          </div>
+
+
+          <div class="tsKpi">
+
+            <small>
+              Línea B · destajo
+            </small>
+
+            <div class="tsMoney">
+              ${money(pB+rB)}
+            </div>
+
+          </div>
+
+
+          <div class="tsKpi">
+
+            <small>
+              Acumulado semanal
+            </small>
+
+            <div class="tsMoney">
+              ${money(total)}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="tsCard">
+
+        <b>
+          Desglose por línea
+        </b>
+
+
+        <div class="tsLine">
+
+          <span>
+            Línea A ·
+            ${sum(A)}
+            pares
+          </span>
+
+          <span>
+            <b>
+              Pespunte
+              ${money(pA)}
+            </b>
+
+            · Preliminar
+            ${money(rA)}
+          </span>
+
+        </div>
+
+
+        <div class="tsLine">
+
+          <span>
+            Línea B ·
+            ${sum(B)}
+            pares
+          </span>
+
+          <span>
+
+            <b>
+              Pespunte
+              ${money(pB)}
+            </b>
+
+            · Preliminar
+            ${money(rB)}
+
+          </span>
+
+        </div>
+
+
+        <div class="tsLine">
+
+          <span>
+            <b>
+              Total
+            </b>
+          </span>
+
+          <span>
+
+            <b>
+              ${money(total)}
+            </b>
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="tsCard">
+
+        <b>
+          Cerrar semana
+        </b>
+
+        <div class="tsMuted">
+
+          El cierre guarda el total
+          de lunes a sábado en el histórico.
+
+          Los registros no se borran.
+
+        </div>
+
+
+        <button
+          class="tsBtn good"
+          id="tsCloseWeek"
+          style="margin-top:10px"
+        >
+          Cerrar semana y guardar histórico
+        </button>
+
+      </div>
+
+
+      <div class="tsCard">
+
+        <b>
+          Histórico de cierres
+        </b>
+
+        <div id="tsHistory"></div>
+
+      </div>
+
+    `;
+
+
+    document
+      .getElementById('tsCloseWeek')
+      ?.addEventListener(
+        'click',
+        ()=>{
+
+          const h=closes();
+
+
+          if(
+            h.some(
+              x=>
+                x.week===
+                start
+            )
+          ){
+
+            alert(
+              'Esta semana ya está cerrada.'
+            );
+
+            return;
+
+          }
+
+
+          h.unshift({
+
+            week:start,
+
+            end,
+
+            total,
+
+            pespunte:
+              pA+pB,
+
+            preliminar:
+              rA+rB,
+
+            lineA:
+              pA+rA,
+
+            lineB:
+              pB+rB,
+
+            closedAt:
+              new Date().toISOString()
+
+          });
+
+
+          save(
+            KEYW,
+            h
+          );
+
+
+          renderRes();
+
+        }
+      );
+
+
+    const h=closes();
+
+
+    document.getElementById(
+      'tsHistory'
+    ).innerHTML=
+
+      h.length
+
+      ?
+
+      `
+      <div
+        style="
+          width:100%;
+          overflow-x:auto;
+          -webkit-overflow-scrolling:touch;
+        "
+      >
+
+        <table
+          class="tsTable"
+          style="min-width:420px"
+        >
+
+          <tr>
+
+            <th>
+              Semana
+            </th>
+
+            <th>
+              A
+            </th>
+
+            <th>
+              B
+            </th>
+
+            <th class="tsRight">
+              Total
+            </th>
+
+          </tr>
+
+
+          ${
+            h.map(x=>
+
+              `<tr>
+
+                <td>
+                  ${x.week}
+                </td>
+
+                <td>
+                  ${money(x.lineA)}
+                </td>
+
+                <td>
+                  ${money(x.lineB)}
+                </td>
+
+                <td class="tsRight">
+
+                  <b>
+                    ${money(x.total)}
+                  </b>
+
+                </td>
+
+              </tr>`
+
+            ).join('')
+          }
+
+        </table>
+
+      </div>
+      `
+
+      :
+
+      `
+      <div
+        class="tsMuted"
+        style="padding-top:8px"
+      >
+        No hay semanas cerradas todavía.
+      </div>
+      `;
+
+  }
+
+
+  /* =========================
+     RENDER GENERAL
+     ========================= */
+
+  function renderAll(){
+
+    renderCap();
+
+    renderCost();
+
+    renderRes();
+
+  }
+
+
+  panel.style.display='none';
+
+}
 </script>
-
-</body>
-</html>
