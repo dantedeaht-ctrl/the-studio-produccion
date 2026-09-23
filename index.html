@@ -1,30 +1,44 @@
 <!doctype html>
+<html lang="es">
+<head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1,viewport-fit=cover">
+
 <title>The Studio</title>
 
+</head>
+
 <script>
+
 (async()=>{
+
   try{
 
-    const ORIGINAL_URL="https://raw.githubusercontent.com/dantedeaht-ctrl/the-studio-produccion/f07dc9e5221a9b207d205d143d68c0b917ee0e0e/index.html";
+    const ORIGINAL_URL=
+    "https://raw.githubusercontent.com/dantedeaht-ctrl/the-studio-produccion/f07dc9e5221a9b207d205d143d68c0b917ee0e0e/index.html";
 
-    const src=await (await fetch(ORIGINAL_URL,{cache:"no-store"})).text();
+    const src=
+    await (await fetch(ORIGINAL_URL,{cache:"no-store"})).text();
 
     const m=src.match(/const b="([^"]+)"/);
 
-    if(!m){
+    if(!m)
       throw new Error("No se encontró la versión base de The Studio");
-    }
 
-    const a=Uint8Array.from(
+    const a=
+    Uint8Array.from(
       atob(m[1]),
       c=>c.charCodeAt(0)
     );
 
-    const ds=new DecompressionStream("gzip");
+    const ds=
+    new DecompressionStream("gzip");
 
-    const t=await new Response(
+    const t=
+    await new Response(
       new Response(a).body.pipeThrough(ds)
     ).text();
 
@@ -33,99 +47,158 @@
     document.close();
 
     setTimeout(()=>{
+
       try{
+
+        /*
+        ============================================================
+        RECUPERACIÓN Y SINCRONIZACIÓN DE COSTOS
+        ============================================================
+        */
+
+        const changed=syncCostos();
+
         fixResponsive();
+
         installDestajo();
+
+        /*
+        Si encontramos costos antiguos y los recuperamos,
+        recargamos una sola vez para que The Studio los muestre.
+        */
+
+        if(
+          changed &&
+          !sessionStorage.getItem("ts_costos_sync_reload")
+        ){
+
+          sessionStorage.setItem(
+            "ts_costos_sync_reload",
+            "1"
+          );
+
+          location.reload();
+
+        }
+
       }catch(e){
+
         console.error(e);
+
       }
+
     },80);
 
   }catch(e){
 
     document.body.innerHTML=
-      '<div style="font:18px system-ui;padding:30px;max-width:100%;box-sizing:border-box">'+
-      'Error al cargar The Studio<br>'+
-      '<small style="overflow-wrap:anywhere">'+e+'</small>'+
-      '</div>';
+    '<div style="font:18px system-ui;padding:30px">'+
+    'Error al cargar The Studio<br>'+
+    '<small>'+e+'</small>'+
+    '</div>';
 
   }
+
 })();
 
 
-/* =========================================================
-   CORRECCIÓN RESPONSIVE
-   Evita que la pantalla se haga más ancha que el celular.
-   ========================================================= */
+/*
+====================================================================
+CORRECCIÓN RESPONSIVE
+====================================================================
+*/
 
 function fixResponsive(){
 
-  if(document.getElementById('tsResponsiveFix')) return;
+  if(document.getElementById("tsResponsiveFix"))
+    return;
 
-  const style=document.createElement('style');
+  const style=document.createElement("style");
 
-  style.id='tsResponsiveFix';
+  style.id="tsResponsiveFix";
 
   style.textContent=`
 
-    /* BASE */
     html,
     body{
+
       width:100%;
       max-width:100%;
       margin:0;
       padding:0;
-      overflow-x:hidden !important;
+
+      overflow-x:hidden!important;
+
     }
+
 
     *,
     *::before,
     *::after{
+
       box-sizing:border-box;
+
     }
 
-    /* ELEMENTOS VISUALES */
+
     img,
     video,
     canvas,
     svg{
+
       max-width:100%;
       height:auto;
+
     }
 
-    /* TABLAS */
+
     table{
+
       max-width:100%;
+
     }
 
+
     table{
+
       display:block;
       overflow-x:auto;
       -webkit-overflow-scrolling:touch;
+
     }
 
-    /* TEXTO LARGO */
+
     pre,
     code{
+
       max-width:100%;
+
       white-space:pre-wrap;
+
       overflow-wrap:anywhere;
+
       word-break:break-word;
+
     }
 
-    /* CAMPOS */
+
     input,
     select,
     textarea,
     button{
+
       max-width:100%;
+
     }
+
 
     textarea{
+
       resize:vertical;
+
     }
 
-    /* CONTENEDORES */
+
     main,
     #app,
     .app,
@@ -137,27 +210,35 @@ function fixResponsive(){
     .section,
     .wrap,
     .wrapper{
+
       max-width:100%;
       min-width:0;
+
     }
+
 
     body > *{
+
       min-width:0;
       max-width:100vw;
+
     }
 
-    /* CUALQUIER ELEMENTO QUE TENGA 100VW */
-    [style*="width:100vw"],
-    [style*='width:100vw']{
-      max-width:100% !important;
+
+    [style*="width:100vw"]{
+
+      max-width:100%!important;
+
     }
 
-    /* EVITA MIN-WIDTH QUE ROMPA EL CELULAR */
-    [style*='min-width']{
-      min-width:0 !important;
+
+    [style*="min-width"]{
+
+      min-width:0!important;
+
     }
 
-    /* GRID / FLEX */
+
     .row,
     .grid,
     .grid2,
@@ -168,8 +249,11 @@ function fixResponsive(){
     .toolbar,
     .actions,
     .form-grid{
+
       min-width:0;
+
     }
+
 
     .row > *,
     .grid > *,
@@ -181,30 +265,30 @@ function fixResponsive(){
     .toolbar > *,
     .actions > *,
     .form-grid > *{
+
       min-width:0;
       max-width:100%;
+
     }
 
-
-    /* =====================================================
-       CELULAR
-       ===================================================== */
 
     @media(max-width:720px){
 
       html,
       body{
+
         font-size:15px;
-        width:100%;
-        max-width:100vw;
-        overflow-x:hidden !important;
+
       }
+
 
       table{
+
         font-size:12px;
+
       }
 
-      /* UNA COLUMNA EN CELULAR */
+
       .grid,
       .grid2,
       .grid3,
@@ -212,57 +296,79 @@ function fixResponsive(){
       .kpis,
       .cards,
       .form-grid{
-        grid-template-columns:minmax(0,1fr) !important;
+
+        grid-template-columns:
+        minmax(0,1fr)!important;
+
       }
+
 
       .row{
-        grid-template-columns:minmax(0,1fr) !important;
+
+        grid-template-columns:
+        minmax(0,1fr)!important;
+
       }
 
-      /* BOTONES */
+
       .toolbar,
       .actions{
-        flex-wrap:wrap !important;
+
+        flex-wrap:wrap!important;
+
       }
+
 
       .toolbar > *,
       .actions > *{
+
         flex:1 1 140px;
+
         min-width:0;
+
       }
 
-      /* HEADER */
+
       header{
-        max-width:100vw !important;
+
+        max-width:100vw!important;
+
         overflow:hidden;
+
       }
 
-      /* MENÚ */
+
       nav{
-        max-width:100vw !important;
-        overflow-x:auto !important;
-        overflow-y:hidden !important;
+
+        max-width:100vw!important;
+
+        overflow-x:auto!important;
+
+        overflow-y:hidden!important;
+
         -webkit-overflow-scrolling:touch;
+
       }
 
     }
 
 
-    /* =====================================================
-       CELULARES PEQUEÑOS
-       ===================================================== */
-
     @media(max-width:420px){
 
       body{
+
         font-size:14px;
+
       }
+
 
       button,
       input,
       select,
       textarea{
+
         font-size:16px;
+
       }
 
     }
@@ -270,765 +376,1146 @@ function fixResponsive(){
   `;
 
   document.head.appendChild(style);
+
 }
 
 
-/* =========================================================
-   MÓDULO DESTAJO
-   ========================================================= */
+/*
+====================================================================
+RECUPERAR COSTOS ANTERIORES
+====================================================================
 
-function installDestajo(){
+Busca información que haya quedado guardada con las claves anteriores.
 
-  if(document.getElementById('tsDestajoBtn')) return;
+NO borra nada.
 
-  const KEYC='ts_costos_v1';
-  const KEYR='ts_destajo_v1';
-  const KEYW='ts_cierres_v1';
+Si encuentra modelos que no están actualmente en
+theStudioCostos_v4, los agrega.
+
+====================================================================
+*/
+
+function syncCostos(){
+
+  try{
+
+    const MAIN=
+    "theStudioCostos_v4";
 
 
-  /* =========================
-     FUNCIONES GENERALES
-     ========================= */
+    /*
+    Claves donde pudieron haber quedado
+    los costos de versiones anteriores.
+    */
 
-  const money=n=>
-    new Intl.NumberFormat(
-      'es-MX',
-      {
-        style:'currency',
-        currency:'MXN'
+    const CAND=[
+      "ts_costos_v1",
+      "theStudioCostos_v3",
+      "theStudioCostos_v2",
+      "theStudioCostos_v1"
+    ];
+
+
+    const parse=(key)=>{
+
+      try{
+
+        const value=
+        JSON.parse(
+          localStorage.getItem(key)||"null"
+        );
+
+        return value;
+
+      }catch{
+
+        return null;
+
       }
-    ).format(Number(n)||0);
+
+    };
 
 
-  const esc=s=>
-    String(s??'').replace(
-      /[&<>"']/g,
-      m=>({
-        '&':'&amp;',
-        '<':'&lt;',
-        '>':'&gt;',
-        '"':'&quot;',
-        "'":'&#39;'
-      }[m])
+    /*
+    Algunos formatos pueden guardar directamente
+    el arreglo y otros dentro de costos/modelos.
+    */
+
+    const unwrap=(value)=>{
+
+      if(Array.isArray(value))
+        return value;
+
+
+      if(
+        value &&
+        Array.isArray(value.costos)
+      )
+        return value.costos;
+
+
+      if(
+        value &&
+        Array.isArray(value.modelos)
+      )
+        return value.modelos;
+
+
+      return [];
+
+    };
+
+
+    /*
+    Identificar el nombre del modelo.
+    */
+
+    const modelOf=(item)=>{
+
+      return String(
+        item?.modelo ??
+        item?.model ??
+        item?.nombre ??
+        item?.name ??
+        ""
+      ).trim();
+
+    };
+
+
+    /*
+    Identificar el costo.
+
+    Si existe costo directo se usa.
+
+    Si solamente existen pespunte + preliminar,
+    se toma la suma para recuperar el costo
+    total por pieza.
+    */
+
+    const costOf=(item)=>{
+
+      const directKeys=[
+        "costo",
+        "cost",
+        "costoPieza",
+        "costo_pieza",
+        "precio",
+        "valor"
+      ];
+
+
+      for(
+        const key of directKeys
+      ){
+
+        if(
+          item?.[key]!==undefined &&
+          item?.[key]!==null &&
+          item?.[key]!==""
+        ){
+
+          return Number(item[key])||0;
+
+        }
+
+      }
+
+
+      const pespunte=
+      Number(item?.pespunte)||0;
+
+
+      const preliminar=
+      Number(item?.preliminar)||0;
+
+
+      return pespunte+preliminar;
+
+    };
+
+
+    /*
+    Juntamos las fuentes anteriores.
+    */
+
+    const sources=[];
+
+
+    for(
+      const key of CAND
+    ){
+
+      const array=
+      unwrap(parse(key));
+
+
+      if(array.length){
+
+        sources.push(...array);
+
+      }
+
+    }
+
+
+    /*
+    Costos actualmente existentes.
+    */
+
+    const current=
+    unwrap(
+      parse(MAIN)
     );
 
 
-  const read=(k,d)=>{
-    try{
-      return JSON.parse(
-        localStorage.getItem(k) ||
-        JSON.stringify(d)
-      );
-    }catch{
-      return d;
+    /*
+    Índice por modelo.
+    */
+
+    const byModel={};
+
+
+    current.forEach(item=>{
+
+      const model=
+      modelOf(item)
+      .toLowerCase();
+
+
+      if(model){
+
+        byModel[model]=item;
+
+      }
+
+    });
+
+
+    let changed=false;
+
+
+    /*
+    Recuperamos modelos faltantes.
+    */
+
+    for(
+      const source of sources
+    ){
+
+      const model=
+      modelOf(source);
+
+
+      const key=
+      model.toLowerCase();
+
+
+      const cost=
+      costOf(source);
+
+
+      if(
+        !key ||
+        cost<=0
+      )
+        continue;
+
+
+      /*
+      Si el modelo no existe,
+      lo recuperamos.
+      */
+
+      if(!byModel[key]){
+
+        const item={
+          modelo:model,
+          costo:cost
+        };
+
+
+        /*
+        Si además tenemos los valores
+        de pespunte y preliminar,
+        también los conservamos.
+        */
+
+        if(
+          source.pespunte!==undefined
+        ){
+
+          item.pespunte=
+          Number(source.pespunte)||0;
+
+        }
+
+
+        if(
+          source.preliminar!==undefined
+        ){
+
+          item.preliminar=
+          Number(source.preliminar)||0;
+
+        }
+
+
+        current.push(item);
+
+        byModel[key]=item;
+
+        changed=true;
+
+      }
+
+      /*
+      Si existe pero tiene costo 0,
+      recuperamos el costo antiguo.
+      */
+
+      else if(
+        costOf(byModel[key])<=0 &&
+        cost>0
+      ){
+
+        byModel[key].costo=
+        cost;
+
+        changed=true;
+
+      }
+
     }
+
+
+    /*
+    Guardamos solamente si hubo cambios.
+    */
+
+    if(changed){
+
+      localStorage.setItem(
+        MAIN,
+        JSON.stringify(current)
+      );
+
+    }
+
+
+    return changed;
+
+
+  }catch(e){
+
+    console.error(
+      "No se pudieron sincronizar los costos",
+      e
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/*
+====================================================================
+DESTajo
+====================================================================
+*/
+
+function installDestajo(){
+
+  if(
+    document.getElementById(
+      "tsDestajoBtn"
+    )
+  )
+    return;
+
+
+  const KEYC=
+  "ts_costos_v1";
+
+
+  const KEYR=
+  "ts_destajo_v1";
+
+
+  const KEYW=
+  "ts_cierres_v1";
+
+
+  const money=n=>
+  new Intl.NumberFormat(
+    "es-MX",
+    {
+      style:"currency",
+      currency:"MXN"
+    }
+  ).format(
+    Number(n)||0
+  );
+
+
+  const esc=s=>
+  String(s??"")
+  .replace(
+    /[&<>"']/g,
+    m=>({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[m])
+  );
+
+
+  const read=(key,defaultValue)=>{
+
+    try{
+
+      return JSON.parse(
+        localStorage.getItem(key)||
+        JSON.stringify(defaultValue)
+      );
+
+    }catch{
+
+      return defaultValue;
+
+    }
+
   };
 
 
-  const save=(k,v)=>
+  const save=(key,value)=>
+
     localStorage.setItem(
-      k,
-      JSON.stringify(v)
+      key,
+      JSON.stringify(value)
     );
 
 
   const today=()=>{
+
     const d=new Date();
-    return d.toISOString().slice(0,10);
+
+    return d
+    .toISOString()
+    .slice(0,10);
+
   };
 
 
-  const mondayOf=d=>{
+  const mondayOf=(date)=>{
 
-    const x=new Date(
-      d+'T12:00:00'
+    const x=
+    new Date(
+      date+"T12:00:00"
     );
 
-    const day=x.getDay();
+
+    const day=
+    x.getDay();
+
 
     const diff=
-      day===0
-      ? -6
-      : 1-day;
+    day===0
+    ?-6
+    :1-day;
+
 
     x.setDate(
       x.getDate()+diff
     );
 
-    return x.toISOString().slice(0,10);
+
+    return x
+    .toISOString()
+    .slice(0,10);
+
   };
 
 
-  const addDays=(s,n)=>{
+  const addDays=(date,n)=>{
 
-    const d=new Date(
-      s+'T12:00:00'
+    const d=
+    new Date(
+      date+"T12:00:00"
     );
+
 
     d.setDate(
       d.getDate()+n
     );
 
-    return d.toISOString().slice(0,10);
+
+    return d
+    .toISOString()
+    .slice(0,10);
+
   };
 
 
-  const weekKey=d=>
-    mondayOf(d);
-
-
   const costs=()=>
-    read(KEYC,[]);
+  read(KEYC,[]);
 
 
   const records=()=>
-    read(KEYR,[]);
+  read(KEYR,[]);
 
 
   const closes=()=>
-    read(KEYW,[]);
+  read(KEYW,[]);
 
 
-  /* =========================
-     ESTILOS DE DESTAJO
-     ========================= */
+  /*
+  ================================================================
+  ESTILOS DESTajo
+  ================================================================
+  */
 
-  const style=document.createElement('style');
+  const style=
+  document.createElement("style");
+
 
   style.textContent=`
 
-    #tsDestajoBtn{
-      position:fixed;
-      right:14px;
-      bottom:14px;
-      z-index:2147483646;
-      border:0;
-      border-radius:999px;
-      padding:13px 17px;
-      background:#111827;
-      color:#fff;
-      font:700 14px system-ui;
-      box-shadow:0 8px 30px #0004;
-      max-width:calc(100vw - 28px);
-    }
+#tsDestajoBtn{
 
+  position:fixed;
 
-    #tsDestajoShade{
-      position:fixed;
-      inset:0;
-      background:#0006;
-      z-index:2147483645;
-      display:none;
-      width:100%;
-      height:100%;
-    }
+  right:14px;
 
+  bottom:14px;
 
-    #tsDestajo{
+  z-index:2147483646;
 
-      position:fixed;
+  border:0;
 
-      right:12px;
-      bottom:70px;
+  border-radius:999px;
 
-      width:min(
-        620px,
-        calc(100vw - 24px)
-      );
+  padding:13px 17px;
 
-      max-width:
-        calc(100vw - 24px);
+  background:#111827;
 
-      max-height:82vh;
+  color:#fff;
 
-      overflow:auto;
+  font:700 14px system-ui;
 
-      -webkit-overflow-scrolling:touch;
+  box-shadow:
+  0 8px 30px #0004;
 
-      background:#fff;
-      color:#111827;
+}
 
-      border-radius:18px;
 
-      z-index:2147483647;
+#tsDestajoShade{
 
-      box-shadow:
-        0 20px 70px #0006;
+  position:fixed;
 
-      font:14px system-ui;
+  inset:0;
 
-      box-sizing:border-box;
-    }
+  background:#0006;
 
+  z-index:2147483645;
 
-    #tsDestajo *{
-      box-sizing:border-box;
-      max-width:100%;
-    }
+  display:none;
 
+}
 
-    .tsHead{
 
-      position:sticky;
-      top:0;
+#tsDestajo{
 
-      background:#fff;
+  position:fixed;
 
-      border-bottom:
-        1px solid #e5e7eb;
+  right:12px;
 
-      padding:14px 16px;
+  bottom:70px;
 
-      display:flex;
+  width:
+  min(
+    620px,
+    calc(100vw - 24px)
+  );
 
-      align-items:center;
+  max-height:82vh;
 
-      justify-content:space-between;
+  overflow:auto;
 
-      gap:10px;
+  background:#fff;
 
-      z-index:2;
-    }
+  color:#111827;
 
+  border-radius:18px;
 
-    .tsHead b{
-      font-size:18px;
-      min-width:0;
-    }
+  z-index:2147483647;
 
+  box-shadow:
+  0 20px 70px #0006;
 
-    .tsClose{
-      border:0;
-      background:#f3f4f6;
-      border-radius:10px;
-      padding:8px 11px;
-      font-size:18px;
-      flex:0 0 auto;
-    }
+  font:14px system-ui;
 
+}
 
-    .tsTabs{
 
-      display:flex;
+#tsDestajo *{
 
-      gap:7px;
+  box-sizing:border-box;
 
-      padding:10px 14px;
+}
 
-      border-bottom:
-        1px solid #eee;
 
-      overflow-x:auto;
+.tsHead{
 
-      overflow-y:hidden;
+  position:sticky;
 
-      -webkit-overflow-scrolling:touch;
+  top:0;
 
-      min-width:0;
-    }
+  background:#fff;
 
+  border-bottom:
+  1px solid #e5e7eb;
 
-    .tsTab{
+  padding:14px 16px;
 
-      border:0;
+  display:flex;
 
-      background:#f3f4f6;
+  align-items:center;
 
-      border-radius:10px;
+  justify-content:space-between;
 
-      padding:9px 12px;
+  z-index:2;
 
-      white-space:nowrap;
+}
 
-      font-weight:700;
 
-      flex:0 0 auto;
-    }
+.tsHead b{
 
+  font-size:18px;
 
-    .tsTab.on{
-      background:#111827;
-      color:#fff;
-    }
+}
 
 
-    .tsPane{
-      display:none;
-      padding:14px;
-      min-width:0;
-    }
+.tsClose{
 
+  border:0;
 
-    .tsPane.on{
-      display:block;
-    }
+  background:#f3f4f6;
 
+  border-radius:10px;
 
-    .tsGrid{
+  padding:8px 11px;
 
-      display:grid;
+  font-size:18px;
 
-      grid-template-columns:
-        minmax(0,1fr)
-        minmax(0,1fr);
+}
 
-      gap:9px;
 
-      min-width:0;
-    }
+.tsTabs{
 
+  display:flex;
 
-    .tsGrid3{
+  gap:7px;
 
-      display:grid;
+  padding:10px 14px;
 
-      grid-template-columns:
-        minmax(0,1fr)
-        minmax(0,1fr)
-        minmax(0,1fr);
+  border-bottom:
+  1px solid #eee;
 
-      gap:9px;
+  overflow:auto;
 
-      min-width:0;
-    }
+}
 
 
-    .tsField{
-      min-width:0;
-    }
+.tsTab{
 
+  border:0;
 
-    .tsField label{
+  background:#f3f4f6;
 
-      display:block;
+  border-radius:10px;
 
-      font-size:11px;
+  padding:9px 12px;
 
-      font-weight:800;
+  white-space:nowrap;
 
-      color:#6b7280;
+  font-weight:700;
 
-      margin:0 0 4px;
-    }
+}
 
 
-    .tsField input,
-    .tsField select{
+.tsTab.on{
 
-      width:100%;
+  background:#111827;
 
-      max-width:100%;
+  color:#fff;
 
-      min-width:0;
+}
 
-      border:
-        1px solid #d1d5db;
 
-      border-radius:9px;
+.tsPane{
 
-      padding:10px;
+  display:none;
 
-      background:#fff;
+  padding:14px;
 
-      font:inherit;
+}
 
-      box-sizing:border-box;
-    }
 
+.tsPane.on{
 
-    .tsBtn{
+  display:block;
 
-      border:0;
+}
 
-      border-radius:10px;
 
-      padding:10px 13px;
+.tsGrid{
 
-      font-weight:800;
+  display:grid;
 
-      background:#111827;
+  grid-template-columns:
+  1fr 1fr;
 
-      color:#fff;
+  gap:9px;
 
-      max-width:100%;
-    }
+}
 
 
-    .tsBtn.alt{
+.tsGrid3{
 
-      background:#e5e7eb;
+  display:grid;
 
-      color:#111827;
-    }
+  grid-template-columns:
+  1fr 1fr 1fr;
 
+  gap:9px;
 
-    .tsBtn.good{
-      background:#166534;
-    }
+}
 
 
-    .tsCard{
+.tsField label{
 
-      border:
-        1px solid #e5e7eb;
+  display:block;
 
-      border-radius:13px;
+  font-size:11px;
 
-      padding:12px;
+  font-weight:800;
 
-      margin:10px 0;
+  color:#6b7280;
 
-      min-width:0;
+  margin:0 0 4px;
 
-      overflow:hidden;
-    }
+}
 
 
-    .tsMoney{
-      font-size:21px;
-      font-weight:900;
-      overflow-wrap:anywhere;
-    }
+.tsField input,
+.tsField select{
 
+  width:100%;
 
-    .tsKpis{
+  border:
+  1px solid #d1d5db;
 
-      display:grid;
+  border-radius:9px;
 
-      grid-template-columns:
-        repeat(3,minmax(0,1fr));
+  padding:10px;
 
-      gap:8px;
+  background:#fff;
 
-      min-width:0;
-    }
+  font:inherit;
 
+}
 
-    .tsKpi{
 
-      background:#f8fafc;
+.tsBtn{
 
-      border-radius:12px;
+  border:0;
 
-      padding:10px;
+  border-radius:10px;
 
-      min-width:0;
+  padding:10px 13px;
 
-      overflow:hidden;
-    }
+  font-weight:800;
 
+  background:#111827;
 
-    .tsKpi small{
+  color:#fff;
 
-      display:block;
+}
 
-      color:#6b7280;
 
-      overflow-wrap:anywhere;
-    }
+.tsBtn.alt{
 
+  background:#e5e7eb;
 
-    .tsTable{
+  color:#111827;
 
-      width:100%;
+}
 
-      max-width:100%;
 
-      border-collapse:collapse;
+.tsBtn.good{
 
-      margin-top:9px;
+  background:#166534;
 
-      font-size:12px;
-    }
+}
 
 
-    .tsTable th,
-    .tsTable td{
+.tsCard{
 
-      padding:7px 5px;
+  border:
+  1px solid #e5e7eb;
 
-      border-bottom:
-        1px solid #eee;
+  border-radius:13px;
 
-      text-align:left;
+  padding:12px;
 
-      font-size:12px;
+  margin:10px 0;
 
-      white-space:nowrap;
-    }
+}
 
 
-    .tsTable th{
-      color:#6b7280;
-    }
+.tsMoney{
 
+  font-size:21px;
 
-    .tsRight{
-      text-align:right !important;
-    }
+  font-weight:900;
 
+}
 
-    .tsLine{
 
-      display:flex;
+.tsKpis{
 
-      justify-content:space-between;
+  display:grid;
 
-      gap:8px;
+  grid-template-columns:
+  repeat(3,1fr);
 
-      padding:8px 0;
+  gap:8px;
 
-      border-bottom:
-        1px solid #eee;
+}
 
-      min-width:0;
-    }
 
+.tsKpi{
 
-    .tsLine > *{
-      min-width:0;
-      overflow-wrap:anywhere;
-    }
+  background:#f8fafc;
 
+  border-radius:12px;
 
-    .tsMuted{
-      color:#6b7280;
-      font-size:12px;
-    }
+  padding:10px;
 
+}
 
-    .tsDanger{
-      color:#b91c1c;
-    }
 
+.tsKpi small{
 
-    .tsPill{
+  display:block;
 
-      display:inline-block;
+  color:#6b7280;
 
-      padding:3px 7px;
+}
 
-      border-radius:999px;
 
-      background:#eef2ff;
+.tsTable{
 
-      font-weight:800;
+  width:100%;
 
-      font-size:11px;
-    }
+  border-collapse:collapse;
 
+  margin-top:9px;
 
-    /* =========================
-       DESTAJO EN CELULAR
-       ========================= */
+}
 
-    @media(max-width:520px){
 
-      #tsDestajo{
+.tsTable th,
+.tsTable td{
 
-        right:8px;
+  padding:7px 5px;
 
-        bottom:
-          calc(62px + env(safe-area-inset-bottom));
+  border-bottom:
+  1px solid #eee;
 
-        width:
-          calc(100vw - 16px);
+  text-align:left;
 
-        max-width:
-          calc(100vw - 16px);
+  font-size:12px;
 
-        max-height:
-          calc(100vh - 80px);
+}
 
-        border-radius:16px;
-      }
 
+.tsTable th{
 
-      .tsGrid,
-      .tsGrid3{
+  color:#6b7280;
 
-        grid-template-columns:
-          minmax(0,1fr)
-          minmax(0,1fr);
-      }
+}
 
 
-      .tsKpis{
+.tsRight{
 
-        grid-template-columns:
-          minmax(0,1fr)
-          minmax(0,1fr);
-      }
+  text-align:right!important;
 
+}
 
-      .tsKpi:last-child{
 
-        grid-column:
-          1/-1;
-      }
+.tsLine{
 
+  display:flex;
 
-      .tsPane{
-        padding:10px;
-      }
+  justify-content:space-between;
 
+  gap:8px;
 
-      .tsCard{
-        padding:10px;
-      }
+  padding:8px 0;
 
+  border-bottom:
+  1px solid #eee;
 
-      .tsHead{
-        padding:12px;
-      }
+}
 
 
-      .tsHead b{
-        font-size:16px;
-      }
+.tsMuted{
 
+  color:#6b7280;
 
-      .tsLine{
+  font-size:12px;
 
-        flex-direction:column;
+}
 
-        align-items:flex-start;
-      }
 
-    }
+.tsDanger{
 
+  color:#b91c1c;
 
-    @media(max-width:380px){
+}
 
-      .tsGrid,
-      .tsGrid3,
-      .tsKpis{
 
-        grid-template-columns:
-          minmax(0,1fr);
-      }
+.tsPill{
 
+  display:inline-block;
 
-      .tsKpi:last-child{
-        grid-column:auto;
-      }
+  padding:3px 7px;
 
-    }
+  border-radius:999px;
 
-  `;
+  background:#eef2ff;
+
+  font-weight:800;
+
+  font-size:11px;
+
+}
+
+
+@media(max-width:520px){
+
+  .tsGrid,
+  .tsGrid3{
+
+    grid-template-columns:
+    1fr 1fr;
+
+  }
+
+
+  .tsKpis{
+
+    grid-template-columns:
+    1fr 1fr;
+
+  }
+
+
+  .tsKpi:last-child{
+
+    grid-column:
+    1/-1;
+
+  }
+
+}
+
+
+@media(max-width:420px){
+
+  #tsDestajo{
+
+    right:8px;
+
+    bottom:64px;
+
+    width:
+    calc(100vw - 16px);
+
+    max-height:
+    84vh;
+
+    border-radius:16px;
+
+  }
+
+
+  .tsPane{
+
+    padding:10px;
+
+  }
+
+
+  .tsGrid,
+  .tsGrid3,
+  .tsKpis{
+
+    grid-template-columns:
+    1fr;
+
+  }
+
+
+  .tsLine{
+
+    flex-direction:column;
+
+  }
+
+
+  .tsBtn{
+
+    min-height:44px;
+
+  }
+
+}
+
+`;
+
 
   document.head.appendChild(style);
 
 
-  /* =========================
-     HTML DEL MÓDULO
-     ========================= */
+  /*
+  ================================================================
+  HTML DESTajo
+  ================================================================
+  */
 
   document.body.insertAdjacentHTML(
-    'beforeend',
+    "beforeend",
 
     `
-    <button
-      id="tsDestajoBtn"
-      aria-label="Abrir Destajo"
-    >
-      💰 Destajo
-    </button>
 
-    <div
-      id="tsDestajoShade"
-    ></div>
-
-    <section
-      id="tsDestajo"
-      aria-label="Destajo The Studio"
-    >
-
-      <div class="tsHead">
-
-        <b>
-          💰 Destajo · Nómina
-        </b>
-
-        <button
-          class="tsClose"
-          id="tsClose"
-        >
-          ×
-        </button>
-
-      </div>
+<button id="tsDestajoBtn">
+💰 Destajo
+</button>
 
 
-      <div class="tsTabs">
-
-        <button
-          class="tsTab on"
-          data-tab="cap"
-        >
-          Captura
-        </button>
-
-        <button
-          class="tsTab"
-          data-tab="cost"
-        >
-          Costos por modelo
-        </button>
-
-        <button
-          class="tsTab"
-          data-tab="res"
-        >
-          Resumen semanal
-        </button>
-
-      </div>
+<div id="tsDestajoShade">
+</div>
 
 
-      <div
-        id="tsCap"
-        class="tsPane on"
-      ></div>
+<section
+id="tsDestajo"
+aria-label="Destajo The Studio"
+>
 
 
-      <div
-        id="tsCost"
-        class="tsPane"
-      ></div>
+<div class="tsHead">
+
+<b>
+💰 Destajo · Nómina
+</b>
+
+<button
+class="tsClose"
+id="tsClose"
+>
+×
+</button>
+
+</div>
 
 
-      <div
-        id="tsRes"
-        class="tsPane"
-      ></div>
+<div class="tsTabs">
 
-    </section>
-    `
+<button
+class="tsTab on"
+data-tab="cap"
+>
+Captura
+</button>
+
+
+<button
+class="tsTab"
+data-tab="cost"
+>
+Costos por modelo
+</button>
+
+
+<button
+class="tsTab"
+data-tab="res"
+>
+Resumen semanal
+</button>
+
+</div>
+
+
+<div
+id="tsCap"
+class="tsPane on"
+>
+</div>
+
+
+<div
+id="tsCost"
+class="tsPane"
+>
+</div>
+
+
+<div
+id="tsRes"
+class="tsPane"
+>
+</div>
+
+
+</section>
+
+`
   );
 
 
   const btn=
-    document.getElementById(
-      'tsDestajoBtn'
-    );
+  document.getElementById(
+    "tsDestajoBtn"
+  );
+
 
   const shade=
-    document.getElementById(
-      'tsDestajoShade'
-    );
+  document.getElementById(
+    "tsDestajoShade"
+  );
+
 
   const panel=
-    document.getElementById(
-      'tsDestajo'
-    );
+  document.getElementById(
+    "tsDestajo"
+  );
 
 
   const open=()=>{
 
-    shade.style.display='block';
+    shade.style.display=
+    "block";
 
-    panel.style.display='block';
+    panel.style.display=
+    "block";
 
     renderAll();
 
@@ -1037,9 +1524,11 @@ function installDestajo(){
 
   const close=()=>{
 
-    shade.style.display='none';
+    shade.style.display=
+    "none";
 
-    panel.style.display='none';
+    panel.style.display=
+    "none";
 
   };
 
@@ -1048,798 +1537,852 @@ function installDestajo(){
 
   shade.onclick=close;
 
-  document.getElementById(
-    'tsClose'
-  ).onclick=close;
+  document
+  .getElementById("tsClose")
+  .onclick=close;
 
 
   document
-    .querySelectorAll('.tsTab')
-    .forEach(t=>{
+  .querySelectorAll(".tsTab")
+  .forEach(tab=>{
 
-      t.onclick=()=>{
+    tab.onclick=()=>{
 
-        document
-          .querySelectorAll('.tsTab')
-          .forEach(x=>
-            x.classList.remove('on')
-          );
-
-        t.classList.add('on');
+      document
+      .querySelectorAll(".tsTab")
+      .forEach(x=>
+        x.classList.remove("on")
+      );
 
 
-        document
-          .querySelectorAll('.tsPane')
-          .forEach(x=>
-            x.classList.remove('on')
-          );
+      tab.classList.add("on");
 
 
-        document
-          .getElementById(
-            'ts'+
-            ({
-              cap:'Cap',
-              cost:'Cost',
-              res:'Res'
-            }[t.dataset.tab])
-          )
-          .classList.add('on');
+      document
+      .querySelectorAll(".tsPane")
+      .forEach(x=>
+        x.classList.remove("on")
+      );
 
 
-        renderAll();
+      const pane={
+        cap:"Cap",
+        cost:"Cost",
+        res:"Res"
+      }[tab.dataset.tab];
 
-      };
 
-    });
+      document
+      .getElementById(
+        "ts"+pane
+      )
+      .classList.add("on");
 
 
-  /* =========================
-     MODELOS
-     ========================= */
+      renderAll();
+
+    };
+
+  });
+
 
   function modelOptions(){
 
     return costs()
-      .map((c,i)=>
+    .map((c,i)=>`
 
-        `<option value="${esc(c.modelo)}">
-          ${esc(c.modelo)}
-          · P ${money(c.pespunte)}
-          · Pre ${money(c.preliminar)}
-        </option>`
+      <option
+      value="${esc(c.modelo)}"
+      >
 
-      )
-      .join('');
+      ${esc(c.modelo)}
+      · P ${money(c.pespunte)}
+      · Pre ${money(c.preliminar)}
+
+      </option>
+
+    `)
+    .join("");
 
   }
 
 
-  /* =========================
-     CAPTURA
-     ========================= */
+  /*
+  ================================================================
+  CAPTURA
+  ================================================================
+  */
 
   function renderCap(){
 
     const c=costs();
 
-    document.getElementById(
-      'tsCap'
-    ).innerHTML=`
 
-      <div class="tsCard">
+    document
+    .getElementById("tsCap")
+    .innerHTML=`
 
-        <b>
-          Registrar producción
-        </b>
+    <div class="tsCard">
 
-        <div class="tsMuted">
-
-          El destajo se calcula con
-          los pares capturados como salida.
-
-          Semana:
-          lunes a sábado.
-
-        </div>
+      <b>
+      Registrar producción
+      </b>
 
 
-        <div
-          class="tsGrid"
-          style="margin-top:10px"
-        >
+      <div class="tsMuted">
 
-          <div class="tsField">
+      El destajo se calcula con
+      los pares capturados como salida.
 
-            <label>
-              Fecha
-            </label>
-
-            <input
-              id="tsDate"
-              type="date"
-              value="${today()}"
-            >
-
-          </div>
-
-
-          <div class="tsField">
-
-            <label>
-              Línea
-            </label>
-
-            <select id="tsLine">
-
-              <option>
-                Línea A
-              </option>
-
-              <option>
-                Línea B
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <div class="tsField">
-
-            <label>
-              Modelo
-            </label>
-
-            <select id="tsModel">
-
-              ${
-                modelOptions() ||
-                '<option value="">Primero agrega un modelo</option>'
-              }
-
-            </select>
-
-          </div>
-
-
-          <div class="tsField">
-
-            <label>
-              Pares salidos
-            </label>
-
-            <input
-              id="tsPairs"
-              type="number"
-              min="0"
-              step="1"
-              placeholder="0"
-            >
-
-          </div>
-
-        </div>
-
-
-        <div
-          class="tsGrid3"
-          style="margin-top:10px"
-        >
-
-          <div class="tsKpi">
-
-            <small>
-              Pespunte/par
-            </small>
-
-            <b id="tsCP">
-              $0.00
-            </b>
-
-          </div>
-
-
-          <div class="tsKpi">
-
-            <small>
-              Preliminar/par
-            </small>
-
-            <b id="tsCR">
-              $0.00
-            </b>
-
-          </div>
-
-
-          <div class="tsKpi">
-
-            <small>
-              Destajo registro
-            </small>
-
-            <b id="tsCT">
-              $0.00
-            </b>
-
-          </div>
-
-        </div>
-
-
-        <div
-          style="
-            display:flex;
-            gap:8px;
-            margin-top:10px;
-            flex-wrap:wrap;
-          "
-        >
-
-          <button
-            class="tsBtn"
-            id="tsAdd"
-          >
-            Agregar
-          </button>
-
-          <button
-            class="tsBtn alt"
-            id="tsClear"
-          >
-            Limpiar
-          </button>
-
-        </div>
+      Semana:
+      lunes a sábado.
 
       </div>
 
 
-      <div class="tsCard">
+      <div
+      class="tsGrid"
+      style="margin-top:10px"
+      >
 
-        <b>
-          Registros recientes
-        </b>
 
-        <div id="tsRecent"></div>
+        <div class="tsField">
+
+          <label>
+          Fecha
+          </label>
+
+          <input
+          id="tsDate"
+          type="date"
+          value="${today()}"
+          >
+
+        </div>
+
+
+        <div class="tsField">
+
+          <label>
+          Línea
+          </label>
+
+          <select id="tsLine">
+
+            <option>
+            Línea A
+            </option>
+
+            <option>
+            Línea B
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="tsField">
+
+          <label>
+          Modelo
+          </label>
+
+          <select id="tsModel">
+
+          ${
+            modelOptions()
+            ||
+            '<option value="">Primero agrega un modelo</option>'
+          }
+
+          </select>
+
+        </div>
+
+
+        <div class="tsField">
+
+          <label>
+          Pares salidos
+          </label>
+
+          <input
+          id="tsPairs"
+          type="number"
+          min="0"
+          step="1"
+          placeholder="0"
+          >
+
+        </div>
+
 
       </div>
+
+
+      <div
+      class="tsGrid3"
+      style="margin-top:10px"
+      >
+
+
+        <div class="tsKpi">
+
+          <small>
+          Pespunte/par
+          </small>
+
+          <b id="tsCP">
+          $0.00
+          </b>
+
+        </div>
+
+
+        <div class="tsKpi">
+
+          <small>
+          Preliminar/par
+          </small>
+
+          <b id="tsCR">
+          $0.00
+          </b>
+
+        </div>
+
+
+        <div class="tsKpi">
+
+          <small>
+          Destajo registro
+          </small>
+
+          <b id="tsCT">
+          $0.00
+          </b>
+
+        </div>
+
+
+      </div>
+
+
+      <div
+      style="
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+      "
+      >
+
+        <button
+        class="tsBtn"
+        id="tsAdd"
+        >
+        Agregar
+        </button>
+
+
+        <button
+        class="tsBtn alt"
+        id="tsClear"
+        >
+        Limpiar
+        </button>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="tsCard">
+
+      <b>
+      Registros recientes
+      </b>
+
+      <div id="tsRecent">
+      </div>
+
+    </div>
 
     `;
 
 
     const update=()=>{
 
-      const x=c.find(
+      const x=
+      c.find(
         v=>
-          v.modelo===
-          (
-            document.getElementById(
-              'tsModel'
-            )?.value
-          )
+        v.modelo===
+        document
+        .getElementById("tsModel")
+        ?.value
       );
 
 
       const p=
-        Number(
-          document.getElementById(
-            'tsPairs'
-          )?.value
-        )||0;
+      Number(
+        document
+        .getElementById("tsPairs")
+        ?.value
+      )||0;
 
 
-      document.getElementById(
-        'tsCP'
-      ).textContent=
-        money(x?.pespunte);
+      document
+      .getElementById("tsCP")
+      .textContent=
+      money(x?.pespunte);
 
 
-      document.getElementById(
-        'tsCR'
-      ).textContent=
-        money(x?.preliminar);
+      document
+      .getElementById("tsCR")
+      .textContent=
+      money(x?.preliminar);
 
 
-      document.getElementById(
-        'tsCT'
-      ).textContent=
-        money(
-          p*
-          (
-            (x?.pespunte||0)+
-            (x?.preliminar||0)
-          )
-        );
+      document
+      .getElementById("tsCT")
+      .textContent=
+      money(
+        p*
+        (
+          (x?.pespunte||0)+
+          (x?.preliminar||0)
+        )
+      );
 
     };
 
 
     document
-      .getElementById('tsModel')
-      ?.addEventListener(
-        'change',
-        update
-      );
+    .getElementById("tsModel")
+    ?.addEventListener(
+      "change",
+      update
+    );
 
 
     document
-      .getElementById('tsPairs')
-      ?.addEventListener(
-        'input',
-        update
-      );
+    .getElementById("tsPairs")
+    ?.addEventListener(
+      "input",
+      update
+    );
 
 
     update();
 
 
     document
-      .getElementById('tsAdd')
-      ?.addEventListener(
-        'click',
-        ()=>{
+    .getElementById("tsAdd")
+    ?.addEventListener(
+      "click",
+      ()=>{
 
-          const model=
-            c.find(
-              v=>
-                v.modelo===
-                document.getElementById(
-                  'tsModel'
-                ).value
-            );
-
-
-          const pairs=
-            Number(
-              document.getElementById(
-                'tsPairs'
-              ).value
-            )||0;
+        const model=
+        c.find(
+          v=>
+          v.modelo===
+          document
+          .getElementById("tsModel")
+          .value
+        );
 
 
-          if(
-            !model||
-            pairs<=0
-          ){
-
-            return alert(
-              'Selecciona un modelo y captura los pares salidos.'
-            );
-
-          }
+        const pairs=
+        Number(
+          document
+          .getElementById("tsPairs")
+          .value
+        )||0;
 
 
-          const r=records();
+        if(
+          !model ||
+          pairs<=0
+        ){
 
-
-          r.push({
-
-            id:Date.now(),
-
-            date:
-              document.getElementById(
-                'tsDate'
-              ).value,
-
-            line:
-              document.getElementById(
-                'tsLine'
-              ).value,
-
-            modelo:
-              model.modelo,
-
-            pares:
-              pairs,
-
-            pespunte:
-              Number(
-                model.pespunte
-              )||0,
-
-            preliminar:
-              Number(
-                model.preliminar
-              )||0
-
-          });
-
-
-          save(
-            KEYR,
-            r
+          return alert(
+            "Selecciona un modelo y captura los pares salidos."
           );
 
-
-          renderAll();
-
         }
-      );
+
+
+        const r=
+        records();
+
+
+        r.push({
+
+          id:Date.now(),
+
+          date:
+          document
+          .getElementById("tsDate")
+          .value,
+
+          line:
+          document
+          .getElementById("tsLine")
+          .value,
+
+          modelo:
+          model.modelo,
+
+          pares:pairs,
+
+          pespunte:
+          Number(model.pespunte)||0,
+
+          preliminar:
+          Number(model.preliminar)||0
+
+        });
+
+
+        save(
+          KEYR,
+          r
+        );
+
+
+        renderAll();
+
+      }
+    );
 
 
     document
-      .getElementById('tsClear')
-      ?.addEventListener(
-        'click',
-        ()=>{
+    .getElementById("tsClear")
+    ?.addEventListener(
+      "click",
+      ()=>{
 
-          document.getElementById(
-            'tsPairs'
-          ).value='';
+        document
+        .getElementById("tsPairs")
+        .value="";
 
-          update();
+        update();
 
-        }
-      );
+      }
+    );
 
 
     const rr=
-      records()
-        .slice(-12)
-        .reverse();
+    records()
+    .slice(-12)
+    .reverse();
 
 
-    document.getElementById(
-      'tsRecent'
-    ).innerHTML=
+    document
+    .getElementById("tsRecent")
+    .innerHTML=
 
-      rr.length
+    rr.length
+
+    ?
+
+    `
+
+    <table class="tsTable">
+
+      <tr>
+
+        <th>
+        Fecha
+        </th>
+
+        <th>
+        Línea
+        </th>
+
+        <th>
+        Modelo
+        </th>
+
+        <th class="tsRight">
+        Pares
+        </th>
+
+        <th class="tsRight">
+        Destajo
+        </th>
+
+      </tr>
+
+
+      ${
+        rr
+        .map(r=>`
+
+        <tr>
+
+          <td>
+          ${r.date}
+          </td>
+
+          <td>
+          ${esc(
+            r.line.replace(
+              "Línea ",
+              ""
+            )
+          )}
+          </td>
+
+          <td>
+          ${esc(r.modelo)}
+          </td>
+
+          <td class="tsRight">
+          ${r.pares}
+          </td>
+
+          <td class="tsRight">
+
+          ${
+            money(
+              r.pares*
+              (
+                r.pespunte+
+                r.preliminar
+              )
+            )
+          }
+
+          </td>
+
+        </tr>
+
+        `)
+        .join("")
+      }
+
+    </table>
+
+    `
+
+    :
+
+    `
+
+    <div
+    class="tsMuted"
+    style="padding:10px 0"
+    >
+
+    Aún no hay registros.
+
+    </div>
+
+    `;
+
+  }
+
+
+  /*
+  ================================================================
+  COSTOS
+  ================================================================
+  */
+
+  function renderCost(){
+
+    const c=
+    costs();
+
+
+    document
+    .getElementById("tsCost")
+    .innerHTML=
+
+    `
+
+    <div class="tsCard">
+
+      <b>
+      Catálogo de costos
+      </b>
+
+
+      <div class="tsMuted">
+
+      Captura una vez el costo
+      por modelo; al registrar
+      salida se toma automáticamente.
+
+      </div>
+
+
+      <div
+      class="tsGrid3"
+      style="margin-top:10px"
+      >
+
+
+        <div class="tsField">
+
+          <label>
+          Modelo
+          </label>
+
+          <input
+          id="tsNewM"
+          placeholder="Verona"
+          >
+
+        </div>
+
+
+        <div class="tsField">
+
+          <label>
+          Costo pespunte $
+          </label>
+
+          <input
+          id="tsNewP"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="12"
+          >
+
+        </div>
+
+
+        <div class="tsField">
+
+          <label>
+          Costo preliminar $
+          </label>
+
+          <input
+          id="tsNewR"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="8"
+          >
+
+        </div>
+
+
+      </div>
+
+
+      <button
+      class="tsBtn"
+      id="tsSaveC"
+      style="margin-top:10px"
+      >
+
+      Guardar / actualizar modelo
+
+      </button>
+
+
+    </div>
+
+
+    <div class="tsCard">
+
+    ${
+      c.length
 
       ?
 
       `
-      <div
-        style="
-          width:100%;
-          overflow-x:auto;
-          -webkit-overflow-scrolling:touch;
-        "
-      >
 
-        <table
-          class="tsTable"
-          style="min-width:520px"
-        >
+      <table class="tsTable">
+
+        <tr>
+
+          <th>
+          Modelo
+          </th>
+
+          <th class="tsRight">
+          Pespunte
+          </th>
+
+          <th class="tsRight">
+          Preliminar
+          </th>
+
+          <th>
+          </th>
+
+        </tr>
+
+
+        ${
+          c
+          .map((x,i)=>`
 
           <tr>
 
-            <th>
-              Fecha
-            </th>
+            <td>
+            ${esc(x.modelo)}
+            </td>
 
-            <th>
-              Línea
-            </th>
+            <td class="tsRight">
+            ${money(x.pespunte)}
+            </td>
 
-            <th>
-              Modelo
-            </th>
+            <td class="tsRight">
+            ${money(x.preliminar)}
+            </td>
 
-            <th class="tsRight">
-              Pares
-            </th>
+            <td class="tsRight">
 
-            <th class="tsRight">
-              Destajo
-            </th>
+              <button
+              class="tsBtn alt"
+              data-del="${i}"
+              >
+              ×
+              </button>
+
+            </td>
 
           </tr>
 
+          `)
+          .join("")
+        }
 
-          ${
-            rr.map(r=>
+      </table>
 
-              `<tr>
-
-                <td>
-                  ${r.date}
-                </td>
-
-                <td>
-                  ${esc(
-                    r.line.replace(
-                      'Línea ',
-                      ''
-                    )
-                  )}
-                </td>
-
-                <td>
-                  ${esc(r.modelo)}
-                </td>
-
-                <td class="tsRight">
-                  ${r.pares}
-                </td>
-
-                <td class="tsRight">
-                  ${
-                    money(
-                      r.pares*
-                      (
-                        r.pespunte+
-                        r.preliminar
-                      )
-                    )
-                  }
-                </td>
-
-              </tr>`
-
-            ).join('')
-          }
-
-        </table>
-
-      </div>
       `
 
       :
 
       `
-      <div
-        class="tsMuted"
-        style="padding:10px 0"
-      >
-        Aún no hay registros.
-      </div>
-      `;
 
-  }
+      <div class="tsMuted">
 
-
-  /* =========================
-     COSTOS
-     ========================= */
-
-  function renderCost(){
-
-    const c=costs();
-
-
-    document.getElementById(
-      'tsCost'
-    ).innerHTML=`
-
-      <div class="tsCard">
-
-        <b>
-          Catálogo de costos
-        </b>
-
-        <div class="tsMuted">
-
-          Captura una vez el costo
-          por modelo; al registrar
-          salida se toma automáticamente.
-
-        </div>
-
-
-        <div
-          class="tsGrid3"
-          style="margin-top:10px"
-        >
-
-          <div class="tsField">
-
-            <label>
-              Modelo
-            </label>
-
-            <input
-              id="tsNewM"
-              placeholder="Verona"
-            >
-
-          </div>
-
-
-          <div class="tsField">
-
-            <label>
-              Costo pespunte $
-            </label>
-
-            <input
-              id="tsNewP"
-              type="number"
-              min="0"
-              step="0.01"
-              placeholder="12"
-            >
-
-          </div>
-
-
-          <div class="tsField">
-
-            <label>
-              Costo preliminar $
-            </label>
-
-            <input
-              id="tsNewR"
-              type="number"
-              min="0"
-              step="0.01"
-              placeholder="8"
-            >
-
-          </div>
-
-        </div>
-
-
-        <button
-          class="tsBtn"
-          id="tsSaveC"
-          style="margin-top:10px"
-        >
-          Guardar / actualizar modelo
-        </button>
+      No hay modelos capturados.
 
       </div>
 
+      `
 
-      <div class="tsCard">
+    }
 
-        ${
-          c.length
-
-          ?
-
-          `
-          <div
-            style="
-              width:100%;
-              overflow-x:auto;
-              -webkit-overflow-scrolling:touch;
-            "
-          >
-
-            <table
-              class="tsTable"
-              style="min-width:480px"
-            >
-
-              <tr>
-
-                <th>
-                  Modelo
-                </th>
-
-                <th class="tsRight">
-                  Pespunte
-                </th>
-
-                <th class="tsRight">
-                  Preliminar
-                </th>
-
-                <th></th>
-
-              </tr>
-
-
-              ${
-                c.map((x,i)=>
-
-                  `<tr>
-
-                    <td>
-                      ${esc(x.modelo)}
-                    </td>
-
-                    <td class="tsRight">
-                      ${money(x.pespunte)}
-                    </td>
-
-                    <td class="tsRight">
-                      ${money(x.preliminar)}
-                    </td>
-
-                    <td class="tsRight">
-
-                      <button
-                        class="tsBtn alt"
-                        data-del="${i}"
-                      >
-                        ×
-                      </button>
-
-                    </td>
-
-                  </tr>`
-
-                ).join('')
-              }
-
-            </table>
-
-          </div>
-          `
-
-          :
-
-          `
-          <div class="tsMuted">
-            No hay modelos capturados.
-          </div>
-          `
-        }
-
-      </div>
+    </div>
 
     `;
 
 
     document
-      .getElementById('tsSaveC')
-      ?.addEventListener(
-        'click',
-        ()=>{
+    .getElementById("tsSaveC")
+    ?.addEventListener(
+      "click",
+      ()=>{
 
-          const m=
-            document.getElementById(
-              'tsNewM'
-            ).value.trim();
-
-
-          if(!m){
-
-            return alert(
-              'Escribe el modelo.'
-            );
-
-          }
+        const m=
+        document
+        .getElementById("tsNewM")
+        .value
+        .trim();
 
 
-          const p=
+        if(!m){
+
+          return alert(
+            "Escribe el modelo."
+          );
+
+        }
+
+
+        const p=
+        Number(
+          document
+          .getElementById("tsNewP")
+          .value
+        )||0;
+
+
+        const r=
+        Number(
+          document
+          .getElementById("tsNewR")
+          .value
+        )||0;
+
+
+        const arr=
+        costs();
+
+
+        const i=
+        arr.findIndex(
+          x=>
+          x.modelo
+          .toLowerCase()===
+          m.toLowerCase()
+        );
+
+
+        const item={
+
+          modelo:m,
+
+          pespunte:p,
+
+          preliminar:r
+
+        };
+
+
+        if(i>=0){
+
+          arr[i]=item;
+
+        }else{
+
+          arr.push(item);
+
+        }
+
+
+        save(
+          KEYC,
+          arr
+        );
+
+
+        renderAll();
+
+      }
+    );
+
+
+    document
+    .querySelectorAll(
+      "[data-del]"
+    )
+    .forEach(
+      button=>{
+
+        button.onclick=()=>{
+
+          const arr=
+          costs();
+
+
+          arr.splice(
             Number(
-              document.getElementById(
-                'tsNewP'
-              ).value
-            )||0;
-
-
-          const r=
-            Number(
-              document.getElementById(
-                'tsNewR'
-              ).value
-            )||0;
-
-
-          const arr=costs();
-
-
-          const i=
-            arr.findIndex(
-              x=>
-                x.modelo.toLowerCase()===
-                m.toLowerCase()
-            );
-
-
-          const item={
-            modelo:m,
-            pespunte:p,
-            preliminar:r
-          };
-
-
-          if(i>=0){
-
-            arr[i]=item;
-
-          }else{
-
-            arr.push(item);
-
-          }
+              button.dataset.del
+            ),
+            1
+          );
 
 
           save(
@@ -1850,480 +2393,484 @@ function installDestajo(){
 
           renderAll();
 
-        }
-      );
+        };
 
-
-    document
-      .querySelectorAll('[data-del]')
-      .forEach(
-        b=>
-
-          b.onclick=()=>{
-
-            const arr=costs();
-
-            arr.splice(
-              Number(
-                b.dataset.del
-              ),
-              1
-            );
-
-            save(
-              KEYC,
-              arr
-            );
-
-            renderAll();
-
-          }
-
-      );
+      }
+    );
 
   }
 
 
-  /* =========================
-     RESUMEN SEMANAL
-     ========================= */
+  /*
+  ================================================================
+  RESUMEN SEMANAL
+  ================================================================
+  */
 
   function renderRes(){
 
     const start=
-      mondayOf(
-        today()
-      );
+    mondayOf(
+      today()
+    );
 
 
     const end=
-      addDays(
-        start,
-        5
-      );
+    addDays(
+      start,
+      5
+    );
 
 
     const rr=
-      records()
-        .filter(
-          r=>
-            r.date>=start &&
-            r.date<=end
-        );
+    records()
+    .filter(
+      r=>
+      r.date>=start &&
+      r.date<=end
+    );
 
 
-    const sum=arr=>
-      arr.reduce(
-        (a,r)=>
-          a+r.pares,
-        0
-      );
+    const sum=
+    arr=>
+    arr.reduce(
+      (a,r)=>
+      a+r.pares,
+      0
+    );
 
 
-    const calc=(arr,k)=>
-      arr.reduce(
-        (a,r)=>
-          a+
-          r.pares*
-          (r[k]||0),
-        0
-      );
+    const calc=
+    (arr,key)=>
+    arr.reduce(
+      (a,r)=>
+      a+
+      r.pares*
+      (r[key]||0),
+      0
+    );
 
 
     const A=
-      rr.filter(
-        r=>
-          r.line===
-          'Línea A'
-      );
+    rr.filter(
+      r=>
+      r.line===
+      "Línea A"
+    );
 
 
     const B=
-      rr.filter(
-        r=>
-          r.line===
-          'Línea B'
-      );
+    rr.filter(
+      r=>
+      r.line===
+      "Línea B"
+    );
 
 
     const pA=
-      calc(
-        A,
-        'pespunte'
-      );
+    calc(
+      A,
+      "pespunte"
+    );
 
 
     const pB=
-      calc(
-        B,
-        'pespunte'
-      );
+    calc(
+      B,
+      "pespunte"
+    );
 
 
     const rA=
-      calc(
-        A,
-        'preliminar'
-      );
+    calc(
+      A,
+      "preliminar"
+    );
 
 
     const rB=
-      calc(
-        B,
-        'preliminar'
-      );
+    calc(
+      B,
+      "preliminar"
+    );
 
 
     const total=
-      pA+
-      pB+
-      rA+
-      rB;
+    pA+pB+rA+rB;
 
 
-    document.getElementById(
-      'tsRes'
-    ).innerHTML=`
+    document
+    .getElementById("tsRes")
+    .innerHTML=
 
-      <div class="tsCard">
+    `
 
-        <b>
-          Semana de nómina
-        </b>
+    <div class="tsCard">
 
-        <div class="tsMuted">
-
-          ${start}
-          →
-          ${end}
-
-          · cierre el sábado
-
-        </div>
+      <b>
+      Semana de nómina
+      </b>
 
 
-        <div
-          class="tsKpis"
-          style="margin-top:10px"
-        >
+      <div class="tsMuted">
 
-          <div class="tsKpi">
+      ${start}
+      →
+      ${end}
 
-            <small>
-              Línea A · destajo
-            </small>
+      · cierre el sábado
 
-            <div class="tsMoney">
-              ${money(pA+rA)}
-            </div>
-
-          </div>
+      </div>
 
 
-          <div class="tsKpi">
-
-            <small>
-              Línea B · destajo
-            </small>
-
-            <div class="tsMoney">
-              ${money(pB+rB)}
-            </div>
-
-          </div>
+      <div
+      class="tsKpis"
+      style="margin-top:10px"
+      >
 
 
-          <div class="tsKpi">
+        <div class="tsKpi">
 
-            <small>
-              Acumulado semanal
-            </small>
+          <small>
+          Línea A · destajo
+          </small>
 
-            <div class="tsMoney">
-              ${money(total)}
-            </div>
+          <div class="tsMoney">
+
+          ${money(
+            pA+rA
+          )}
 
           </div>
 
         </div>
 
+
+        <div class="tsKpi">
+
+          <small>
+          Línea B · destajo
+          </small>
+
+          <div class="tsMoney">
+
+          ${money(
+            pB+rB
+          )}
+
+          </div>
+
+        </div>
+
+
+        <div class="tsKpi">
+
+          <small>
+          Acumulado semanal
+          </small>
+
+          <div class="tsMoney">
+
+          ${money(
+            total
+          )}
+
+          </div>
+
+        </div>
+
+
       </div>
 
+    </div>
 
-      <div class="tsCard">
+
+    <div class="tsCard">
+
+      <b>
+      Desglose por línea
+      </b>
+
+
+      <div class="tsLine">
+
+        <span>
+
+        Línea A ·
+        ${sum(A)}
+        pares
+
+        </span>
+
+
+        <span>
 
         <b>
-          Desglose por línea
+        Pespunte
+        ${money(pA)}
         </b>
 
+        · Preliminar
+        ${money(rA)}
 
-        <div class="tsLine">
-
-          <span>
-            Línea A ·
-            ${sum(A)}
-            pares
-          </span>
-
-          <span>
-            <b>
-              Pespunte
-              ${money(pA)}
-            </b>
-
-            · Preliminar
-            ${money(rA)}
-          </span>
-
-        </div>
-
-
-        <div class="tsLine">
-
-          <span>
-            Línea B ·
-            ${sum(B)}
-            pares
-          </span>
-
-          <span>
-
-            <b>
-              Pespunte
-              ${money(pB)}
-            </b>
-
-            · Preliminar
-            ${money(rB)}
-
-          </span>
-
-        </div>
-
-
-        <div class="tsLine">
-
-          <span>
-            <b>
-              Total
-            </b>
-          </span>
-
-          <span>
-
-            <b>
-              ${money(total)}
-            </b>
-
-          </span>
-
-        </div>
+        </span>
 
       </div>
 
 
-      <div class="tsCard">
+      <div class="tsLine">
+
+        <span>
+
+        Línea B ·
+        ${sum(B)}
+        pares
+
+        </span>
+
+
+        <span>
 
         <b>
-          Cerrar semana
+        Pespunte
+        ${money(pB)}
         </b>
 
-        <div class="tsMuted">
+        · Preliminar
+        ${money(rB)}
 
-          El cierre guarda el total
-          de lunes a sábado en el histórico.
-
-          Los registros no se borran.
-
-        </div>
-
-
-        <button
-          class="tsBtn good"
-          id="tsCloseWeek"
-          style="margin-top:10px"
-        >
-          Cerrar semana y guardar histórico
-        </button>
+        </span>
 
       </div>
 
 
-      <div class="tsCard">
+      <div class="tsLine">
+
+        <span>
+        <b>
+        Total
+        </b>
+        </span>
+
+
+        <span>
 
         <b>
-          Histórico de cierres
+        ${money(total)}
         </b>
 
-        <div id="tsHistory"></div>
+        </span>
 
       </div>
+
+    </div>
+
+
+    <div class="tsCard">
+
+      <b>
+      Cerrar semana
+      </b>
+
+
+      <div class="tsMuted">
+
+      El cierre guarda el total
+      de lunes a sábado en el histórico.
+
+      Los registros no se borran.
+
+      </div>
+
+
+      <button
+      class="tsBtn good"
+      id="tsCloseWeek"
+      style="margin-top:10px"
+      >
+
+      Cerrar semana y guardar histórico
+
+      </button>
+
+    </div>
+
+
+    <div class="tsCard">
+
+      <b>
+      Histórico de cierres
+      </b>
+
+
+      <div id="tsHistory">
+      </div>
+
+    </div>
 
     `;
 
 
     document
-      .getElementById('tsCloseWeek')
-      ?.addEventListener(
-        'click',
-        ()=>{
+    .getElementById(
+      "tsCloseWeek"
+    )
+    ?.addEventListener(
+      "click",
+      ()=>{
 
-          const h=closes();
-
-
-          if(
-            h.some(
-              x=>
-                x.week===
-                start
-            )
-          ){
-
-            alert(
-              'Esta semana ya está cerrada.'
-            );
-
-            return;
-
-          }
+        const h=
+        closes();
 
 
-          h.unshift({
+        if(
+          h.some(
+            x=>
+            x.week===
+            start
+          )
+        ){
 
-            week:start,
-
-            end,
-
-            total,
-
-            pespunte:
-              pA+pB,
-
-            preliminar:
-              rA+rB,
-
-            lineA:
-              pA+rA,
-
-            lineB:
-              pB+rB,
-
-            closedAt:
-              new Date().toISOString()
-
-          });
-
-
-          save(
-            KEYW,
-            h
+          alert(
+            "Esta semana ya está cerrada."
           );
 
-
-          renderRes();
+          return;
 
         }
-      );
 
 
-    const h=closes();
+        h.unshift({
+
+          week:start,
+
+          end:end,
+
+          total:total,
+
+          pespunte:
+          pA+pB,
+
+          preliminar:
+          rA+rB,
+
+          lineA:
+          pA+rA,
+
+          lineB:
+          pB+rB,
+
+          closedAt:
+          new Date()
+          .toISOString()
+
+        });
 
 
-    document.getElementById(
-      'tsHistory'
-    ).innerHTML=
-
-      h.length
-
-      ?
-
-      `
-      <div
-        style="
-          width:100%;
-          overflow-x:auto;
-          -webkit-overflow-scrolling:touch;
-        "
-      >
-
-        <table
-          class="tsTable"
-          style="min-width:420px"
-        >
-
-          <tr>
-
-            <th>
-              Semana
-            </th>
-
-            <th>
-              A
-            </th>
-
-            <th>
-              B
-            </th>
-
-            <th class="tsRight">
-              Total
-            </th>
-
-          </tr>
+        save(
+          KEYW,
+          h
+        );
 
 
-          ${
-            h.map(x=>
+        renderRes();
 
-              `<tr>
+      }
+    );
 
-                <td>
-                  ${x.week}
-                </td>
 
-                <td>
-                  ${money(x.lineA)}
-                </td>
+    const h=
+    closes();
 
-                <td>
-                  ${money(x.lineB)}
-                </td>
 
-                <td class="tsRight">
+    document
+    .getElementById(
+      "tsHistory"
+    )
+    .innerHTML=
 
-                  <b>
-                    ${money(x.total)}
-                  </b>
+    h.length
 
-                </td>
+    ?
 
-              </tr>`
+    `
 
-            ).join('')
-          }
+    <table class="tsTable">
 
-        </table>
+      <tr>
 
-      </div>
-      `
+        <th>
+        Semana
+        </th>
 
-      :
+        <th>
+        A
+        </th>
 
-      `
-      <div
-        class="tsMuted"
-        style="padding-top:8px"
-      >
-        No hay semanas cerradas todavía.
-      </div>
-      `;
+        <th>
+        B
+        </th>
+
+        <th class="tsRight">
+        Total
+        </th>
+
+      </tr>
+
+
+      ${
+        h
+        .map(x=>`
+
+        <tr>
+
+          <td>
+          ${x.week}
+          </td>
+
+          <td>
+          ${money(x.lineA)}
+          </td>
+
+          <td>
+          ${money(x.lineB)}
+          </td>
+
+          <td class="tsRight">
+
+            <b>
+            ${money(x.total)}
+            </b>
+
+          </td>
+
+        </tr>
+
+        `)
+        .join("")
+      }
+
+    </table>
+
+    `
+
+    :
+
+    `
+
+    <div
+    class="tsMuted"
+    style="padding-top:8px"
+    >
+
+    No hay semanas cerradas todavía.
+
+    </div>
+
+    `;
 
   }
 
-
-  /* =========================
-     RENDER GENERAL
-     ========================= */
 
   function renderAll(){
 
@@ -2336,7 +2883,8 @@ function installDestajo(){
   }
 
 
-  panel.style.display='none';
+  panel.style.display="none";
 
 }
+
 </script>
