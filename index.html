@@ -1,186 +1,55 @@
 <!doctype html>
 <html lang="es">
 <head>
-
 <meta charset="utf-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1,viewport-fit=cover">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The Studio</title>
-
 </head>
 
 <script>
-
 (async()=>{
 
 /* ================================================================
-   THE STUDIO
-   CARGA DE LA VERSIÓN BASE
+   THE STUDIO · CARGADOR MAESTRO
+   CONSERVA LA VERSIÓN COMPLETA ACTUAL
    ================================================================ */
 
 try{
 
-  /*
-  ================================================================
-  CLAVES PRINCIPALES
-  NO CAMBIAR
-  ================================================================
-  */
-
-  const KPROD = "theStudioProduccion_v4";
-  const KCOST = "theStudioCostos_v4";
-  const KHIST = "theStudioHistorial_v4";
-  const KADV  = "theStudioAvances_v4";
-
-  /*
-  ================================================================
-  RECUPERAMOS LOS COSTOS
-  ================================================================
-  */
-
-  migrateAllCosts();
-
-  const ORIGINAL_URL =
-    "https://raw.githubusercontent.com/dantedeaht-ctrl/the-studio-produccion/f07dc9e5221a9b207d205d143d68c0b917ee0e0e/index.html";
+  const CURRENT_VERSION =
+    "https://raw.githubusercontent.com/dantedeaht-ctrl/the-studio-produccion/11f7c94a0753df8741e92f422a471ba14d28a914/index.html";
 
   const response =
     await fetch(
-      ORIGINAL_URL,
+      CURRENT_VERSION,
       {
         cache:"no-store"
       }
     );
 
-  const src =
+  let src =
     await response.text();
 
-  const m =
-    src.match(
-      /const b="([^"]+)"/
-    );
-
-  if(!m){
+  if(!src){
 
     throw new Error(
-      "No se encontró la versión base de The Studio"
+      "No se pudo recuperar The Studio."
     );
 
   }
 
-  const a =
-    Uint8Array.from(
-      atob(m[1]),
-      c=>c.charCodeAt(0)
-    );
+  /* ==============================================================
+     INYECTAMOS LA CORRECCIÓN REAL
+     SOBRE LA VERSIÓN COMPLETA QUE YA FUNCIONA
+     ============================================================== */
 
-  const ds =
-    new DecompressionStream("gzip");
+  const FIX = `
 
-  const t =
-    await new Response(
-      new Response(a)
-      .body
-      .pipeThrough(ds)
-    ).text();
+/* ==============================================================
+   FIX DEFINITIVO · CATÁLOGO DE COSTOS
+   ============================================================== */
 
-  document.open();
-
-  document.write(t);
-
-  document.close();
-
-  /*
-  ================================================================
-  DESPUÉS DE CARGAR LA APP
-  ================================================================
-  */
-
-  setTimeout(()=>{
-
-    try{
-
-      migrateAllCosts();
-
-      fixResponsive();
-
-      installBMWTheme();
-
-      installJARVISTheme();
-
-      installCostRepair();
-
-      installWeekRepair();
-
-      installDestajo();
-
-      installLineEfficiency();
-
-      refreshStudio();
-
-      if(
-        !window.__TS_OBSERVER__
-      ){
-
-        window.__TS_OBSERVER__ =
-          new MutationObserver(
-            ()=>{
-              try{
-                refreshStudio();
-                installLineEfficiency();
-              }catch{}
-            }
-          );
-
-        window.__TS_OBSERVER__.observe(
-          document.body,
-          {
-            childList:true,
-            subtree:true
-          }
-        );
-
-      }
-
-    }catch(e){
-
-      console.error(
-        "The Studio patch:",
-        e
-      );
-
-    }
-
-  },250);
-
-}catch(e){
-
-  setTimeout(()=>{
-
-    if(document.body){
-
-      document.body.innerHTML =
-        '<div style="font:18px system-ui;padding:30px">'+
-        'Error al cargar The Studio<br>'+
-        '<small>'+
-        String(e)+
-        '</small>'+
-        '</div>';
-
-    }
-
-  },100);
-
-}
-
-})();
-
-/* ================================================================
-   UTILIDADES
-   ================================================================ */
-
-function readJSON(key,fallback){
+function TSFixReadJSON(key,fallback){
 
   try{
 
@@ -191,6 +60,7 @@ function readJSON(key,fallback){
       value===null ||
       value===undefined ||
       value===""
+
     ){
 
       return fallback;
@@ -207,16 +77,22 @@ function readJSON(key,fallback){
 
 }
 
-function saveJSON(key,value){
 
-  localStorage.setItem(
-    key,
-    JSON.stringify(value)
-  );
+function TSFixSaveJSON(key,value){
+
+  try{
+
+    localStorage.setItem(
+      key,
+      JSON.stringify(value)
+    );
+
+  }catch{}
 
 }
 
-function num(value){
+
+function TSFixNum(value){
 
   const n =
     Number(value);
@@ -227,7 +103,8 @@ function num(value){
 
 }
 
-function money(value){
+
+function TSFixMoney(value){
 
   return new Intl.NumberFormat(
     "es-MX",
@@ -237,37 +114,20 @@ function money(value){
       minimumFractionDigits:2
     }
   ).format(
-    num(value)
+    TSFixNum(value)
   );
 
 }
 
-function esc(value){
 
-  return String(value ?? "")
-    .replace(
-      /[&<>"']/g,
-      m=>({
-
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#39;"
-
-      }[m])
-    );
-
-}
-
-function normalize(value){
+function TSFixNormalize(value){
 
   return String(
     value ?? ""
   )
   .normalize("NFD")
   .replace(
-    /[\u0300-\u036f]/g,
+    /[\\\\u0300-\\\\u036f]/g,
     ""
   )
   .trim()
@@ -275,282 +135,20 @@ function normalize(value){
 
 }
 
-/* ================================================================
-   FECHAS
-   ================================================================ */
 
-function localDateString(date){
-
-  const d =
-    date instanceof Date
-      ? new Date(date)
-      : new Date(String(date)+"T12:00:00");
-
-  if(
-    Number.isNaN(d.getTime())
-  ){
-
-    return "";
-
-  }
-
-  return [
-    d.getFullYear(),
-    String(d.getMonth()+1).padStart(2,"0"),
-    String(d.getDate()).padStart(2,"0")
-  ].join("-");
-
-}
-
-function todayLocal(){
-
-  return localDateString(
-    new Date()
-  );
-
-}
-
-function mondayOf(date){
-
-  const d =
-    new Date(
-      String(date)+"T12:00:00"
-    );
-
-  if(
-    Number.isNaN(d.getTime())
-  ){
-
-    return todayLocal();
-
-  }
-
-  const day =
-    d.getDay();
-
-  const diff =
-    day===0
-      ? -6
-      : 1-day;
-
-  d.setDate(
-    d.getDate()+diff
-  );
-
-  return localDateString(d);
-
-}
-
-function addDays(date,n){
-
-  const d =
-    new Date(
-      String(date)+"T12:00:00"
-    );
-
-  d.setDate(
-    d.getDate()+n
-  );
-
-  return localDateString(d);
-
-}
-
-function weekRange(reference){
-
-  const start =
-    mondayOf(reference);
-
-  return {
-
-    start:start,
-
-    end:addDays(start,5)
-
-  };
-
-}
-
-function inWeek(date,reference){
-
-  const d =
-    localDateString(date);
-
-  const r =
-    weekRange(reference);
-
-  return (
-    d>=r.start &&
-    d<=r.end
-  );
-
-}
-
-/* ================================================================
-   PRODUCCIÓN
-   ================================================================ */
-
-function getProduction(){
-
-  const raw =
-    readJSON(
-      "theStudioProduccion_v4",
-      []
-    );
-
-  if(
-    Array.isArray(raw)
-  ){
-
-    return raw;
-
-  }
-
-  if(
-    raw &&
-    Array.isArray(raw.prod)
-  ){
-
-    return raw.prod;
-
-  }
-
-  if(
-    raw &&
-    Array.isArray(raw.produccion)
-  ){
-
-    return raw.produccion;
-
-  }
-
-  return [];
-
-}
-
-/* ================================================================
-   AVANCES
-   ================================================================ */
-
-function getAdvances(){
-
-  const raw =
-    readJSON(
-      "theStudioAvances_v4",
-      []
-    );
-
-  if(
-    Array.isArray(raw)
-  ){
-
-    return raw;
-
-  }
-
-  if(
-    raw &&
-    Array.isArray(raw.avances)
-  ){
-
-    return raw.avances;
-
-  }
-
-  return [];
-
-}
-
-/* ================================================================
+/* ==============================================================
    COSTOS
-   ================================================================ */
+   ============================================================== */
 
-function normalizeCostObject(raw){
+function TSFixCosts(){
+
+  const raw =
+    TSFixReadJSON(
+      "theStudioCostos_v4",
+      {}
+    );
 
   const result = {};
-
-  if(
-    raw &&
-    !Array.isArray(raw) &&
-    typeof raw==="object"
-  ){
-
-    if(
-      raw.cost &&
-      typeof raw.cost==="object"
-    ){
-
-      raw =
-        raw.cost;
-
-    }
-
-  }
-
-  if(
-    raw &&
-    !Array.isArray(raw) &&
-    typeof raw==="object"
-  ){
-
-    Object.keys(raw)
-    .forEach(model=>{
-
-      const item =
-        raw[model];
-
-      if(
-        item &&
-        typeof item==="object"
-      ){
-
-        result[model] = {
-
-          pes:
-            num(
-              item.pes ??
-              item.pespunte ??
-              item.pesPunte ??
-              item.costoPespunte
-            ),
-
-          pre:
-            num(
-              item.pre ??
-              item.preliminar ??
-              item.costoPreliminar
-            ),
-
-          min:
-            num(
-              item.min ??
-              item.minutos ??
-              item.tiempoEstandar ??
-              item.tiempo ??
-              item.standardTime
-            )
-
-        };
-
-      }else{
-
-        result[model] = {
-
-          pes:num(item),
-
-          pre:0,
-
-          min:0
-
-        };
-
-      }
-
-    });
-
-    return result;
-
-  }
 
   if(
     Array.isArray(raw)
@@ -566,7 +164,6 @@ function normalizeCostObject(raw){
           item.modelo ??
           item.model ??
           item.nombre ??
-          item.name ??
           ""
         ).trim();
 
@@ -576,22 +173,21 @@ function normalizeCostObject(raw){
       result[model] = {
 
         pes:
-          num(
+          TSFixNum(
             item.pes ??
             item.pespunte ??
-            item.pesPunte ??
             item.costoPespunte
           ),
 
         pre:
-          num(
+          TSFixNum(
             item.pre ??
             item.preliminar ??
             item.costoPreliminar
           ),
 
         min:
-          num(
+          TSFixNum(
             item.min ??
             item.minutos ??
             item.tiempoEstandar ??
@@ -603,2136 +199,412 @@ function normalizeCostObject(raw){
 
     });
 
+    return result;
+
+  }
+
+  if(
+    raw &&
+    typeof raw==="object"
+  ){
+
+    const source =
+      raw.cost &&
+      typeof raw.cost==="object"
+        ? raw.cost
+        : raw;
+
+    Object.keys(source)
+    .forEach(model=>{
+
+      const item =
+        source[model];
+
+      if(
+        item &&
+        typeof item==="object"
+      ){
+
+        result[model] = {
+
+          pes:
+            TSFixNum(
+              item.pes ??
+              item.pespunte ??
+              item.costoPespunte
+            ),
+
+          pre:
+            TSFixNum(
+              item.pre ??
+              item.preliminar ??
+              item.costoPreliminar
+            ),
+
+          min:
+            TSFixNum(
+              item.min ??
+              item.minutos ??
+              item.tiempoEstandar ??
+              item.tiempo ??
+              item.standardTime
+            )
+
+        };
+
+      }
+
+    });
+
   }
 
   return result;
 
 }
 
-/* ================================================================
-   RECUPERACIÓN COMPLETA DE COSTOS
-   ================================================================ */
 
-function migrateAllCosts(){
+/* ==============================================================
+   MODAL EDITAR MODELO
+   ============================================================== */
 
-  try{
-
-    const MAIN =
-      "theStudioCostos_v4";
-
-    let main =
-      normalizeCostObject(
-        readJSON(
-          MAIN,
-          null
-        )
-      );
-
-    const OLD_KEYS = [
-
-      "ts_costos_v1",
-
-      "theStudioCostos_v1",
-
-      "theStudioCostos_v2",
-
-      "theStudioCostos_v3",
-
-      "theStudioCostos",
-
-      "costos",
-
-      "modelos",
-
-      "catalogoModelos",
-
-      "catalogoCostos"
-
-    ];
-
-    function mergeModel(
-      model,
-      incoming
-    ){
-
-      const cleanModel =
-        String(
-          model ?? ""
-        ).trim();
-
-      if(!cleanModel)
-        return;
-
-      const existingName =
-        Object.keys(main)
-        .find(
-          x=>
-            normalize(x) ===
-            normalize(cleanModel)
-        );
-
-      const name =
-        existingName ||
-        cleanModel;
-
-      if(!main[name]){
-
-        main[name] = {
-
-          pes:
-            num(
-              incoming?.pes
-            ),
-
-          pre:
-            num(
-              incoming?.pre
-            ),
-
-          min:
-            num(
-              incoming?.min
-            )
-
-        };
-
-        return;
-
-      }
-
-      if(
-        !num(main[name].pes) &&
-        num(incoming?.pes)
-      ){
-
-        main[name].pes =
-          num(incoming.pes);
-
-      }
-
-      if(
-        !num(main[name].pre) &&
-        num(incoming?.pre)
-      ){
-
-        main[name].pre =
-          num(incoming.pre);
-
-      }
-
-      if(
-        !num(main[name].min) &&
-        num(incoming?.min)
-      ){
-
-        main[name].min =
-          num(incoming.min);
-
-      }
-
-    }
-
-    function extractItem(item){
-
-      if(
-        !item ||
-        typeof item!=="object"
-      ){
-
-        return null;
-
-      }
-
-      const model =
-        String(
-          item.modelo ??
-          item.model ??
-          item.nombre ??
-          item.name ??
-          ""
-        ).trim();
-
-      if(!model)
-        return null;
-
-      const pes =
-        num(
-          item.pes ??
-          item.pespunte ??
-          item.pesPunte ??
-          item.costoPespunte ??
-          item.costo_pespunte ??
-          item.precioPespunte ??
-          item.precio_pespunte ??
-          item.pesCost
-        );
-
-      const pre =
-        num(
-          item.pre ??
-          item.preliminar ??
-          item.costoPreliminar ??
-          item.costo_preliminar ??
-          item.precioPreliminar ??
-          item.precio_preliminar ??
-          item.preCost
-        );
-
-      const min =
-        num(
-          item.min ??
-          item.minutos ??
-          item.tiempoEstandar ??
-          item.tiempo ??
-          item.standardTime
-        );
-
-      if(
-        pes===0 &&
-        pre===0 &&
-        min===0
-      ){
-
-        return null;
-
-      }
-
-      return {
-
-        model:model,
-
-        pes:pes,
-
-        pre:pre,
-
-        min:min
-
-      };
-
-    }
-
-    function readCostSource(raw){
-
-      if(!raw)
-        return;
-
-      if(
-        Array.isArray(raw)
-      ){
-
-        raw.forEach(
-          item=>{
-
-            const found =
-              extractItem(item);
-
-            if(found){
-
-              mergeModel(
-                found.model,
-                found
-              );
-
-            }
-
-          }
-        );
-
-        return;
-
-      }
-
-      if(
-        typeof raw!=="object"
-      ){
-
-        return;
-
-      }
-
-      [
-        raw.costos,
-        raw.modelos,
-        raw.cost,
-        raw.catalogo,
-        raw.data
-      ]
-      .forEach(
-        source=>{
-
-          if(
-            source &&
-            source!==raw
-          ){
-
-            readCostSource(
-              source
-            );
-
-          }
-
-        }
-      );
-
-      Object.keys(raw)
-      .forEach(
-        key=>{
-
-          if(
-            [
-              "costos",
-              "modelos",
-              "cost",
-              "catalogo",
-              "data"
-            ]
-            .includes(
-              key
-            )
-          ){
-
-            return;
-
-          }
-
-          const value =
-            raw[key];
-
-          if(
-            !value ||
-            typeof value!=="object" ||
-            Array.isArray(value)
-          ){
-
-            return;
-
-          }
-
-          const pes =
-            num(
-              value.pes ??
-              value.pespunte ??
-              value.pesPunte ??
-              value.costoPespunte ??
-              value.costo_pespunte ??
-              value.precioPespunte ??
-              value.precio_pespunte
-            );
-
-          const pre =
-            num(
-              value.pre ??
-              value.preliminar ??
-              value.costoPreliminar ??
-              value.costo_preliminar ??
-              value.precioPreliminar ??
-              value.precio_preliminar
-            );
-
-          const min =
-            num(
-              value.min ??
-              value.minutos ??
-              value.tiempoEstandar ??
-              value.tiempo ??
-              value.standardTime
-            );
-
-          if(
-            pes===0 &&
-            pre===0 &&
-            min===0
-          ){
-
-            return;
-
-          }
-
-          mergeModel(
-            key,
-            {
-              pes:pes,
-              pre:pre,
-              min:min
-            }
-          );
-
-        }
-      );
-
-    }
-
-    OLD_KEYS.forEach(
-      key=>{
-
-        const raw =
-          readJSON(
-            key,
-            null
-          );
-
-        readCostSource(
-          raw
-        );
-
-      }
-    );
-
-    for(
-      let i=0;
-      i<localStorage.length;
-      i++
-    ){
-
-      const key =
-        localStorage.key(i);
-
-      if(!key)
-        continue;
-
-      if(
-        OLD_KEYS.includes(key) ||
-        key===MAIN
-      ){
-
-        continue;
-
-      }
-
-      let raw =
-        null;
-
-      try{
-
-        raw =
-          JSON.parse(
-            localStorage.getItem(key)
-          );
-
-      }catch{
-
-        continue;
-
-      }
-
-      if(
-        Array.isArray(raw)
-      ){
-
-        const possible =
-          raw.some(
-            item=>{
-
-              if(
-                !item ||
-                typeof item!=="object"
-              ){
-
-                return false;
-
-              }
-
-              const hasModel =
-                item.modelo!==undefined ||
-                item.model!==undefined ||
-                item.nombre!==undefined ||
-                item.name!==undefined;
-
-              const hasCost =
-                item.pes!==undefined ||
-                item.pespunte!==undefined ||
-                item.pespunte!==undefined ||
-                item.costoPespunte!==undefined ||
-                item.pre!==undefined ||
-                item.preliminar!==undefined ||
-                item.costoPreliminar!==undefined ||
-                item.min!==undefined ||
-                item.minutos!==undefined ||
-                item.tiempoEstandar!==undefined;
-
-              return (
-                hasModel &&
-                hasCost
-              );
-
-            }
-          );
-
-        if(possible){
-
-          readCostSource(
-            raw
-          );
-
-        }
-
-      }
-      else
-      if(
-        raw &&
-        typeof raw==="object"
-      ){
-
-        const text =
-          JSON.stringify(
-            raw
-          ).toLowerCase();
-
-        if(
-          text.includes("pespunte") ||
-          text.includes("preliminar") ||
-          text.includes("costopespunte") ||
-          text.includes("costopreliminar") ||
-          text.includes("tiempoestandar")
-        ){
-
-          readCostSource(
-            raw
-          );
-
-        }
-
-      }
-
-    }
-
-    saveJSON(
-      MAIN,
-      main
-    );
-
-    const mirror =
-      Object.keys(main)
-      .map(
-        model=>({
-
-          modelo:model,
-
-          pespunte:
-            num(
-              main[model].pes
-            ),
-
-          preliminar:
-            num(
-              main[model].pre
-            ),
-
-          min:
-            num(
-              main[model].min
-            )
-
-        })
-      );
-
-    saveJSON(
-      "ts_costos_v1",
-      mirror
-    );
-
-    return main;
-
-  }catch(e){
-
-    console.error(
-      "Error recuperando costos:",
-      e
-    );
-
-    return normalizeCostObject(
-      readJSON(
-        "theStudioCostos_v4",
-        {}
-      )
-    );
-
-  }
-
-}
-
-/* ================================================================
-   RESPONSIVE
-   ================================================================ */
-
-function fixResponsive(){
-
-  if(
-    document.getElementById(
-      "tsResponsiveFix"
-    )
-  ){
-
-    return;
-
-  }
-
-  const style =
-    document.createElement("style");
-
-  style.id =
-    "tsResponsiveFix";
-
-  style.textContent = `
-
-    html,
-    body{
-      width:100%;
-      max-width:100%;
-      margin:0;
-      padding:0;
-      overflow-x:hidden!important;
-    }
-
-    *,
-    *::before,
-    *::after{
-      box-sizing:border-box;
-    }
-
-    img,
-    video,
-    canvas,
-    svg{
-      max-width:100%;
-      height:auto;
-    }
-
-    input,
-    select,
-    textarea,
-    button{
-      max-width:100%;
-    }
-
-    table{
-      max-width:100%;
-    }
-
-    pre,
-    code{
-      max-width:100%;
-      white-space:pre-wrap;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-
-    main,
-    #app,
-    .app,
-    .container,
-    .content,
-    .page,
-    .panel,
-    .card,
-    .section,
-    .wrap,
-    .wrapper{
-      max-width:100%;
-      min-width:0;
-    }
-
-    body > *{
-      min-width:0;
-      max-width:100vw;
-    }
-
-    [style*="width:100vw"]{
-      max-width:100%!important;
-    }
-
-    [style*="min-width"]{
-      min-width:0!important;
-    }
-
-    @media(max-width:720px){
-
-      html,
-      body{
-        font-size:15px;
-      }
-
-      table{
-        font-size:12px;
-      }
-
-      .grid,
-      .grid2,
-      .grid3,
-      .grid4,
-      .kpis,
-      .cards,
-      .form-grid{
-        grid-template-columns:minmax(0,1fr)!important;
-      }
-
-      .row{
-        grid-template-columns:minmax(0,1fr)!important;
-      }
-
-      .toolbar,
-      .actions{
-        flex-wrap:wrap!important;
-      }
-
-      header{
-        max-width:100vw!important;
-        overflow:hidden;
-      }
-
-      nav{
-        max-width:100vw!important;
-        overflow-x:auto!important;
-        overflow-y:hidden!important;
-        -webkit-overflow-scrolling:touch;
-      }
-
-    }
-
-    @media(max-width:420px){
-
-      body{
-        font-size:14px;
-      }
-
-      button,
-      input,
-      select,
-      textarea{
-        font-size:16px;
-      }
-
-    }
-
-  `;
-
-  document.head.appendChild(
-    style
-  );
-
-}
-
-/* ================================================================
-   TEMA ORIGINAL BMW
-   ================================================================ */
-
-function installBMWTheme(){
-
-  if(
-    document.getElementById(
-      "tsBMWTheme"
-    )
-  ){
-
-    return;
-
-  }
-
-  const style =
-    document.createElement("style");
-
-  style.id =
-    "tsBMWTheme";
-
-  style.textContent = `
-
-    :root{
-
-      --ts-navy:#07111f;
-      --ts-navy2:#080f1a;
-      --ts-card:#0d1725;
-      --ts-input:#111e2e;
-      --ts-blue:#1769ff;
-      --ts-blue2:#0b4fc4;
-      --ts-electric:#4d9aff;
-      --ts-white:#eef4fb;
-      --ts-white2:#f4f8fc;
-      --ts-muted:#aebed2;
-      --ts-border:#24364c;
-      --ts-red:#e05252;
-      --ts-green:#00a878;
-
-    }
-
-    body{
-      background:var(--ts-navy)!important;
-      color:var(--ts-white)!important;
-    }
-
-    header{
-
-      background:
-        linear-gradient(
-          135deg,
-          #050a12 0%,
-          #0b1b32 55%,
-          #123d72 100%
-        )!important;
-
-      color:var(--ts-white)!important;
-
-    }
-
-    main,
-    section,
-    article{
-      color:var(--ts-white);
-    }
-
-    .card,
-    .panel,
-    .section,
-    .box,
-    .kpi,
-    .stat{
-
-      background:var(--ts-card)!important;
-      border-color:var(--ts-border)!important;
-
-    }
-
-    input,
-    select,
-    textarea{
-
-      background:var(--ts-input)!important;
-      color:var(--ts-white)!important;
-      border-color:var(--ts-border)!important;
-
-    }
-
-    input::placeholder,
-    textarea::placeholder{
-      color:#73869e!important;
-    }
-
-    button{
-      border-color:transparent!important;
-    }
-
-    button:not([class*="danger"]){
-
-      background:var(--ts-blue)!important;
-      color:white!important;
-
-    }
-
-    nav button{
-
-      background:#142337!important;
-      color:var(--ts-electric)!important;
-
-    }
-
-    nav button.active,
-    nav button.selected,
-    nav button[aria-selected="true"]{
-
-      background:var(--ts-blue)!important;
-      color:white!important;
-
-    }
-
-    table{
-      color:var(--ts-white)!important;
-    }
-
-    th{
-      color:var(--ts-muted)!important;
-    }
-
-    td{
-      border-color:var(--ts-border)!important;
-    }
-
-    .danger,
-    .btn-danger,
-    button[class*="danger"]{
-
-      background:#351719!important;
-      color:#ffb4b4!important;
-
-    }
-
-    .success,
-    .btn-success{
-
-      background:#0c2a23!important;
-      color:#8ff0d3!important;
-
-    }
-
-  `;
-
-  document.head.appendChild(
-    style
-  );
-
-}
-
-/* ================================================================
-   TEMA JARVIS
-   ================================================================ */
-
-function installJARVISTheme(){
-
-  if(
-    document.getElementById(
-      "tsJARVISTheme"
-    )
-  ){
-
-    return;
-
-  }
-
-  const style =
-    document.createElement("style");
-
-  style.id =
-    "tsJARVISTheme";
-
-  style.textContent = `
-
-    :root{
-
-      --jarvis-bg:#02070d;
-      --jarvis-bg2:#06121c;
-      --jarvis-panel:#071923;
-      --jarvis-panel2:#0a202d;
-      --jarvis-blue:#00bfff;
-      --jarvis-blue2:#008cff;
-      --jarvis-cyan:#48e7ff;
-      --jarvis-text:#e9fbff;
-      --jarvis-muted:#83aebb;
-      --jarvis-border:#104456;
-      --jarvis-glow:rgba(0,191,255,.42);
-
-    }
-
-    html,
-    body{
-
-      background:
-        radial-gradient(
-          circle at 50% -20%,
-          #0c3044 0%,
-          #02070d 48%,
-          #010408 100%
-        )!important;
-
-      color:
-        var(--jarvis-text)!important;
-
-    }
-
-    body{
-
-      position:relative;
-
-    }
-
-    body::before{
-
-      content:"";
-
-      position:fixed;
-
-      inset:0;
-
-      pointer-events:none;
-
-      z-index:2147483000;
-
-      background:
-
-        linear-gradient(
-          rgba(0,191,255,.018) 50%,
-          transparent 50%
-        );
-
-      background-size:
-        100% 4px;
-
-      mix-blend-mode:
-        screen;
-
-    }
-
-    body::after{
-
-      content:"THE STUDIO // J.A.R.V.I.S.";
-
-      position:fixed;
-
-      right:12px;
-
-      top:8px;
-
-      z-index:2147483001;
-
-      pointer-events:none;
-
-      font:
-        800 9px
-        system-ui;
-
-      letter-spacing:
-        2px;
-
-      color:
-        rgba(72,231,255,.55);
-
-      text-shadow:
-        0 0 10px
-        rgba(0,191,255,.7);
-
-    }
-
-    header{
-
-      background:
-        linear-gradient(
-          135deg,
-          #01070c,
-          #06202d 52%,
-          #063d55
-        )!important;
-
-      border-bottom:
-        1px solid
-        var(--jarvis-border)!important;
-
-      box-shadow:
-        0 0 28px
-        rgba(0,191,255,.18)!important;
-
-    }
-
-    .card,
-    .panel,
-    .section,
-    .box,
-    .kpi,
-    .stat{
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(7,25,35,.97),
-          rgba(3,13,20,.97)
-        )!important;
-
-      border:
-        1px solid
-        var(--jarvis-border)!important;
-
-      box-shadow:
-        inset 0 0 18px
-        rgba(0,191,255,.035),
-        0 8px 30px
-        rgba(0,0,0,.28)!important;
-
-    }
-
-    input,
-    select,
-    textarea{
-
-      background:
-        #04131c!important;
-
-      color:
-        var(--jarvis-text)!important;
-
-      border:
-        1px solid
-        #15506a!important;
-
-      box-shadow:
-        inset 0 0 10px
-        rgba(0,191,255,.04)!important;
-
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus{
-
-      outline:none!important;
-
-      border-color:
-        var(--jarvis-cyan)!important;
-
-      box-shadow:
-        0 0 0 2px
-        rgba(0,191,255,.1),
-        0 0 18px
-        rgba(0,191,255,.22)!important;
-
-    }
-
-    button{
-
-      background:
-        linear-gradient(
-          135deg,
-          #007fc4,
-          #00bfff
-        )!important;
-
-      color:#001018!important;
-
-      box-shadow:
-        0 0 12px
-        rgba(0,191,255,.18)!important;
-
-      font-weight:900!important;
-
-    }
-
-    button:hover{
-
-      background:
-        linear-gradient(
-          135deg,
-          #00bfff,
-          #48e7ff
-        )!important;
-
-      box-shadow:
-        0 0 20px
-        rgba(0,191,255,.42)!important;
-
-    }
-
-    nav button{
-
-      background:
-        #061721!important;
-
-      color:
-        var(--jarvis-cyan)!important;
-
-      border:
-        1px solid
-        #124253!important;
-
-    }
-
-    nav button.active,
-    nav button.selected,
-    nav button[aria-selected="true"]{
-
-      background:
-        linear-gradient(
-          135deg,
-          #006b9f,
-          #00aee5
-        )!important;
-
-      color:#fff!important;
-
-      box-shadow:
-        0 0 18px
-        rgba(0,191,255,.32)!important;
-
-    }
-
-    table{
-
-      color:
-        var(--jarvis-text)!important;
-
-    }
-
-    th{
-
-      color:
-        var(--jarvis-cyan)!important;
-
-    }
-
-    td{
-
-      border-color:
-        #123c4d!important;
-
-    }
-
-    ::-webkit-scrollbar{
-
-      width:7px;
-      height:7px;
-
-    }
-
-    ::-webkit-scrollbar-track{
-
-      background:#02080d;
-
-    }
-
-    ::-webkit-scrollbar-thumb{
-
-      background:#12617d;
-
-      border-radius:99px;
-
-      box-shadow:
-        0 0 8px
-        rgba(0,191,255,.4);
-
-    }
-
-    .tsCard{
-
-      background:
-        linear-gradient(
-          145deg,
-          #071923,
-          #031018
-        )!important;
-
-      border-color:
-        #104456!important;
-
-      box-shadow:
-        inset 0 0 18px
-        rgba(0,191,255,.04),
-        0 10px 35px
-        rgba(0,0,0,.4)!important;
-
-    }
-
-    .tsKpi{
-
-      background:
-        #04131c!important;
-
-      border:
-        1px solid
-        #104456;
-
-    }
-
-    .tsMoney{
-
-      color:
-        var(--jarvis-cyan)!important;
-
-      text-shadow:
-        0 0 12px
-        rgba(0,191,255,.4);
-
-    }
-
-  `;
-
-  document.head.appendChild(
-    style
-  );
-
-}
-
-/* ================================================================
-   FECHA DE REFERENCIA
-   ================================================================ */
-
-function getReferenceDate(){
-
-  const inputs =
-    [
-      ...document.querySelectorAll(
-        'input[type="date"]'
-      )
-    ];
-
-  for(
-    const input of inputs
-  ){
-
-    const parent =
-      input.parentElement;
-
-    const text =
-      normalize(
-        parent?.textContent
-      );
-
-    if(
-      text.includes(
-        "fecha de referencia"
-      )
-    ){
-
-      if(input.value)
-        return input.value;
-
-    }
-
-  }
-
-  for(
-    const input of inputs
-  ){
-
-    if(
-      input.closest("#tsDestajo")
-    )
-      continue;
-
-    if(
-      input.offsetParent!==null &&
-      input.value
-    ){
-
-      return input.value;
-
-    }
-
-  }
-
-  return todayLocal();
-
-}
-
-/* ================================================================
-   SEMANA
-   ================================================================ */
-
-function calculateWeek(reference){
-
-  const prod =
-    getProduction();
-
-  const advances =
-    getAdvances();
-
-  const range =
-    weekRange(reference);
-
-  const programmed =
-    prod.filter(
-      item=>
-        inWeek(
-          item.fecha ??
-          item.date,
-          reference
-        )
-    );
-
-  const programado =
-    programmed.reduce(
-      (total,item)=>
-        total+
-        num(
-          item.programado ??
-          item.piezasProgramadas ??
-          item.cantidad ??
-          item.qty
-        ),
-      0
-    );
-
-  const empaqueRecords =
-    advances.filter(item=>{
-
-      const date =
-        item.fecha ??
-        item.fechaHora ??
-        item.date;
-
-      if(
-        !inWeek(
-          date,
-          reference
-        )
-      ){
-
-        return false;
-
-      }
-
-      return normalize(
-        item.siguienteProceso ??
-        item.procesoNuevo ??
-        item.procesoDestino ??
-        item.destino ??
-        ""
-      ) ===
-      "empaque";
-
-    });
-
-  const empaque =
-    empaqueRecords.reduce(
-      (total,item)=>
-        total+
-        num(
-          item.piezas ??
-          item.cantidad ??
-          item.qty
-        ),
-      0
-    );
-
-  const auditoriaRecords =
-    advances.filter(item=>{
-
-      const date =
-        item.fecha ??
-        item.fechaHora ??
-        item.date;
-
-      if(
-        !inWeek(
-          date,
-          reference
-        )
-      ){
-
-        return false;
-
-      }
-
-      return normalize(
-        item.siguienteProceso ??
-        item.procesoNuevo ??
-        item.procesoDestino ??
-        item.destino ??
-        ""
-      ) ===
-      "auditoria";
-
-    });
-
-  const auditoria =
-    auditoriaRecords.reduce(
-      (total,item)=>
-        total+
-        num(
-          item.piezas ??
-          item.cantidad ??
-          item.qty
-        ),
-      0
-    );
-
-  const ots =
-    new Set();
-
-  empaqueRecords.forEach(
-    item=>{
-
-      if(
-        item.ot!==undefined &&
-        item.ot!==null &&
-        String(item.ot).trim()
-      ){
-
-        ots.add(
-          String(item.ot).trim()
-        );
-
-      }
-
-    }
-  );
-
-  return {
-
-    start:range.start,
-    end:range.end,
-    programado,
-    empaque,
-    auditoria,
-    otsEmpaque:ots.size,
-    programmedRecords:programmed,
-    empaqueRecords,
-    auditoriaRecords
-
-  };
-
-}
-
-/* ================================================================
-   DASHBOARD
-   ================================================================ */
-
-function setDashboardMetric(
-  label,
-  value
-){
-
-  const target =
-    normalize(label);
-
-  const leaves =
-    [
-      ...document.querySelectorAll(
-        "body *"
-      )
-    ].filter(
-      el=>
-        el.children.length===0 &&
-        normalize(el.textContent)===target &&
-        el.offsetParent!==null
-    );
-
-  for(
-    const labelEl of leaves
-  ){
-
-    let box =
-      labelEl.parentElement;
-
-    for(
-      let level=0;
-      level<5 && box;
-      level++,
-      box=box.parentElement
-    ){
-
-      const candidates =
-        [
-          ...box.querySelectorAll(
-            "strong,b,h1,h2,h3,h4,h5,.value,.number,.num,.stat-value"
-          )
-        ]
-        .filter(
-          el=>
-            el!==labelEl &&
-            el.offsetParent!==null &&
-            /\d/.test(
-              el.textContent
-            )
-        );
-
-      if(
-        candidates.length
-      ){
-
-        candidates.sort(
-          (a,b)=>
-            a.textContent.length-
-            b.textContent.length
-        );
-
-        candidates[0].textContent =
-          new Intl.NumberFormat(
-            "es-MX"
-          ).format(
-            value
-          );
-
-        return true;
-
-      }
-
-    }
-
-  }
-
-  return false;
-
-}
-
-/* ================================================================
-   REFRESCAR
-   ================================================================ */
-
-function refreshStudio(){
-
-  try{
-
-    const reference =
-      getReferenceDate();
-
-    const data =
-      calculateWeek(
-        reference
-      );
-
-    setDashboardMetric(
-      "Programado",
-      data.programado
-    );
-
-    setDashboardMetric(
-      "Empaque para nómina",
-      data.empaque
-    );
-
-    setDashboardMetric(
-      "Auditoría",
-      data.auditoria
-    );
-
-    setDashboardMetric(
-      "OTs con Empaque",
-      data.otsEmpaque
-    );
-
-    installWeekListeners();
-
-    installCostRepair();
-
-  }catch(e){
-
-    console.error(
-      "refreshStudio:",
-      e
-    );
-
-  }
-
-}
-
-/* ================================================================
-   LISTENERS DE SEMANA
-   ================================================================ */
-
-function installWeekListeners(){
-
-  if(
-    window.__TS_WEEK_LISTENERS__
-  ){
-
-    return;
-
-  }
-
-  window.__TS_WEEK_LISTENERS__ =
-    true;
-
-  document.addEventListener(
-    "change",
-    event=>{
-
-      const el =
-        event.target;
-
-      if(
-        el.matches(
-          'input[type="date"]'
-        )
-      ){
-
-        setTimeout(
-          refreshStudio,
-          80
-        );
-
-        setTimeout(
-          installLineEfficiency,
-          100
-        );
-
-      }
-
-    }
-  );
-
-  document.addEventListener(
-    "click",
-    event=>{
-
-      const button =
-        event.target.closest(
-          "button"
-        );
-
-      if(!button)
-        return;
-
-      const text =
-        normalize(
-          button.textContent
-        );
-
-      if(
-        text==="actualizar" ||
-        text.includes(
-          "actualizar"
-        )
-      ){
-
-        setTimeout(
-          refreshStudio,
-          120
-        );
-
-        setTimeout(
-          installLineEfficiency,
-          150
-        );
-
-      }
-
-    }
-  );
-
-}
-
-/* ================================================================
-   REPARACIÓN SEMANAL
-   CORRECCIÓN DEL ERROR QUE FALTABA
-   ================================================================ */
-
-function installWeekRepair(){
-
-  if(
-    window.__TS_WEEK_REPAIR__
-  ){
-
-    return;
-
-  }
-
-  window.__TS_WEEK_REPAIR__ =
-    true;
-
-  /*
-  Esta función existe para que el cargador
-  no se detenga antes de Destajo y Eficiencia.
-  */
-
-  installWeekListeners();
-
-}
-
-/* ================================================================
-   COSTOS + EDITAR MODELO + TIEMPO ESTÁNDAR
-   ================================================================ */
-
-function installCostRepair(){
-
-  const existing =
-    document.getElementById(
-      "tsCostRepair"
-    );
+function TSFixOpenEditor(model){
 
   const costs =
-    migrateAllCosts();
+    TSFixCosts();
 
-  if(existing){
+  const item =
+    costs[model] ||
+    {
+      pes:0,
+      pre:0,
+      min:0
+    };
 
-    renderCostRepair(
-      existing,
-      costs
+  let modal =
+    document.getElementById(
+      "TS_FIX_EDITOR"
     );
 
-    return;
+  if(!modal){
 
-  }
-
-  const heading =
-    [
-      ...document.querySelectorAll(
-        "body *"
-      )
-    ].find(
-      el=>
-        el.children.length===0 &&
-        normalize(
-          el.textContent
-        )==="catalogo de modelos" &&
-        el.offsetParent!==null
-    );
-
-  if(!heading)
-    return;
-
-  let container =
-    heading.parentElement;
-
-  for(
-    let i=0;
-    i<4 &&
-    container &&
-    container.parentElement;
-    i++
-  ){
-
-    container =
-      container.parentElement;
-
-  }
-
-  const panel =
-    document.createElement(
-      "section"
-    );
-
-  panel.id =
-    "tsCostRepair";
-
-  panel.style.cssText = `
-
-    margin:18px 0;
-    padding:18px;
-    border:1px solid #104456;
-    border-radius:20px;
-    background:
-      linear-gradient(
-        145deg,
-        #071923,
-        #031018
+    modal =
+      document.createElement(
+        "div"
       );
-    color:#e9fbff;
-    box-shadow:
-      0 12px 35px #0007,
-      inset 0 0 18px rgba(0,191,255,.04);
 
-  `;
+    modal.id =
+      "TS_FIX_EDITOR";
 
-  container.insertBefore(
-    panel,
-    container.firstChild
-  );
+    modal.innerHTML = `
 
-  renderCostRepair(
-    panel,
-    costs
-  );
+      <div class="TS_FIX_BACK">
 
-}
+        <div class="TS_FIX_MODAL">
 
-/* ================================================================
-   RENDER COSTOS
-   ================================================================ */
+          <div class="TS_FIX_TITLE">
 
-function renderCostRepair(
-  panel,
-  costs
-){
+            <span>
+              ✏️ Editar modelo
+            </span>
 
-  const models =
-    Object.keys(costs)
-    .sort(
-      (a,b)=>
-        a.localeCompare(
-          b,
-          "es"
-        )
+            <button
+              type="button"
+              id="TS_FIX_CLOSE"
+            >
+              ×
+            </button>
+
+          </div>
+
+
+          <div class="TS_FIX_SUB">
+
+            Actualiza costos o tiempo estándar
+            sin perder la información existente.
+
+          </div>
+
+
+          <label>
+            Modelo
+          </label>
+
+          <input
+            id="TS_FIX_MODEL"
+            type="text"
+          >
+
+
+          <label>
+            Costo pespunte $
+          </label>
+
+          <input
+            id="TS_FIX_PES"
+            type="number"
+            min="0"
+            step="0.01"
+          >
+
+
+          <label>
+            Costo preliminar $
+          </label>
+
+          <input
+            id="TS_FIX_PRE"
+            type="number"
+            min="0"
+            step="0.01"
+          >
+
+
+          <label>
+            Tiempo estándar (min)
+          </label>
+
+          <input
+            id="TS_FIX_MIN"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="Ej. 4.50"
+          >
+
+
+          <button
+            type="button"
+            id="TS_FIX_SAVE"
+            class="TS_FIX_SAVE"
+          >
+            💾 Guardar cambios
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+    document.body.appendChild(
+      modal
     );
-
-  panel.innerHTML = `
-
-    <div
-      style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        gap:12px;
-        flex-wrap:wrap;
-      "
-    >
-
-      <div>
-
-        <div
-          style="
-            font-size:21px;
-            font-weight:900;
-            color:#48e7ff;
-            text-shadow:0 0 12px #00bfff55;
-          "
-        >
-
-          🤖 Catálogo JARVIS · Modelos
-
-        </div>
-
-        <div
-          style="
-            color:#83aebb;
-            font-size:13px;
-            margin-top:4px;
-          "
-        >
-
-          Modelo · Pespunte · Preliminar ·
-          Tiempo estándar
-
-        </div>
-
-      </div>
-
-      <div
-        style="
-          background:#063d55;
-          color:#48e7ff;
-          border-radius:999px;
-          padding:7px 12px;
-          font-weight:800;
-          font-size:12px;
-          box-shadow:0 0 14px #00bfff33;
-        "
-      >
-
-        ${models.length}
-        modelos
-
-      </div>
-
-    </div>
-
-    <div
-      style="
-        margin-top:15px;
-        display:grid;
-        grid-template-columns:
-          minmax(120px,1.2fr)
-          minmax(95px,1fr)
-          minmax(95px,1fr)
-          minmax(100px,1fr)
-          90px;
-        gap:8px;
-        align-items:center;
-      "
-      class="tsCostGrid"
-    >
-
-      <div class="tsCostHead">
-        MODELO
-      </div>
-
-      <div class="tsCostHead">
-        PESpunte
-      </div>
-
-      <div class="tsCostHead">
-        PRELIMINAR
-      </div>
-
-      <div class="tsCostHead">
-        TIEMPO STD.
-      </div>
-
-      <div class="tsCostHead">
-        ACCIÓN
-      </div>
-
-      ${
-        models.map(
-          model=>{
-
-            const item =
-              costs[model] ||
-              {pes:0,pre:0,min:0};
-
-            return `
-
-              <div
-                class="tsCostCell"
-              >
-                ${esc(model)}
-              </div>
-
-              <div
-                class="tsCostCell"
-              >
-                ${money(item.pes)}
-              </div>
-
-              <div
-                class="tsCostCell"
-              >
-                ${money(item.pre)}
-              </div>
-
-              <div
-                class="tsCostCell"
-              >
-                ${
-                  num(item.min)
-                    ? num(item.min)+" min"
-                    : "—"
-                }
-              </div>
-
-              <div
-                class="tsCostCell"
-              >
-
-                <button
-                  type="button"
-                  class="tsEditCost"
-                  data-model="${esc(model)}"
-                >
-
-                  ✏️
-
-                </button>
-
-              </div>
-
-            `;
-
-          }
-        ).join("")
-      }
-
-    </div>
-
-    <div
-      style="
-        margin-top:18px;
-        padding-top:18px;
-        border-top:1px solid #104456;
-      "
-    >
-
-      <div
-        style="
-          font-size:16px;
-          font-weight:900;
-          margin-bottom:10px;
-          color:#48e7ff;
-        "
-      >
-
-        ✏️ Agregar / editar modelo
-
-      </div>
-
-      <div
-        class="tsCostForm"
-        style="
-          display:grid;
-          grid-template-columns:
-            1.35fr 1fr 1fr 1fr auto;
-          gap:9px;
-        "
-      >
-
-        <input
-          id="tsCostModel"
-          placeholder="Modelo"
-        >
-
-        <input
-          id="tsCostPes"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="Pespunte"
-        >
-
-        <input
-          id="tsCostPre"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="Preliminar"
-        >
-
-        <input
-          id="tsCostMin"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="Tiempo estándar min"
-        >
-
-        <button
-          type="button"
-          id="tsSaveCost"
-        >
-
-          Guardar
-
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
-
-  if(
-    !document.getElementById(
-      "tsCostRepairStyle"
-    )
-  ){
 
     const style =
-      document.createElement("style");
+      document.createElement(
+        "style"
+      );
 
     style.id =
-      "tsCostRepairStyle";
+      "TS_FIX_STYLE";
 
     style.textContent = `
 
-      #tsCostRepair input{
+      #TS_FIX_EDITOR{
 
-        width:100%;
-        min-width:0;
-        padding:11px;
-        border:1px solid #15506a;
-        border-radius:10px;
-        background:#04131c;
-        color:#e9fbff;
-        font:inherit;
+        position:fixed;
+
+        inset:0;
+
+        z-index:2147483647;
+
+        display:none;
 
       }
 
-      #tsCostRepair button{
+      #TS_FIX_EDITOR.show{
+
+        display:block;
+
+      }
+
+      .TS_FIX_BACK{
+
+        position:absolute;
+
+        inset:0;
+
+        background:
+          rgba(0,0,0,.78);
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        padding:20px;
+
+        backdrop-filter:
+          blur(8px);
+
+      }
+
+      .TS_FIX_MODAL{
+
+        width:
+          min(
+            520px,
+            100%
+          );
+
+        max-height:
+          90vh;
+
+        overflow:auto;
+
+        background:
+          linear-gradient(
+            145deg,
+            #071923,
+            #020a10
+          );
+
+        color:#e9fbff;
+
+        border:
+          1px solid #104456;
+
+        border-radius:22px;
+
+        padding:20px;
+
+        box-shadow:
+          0 25px 80px #000c,
+          0 0 35px
+          rgba(0,191,255,.25);
+
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+
+      }
+
+      .TS_FIX_TITLE{
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        font-size:21px;
+
+        font-weight:900;
+
+        color:#48e7ff;
+
+        margin-bottom:5px;
+
+      }
+
+      #TS_FIX_CLOSE{
+
+        width:40px;
+
+        height:40px;
 
         border:0;
-        border-radius:10px;
-        padding:10px 12px;
-        background:#00aee5;
-        color:#001018;
-        font-weight:900;
+
+        border-radius:12px;
+
+        background:#092534!important;
+
+        color:#48e7ff!important;
+
+        font-size:25px;
+
         cursor:pointer;
 
       }
 
-      #tsCostRepair .tsEditCost{
+      .TS_FIX_SUB{
 
-        background:#063d55!important;
-        color:#48e7ff!important;
-        padding:8px 10px;
-        white-space:nowrap;
+        color:#83aebb;
+
+        font-size:13px;
+
+        margin-bottom:18px;
 
       }
 
-      #tsCostRepair .tsCostHead{
+      .TS_FIX_MODAL label{
+
+        display:block;
+
+        margin:
+          12px 0 6px;
 
         color:#48e7ff;
-        font-size:11px;
+
+        font-size:12px;
+
         font-weight:900;
-        padding:6px;
+
+        text-transform:uppercase;
 
       }
 
-      #tsCostRepair .tsCostCell{
+      .TS_FIX_MODAL input{
 
-        padding:10px 6px;
-        border-top:1px solid #104456;
-        min-width:0;
-        overflow-wrap:anywhere;
+        width:100%;
+
+        box-sizing:border-box;
+
+        padding:13px;
+
+        border-radius:12px;
+
+        border:
+          1px solid #15506a;
+
+        background:#04131c;
+
+        color:#e9fbff;
+
+        font-size:16px;
+
+        outline:none;
 
       }
 
-      @media(max-width:760px){
+      .TS_FIX_MODAL input:focus{
 
-        #tsCostRepair .tsCostGrid{
+        border-color:#48e7ff;
 
-          grid-template-columns:
-            1fr 1fr!important;
+        box-shadow:
+          0 0 15px
+          rgba(0,191,255,.2);
 
-        }
+      }
 
-        #tsCostRepair .tsCostForm{
+      .TS_FIX_SAVE{
 
-          grid-template-columns:
-            1fr!important;
+        width:100%;
 
-        }
+        margin-top:20px;
+
+        padding:14px;
+
+        border:0;
+
+        border-radius:12px;
+
+        background:
+          linear-gradient(
+            135deg,
+            #007fc4,
+            #00bfff
+          )!important;
+
+        color:#001018!important;
+
+        font-weight:900;
+
+        font-size:16px;
+
+        cursor:pointer;
 
       }
 
@@ -2742,84 +614,38 @@ function renderCostRepair(
       style
     );
 
-  }
+    document
+    .getElementById(
+      "TS_FIX_CLOSE"
+    )
+    .onclick = ()=>{
 
-  panel
-  .querySelectorAll(
-    ".tsEditCost"
-  )
-  .forEach(
-    button=>{
+      modal.classList.remove(
+        "show"
+      );
 
-      button.onclick=()=>{
+    };
 
-        const model =
-          button.dataset.model;
+    document
+    .getElementById(
+      "TS_FIX_SAVE"
+    )
+    .onclick = ()=>{
 
-        const item =
-          costs[model] ||
-          {
-            pes:0,
-            pre:0,
-            min:0
-          };
+      const oldModel =
+        modal
+        .dataset
+        .oldModel;
 
+      const newModel =
         document
         .getElementById(
-          "tsCostModel"
-        )
-        .value =
-          model;
-
-        document
-        .getElementById(
-          "tsCostPes"
-        )
-        .value =
-          num(item.pes);
-
-        document
-        .getElementById(
-          "tsCostPre"
-        )
-        .value =
-          num(item.pre);
-
-        document
-        .getElementById(
-          "tsCostMin"
-        )
-        .value =
-          num(item.min);
-
-        document
-        .getElementById(
-          "tsCostModel"
-        )
-        .focus();
-
-      };
-
-    }
-  );
-
-  document
-  .getElementById(
-    "tsSaveCost"
-  )
-  ?.addEventListener(
-    "click",
-    ()=>{
-
-      const model =
-        document
-        .getElementById(
-          "tsCostModel"
+          "TS_FIX_MODEL"
         )
         .value
         .trim();
 
-      if(!model){
+      if(!newModel){
 
         alert(
           "Escribe el nombre del modelo."
@@ -2830,75 +656,74 @@ function renderCostRepair(
       }
 
       const pes =
-        num(
+        TSFixNum(
           document
           .getElementById(
-            "tsCostPes"
+            "TS_FIX_PES"
           )
           .value
         );
 
       const pre =
-        num(
+        TSFixNum(
           document
           .getElementById(
-            "tsCostPre"
+            "TS_FIX_PRE"
           )
           .value
         );
 
-      const minValue =
-        num(
+      const min =
+        TSFixNum(
           document
           .getElementById(
-            "tsCostMin"
+            "TS_FIX_MIN"
           )
           .value
         );
 
       const current =
-        normalizeCostObject(
-          readJSON(
-            "theStudioCostos_v4",
-            {}
-          )
-        );
+        TSFixCosts();
 
-      const oldName =
+      const existing =
         Object.keys(current)
         .find(
           x=>
-            normalize(x)===
-            normalize(model)
+            TSFixNormalize(x) ===
+            TSFixNormalize(oldModel)
         );
 
       if(
-        oldName &&
-        oldName!==model
+        existing &&
+        TSFixNormalize(existing) !==
+        TSFixNormalize(newModel)
       ){
 
         delete current[
-          oldName
+          existing
         ];
 
       }
 
-      current[model] = {
+      current[newModel] = {
 
         pes:pes,
 
         pre:pre,
 
-        min:minValue
+        min:min
 
       };
 
-      saveJSON(
+      TSFixSaveJSON(
         "theStudioCostos_v4",
         current
       );
 
-      saveJSON(
+
+      /* espejo para compatibilidad */
+
+      TSFixSaveJSON(
         "ts_costos_v1",
         Object.keys(current)
         .map(name=>({
@@ -2906,22 +731,31 @@ function renderCostRepair(
           modelo:name,
 
           pespunte:
-            num(
+            TSFixNum(
               current[name].pes
             ),
 
           preliminar:
-            num(
+            TSFixNum(
               current[name].pre
             ),
 
           min:
-            num(
+            TSFixNum(
               current[name].min
             )
 
         }))
       );
+
+
+      modal.classList.remove(
+        "show"
+      );
+
+
+      TSFixRefreshCatalog();
+
 
       try{
 
@@ -2939,2886 +773,776 @@ function renderCostRepair(
 
               storageArea:
                 localStorage
+
             }
           )
         );
 
       }catch{}
 
-      renderCostRepair(
-        panel,
-        current
+    };
+
+  }
+
+  modal.dataset.oldModel =
+    model;
+
+  document
+  .getElementById(
+    "TS_FIX_MODEL"
+  )
+  .value =
+    model;
+
+  document
+  .getElementById(
+    "TS_FIX_PES"
+  )
+  .value =
+    TSFixNum(item.pes);
+
+  document
+  .getElementById(
+    "TS_FIX_PRE"
+  )
+  .value =
+    TSFixNum(item.pre);
+
+  document
+  .getElementById(
+    "TS_FIX_MIN"
+  )
+  .value =
+    TSFixNum(item.min);
+
+  modal.classList.add(
+    "show"
+  );
+
+}
+
+
+/* ==============================================================
+   ENCONTRAR CATÁLOGO REAL
+   ============================================================== */
+
+function TSFixFindCatalog(){
+
+  const headings =
+    [
+      ...document.querySelectorAll(
+        "body *"
+      )
+    ];
+
+  const heading =
+    headings.find(
+      el=>{
+
+        if(
+          el.children.length!==0
+        )
+          return false;
+
+        if(
+          el.offsetParent===null
+        )
+          return false;
+
+        const text =
+          TSFixNormalize(
+            el.textContent
+          );
+
+        return (
+          text ===
+            "catalogo de costos" ||
+
+          text ===
+            "catalogo de modelos"
+
+        );
+
+      }
+    );
+
+  if(!heading)
+    return null;
+
+  let node =
+    heading;
+
+  for(
+    let i=0;
+    i<8;
+    i++
+  ){
+
+    if(!node)
+      break;
+
+    const text =
+      TSFixNormalize(
+        node.textContent
       );
 
-      setTimeout(
-        installDestajo,
-        80
-      );
+    if(
+      text.includes(
+        "guardar / actualizar modelo"
+      ) &&
+      (
+        text.includes(
+          "pespunte"
+        ) ||
+        text.includes(
+          "preliminar"
+        )
+      )
+    ){
+
+      return node;
 
     }
-  );
 
-}
-
-/* ================================================================
-   EFICIENCIA POR LÍNEA
-   PROGRAMADO VS SALIDA DE PESpunte
-   ================================================================ */
-
-function getLineName(item){
-
-  return String(
-    item.linea ??
-    item.line ??
-    item.lineaProduccion ??
-    item.lineaNombre ??
-    item.Linea ??
-    ""
-  ).trim();
-
-}
-
-function sameLine(item,line){
-
-  const a =
-    normalize(
-      getLineName(item)
-    );
-
-  const b =
-    normalize(line);
-
-  if(
-    a===b
-  ){
-
-    return true;
+    node =
+      node.parentElement;
 
   }
-
-  if(
-    b==="linea a"
-  ){
-
-    return (
-      a==="a" ||
-      a==="lineaa" ||
-      a==="linea  a"
-    );
-
-  }
-
-  if(
-    b==="linea b"
-  ){
-
-    return (
-      a==="b" ||
-      a==="lineab" ||
-      a==="linea  b"
-    );
-
-  }
-
-  return false;
-
-}
-
-function getItemDate(item){
-
-  return localDateString(
-    item.fecha ??
-    item.date ??
-    item.fechaHora ??
-    item.createdAt ??
-    ""
-  );
-
-}
-
-function isSalidaPespunte(item){
-
-  const destination =
-    normalize(
-      item.siguienteProceso ??
-      item.procesoNuevo ??
-      item.procesoDestino ??
-      item.destino ??
-      item.hasta ??
-      item.to ??
-      ""
-    );
-
-  const source =
-    normalize(
-      item.procesoAnterior ??
-      item.procesoOrigen ??
-      item.proceso ??
-      item.desde ??
-      item.from ??
-      ""
-    );
-
-  /*
-  Detectamos explícitamente:
-  Salida pespunte / salida de pespunte.
-  */
-
-  const salida =
-    destination.includes(
-      "salida pespunte"
-    ) ||
-    destination.includes(
-      "salida de pespunte"
-    ) ||
-    destination==="salidapespunte" ||
-    destination==="salidadepespunte";
-
-  if(salida)
-    return true;
-
-  /*
-  También aceptamos movimientos cuyo origen
-  sea Pespunte y cuyo proceso siguiente sea
-  Clasificación, porque en algunas versiones
-  el avance puede quedar registrado así.
-  */
-
-  const origenPespunte =
-    source==="pespunte" ||
-    source.includes("pespunte");
-
-  const siguienteClasificacion =
-    destination==="clasificacion" ||
-    destination.includes("clasificacion");
 
   return (
-    origenPespunte &&
-    siguienteClasificacion
+    heading.parentElement
   );
 
 }
 
-function getProgrammedForLine(
-  date,
-  line
-){
 
-  return getProduction()
-    .filter(
-      item=>
-        getItemDate(item)===date &&
-        sameLine(item,line)
-    )
-    .reduce(
-      (total,item)=>
-        total+
-        num(
-          item.programado ??
-          item.piezasProgramadas ??
-          item.cantidad ??
-          item.qty ??
-          item.piezas
-        ),
-      0
-    );
+/* ==============================================================
+   INSERTAR TIEMPO ESTÁNDAR EN EL FORMULARIO
+   ============================================================== */
 
-}
+function TSFixInstallTimeField(){
 
-function getSalidaPespunteForLine(
-  date,
-  line
-){
+  const catalog =
+    TSFixFindCatalog();
 
-  return getAdvances()
-    .filter(
-      item=>
-        getItemDate(item)===date &&
-        sameLine(item,line) &&
-        isSalidaPespunte(item)
-    )
-    .reduce(
-      (total,item)=>
-        total+
-        num(
-          item.piezas ??
-          item.cantidad ??
-          item.qty ??
-          item.pares
-        ),
-      0
-    );
-
-}
-
-function lineEfficiency(
-  programado,
-  salida
-){
-
-  const p =
-    num(programado);
-
-  if(p<=0)
-    return 0;
-
-  return (
-    num(salida) /
-    p
-  )*
-  100;
-
-}
-
-function installLineEfficiency(){
-
-  const old =
-    document.getElementById(
-      "tsLineEfficiency"
-    );
-
-  if(old){
-
-    renderLineEfficiency(
-      old
-    );
-
+  if(!catalog)
     return;
 
-  }
+  if(
+    document.getElementById(
+      "TS_FIX_TIME_FORM"
+    )
+  )
+    return;
 
-  const panel =
+  const inputs =
+    [
+      ...catalog.querySelectorAll(
+        "input"
+      )
+    ];
+
+  if(!inputs.length)
+    return;
+
+  const modelInput =
+    inputs.find(
+      x=>
+        TSFixNormalize(
+          x.placeholder
+        ).includes(
+          "verona"
+        )
+    ) ||
+    inputs[0];
+
+  if(!modelInput)
+    return;
+
+  const field =
     document.createElement(
-      "section"
+      "div"
     );
 
-  panel.id =
-    "tsLineEfficiency";
+  field.id =
+    "TS_FIX_TIME_FORM";
 
-  panel.innerHTML =
-    "";
+  field.style.cssText = `
 
-  panel.style.cssText = `
+    margin-top:12px;
 
-    margin:18px 0;
-
-    padding:18px;
+    padding:12px;
 
     border:
       1px solid #104456;
 
-    border-radius:20px;
+    border-radius:14px;
 
-    background:
-      linear-gradient(
-        145deg,
-        #071923,
-        #031018
-      );
-
-    color:#e9fbff;
-
-    box-shadow:
-      0 12px 35px #0007,
-      inset 0 0 18px
-      rgba(0,191,255,.04);
+    background:#04131c;
 
   `;
 
-  /*
-  Intentamos colocar el panel cerca del contenido
-  principal sin alterar el HTML original.
-  */
+  field.innerHTML = `
 
-  const target =
-    document.querySelector(
-      "main"
-    ) ||
-    document.querySelector(
-      "#app"
-    ) ||
-    document.body;
+    <div
+      style="
+        color:#48e7ff;
+        font-size:12px;
+        font-weight:900;
+        margin-bottom:7px;
+      "
+    >
+      TIEMPO ESTÁNDAR DEL MODELO · MINUTOS
+    </div>
 
-  if(
-    target &&
-    target.firstElementChild
-  ){
+    <input
+      id="TS_FIX_TIME_INPUT"
+      type="number"
+      min="0"
+      step="0.01"
+      placeholder="Ej. 4.50"
+      style="
+        width:100%;
+        box-sizing:border-box;
+        padding:12px;
+        border:1px solid #15506a;
+        border-radius:10px;
+        background:#071923;
+        color:#e9fbff;
+        font-size:16px;
+      "
+    >
 
-    target.insertBefore(
-      panel,
-      target.firstElementChild
+  `;
+
+  const saveButton =
+    [
+      ...catalog.querySelectorAll(
+        "button"
+      )
+    ].find(
+      b=>
+        TSFixNormalize(
+          b.textContent
+        ).includes(
+          "guardar"
+        )
     );
+
+  if(saveButton){
+
+    saveButton.parentElement
+      ?.insertBefore(
+        field,
+        saveButton
+      );
 
   }else{
 
-    document.body.appendChild(
-      panel
+    catalog.appendChild(
+      field
     );
 
   }
 
-  renderLineEfficiency(
-    panel
-  );
 
-}
+  if(saveButton){
 
-function renderLineEfficiency(
-  panel
-){
+    saveButton.addEventListener(
+      "click",
+      ()=>{
 
-  const date =
-    getReferenceDate() ||
-    todayLocal();
+        setTimeout(()=>{
 
-  const AProgramado =
-    getProgrammedForLine(
-      date,
-      "Línea A"
-    );
+          const model =
+            modelInput.value.trim();
 
-  const BProgramado =
-    getProgrammedForLine(
-      date,
-      "Línea B"
-    );
+          if(!model)
+            return;
 
-  const ASalida =
-    getSalidaPespunteForLine(
-      date,
-      "Línea A"
-    );
+          const time =
+            TSFixNum(
+              document
+              .getElementById(
+                "TS_FIX_TIME_INPUT"
+              )
+              ?.value
+            );
 
-  const BSalida =
-    getSalidaPespunteForLine(
-      date,
-      "Línea B"
-    );
+          if(time<=0)
+            return;
 
-  const AEff =
-    lineEfficiency(
-      AProgramado,
-      ASalida
-    );
+          const current =
+            TSFixCosts();
 
-  const BEff =
-    lineEfficiency(
-      BProgramado,
-      BSalida
-    );
+          const existing =
+            Object.keys(current)
+            .find(
+              x=>
+                TSFixNormalize(x)===
+                TSFixNormalize(model)
+            );
 
-  const totalProgramado =
-    AProgramado+
-    BProgramado;
+          const name =
+            existing || model;
 
-  const totalSalida =
-    ASalida+
-    BSalida;
+          current[name] = {
 
-  const totalEff =
-    lineEfficiency(
-      totalProgramado,
-      totalSalida
-    );
+            pes:
+              TSFixNum(
+                current[name]?.pes
+              ),
 
-  const effClass=value=>{
+            pre:
+              TSFixNum(
+                current[name]?.pre
+              ),
 
-    if(value>=100)
-      return "100";
+            min:time
 
-    if(value>=80)
-      return "80";
+          };
 
-    if(value>=60)
-      return "60";
-
-    return "low";
-
-  };
-
-  panel.innerHTML = `
-
-    <div
-      style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        gap:12px;
-        flex-wrap:wrap;
-      "
-    >
-
-      <div>
-
-        <div
-          style="
-            font-size:21px;
-            font-weight:900;
-            color:#48e7ff;
-            text-shadow:
-              0 0 12px
-              rgba(0,191,255,.5);
-          "
-        >
-
-          ⚡ JARVIS · Carga de líneas
-
-        </div>
-
-        <div
-          style="
-            color:#83aebb;
-            font-size:13px;
-            margin-top:4px;
-          "
-        >
-
-          ${esc(date)}
-          · Programado vs Salida de Pespunte
-
-        </div>
-
-      </div>
-
-      <div
-        style="
-          border:
-            1px solid #15506a;
-          border-radius:999px;
-          padding:7px 12px;
-          color:#48e7ff;
-          font-weight:900;
-          background:#04131c;
-        "
-      >
-
-        EFICIENCIA
-
-      </div>
-
-    </div>
-
-    <div
-      class="tsEffGrid"
-      style="
-        display:grid;
-        grid-template-columns:
-          repeat(3,minmax(0,1fr));
-        gap:10px;
-        margin-top:15px;
-      "
-    >
-
-      ${lineEfficiencyCard(
-        "LÍNEA A",
-        AProgramado,
-        ASalida,
-        AEff,
-        effClass(AEff)
-      )}
-
-      ${lineEfficiencyCard(
-        "LÍNEA B",
-        BProgramado,
-        BSalida,
-        BEff,
-        effClass(BEff)
-      )}
-
-      ${lineEfficiencyCard(
-        "GENERAL",
-        totalProgramado,
-        totalSalida,
-        totalEff,
-        effClass(totalEff)
-      )}
-
-    </div>
-
-    <div
-      style="
-        margin-top:12px;
-        padding:11px;
-        border:
-          1px solid #104456;
-        border-radius:12px;
-        background:#04131c;
-        color:#83aebb;
-        font-size:12px;
-      "
-    >
-
-      <b style="color:#48e7ff">
-        Fórmula:
-      </b>
-
-      Salida de Pespunte ÷ Programado × 100
-
-    </div>
-
-    <style>
-
-      #tsLineEfficiency
-      .tsEffCard{
-
-        padding:14px;
-
-        border:
-          1px solid #104456;
-
-        border-radius:15px;
-
-        background:
-          linear-gradient(
-            145deg,
-            #08212d,
-            #031018
+          TSFixSaveJSON(
+            "theStudioCostos_v4",
+            current
           );
 
-      }
+          TSFixRefreshCatalog();
 
-      #tsLineEfficiency
-      .tsEffPct{
+        },150);
 
-        font:
-          900 30px
-          system-ui;
-
-        color:#48e7ff;
-
-        text-shadow:
-          0 0 15px
-          rgba(0,191,255,.55);
-
-      }
-
-      #tsLineEfficiency
-      .tsEffBar{
-
-        height:9px;
-
-        margin-top:10px;
-
-        border-radius:99px;
-
-        overflow:hidden;
-
-        background:#06141d;
-
-        border:
-          1px solid #104456;
-
-      }
-
-      #tsLineEfficiency
-      .tsEffFill{
-
-        height:100%;
-
-        border-radius:99px;
-
-        background:
-          linear-gradient(
-            90deg,
-            #007fc4,
-            #48e7ff
-          );
-
-        box-shadow:
-          0 0 12px
-          rgba(0,191,255,.65);
-
-      }
-
-      @media(max-width:720px){
-
-        #tsLineEfficiency
-        .tsEffGrid{
-
-          grid-template-columns:
-            1fr!important;
-
-        }
-
-      }
-
-    </style>
-
-  `;
-
-}
-
-function lineEfficiencyCard(
-  title,
-  programmed,
-  salida,
-  efficiency,
-  cls
-){
-
-  const bar =
-    Math.min(
-      Math.max(
-        num(efficiency),
-        0
-      ),
-      100
-    );
-
-  return `
-
-    <div
-      class="tsEffCard"
-    >
-
-      <div
-        style="
-          color:#83aebb;
-          font-size:11px;
-          font-weight:900;
-          letter-spacing:1px;
-        "
-      >
-
-        ${title}
-
-      </div>
-
-      <div
-        class="tsEffPct"
-      >
-
-        ${num(efficiency).toFixed(1)}%
-
-      </div>
-
-      <div
-        style="
-          display:grid;
-          grid-template-columns:1fr 1fr;
-          gap:8px;
-          margin-top:8px;
-        "
-      >
-
-        <div>
-
-          <div
-            style="
-              color:#83aebb;
-              font-size:10px;
-            "
-          >
-            PROGRAMADO
-          </div>
-
-          <b>
-            ${new Intl.NumberFormat("es-MX")
-              .format(programmed)}
-          </b>
-
-        </div>
-
-        <div>
-
-          <div
-            style="
-              color:#83aebb;
-              font-size:10px;
-            "
-          >
-            SALIDA PESpUNTE
-          </div>
-
-          <b>
-            ${new Intl.NumberFormat("es-MX")
-              .format(salida)}
-          </b>
-
-        </div>
-
-      </div>
-
-      <div
-        class="tsEffBar"
-      >
-
-        <div
-          class="tsEffFill"
-          style="
-            width:${bar}%;
-          "
-        ></div>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-/* ================================================================
-   DESTAJO
-   ================================================================ */
-
-function installDestajo(){
-
-  if(
-    document.getElementById(
-      "tsDestajoBtn"
-    )
-  ){
-
-    return;
-
-  }
-
-  const KEYC =
-    "theStudioCostos_v4";
-
-  const KEYR =
-    "ts_destajo_v1";
-
-  const KEYW =
-    "ts_cierres_v1";
-
-  function costsArray(){
-
-    const object =
-      normalizeCostObject(
-        readJSON(
-          KEYC,
-          {}
-        )
-      );
-
-    return Object.keys(object)
-    .map(model=>({
-
-      modelo:model,
-
-      pespunte:
-        num(object[model].pes),
-
-      preliminar:
-        num(object[model].pre),
-
-      min:
-        num(object[model].min)
-
-    }));
-
-  }
-
-  function records(){
-
-    return readJSON(
-      KEYR,
-      []
+      },
+      true
     );
 
   }
 
-  function closes(){
-
-    return readJSON(
-      KEYW,
-      []
-    );
-
-  }
-
-  function save(
-    key,
-    value
-  ){
-
-    saveJSON(
-      key,
-      value
-    );
-
-  }
-
-  const style =
-    document.createElement(
-      "style"
-    );
-
-  style.id =
-    "tsDestajoStyle";
-
-  style.textContent = `
-
-#tsDestajoBtn{
-
-  position:fixed;
-
-  right:14px;
-
-  bottom:14px;
-
-  z-index:2147483646;
-
-  border:1px solid #15506a;
-
-  border-radius:999px;
-
-  padding:14px 19px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #007fc4,
-      #00bfff
-    )!important;
-
-  color:#001018!important;
-
-  font:900 15px system-ui;
-
-  box-shadow:
-    0 0 22px
-    rgba(0,191,255,.35);
-
 }
 
-#tsDestajoShade{
 
-  position:fixed;
-
-  inset:0;
-
-  background:#000b;
-
-  z-index:2147483645;
-
-  display:none;
-
-}
-
-#tsDestajo{
-
-  position:fixed;
-
-  right:12px;
-
-  bottom:70px;
-
-  width:
-    min(
-      620px,
-      calc(100vw - 24px)
-    );
-
-  max-height:82vh;
-
-  overflow:auto;
-
-  background:
-    linear-gradient(
-      145deg,
-      #071923,
-      #020a10
-    );
-
-  color:#e9fbff;
-
-  border:
-    1px solid #104456;
-
-  border-radius:18px;
-
-  z-index:2147483647;
-
-  box-shadow:
-    0 20px 70px #0009,
-    0 0 35px
-    rgba(0,191,255,.12);
-
-  font:14px system-ui;
-
-}
-
-#tsDestajo *{
-
-  box-sizing:border-box;
-
-}
-
-.tsHead{
-
-  position:sticky;
-
-  top:0;
-
-  background:#031018;
-
-  border-bottom:
-    1px solid #104456;
-
-  padding:14px 16px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  z-index:2;
-
-}
-
-.tsHead b{
-
-  font-size:18px;
-
-  color:#48e7ff;
-
-}
-
-.tsClose{
-
-  border:1px solid #15506a!important;
-
-  background:#061721!important;
-
-  color:#48e7ff!important;
-
-  border-radius:10px;
-
-  padding:8px 11px;
-
-  font-size:18px;
-
-}
-
-.tsTabs{
-
-  display:flex;
-
-  gap:7px;
-
-  padding:10px 14px;
-
-  border-bottom:
-    1px solid #104456;
-
-  overflow:auto;
-
-}
-
-.tsTab{
-
-  border:1px solid #104456!important;
-
-  background:#061721!important;
-
-  color:#83aebb!important;
-
-  border-radius:10px;
-
-  padding:9px 12px;
-
-  white-space:nowrap;
-
-  font-weight:900;
-
-}
-
-.tsTab.on{
-
-  background:#00aee5!important;
-
-  color:#001018!important;
-
-}
-
-.tsPane{
-
-  display:none;
-
-  padding:14px;
-
-}
-
-.tsPane.on{
-
-  display:block;
-
-}
-
-.tsGrid{
-
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:9px;
-
-}
-
-.tsGrid3{
-
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr 1fr;
-
-  gap:9px;
-
-}
-
-.tsField label{
-
-  display:block;
-
-  font-size:11px;
-
-  font-weight:900;
-
-  color:#83aebb;
-
-  margin:0 0 4px;
-
-}
-
-.tsField input,
-.tsField select{
-
-  width:100%;
-
-  border:
-    1px solid #15506a;
-
-  border-radius:9px;
-
-  padding:10px;
-
-  background:#04131c;
-
-  color:#e9fbff;
-
-  font:inherit;
-
-}
-
-.tsBtn{
-
-  border:0;
-
-  border-radius:10px;
-
-  padding:10px 13px;
-
-  font-weight:900;
-
-  background:#00aee5!important;
-
-  color:#001018!important;
-
-}
-
-.tsBtn.alt{
-
-  background:#061721!important;
-
-  color:#48e7ff!important;
-
-  border:
-    1px solid #15506a!important;
-
-}
-
-.tsBtn.good{
-
-  background:#0c5d54!important;
-
-  color:#9dfff1!important;
-
-}
-
-.tsCard{
-
-  border:
-    1px solid #104456;
-
-  background:
-    linear-gradient(
-      145deg,
-      #071923,
-      #031018
-    );
-
-  border-radius:13px;
-
-  padding:12px;
-
-  margin:10px 0;
-
-}
-
-.tsMoney{
-
-  font-size:21px;
-
-  font-weight:900;
-
-  color:#48e7ff;
-
-}
-
-.tsKpis{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:8px;
-
-}
-
-.tsKpi{
-
-  background:#04131c;
-
-  border:
-    1px solid #104456;
-
-  border-radius:12px;
-
-  padding:10px;
-
-}
-
-.tsKpi small{
-
-  display:block;
-
-  color:#83aebb;
-
-}
-
-.tsTable{
-
-  width:100%;
-
-  border-collapse:collapse;
-
-  margin-top:9px;
-
-}
-
-.tsTable th,
-.tsTable td{
-
-  padding:7px 5px;
-
-  border-bottom:
-    1px solid #104456;
-
-  text-align:left;
-
-  font-size:12px;
-
-}
-
-.tsTable th{
-
-  color:#48e7ff;
-
-}
-
-.tsRight{
-
-  text-align:right!important;
-
-}
-
-.tsLine{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  gap:8px;
-
-  padding:8px 0;
-
-  border-bottom:
-    1px solid #104456;
-
-}
-
-.tsMuted{
-
-  color:#83aebb;
-
-  font-size:12px;
-
-}
-
-@media(max-width:520px){
-
-  .tsGrid,
-  .tsGrid3{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-  .tsKpis{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-  .tsKpi:last-child{
-
-    grid-column:
-      1/-1;
-
-  }
-
-}
-
-@media(max-width:420px){
-
-  #tsDestajo{
-
-    right:8px;
-
-    bottom:64px;
-
-    width:
-      calc(100vw - 16px);
-
-    max-height:84vh;
-
-    border-radius:16px;
-
-  }
-
-  .tsPane{
-
-    padding:10px;
-
-  }
-
-  .tsGrid,
-  .tsGrid3,
-  .tsKpis{
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-  .tsLine{
-
-    flex-direction:column;
-
-  }
-
-  .tsBtn{
-
-    min-height:44px;
-
-  }
-
-}
-
-`;
-
-  document.head.appendChild(
-    style
-  );
-
-  document.body.insertAdjacentHTML(
-    "beforeend",
-
-    `
-
-<button id="tsDestajoBtn">
-💰 Destajo
-</button>
-
-<div id="tsDestajoShade">
-</div>
-
-<section
-id="tsDestajo"
-aria-label="Destajo The Studio"
->
-
-<div class="tsHead">
-
-<b>
-🤖 Destajo · Nómina
-</b>
-
-<button
-class="tsClose"
-id="tsClose"
->
-×
-</button>
-
-</div>
-
-<div class="tsTabs">
-
-<button
-class="tsTab on"
-data-tab="cap"
->
-Captura
-</button>
-
-<button
-class="tsTab"
-data-tab="cost"
->
-Costos por modelo
-</button>
-
-<button
-class="tsTab"
-data-tab="res"
->
-Resumen semanal
-</button>
-
-</div>
-
-<div
-id="tsCap"
-class="tsPane on"
->
-</div>
-
-<div
-id="tsCost"
-class="tsPane"
->
-</div>
-
-<div
-id="tsRes"
-class="tsPane"
->
-</div>
-
-</section>
-
-`
-  );
-
-  const btn =
-    document.getElementById(
-      "tsDestajoBtn"
-    );
-
-  const shade =
-    document.getElementById(
-      "tsDestajoShade"
-    );
-
-  const panel =
-    document.getElementById(
-      "tsDestajo"
-    );
-
-  const open=()=>{
-
-    shade.style.display =
-      "block";
-
-    panel.style.display =
-      "block";
-
-    renderAll();
-
-  };
-
-  const close=()=>{
-
-    shade.style.display =
-      "none";
-
-    panel.style.display =
-      "none";
-
-  };
-
-  btn.onclick =
-    open;
-
-  shade.onclick =
-    close;
-
-  document
-  .getElementById(
-    "tsClose"
-  )
-  .onclick =
-    close;
-
-  document
-  .querySelectorAll(
-    ".tsTab"
-  )
-  .forEach(
-    tab=>{
-
-      tab.onclick=()=>{
-
-        document
-        .querySelectorAll(
-          ".tsTab"
-        )
-        .forEach(
-          x=>
-            x.classList.remove(
-              "on"
-            )
-        );
-
-        tab.classList.add(
-          "on"
-        );
-
-        document
-        .querySelectorAll(
-          ".tsPane"
-        )
-        .forEach(
-          x=>
-            x.classList.remove(
-              "on"
-            )
-        );
-
-        const pane = {
-
-          cap:"Cap",
-
-          cost:"Cost",
-
-          res:"Res"
-
-        }[
-          tab.dataset.tab
+/* ==============================================================
+   AGREGAR COLUMNAS + LÁPIZ
+   ============================================================== */
+
+function TSFixRefreshCatalog(){
+
+  const tables =
+    [
+      ...document.querySelectorAll(
+        "table"
+      )
+    ];
+
+  tables.forEach(
+    table=>{
+
+      const firstRows =
+        [
+          ...table.querySelectorAll(
+            "tr"
+          )
         ];
 
-        document
-        .getElementById(
-          "ts"+pane
-        )
-        .classList.add(
-          "on"
+      if(!firstRows.length)
+        return;
+
+      const header =
+        firstRows[0];
+
+      const headerText =
+        TSFixNormalize(
+          header.textContent
         );
 
-        renderAll();
+      if(
+        !headerText.includes(
+          "modelo"
+        ) ||
+        !headerText.includes(
+          "pespunte"
+        ) ||
+        !headerText.includes(
+          "preliminar"
+        )
+      ){
 
-      };
+        return;
+
+      }
+
+      const oldMarker =
+        table.dataset.tsFixDone;
+
+      const costs =
+        TSFixCosts();
+
+
+      /* evitar duplicados */
+
+      if(
+        oldMarker!=="1"
+      ){
+
+        const thTime =
+          document.createElement(
+            "th"
+          );
+
+        thTime.textContent =
+          "TIEMPO STD.";
+
+        thTime.style.cssText =
+          `
+          padding:10px 6px;
+          color:#48e7ff;
+          font-weight:900;
+          text-align:right;
+          white-space:nowrap;
+          `;
+
+        header.appendChild(
+          thTime
+        );
+
+
+        const thEdit =
+          document.createElement(
+            "th"
+          );
+
+        thEdit.textContent =
+          "EDITAR";
+
+        thEdit.style.cssText =
+          `
+          padding:10px 6px;
+          color:#48e7ff;
+          font-weight:900;
+          text-align:center;
+          white-space:nowrap;
+          `;
+
+        header.appendChild(
+          thEdit
+        );
+
+        table.dataset.tsFixDone =
+          "1";
+
+      }
+
+
+      const rows =
+        firstRows.slice(1);
+
+      rows.forEach(
+        row=>{
+
+          if(
+            row.dataset.tsFixRow==="1"
+          )
+            return;
+
+          const cells =
+            [
+              ...row.children
+            ];
+
+          if(!cells.length)
+            return;
+
+          const model =
+            cells[0]
+            ?.textContent
+            ?.trim();
+
+          if(!model)
+            return;
+
+          const cleanModel =
+            Object.keys(costs)
+            .find(
+              x=>
+                TSFixNormalize(x)===
+                TSFixNormalize(model)
+            );
+
+          const item =
+            costs[
+              cleanModel || model
+            ] ||
+            {
+              pes:0,
+              pre:0,
+              min:0
+            };
+
+
+          const timeCell =
+            document.createElement(
+              "td"
+            );
+
+          timeCell.style.cssText =
+            `
+            padding:10px 6px;
+            border-top:1px solid #104456;
+            text-align:right;
+            white-space:nowrap;
+            color:#48e7ff;
+            font-weight:800;
+            `;
+
+          timeCell.textContent =
+            TSFixNum(item.min)>0
+              ? TSFixNum(item.min)+" min"
+              : "—";
+
+
+          const editCell =
+            document.createElement(
+              "td"
+            );
+
+          editCell.style.cssText =
+            `
+            padding:7px 5px;
+            border-top:1px solid #104456;
+            text-align:center;
+            `;
+
+
+          const editButton =
+            document.createElement(
+              "button"
+            );
+
+          editButton.type =
+            "button";
+
+          editButton.textContent =
+            "✏️";
+
+          editButton.title =
+            "Editar modelo";
+
+          editButton.style.cssText =
+            `
+            border:0;
+            border-radius:10px;
+            min-width:42px;
+            min-height:38px;
+            padding:8px 10px;
+            background:#063d55!important;
+            color:#48e7ff!important;
+            font-size:18px;
+            cursor:pointer;
+            box-shadow:
+              0 0 12px
+              rgba(0,191,255,.2);
+            `;
+
+          editButton.onclick =
+            event=>{
+
+              event.preventDefault();
+              event.stopPropagation();
+
+              TSFixOpenEditor(
+                cleanModel || model
+              );
+
+            };
+
+          editCell.appendChild(
+            editButton
+          );
+
+          row.appendChild(
+            timeCell
+          );
+
+          row.appendChild(
+            editCell
+          );
+
+          row.dataset.tsFixRow =
+            "1";
+
+        }
+      );
 
     }
   );
 
-  function modelOptions(){
 
-    return costsArray()
-      .map(c=>`
+  /* ============================================================
+     TAMBIÉN SOPORTAMOS CATÁLOGOS HECHOS CON DIVS
+     ============================================================ */
 
-        <option
-          value="${esc(c.modelo)}"
-        >
+  const catalog =
+    TSFixFindCatalog();
 
-          ${esc(c.modelo)}
+  if(catalog){
 
-          · P
-          ${money(c.pespunte)}
+    const text =
+      TSFixNormalize(
+        catalog.textContent
+      );
 
-          · Pre
-          ${money(c.preliminar)}
+    if(
+      text.includes("catalogo de costos") ||
+      text.includes("catalogo de modelos")
+    ){
 
-        </option>
+      TSFixInstallTimeField();
 
-      `)
-      .join("");
+    }
 
   }
-
-  /* ==============================================================
-     CAPTURA
-     ============================================================== */
-
-  function renderCap(){
-
-    const c =
-      costsArray();
-
-    document
-    .getElementById(
-      "tsCap"
-    )
-    .innerHTML = `
-
-      <div class="tsCard">
-
-        <b>
-          Registrar producción
-        </b>
-
-        <div class="tsMuted">
-
-          El destajo se calcula con
-          piezas capturadas como salida.
-
-          Semana:
-          lunes a sábado.
-
-        </div>
-
-        <div
-          class="tsGrid"
-          style="margin-top:10px"
-        >
-
-          <div class="tsField">
-
-            <label>
-              Fecha
-            </label>
-
-            <input
-              id="tsDate"
-              type="date"
-              value="${todayLocal()}"
-            >
-
-          </div>
-
-          <div class="tsField">
-
-            <label>
-              Línea
-            </label>
-
-            <select id="tsLine">
-
-              <option>
-                Línea A
-              </option>
-
-              <option>
-                Línea B
-              </option>
-
-            </select>
-
-          </div>
-
-          <div class="tsField">
-
-            <label>
-              Modelo
-            </label>
-
-            <select id="tsModel">
-
-              ${
-                modelOptions()
-                ||
-                '<option value="">Primero agrega un modelo</option>'
-              }
-
-            </select>
-
-          </div>
-
-          <div class="tsField">
-
-            <label>
-              Piezas salidas
-            </label>
-
-            <input
-              id="tsPairs"
-              type="number"
-              min="0"
-              step="1"
-              placeholder="0"
-            >
-
-          </div>
-
-        </div>
-
-        <div
-          class="tsGrid3"
-          style="margin-top:10px"
-        >
-
-          <div class="tsKpi">
-
-            <small>
-              Pespunte/pieza
-            </small>
-
-            <b id="tsCP">
-              $0.00
-            </b>
-
-          </div>
-
-          <div class="tsKpi">
-
-            <small>
-              Preliminar/pieza
-            </small>
-
-            <b id="tsCR">
-              $0.00
-            </b>
-
-          </div>
-
-          <div class="tsKpi">
-
-            <small>
-              Destajo registro
-            </small>
-
-            <b id="tsCT">
-              $0.00
-            </b>
-
-          </div>
-
-        </div>
-
-        <div
-          style="
-            display:flex;
-            gap:8px;
-            margin-top:10px;
-          "
-        >
-
-          <button
-            class="tsBtn"
-            id="tsAdd"
-          >
-            Agregar
-          </button>
-
-          <button
-            class="tsBtn alt"
-            id="tsClear"
-          >
-            Limpiar
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="tsCard">
-
-        <b>
-          Registros recientes
-        </b>
-
-        <div id="tsRecent">
-        </div>
-
-      </div>
-
-    `;
-
-    const update=()=>{
-
-      const model =
-        c.find(
-          x=>
-            x.modelo ===
-            document
-            .getElementById(
-              "tsModel"
-            )
-            ?.value
-        );
-
-      const pieces =
-        num(
-          document
-          .getElementById(
-            "tsPairs"
-          )
-          ?.value
-        );
-
-      document
-      .getElementById(
-        "tsCP"
-      )
-      .textContent =
-        money(
-          model?.pespunte
-        );
-
-      document
-      .getElementById(
-        "tsCR"
-      )
-      .textContent =
-        money(
-          model?.preliminar
-        );
-
-      document
-      .getElementById(
-        "tsCT"
-      )
-      .textContent =
-        money(
-          pieces*
-          (
-            num(model?.pespunte)+
-            num(model?.preliminar)
-          )
-        );
-
-    };
-
-    document
-    .getElementById(
-      "tsModel"
-    )
-    ?.addEventListener(
-      "change",
-      update
-    );
-
-    document
-    .getElementById(
-      "tsPairs"
-    )
-    ?.addEventListener(
-      "input",
-      update
-    );
-
-    update();
-
-    document
-    .getElementById(
-      "tsAdd"
-    )
-    ?.addEventListener(
-      "click",
-      ()=>{
-
-        const model =
-          c.find(
-            x=>
-              x.modelo ===
-              document
-              .getElementById(
-                "tsModel"
-              )
-              .value
-          );
-
-        const pieces =
-          num(
-            document
-            .getElementById(
-              "tsPairs"
-            )
-            .value
-          );
-
-        if(
-          !model ||
-          pieces<=0
-        ){
-
-          alert(
-            "Selecciona un modelo y captura las piezas salidas."
-          );
-
-          return;
-
-        }
-
-        const r =
-          records();
-
-        r.push({
-
-          id:
-            Date.now(),
-
-          date:
-            document
-            .getElementById(
-              "tsDate"
-            )
-            .value,
-
-          line:
-            document
-            .getElementById(
-              "tsLine"
-            )
-            .value,
-
-          modelo:
-            model.modelo,
-
-          piezas:
-            pieces,
-
-          pares:
-            pieces,
-
-          pespunte:
-            num(
-              model.pespunte
-            ),
-
-          preliminar:
-            num(
-              model.preliminar
-            )
-
-        });
-
-        save(
-          KEYR,
-          r
-        );
-
-        renderAll();
-
-        setTimeout(
-          installLineEfficiency,
-          100
-        );
-
-      }
-    );
-
-    document
-    .getElementById(
-      "tsClear"
-    )
-    ?.addEventListener(
-      "click",
-      ()=>{
-
-        document
-        .getElementById(
-          "tsPairs"
-        )
-        .value =
-          "";
-
-        update();
-
-      }
-    );
-
-    const rr =
-      records()
-      .slice(-12)
-      .reverse();
-
-    document
-    .getElementById(
-      "tsRecent"
-    )
-    .innerHTML =
-
-      rr.length
-
-      ?
-
-      `
-
-      <table class="tsTable">
-
-        <tr>
-
-          <th>
-            Fecha
-          </th>
-
-          <th>
-            Línea
-          </th>
-
-          <th>
-            Modelo
-          </th>
-
-          <th class="tsRight">
-            Piezas
-          </th>
-
-          <th class="tsRight">
-            Destajo
-          </th>
-
-        </tr>
-
-        ${
-          rr.map(
-            r=>`
-
-              <tr>
-
-                <td>
-                  ${esc(r.date)}
-                </td>
-
-                <td>
-                  ${esc(
-                    String(
-                      r.line || ""
-                    )
-                    .replace(
-                      "Línea ",
-                      ""
-                    )
-                  )}
-                </td>
-
-                <td>
-                  ${esc(r.modelo)}
-                </td>
-
-                <td class="tsRight">
-                  ${num(
-                    r.piezas ??
-                    r.pares
-                  )}
-                </td>
-
-                <td class="tsRight">
-
-                  ${money(
-                    num(
-                      r.piezas ??
-                      r.pares
-                    )*
-                    (
-                      num(r.pespunte)+
-                      num(r.preliminar)
-                    )
-                  )}
-
-                </td>
-
-              </tr>
-
-            `
-          ).join("")
-        }
-
-      </table>
-
-      `
-
-      :
-
-      `
-
-      <div
-        class="tsMuted"
-        style="padding:10px 0"
-      >
-
-        Aún no hay registros.
-
-      </div>
-
-      `;
-
-  }
-
-  /* ==============================================================
-     COSTOS DESTAJO + TIEMPO ESTÁNDAR
-     ============================================================== */
-
-  function renderCost(){
-
-    const c =
-      costsArray();
-
-    document
-    .getElementById(
-      "tsCost"
-    )
-    .innerHTML = `
-
-      <div class="tsCard">
-
-        <b>
-          🤖 Catálogo de costos
-        </b>
-
-        <div class="tsMuted">
-
-          Pespunte + Preliminar +
-          Tiempo estándar.
-
-          Los costos existentes se conservan.
-
-        </div>
-
-        <div
-          class="tsGrid"
-          style="margin-top:10px"
-        >
-
-          <div class="tsField">
-
-            <label>
-              Modelo
-            </label>
-
-            <input
-              id="tsNewM"
-              placeholder="Verona"
-            >
-
-          </div>
-
-          <div class="tsField">
-
-            <label>
-              Costo pespunte $
-            </label>
-
-            <input
-              id="tsNewP"
-              type="number"
-              min="0"
-              step="0.01"
-              placeholder="12.50"
-            >
-
-          </div>
-
-          <div class="tsField">
-
-            <label>
-              Costo preliminar $
-            </label>
-
-            <input
-              id="tsNewR"
-              type="number"
-              min="0"
-              step="0.01"
-              placeholder="0.00"
-            >
-
-          </div>
-
-          <div class="tsField">
-
-            <label>
-              Tiempo estándar (min)
-            </label>
-
-            <input
-              id="tsNewMin"
-              type="number"
-              min="0"
-              step="0.01"
-              placeholder="0.00"
-            >
-
-          </div>
-
-        </div>
-
-        <button
-          class="tsBtn"
-          id="tsSaveC"
-          style="margin-top:10px"
-        >
-
-          💾 Guardar / actualizar modelo
-
-        </button>
-
-      </div>
-
-      <div class="tsCard">
-
-        ${
-          c.length
-
-          ?
-
-          `
-
-          <table class="tsTable">
-
-            <tr>
-
-              <th>
-                Modelo
-              </th>
-
-              <th class="tsRight">
-                Pespunte
-              </th>
-
-              <th class="tsRight">
-                Preliminar
-              </th>
-
-              <th class="tsRight">
-                Tiempo
-              </th>
-
-              <th>
-                Acción
-              </th>
-
-            </tr>
-
-            ${
-              c.map(
-                x=>`
-
-                  <tr>
-
-                    <td>
-                      ${esc(x.modelo)}
-                    </td>
-
-                    <td class="tsRight">
-                      ${money(
-                        x.pespunte
-                      )}
-                    </td>
-
-                    <td class="tsRight">
-                      ${money(
-                        x.preliminar
-                      )}
-                    </td>
-
-                    <td class="tsRight">
-
-                      ${
-                        num(x.min)
-                          ? num(x.min)+" min"
-                          : "—"
-                      }
-
-                    </td>
-
-                    <td>
-
-                      <button
-                        class="tsBtn alt tsDestEdit"
-                        data-model="${esc(x.modelo)}"
-                      >
-                        ✏️
-                      </button>
-
-                    </td>
-
-                  </tr>
-
-                `
-              ).join("")
-            }
-
-          </table>
-
-          `
-
-          :
-
-          `
-
-          <div class="tsMuted">
-
-            No hay modelos capturados.
-
-          </div>
-
-          `
-
-        }
-
-      </div>
-
-    `;
-
-    document
-    .getElementById(
-      "tsSaveC"
-    )
-    ?.addEventListener(
-      "click",
-      ()=>{
-
-        const model =
-          document
-          .getElementById(
-            "tsNewM"
-          )
-          .value
-          .trim();
-
-        if(!model){
-
-          alert(
-            "Escribe el modelo."
-          );
-
-          return;
-
-        }
-
-        const p =
-          num(
-            document
-            .getElementById(
-              "tsNewP"
-            )
-            .value
-          );
-
-        const r =
-          num(
-            document
-            .getElementById(
-              "tsNewR"
-            )
-            .value
-          );
-
-        const min =
-          num(
-            document
-            .getElementById(
-              "tsNewMin"
-            )
-            .value
-          );
-
-        const arr =
-          normalizeCostObject(
-            readJSON(
-              KEYC,
-              {}
-            )
-          );
-
-        const existing =
-          Object.keys(arr)
-          .find(
-            x=>
-              normalize(x)===
-              normalize(model)
-          );
-
-        if(
-          existing &&
-          existing!==model
-        ){
-
-          delete arr[
-            existing
-          ];
-
-        }
-
-        arr[model] = {
-
-          pes:p,
-
-          pre:r,
-
-          min:min
-
-        };
-
-        saveJSON(
-          KEYC,
-          arr
-        );
-
-        saveJSON(
-          "ts_costos_v1",
-          Object.keys(arr)
-          .map(x=>({
-
-            modelo:x,
-
-            pespunte:
-              num(arr[x].pes),
-
-            preliminar:
-              num(arr[x].pre),
-
-            min:
-              num(arr[x].min)
-
-          }))
-        );
-
-        renderAll();
-
-        setTimeout(
-          installCostRepair,
-          50
-        );
-
-      }
-    );
-
-    document
-    .querySelectorAll(
-      ".tsDestEdit"
-    )
-    .forEach(
-      button=>{
-
-        button.onclick=()=>{
-
-          const model =
-            button.dataset.model;
-
-          const item =
-            c.find(
-              x=>
-                x.modelo===model
-            );
-
-          if(!item)
-            return;
-
-          document
-          .getElementById(
-            "tsNewM"
-          )
-          .value =
-            item.modelo;
-
-          document
-          .getElementById(
-            "tsNewP"
-          )
-          .value =
-            num(
-              item.pespunte
-            );
-
-          document
-          .getElementById(
-            "tsNewR"
-          )
-          .value =
-            num(
-              item.preliminar
-            );
-
-          document
-          .getElementById(
-            "tsNewMin"
-          )
-          .value =
-            num(
-              item.min
-            );
-
-          document
-          .getElementById(
-            "tsNewM"
-          )
-          .focus();
-
-        };
-
-      }
-    );
-
-  }
-
-  /* ==============================================================
-     RESUMEN DESTAJO
-     ============================================================== */
-
-  function renderRes(){
-
-    const start =
-      mondayOf(
-        todayLocal()
-      );
-
-    const end =
-      addDays(
-        start,
-        5
-      );
-
-    const rr =
-      records()
-      .filter(
-        r=>
-          r.date>=start &&
-          r.date<=end
-      );
-
-    const sum =
-      arr=>
-        arr.reduce(
-          (a,r)=>
-            a+
-            num(
-              r.piezas ??
-              r.pares
-            ),
-          0
-        );
-
-    const calc =
-      (arr,key)=>
-        arr.reduce(
-          (a,r)=>
-            a+
-            num(
-              r.piezas ??
-              r.pares
-            )*
-            num(
-              r[key]
-            ),
-          0
-        );
-
-    const A =
-      rr.filter(
-        r=>
-          r.line===
-          "Línea A"
-      );
-
-    const B =
-      rr.filter(
-        r=>
-          r.line===
-          "Línea B"
-      );
-
-    const pA =
-      calc(
-        A,
-        "pespunte"
-      );
-
-    const pB =
-      calc(
-        B,
-        "pespunte"
-      );
-
-    const rA =
-      calc(
-        A,
-        "preliminar"
-      );
-
-    const rB =
-      calc(
-        B,
-        "preliminar"
-      );
-
-    const total =
-      pA+pB+rA+rB;
-
-    document
-    .getElementById(
-      "tsRes"
-    )
-    .innerHTML = `
-
-      <div class="tsCard">
-
-        <b>
-          Semana de nómina
-        </b>
-
-        <div class="tsMuted">
-
-          ${start}
-          →
-          ${end}
-
-          · cierre el sábado
-
-        </div>
-
-        <div
-          class="tsKpis"
-          style="margin-top:10px"
-        >
-
-          <div class="tsKpi">
-
-            <small>
-              Línea A · destajo
-            </small>
-
-            <div class="tsMoney">
-
-              ${money(
-                pA+rA
-              )}
-
-            </div>
-
-          </div>
-
-          <div class="tsKpi">
-
-            <small>
-              Línea B · destajo
-            </small>
-
-            <div class="tsMoney">
-
-              ${money(
-                pB+rB
-              )}
-
-            </div>
-
-          </div>
-
-          <div class="tsKpi">
-
-            <small>
-              Acumulado semanal
-            </small>
-
-            <div class="tsMoney">
-
-              ${money(
-                total
-              )}
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="tsCard">
-
-        <b>
-          Desglose por línea
-        </b>
-
-        <div class="tsLine">
-
-          <span>
-
-            Línea A ·
-            ${sum(A)}
-            piezas
-
-          </span>
-
-          <span>
-
-            <b>
-              Pespunte
-              ${money(pA)}
-            </b>
-
-            · Preliminar
-            ${money(rA)}
-
-          </span>
-
-        </div>
-
-        <div class="tsLine">
-
-          <span>
-
-            Línea B ·
-            ${sum(B)}
-            piezas
-
-          </span>
-
-          <span>
-
-            <b>
-              Pespunte
-              ${money(pB)}
-            </b>
-
-            · Preliminar
-            ${money(rB)}
-
-          </span>
-
-        </div>
-
-        <div class="tsLine">
-
-          <span>
-            <b>
-              Total
-            </b>
-          </span>
-
-          <span>
-
-            <b>
-              ${money(total)}
-            </b>
-
-          </span>
-
-        </div>
-
-      </div>
-
-      <div class="tsCard">
-
-        <b>
-          Cerrar semana
-        </b>
-
-        <div class="tsMuted">
-
-          El cierre guarda el total
-          de lunes a sábado.
-
-          Los registros no se borran.
-
-        </div>
-
-        <button
-          class="tsBtn good"
-          id="tsCloseWeek"
-          style="margin-top:10px"
-        >
-
-          Cerrar semana y guardar histórico
-
-        </button>
-
-      </div>
-
-      <div class="tsCard">
-
-        <b>
-          Histórico de cierres
-        </b>
-
-        <div id="tsHistory">
-        </div>
-
-      </div>
-
-    `;
-
-    document
-    .getElementById(
-      "tsCloseWeek"
-    )
-    ?.addEventListener(
-      "click",
-      ()=>{
-
-        const h =
-          closes();
-
-        if(
-          h.some(
-            x=>
-              x.week===
-              start
-          )
-        ){
-
-          alert(
-            "Esta semana ya está cerrada."
-          );
-
-          return;
-
-        }
-
-        h.unshift({
-
-          week:start,
-
-          end:end,
-
-          total:total,
-
-          pespunte:
-            pA+pB,
-
-          preliminar:
-            rA+rB,
-
-          lineA:
-            pA+rA,
-
-          lineB:
-            pB+rB,
-
-          closedAt:
-            new Date()
-            .toISOString()
-
-        });
-
-        save(
-          KEYW,
-          h
-        );
-
-        renderRes();
-
-      }
-    );
-
-    const h =
-      closes();
-
-    document
-    .getElementById(
-      "tsHistory"
-    )
-    .innerHTML =
-
-      h.length
-
-      ?
-
-      `
-
-      <table class="tsTable">
-
-        <tr>
-
-          <th>
-            Semana
-          </th>
-
-          <th>
-            A
-          </th>
-
-          <th>
-            B
-          </th>
-
-          <th class="tsRight">
-            Total
-          </th>
-
-        </tr>
-
-        ${
-          h.map(
-            x=>`
-
-              <tr>
-
-                <td>
-                  ${esc(x.week)}
-                </td>
-
-                <td>
-                  ${money(x.lineA)}
-                </td>
-
-                <td>
-                  ${money(x.lineB)}
-                </td>
-
-                <td class="tsRight">
-
-                  <b>
-                    ${money(x.total)}
-                  </b>
-
-                </td>
-
-              </tr>
-
-            `
-          ).join("")
-        }
-
-      </table>
-
-      `
-
-      :
-
-      `
-
-      <div
-        class="tsMuted"
-        style="padding-top:8px"
-      >
-
-        No hay semanas cerradas todavía.
-
-      </div>
-
-      `;
-
-  }
-
-  function renderAll(){
-
-    renderCap();
-
-    renderCost();
-
-    renderRes();
-
-  }
-
-  panel.style.display =
-    "none";
 
 }
 
-/* ================================================================
-   FINAL
-   ================================================================ */
 
+/* ==============================================================
+   OBSERVADOR
+   ============================================================== */
+
+function TSFixStart(){
+
+  TSFixRefreshCatalog();
+
+  TSFixInstallTimeField();
+
+  if(
+    window.__TS_FIX_OBSERVER__
+  )
+    return;
+
+  window.__TS_FIX_OBSERVER__ =
+    new MutationObserver(
+      ()=>{
+
+        try{
+
+          TSFixRefreshCatalog();
+
+          TSFixInstallTimeField();
+
+        }catch{}
+
+      }
+    );
+
+  window.__TS_FIX_OBSERVER__.observe(
+    document.body,
+    {
+      childList:true,
+      subtree:true
+    }
+  );
+
+}
+
+
+setTimeout(
+  TSFixStart,
+  700
+);
+
+setTimeout(
+  TSFixStart,
+  1600
+);
+
+setTimeout(
+  TSFixStart,
+  3000
+);
+
+
+/* ==============================================================
+   FIN FIX
+   ============================================================== */
+
+`;
+
+
+  /*
+  Insertamos nuestro código dentro del
+  index actual, antes del </script> final.
+  */
+
+  const marker =
+    /\\s*<\\/script>\\s*$/i;
+
+  if(!marker.test(src)){
+
+    throw new Error(
+      "No se encontró el cierre del código base."
+    );
+
+  }
+
+  src =
+    src.replace(
+      marker,
+      "\\n" +
+      FIX +
+      "\\n</script>"
+    );
+
+
+  /*
+  El código actual ya ejecuta:
+  installCostRepair()
+
+  Nuestro FIX se ejecuta posteriormente,
+  por lo que conserva todas las funciones
+  que ya tienes.
+  */
+
+
+  document.open();
+
+  document.write(
+    src
+  );
+
+  document.close();
+
+
+}catch(error){
+
+  document.body.innerHTML = `
+
+    <div
+      style="
+        font-family:system-ui;
+        padding:30px;
+        color:#fff;
+        background:#02070d;
+        min-height:100vh;
+      "
+    >
+
+      <h2>
+        The Studio
+      </h2>
+
+      <p>
+        Error al cargar la versión guardada.
+      </p>
+
+      <small>
+        ${String(error)}
+      </small>
+
+    </div>
+
+  `;
+
+}
+
+})();
 </script>
