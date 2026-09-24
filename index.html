@@ -37,7 +37,7 @@ try{
 
   /*
   ================================================================
-  PRIMERO RECUPERAMOS LOS COSTOS
+  RECUPERAMOS LOS COSTOS
   ANTES DE CARGAR LA APP
   ================================================================
   */
@@ -46,7 +46,7 @@ try{
 
 
   const ORIGINAL_URL =
-  "https://raw.githubusercontent.com/dantedeaht-ctrl/the-studio-produccion/f07dc9e5221a9b207d205d143d68c0b917ee0e0e/index.html";
+    "https://raw.githubusercontent.com/dantedeaht-ctrl/the-studio-produccion/f07dc9e5221a9b207d205d143d68c0b917ee0e0e/index.html";
 
 
   const response =
@@ -125,17 +125,8 @@ try{
 
       installDestajo();
 
-      /*
-      Ejecutamos inmediatamente.
-      */
-
       refreshStudio();
 
-
-      /*
-      Observamos cambios del DOM porque la aplicación
-      puede volver a pintar la pantalla después.
-      */
 
       if(
         !window.__TS_OBSERVER__
@@ -591,11 +582,6 @@ function normalizeCostObject(raw){
 
       }else{
 
-        /*
-        Si una versión antigua guardó
-        únicamente un número.
-        */
-
         result[model] = {
 
           pes:num(item),
@@ -681,11 +667,10 @@ function normalizeCostObject(raw){
 }
 
 
-/*
-================================================================
-RECUPERACIÓN COMPLETA DE COSTOS
-================================================================
-*/
+/* ================================================================
+   RECUPERACIÓN COMPLETA DE COSTOS
+   ÚNICO BLOQUE MODIFICADO
+   ================================================================ */
 
 function migrateAllCosts(){
 
@@ -694,6 +679,27 @@ function migrateAllCosts(){
     const MAIN =
       "theStudioCostos_v4";
 
+
+    /*
+    --------------------------------------------------------------
+    LEEMOS PRIMERO LOS COSTOS ACTUALES
+    --------------------------------------------------------------
+    */
+
+    let main =
+      normalizeCostObject(
+        readJSON(
+          MAIN,
+          null
+        )
+      );
+
+
+    /*
+    --------------------------------------------------------------
+    CLAVES ANTIGUAS CONOCIDAS
+    --------------------------------------------------------------
+    */
 
     const OLD_KEYS = [
 
@@ -707,119 +713,564 @@ function migrateAllCosts(){
 
       "theStudioCostos",
 
-      "costos"
+      "costos",
+
+      "modelos",
+
+      "catalogoModelos",
+
+      "catalogoCostos"
 
     ];
 
 
-    let mainRaw =
-      readJSON(
-        MAIN,
-        null
-      );
-
-
-    let main =
-      normalizeCostObject(
-        mainRaw
-      );
-
-
     /*
     --------------------------------------------------------------
-    Buscamos información antigua.
+    AGREGA UN MODELO SIN BORRAR COSTOS EXISTENTES
     --------------------------------------------------------------
     */
 
-    OLD_KEYS.forEach(key=>{
+    function mergeModel(
+      model,
+      incoming
+    ){
 
-      const raw =
-        readJSON(
-          key,
-          null
+      const cleanModel =
+        String(
+          model ?? ""
+        ).trim();
+
+
+      if(!cleanModel)
+        return;
+
+
+      const existingName =
+        Object.keys(main)
+        .find(
+          x=>
+            normalize(x) ===
+            normalize(cleanModel)
         );
 
 
-      const old =
-        normalizeCostObject(
-          raw
-        );
+      const name =
+        existingName ||
+        cleanModel;
 
 
-      Object.keys(old)
-      .forEach(model=>{
+      if(!main[name]){
 
-        const incoming =
-          old[model];
+        main[name] = {
 
+          pes:
+            num(
+              incoming?.pes
+            ),
 
-        if(
-          !main[model]
-        ){
+          pre:
+            num(
+              incoming?.pre
+            ),
 
-          main[model] = {
+          min:
+            num(
+              incoming?.min
+            )
 
-            pes:
-              num(incoming.pes),
+        };
 
-            pre:
-              num(incoming.pre),
+        return;
 
-            min:
-              num(incoming.min)
-
-          };
-
-          return;
-
-        }
+      }
 
 
-        /*
-        No reemplazamos un costo válido.
-        Solamente recuperamos campos que falten.
-        */
+      /*
+      ------------------------------------------------------------
+      SOLO RECUPERAMOS CAMPOS VACÍOS
+      ------------------------------------------------------------
+      */
 
-        if(
-          !num(main[model].pes) &&
-          num(incoming.pes)
-        ){
+      if(
+        !num(main[name].pes) &&
+        num(incoming?.pes)
+      ){
 
-          main[model].pes =
-            num(incoming.pes);
+        main[name].pes =
+          num(incoming.pes);
 
-        }
-
-
-        if(
-          !num(main[model].pre) &&
-          num(incoming.pre)
-        ){
-
-          main[model].pre =
-            num(incoming.pre);
-
-        }
+      }
 
 
-        if(
-          !num(main[model].min) &&
-          num(incoming.min)
-        ){
+      if(
+        !num(main[name].pre) &&
+        num(incoming?.pre)
+      ){
 
-          main[model].min =
-            num(incoming.min);
+        main[name].pre =
+          num(incoming.pre);
 
-        }
+      }
 
-      });
 
-    });
+      if(
+        !num(main[name].min) &&
+        num(incoming?.min)
+      ){
+
+        main[name].min =
+          num(incoming.min);
+
+      }
+
+    }
 
 
     /*
     --------------------------------------------------------------
-    GUARDAMOS EN EL FORMATO PRINCIPAL.
+    EXTRAER UN REGISTRO DE COSTO
+    --------------------------------------------------------------
+    */
+
+    function extractItem(item){
+
+      if(
+        !item ||
+        typeof item!=="object"
+      ){
+
+        return null;
+
+      }
+
+
+      const model =
+        String(
+          item.modelo ??
+          item.model ??
+          item.nombre ??
+          item.name ??
+          ""
+        ).trim();
+
+
+      if(!model)
+        return null;
+
+
+      const pes =
+        num(
+          item.pes ??
+          item.pespunte ??
+          item.pesPunte ??
+          item.costoPespunte ??
+          item.costo_pespunte ??
+          item.precioPespunte ??
+          item.precio_pespunte ??
+          item.pesCost
+        );
+
+
+      const pre =
+        num(
+          item.pre ??
+          item.preliminar ??
+          item.costoPreliminar ??
+          item.costo_preliminar ??
+          item.precioPreliminar ??
+          item.precio_preliminar ??
+          item.preCost
+        );
+
+
+      const min =
+        num(
+          item.min ??
+          item.minutos
+        );
+
+
+      if(
+        pes===0 &&
+        pre===0 &&
+        min===0
+      ){
+
+        return null;
+
+      }
+
+
+      return {
+
+        model:model,
+
+        pes:pes,
+
+        pre:pre,
+
+        min:min
+
+      };
+
+    }
+
+
+    /*
+    --------------------------------------------------------------
+    LEER UNA FUENTE DE COSTOS
+    --------------------------------------------------------------
+    */
+
+    function readCostSource(raw){
+
+      if(!raw)
+        return;
+
+
+      /*
+      ARRAY
+      */
+
+      if(
+        Array.isArray(raw)
+      ){
+
+        raw.forEach(
+          item=>{
+
+            const found =
+              extractItem(item);
+
+
+            if(found){
+
+              mergeModel(
+                found.model,
+                found
+              );
+
+            }
+
+          }
+        );
+
+        return;
+
+      }
+
+
+      /*
+      OBJETO
+      */
+
+      if(
+        typeof raw!=="object"
+      ){
+
+        return;
+
+      }
+
+
+      /*
+      Estructuras anidadas conocidas.
+      */
+
+      [
+        raw.costos,
+        raw.modelos,
+        raw.cost,
+        raw.catalogo,
+        raw.data
+      ]
+      .forEach(
+        source=>{
+
+          if(
+            source &&
+            source!==raw
+          ){
+
+            readCostSource(
+              source
+            );
+
+          }
+
+        }
+      );
+
+
+      /*
+      ------------------------------------------------------------
+      FORMATO MAPA:
+
+      {
+        Verona:{
+          pes:12.50,
+          pre:8
+        }
+      }
+      ------------------------------------------------------------
+      */
+
+      Object.keys(raw)
+      .forEach(
+        key=>{
+
+          if(
+            [
+              "costos",
+              "modelos",
+              "cost",
+              "catalogo",
+              "data"
+            ]
+            .includes(
+              key
+            )
+          ){
+
+            return;
+
+          }
+
+
+          const value =
+            raw[key];
+
+
+          if(
+            !value ||
+            typeof value!=="object" ||
+            Array.isArray(value)
+          ){
+
+            return;
+
+          }
+
+
+          const pes =
+            num(
+              value.pes ??
+              value.pespunte ??
+              value.pesPunte ??
+              value.costoPespunte ??
+              value.costo_pespunte ??
+              value.precioPespunte ??
+              value.precio_pespunte
+            );
+
+
+          const pre =
+            num(
+              value.pre ??
+              value.preliminar ??
+              value.costoPreliminar ??
+              value.costo_preliminar ??
+              value.precioPreliminar ??
+              value.precio_preliminar
+            );
+
+
+          const min =
+            num(
+              value.min ??
+              value.minutos
+            );
+
+
+          if(
+            pes===0 &&
+            pre===0 &&
+            min===0
+          ){
+
+            return;
+
+          }
+
+
+          mergeModel(
+            key,
+            {
+              pes:pes,
+              pre:pre,
+              min:min
+            }
+          );
+
+        }
+      );
+
+    }
+
+
+    /*
+    --------------------------------------------------------------
+    REVISAMOS LAS CLAVES ANTIGUAS
+    --------------------------------------------------------------
+    */
+
+    OLD_KEYS.forEach(
+      key=>{
+
+        const raw =
+          readJSON(
+            key,
+            null
+          );
+
+
+        readCostSource(
+          raw
+        );
+
+      }
+    );
+
+
+    /*
+    --------------------------------------------------------------
+    BUSCAMOS TAMBIÉN EN OTRAS CLAVES DE localStorage
+    --------------------------------------------------------------
+    */
+
+    for(
+      let i=0;
+      i<localStorage.length;
+      i++
+    ){
+
+      const key =
+        localStorage.key(i);
+
+
+      if(!key)
+        continue;
+
+
+      if(
+        OLD_KEYS.includes(key) ||
+        key===MAIN
+      ){
+
+        continue;
+
+      }
+
+
+      let raw =
+        null;
+
+
+      try{
+
+        raw =
+          JSON.parse(
+            localStorage.getItem(key)
+          );
+
+      }catch{
+
+        continue;
+
+      }
+
+
+      /*
+      Revisamos arrays que tengan
+      modelo + algún costo.
+      */
+
+      if(
+        Array.isArray(raw)
+      ){
+
+        const possible =
+          raw.some(
+            item=>{
+
+              if(
+                !item ||
+                typeof item!=="object"
+              ){
+
+                return false;
+
+              }
+
+
+              const hasModel =
+                item.modelo!==undefined ||
+                item.model!==undefined ||
+                item.nombre!==undefined ||
+                item.name!==undefined;
+
+
+              const hasCost =
+                item.pes!==undefined ||
+                item.pespunte!==undefined ||
+                item.pesPunte!==undefined ||
+                item.costoPespunte!==undefined ||
+                item.pre!==undefined ||
+                item.preliminar!==undefined ||
+                item.costoPreliminar!==undefined;
+
+
+              return (
+                hasModel &&
+                hasCost
+              );
+
+            }
+          );
+
+
+        if(possible){
+
+          readCostSource(
+            raw
+          );
+
+        }
+
+      }
+      else
+      if(
+        raw &&
+        typeof raw==="object"
+      ){
+
+        const text =
+          JSON.stringify(
+            raw
+          ).toLowerCase();
+
+
+        if(
+          text.includes("pespunte") ||
+          text.includes("preliminar") ||
+          text.includes("costopespunte") ||
+          text.includes("costopreliminar")
+        ){
+
+          readCostSource(
+            raw
+          );
+
+        }
+
+      }
+
+    }
+
+
+    /*
+    --------------------------------------------------------------
+    GUARDAMOS LOS COSTOS RECUPERADOS
     --------------------------------------------------------------
     */
 
@@ -831,32 +1282,45 @@ function migrateAllCosts(){
 
     /*
     --------------------------------------------------------------
-    TAMBIÉN CREAMOS UN ESPEJO PARA EL MÓDULO
-    DE DESTAJO ANTIGUO.
+    ESPEJO DEL MÓDULO DE DESTAJO
     --------------------------------------------------------------
     */
 
     const mirror =
       Object.keys(main)
-      .map(model=>({
+      .map(
+        model=>({
 
-        modelo:model,
+          modelo:model,
 
-        pespunte:
-          num(main[model].pes),
+          pespunte:
+            num(
+              main[model].pes
+            ),
 
-        preliminar:
-          num(main[model].pre),
+          preliminar:
+            num(
+              main[model].pre
+            ),
 
-        min:
-          num(main[model].min)
+          min:
+            num(
+              main[model].min
+            )
 
-      }));
+        })
+      );
 
 
     saveJSON(
       "ts_costos_v1",
       mirror
+    );
+
+
+    console.log(
+      "The Studio · Costos recuperados:",
+      Object.keys(main)
     );
 
 
@@ -871,7 +1335,16 @@ function migrateAllCosts(){
     );
 
 
-    return {};
+    /*
+    En caso de error NO borramos nada.
+    */
+
+    return normalizeCostObject(
+      readJSON(
+        "theStudioCostos_v4",
+        {}
+      )
+    );
 
   }
 
@@ -1389,11 +1862,6 @@ function installBMWTheme(){
 
 function getReferenceDate(){
 
-  /*
-  Primero buscamos el input que tenga
-  una etiqueta "Fecha de referencia".
-  */
-
   const inputs =
     [
       ...document.querySelectorAll(
@@ -1429,11 +1897,6 @@ function getReferenceDate(){
 
   }
 
-
-  /*
-  Segundo intento: cualquier fecha visible
-  que no pertenezca a Destajo.
-  */
 
   for(
     const input of inputs
@@ -1480,13 +1943,6 @@ function calculateWeek(reference){
     weekRange(reference);
 
 
-  /*
-  ------------------------------------------------
-  PROGRAMADO
-  SOLO OTs PROGRAMADAS LUNES-SÁBADO
-  ------------------------------------------------
-  */
-
   const programmed =
     prod.filter(
       item=>
@@ -1507,14 +1963,6 @@ function calculateWeek(reference){
       0
     );
 
-
-  /*
-  ------------------------------------------------
-  EMPAQUE
-  SOLO MOVIMIENTOS QUE ENTRARON
-  A EMPAQUE EN ESTA SEMANA.
-  ------------------------------------------------
-  */
 
   const empaqueRecords =
     advances.filter(item=>{
@@ -1561,12 +2009,6 @@ function calculateWeek(reference){
     );
 
 
-  /*
-  ------------------------------------------------
-  AUDITORÍA
-  ------------------------------------------------
-  */
-
   const auditoriaRecords =
     advances.filter(item=>{
 
@@ -1611,12 +2053,6 @@ function calculateWeek(reference){
       0
     );
 
-
-  /*
-  ------------------------------------------------
-  OTs CON EMPAQUE
-  ------------------------------------------------
-  */
 
   const ots =
     new Set();
@@ -1727,11 +2163,6 @@ function setDashboardMetric(
         candidates.length
       ){
 
-        /*
-        Elegimos el candidato numérico
-        más cercano y corto.
-        */
-
         candidates.sort(
           (a,b)=>
             a.textContent.length-
@@ -1779,10 +2210,6 @@ function refreshStudio(){
       );
 
 
-    /*
-    Actualizamos los KPI existentes.
-    */
-
     setDashboardMetric(
       "Programado",
       data.programado
@@ -1807,16 +2234,7 @@ function refreshStudio(){
     );
 
 
-    /*
-    Instalamos eventos una sola vez.
-    */
-
     installWeekListeners();
-
-
-    /*
-    Costos.
-    */
 
     installCostRepair();
 
@@ -1923,22 +2341,11 @@ function installWeekListeners(){
 
 function installCostRepair(){
 
-  /*
-  --------------------------------------------------------------
-  Evitamos duplicar nuestro panel.
-  --------------------------------------------------------------
-  */
-
   const existing =
     document.getElementById(
       "tsCostRepair"
     );
 
-
-  /*
-  Siempre sincronizamos localStorage,
-  aunque el panel ya exista.
-  */
 
   const costs =
     migrateAllCosts();
@@ -1955,10 +2362,6 @@ function installCostRepair(){
 
   }
 
-
-  /*
-  Buscamos "Catálogo de modelos".
-  */
 
   const heading =
     [
@@ -1978,10 +2381,6 @@ function installCostRepair(){
   if(!heading)
     return;
 
-
-  /*
-  Buscamos el contenedor principal.
-  */
 
   let container =
     heading.parentElement;
@@ -2042,11 +2441,6 @@ function installCostRepair(){
 
   `;
 
-
-  /*
-  Lo colocamos al principio del contenedor
-  para que sea fácil de encontrar.
-  */
 
   container.insertBefore(
     panel,
@@ -2308,12 +2702,6 @@ function renderCostRepair(
   `;
 
 
-  /*
-  --------------------------------------------------------------
-  ESTILOS DEL PANEL
-  --------------------------------------------------------------
-  */
-
   if(
     !document.getElementById(
       "tsCostRepairStyle"
@@ -2440,12 +2828,6 @@ function renderCostRepair(
   }
 
 
-  /*
-  --------------------------------------------------------------
-  EDITAR
-  --------------------------------------------------------------
-  */
-
   panel
   .querySelectorAll(
     ".tsEditCost"
@@ -2502,12 +2884,6 @@ function renderCostRepair(
     }
   );
 
-
-  /*
-  --------------------------------------------------------------
-  GUARDAR / ACTUALIZAR
-  --------------------------------------------------------------
-  */
 
   document
   .getElementById(
@@ -2566,12 +2942,7 @@ function renderCostRepair(
         );
 
 
-      /*
-      Conservamos minutos si ya existían.
-      */
-
-      const old =
-        current[model] ||
+      const oldName =
         Object.keys(current)
         .find(
           x=>
@@ -2584,35 +2955,25 @@ function renderCostRepair(
 
 
       if(
-        typeof old==="object"
+        oldName &&
+        current[oldName]
       ){
 
         minValue =
-          num(old.min);
+          num(
+            current[oldName].min
+          );
 
       }
 
 
-      /*
-      Evitamos duplicados por mayúsculas.
-      */
-
-      const existingName =
-        Object.keys(current)
-        .find(
-          x=>
-            normalize(x)===
-            normalize(model)
-        );
-
-
       if(
-        existingName &&
-        existingName!==model
+        oldName &&
+        oldName!==model
       ){
 
         delete current[
-          existingName
+          oldName
         ];
 
       }
@@ -2634,10 +2995,6 @@ function renderCostRepair(
         current
       );
 
-
-      /*
-      También actualizamos espejo.
-      */
 
       const mirror =
         Object.keys(current)
@@ -2668,11 +3025,6 @@ function renderCostRepair(
         mirror
       );
 
-
-      /*
-      Disparamos eventos para que otras partes
-      de The Studio sepan que cambiaron los costos.
-      */
 
       try{
 
@@ -4086,7 +4438,7 @@ class="tsPane"
 
 
   /* ==============================================================
-     COSTOS DESTajo
+     COSTOS DESTAJO
      ============================================================== */
 
   function renderCost(){
@@ -4165,7 +4517,7 @@ class="tsPane"
               type="number"
               min="0"
               step="0.01"
-              placeholder="8.00"
+              placeholder="0.00"
             >
 
           </div>
@@ -4969,6 +5321,7 @@ class="tsPane"
 
   panel.style.display =
     "none";
+
 
 }
 
