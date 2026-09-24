@@ -11,7 +11,11 @@
 
 /* ================================================================
    THE STUDIO · CARGADOR MAESTRO
-   CONSERVA LA VERSIÓN COMPLETA ACTUAL
+   VERSIÓN CON:
+   • COSTOS + TIEMPO ESTÁNDAR
+   • EDICIÓN CON ✏️
+   • TABLERO DE EFICIENCIA
+   • DETALLE DE OT PROGRAMADAS
    ================================================================ */
 
 try{
@@ -38,18 +42,23 @@ try{
 
   }
 
+
   /* ==============================================================
-     INYECTAMOS LA CORRECCIÓN REAL
-     SOBRE LA VERSIÓN COMPLETA QUE YA FUNCIONA
+     FIX NUEVO
      ============================================================== */
 
   const FIX = `
 
 /* ==============================================================
-   FIX DEFINITIVO · CATÁLOGO DE COSTOS
+   THE STUDIO · AJUSTES NUEVOS
    ============================================================== */
 
-function TSFixReadJSON(key,fallback){
+
+/* ==============================================================
+   UTILIDADES SEGURAS
+   ============================================================== */
+
+function TSNEWReadJSON(key,fallback){
 
   try{
 
@@ -60,7 +69,6 @@ function TSFixReadJSON(key,fallback){
       value===null ||
       value===undefined ||
       value===""
-
     ){
 
       return fallback;
@@ -78,7 +86,7 @@ function TSFixReadJSON(key,fallback){
 }
 
 
-function TSFixSaveJSON(key,value){
+function TSNEWSaveJSON(key,value){
 
   try{
 
@@ -92,7 +100,7 @@ function TSFixSaveJSON(key,value){
 }
 
 
-function TSFixNum(value){
+function TSNEWNum(value){
 
   const n =
     Number(value);
@@ -104,23 +112,7 @@ function TSFixNum(value){
 }
 
 
-function TSFixMoney(value){
-
-  return new Intl.NumberFormat(
-    "es-MX",
-    {
-      style:"currency",
-      currency:"MXN",
-      minimumFractionDigits:2
-    }
-  ).format(
-    TSFixNum(value)
-  );
-
-}
-
-
-function TSFixNormalize(value){
+function TSNEWNormalize(value){
 
   return String(
     value ?? ""
@@ -136,19 +128,78 @@ function TSFixNormalize(value){
 }
 
 
+function TSNEWMoney(value){
+
+  return new Intl.NumberFormat(
+    "es-MX",
+    {
+      style:"currency",
+      currency:"MXN",
+      minimumFractionDigits:2
+    }
+  ).format(
+    TSNEWNum(value)
+  );
+
+}
+
+
+function TSNEWDate(value){
+
+  if(
+    typeof localDateString ===
+    "function"
+  ){
+
+    return localDateString(
+      value
+    );
+
+  }
+
+  const d =
+    new Date(
+      value
+    );
+
+  if(
+    Number.isNaN(
+      d.getTime()
+    )
+  ){
+
+    return "";
+
+  }
+
+  return [
+    d.getFullYear(),
+    String(
+      d.getMonth()+1
+    ).padStart(2,"0"),
+    String(
+      d.getDate()
+    ).padStart(2,"0")
+  ].join("-");
+
+}
+
+
 /* ==============================================================
    COSTOS
+   CONSERVA theStudioCostos_v4
    ============================================================== */
 
-function TSFixCosts(){
+function TSNEWGetCosts(){
 
   const raw =
-    TSFixReadJSON(
+    TSNEWReadJSON(
       "theStudioCostos_v4",
       {}
     );
 
   const result = {};
+
 
   if(
     Array.isArray(raw)
@@ -173,21 +224,21 @@ function TSFixCosts(){
       result[model] = {
 
         pes:
-          TSFixNum(
+          TSNEWNum(
             item.pes ??
             item.pespunte ??
             item.costoPespunte
           ),
 
         pre:
-          TSFixNum(
+          TSNEWNum(
             item.pre ??
             item.preliminar ??
             item.costoPreliminar
           ),
 
         min:
-          TSFixNum(
+          TSNEWNum(
             item.min ??
             item.minutos ??
             item.tiempoEstandar ??
@@ -202,6 +253,7 @@ function TSFixCosts(){
     return result;
 
   }
+
 
   if(
     raw &&
@@ -221,38 +273,37 @@ function TSFixCosts(){
         source[model];
 
       if(
-        item &&
-        typeof item==="object"
-      ){
+        !item ||
+        typeof item!=="object"
+      )
+        return;
 
-        result[model] = {
+      result[model] = {
 
-          pes:
-            TSFixNum(
-              item.pes ??
-              item.pespunte ??
-              item.costoPespunte
-            ),
+        pes:
+          TSNEWNum(
+            item.pes ??
+            item.pespunte ??
+            item.costoPespunte
+          ),
 
-          pre:
-            TSFixNum(
-              item.pre ??
-              item.preliminar ??
-              item.costoPreliminar
-            ),
+        pre:
+          TSNEWNum(
+            item.pre ??
+            item.preliminar ??
+            item.costoPreliminar
+          ),
 
-          min:
-            TSFixNum(
-              item.min ??
-              item.minutos ??
-              item.tiempoEstandar ??
-              item.tiempo ??
-              item.standardTime
-            )
+        min:
+          TSNEWNum(
+            item.min ??
+            item.minutos ??
+            item.tiempoEstandar ??
+            item.tiempo ??
+            item.standardTime
+          )
 
-        };
-
-      }
+      };
 
     });
 
@@ -264,13 +315,13 @@ function TSFixCosts(){
 
 
 /* ==============================================================
-   MODAL EDITAR MODELO
+   EDITOR DE MODELO
    ============================================================== */
 
-function TSFixOpenEditor(model){
+function TSNEWEditModel(model){
 
   const costs =
-    TSFixCosts();
+    TSNEWGetCosts();
 
   const item =
     costs[model] ||
@@ -280,10 +331,12 @@ function TSFixOpenEditor(model){
       min:0
     };
 
+
   let modal =
     document.getElementById(
-      "TS_FIX_EDITOR"
+      "TSNEW_EDITOR"
     );
+
 
   if(!modal){
 
@@ -293,15 +346,16 @@ function TSFixOpenEditor(model){
       );
 
     modal.id =
-      "TS_FIX_EDITOR";
+      "TSNEW_EDITOR";
+
 
     modal.innerHTML = `
 
-      <div class="TS_FIX_BACK">
+      <div class="TSNEW_BACK">
 
-        <div class="TS_FIX_MODAL">
+        <div class="TSNEW_MODAL">
 
-          <div class="TS_FIX_TITLE">
+          <div class="TSNEW_TITLE">
 
             <span>
               ✏️ Editar modelo
@@ -309,7 +363,7 @@ function TSFixOpenEditor(model){
 
             <button
               type="button"
-              id="TS_FIX_CLOSE"
+              id="TSNEW_CLOSE"
             >
               ×
             </button>
@@ -317,10 +371,12 @@ function TSFixOpenEditor(model){
           </div>
 
 
-          <div class="TS_FIX_SUB">
+          <div class="TSNEW_SUB">
 
-            Actualiza costos o tiempo estándar
-            sin perder la información existente.
+            Puedes modificar el nombre,
+            costo de pespunte,
+            costo preliminar
+            y tiempo estándar.
 
           </div>
 
@@ -330,17 +386,17 @@ function TSFixOpenEditor(model){
           </label>
 
           <input
-            id="TS_FIX_MODEL"
+            id="TSNEW_MODEL"
             type="text"
           >
 
 
           <label>
-            Costo pespunte $
+            Costo pespunte
           </label>
 
           <input
-            id="TS_FIX_PES"
+            id="TSNEW_PES"
             type="number"
             min="0"
             step="0.01"
@@ -348,11 +404,11 @@ function TSFixOpenEditor(model){
 
 
           <label>
-            Costo preliminar $
+            Costo preliminar
           </label>
 
           <input
-            id="TS_FIX_PRE"
+            id="TSNEW_PRE"
             type="number"
             min="0"
             step="0.01"
@@ -360,22 +416,20 @@ function TSFixOpenEditor(model){
 
 
           <label>
-            Tiempo estándar (min)
+            Tiempo estándar · minutos
           </label>
 
           <input
-            id="TS_FIX_MIN"
+            id="TSNEW_MIN"
             type="number"
             min="0"
             step="0.01"
-            placeholder="Ej. 4.50"
           >
 
 
           <button
+            id="TSNEW_SAVE"
             type="button"
-            id="TS_FIX_SAVE"
-            class="TS_FIX_SAVE"
           >
             💾 Guardar cambios
           </button>
@@ -386,51 +440,51 @@ function TSFixOpenEditor(model){
 
     `;
 
+
     document.body.appendChild(
       modal
     );
+
 
     const style =
       document.createElement(
         "style"
       );
 
+
     style.id =
-      "TS_FIX_STYLE";
+      "TSNEW_STYLE";
+
 
     style.textContent = `
 
-      #TS_FIX_EDITOR{
+      #TSNEW_EDITOR{
 
         position:fixed;
-
         inset:0;
-
         z-index:2147483647;
-
         display:none;
 
       }
 
-      #TS_FIX_EDITOR.show{
+
+      #TSNEW_EDITOR.show{
 
         display:block;
 
       }
 
-      .TS_FIX_BACK{
+
+      .TSNEW_BACK{
 
         position:absolute;
-
         inset:0;
 
         background:
-          rgba(0,0,0,.78);
+          rgba(0,0,0,.80);
 
         display:flex;
-
         align-items:center;
-
         justify-content:center;
 
         padding:20px;
@@ -440,7 +494,8 @@ function TSFixOpenEditor(model){
 
       }
 
-      .TS_FIX_MODAL{
+
+      .TSNEW_MODAL{
 
         width:
           min(
@@ -448,10 +503,12 @@ function TSFixOpenEditor(model){
             100%
           );
 
-        max-height:
-          90vh;
-
+        max-height:90vh;
         overflow:auto;
+
+        padding:20px;
+
+        border-radius:22px;
 
         background:
           linear-gradient(
@@ -465,14 +522,8 @@ function TSFixOpenEditor(model){
         border:
           1px solid #104456;
 
-        border-radius:22px;
-
-        padding:20px;
-
         box-shadow:
-          0 25px 80px #000c,
-          0 0 35px
-          rgba(0,191,255,.25);
+          0 25px 80px #000c;
 
         font-family:
           system-ui,
@@ -481,55 +532,50 @@ function TSFixOpenEditor(model){
 
       }
 
-      .TS_FIX_TITLE{
+
+      .TSNEW_TITLE{
 
         display:flex;
 
-        align-items:center;
-
         justify-content:space-between;
-
-        font-size:21px;
-
-        font-weight:900;
+        align-items:center;
 
         color:#48e7ff;
 
-        margin-bottom:5px;
+        font-size:21px;
+        font-weight:900;
+
+        margin-bottom:8px;
 
       }
 
-      #TS_FIX_CLOSE{
+
+      #TSNEW_CLOSE{
 
         width:40px;
-
         height:40px;
 
         border:0;
-
         border-radius:12px;
 
         background:#092534!important;
-
         color:#48e7ff!important;
 
         font-size:25px;
 
-        cursor:pointer;
-
       }
 
-      .TS_FIX_SUB{
+
+      .TSNEW_SUB{
 
         color:#83aebb;
-
         font-size:13px;
-
         margin-bottom:18px;
 
       }
 
-      .TS_FIX_MODAL label{
+
+      .TSNEW_MODAL label{
 
         display:block;
 
@@ -539,17 +585,16 @@ function TSFixOpenEditor(model){
         color:#48e7ff;
 
         font-size:12px;
-
         font-weight:900;
 
         text-transform:uppercase;
 
       }
 
-      .TS_FIX_MODAL input{
+
+      .TSNEW_MODAL input{
 
         width:100%;
-
         box-sizing:border-box;
 
         padding:13px;
@@ -565,21 +610,10 @@ function TSFixOpenEditor(model){
 
         font-size:16px;
 
-        outline:none;
-
       }
 
-      .TS_FIX_MODAL input:focus{
 
-        border-color:#48e7ff;
-
-        box-shadow:
-          0 0 15px
-          rgba(0,191,255,.2);
-
-      }
-
-      .TS_FIX_SAVE{
+      #TSNEW_SAVE{
 
         width:100%;
 
@@ -600,220 +634,236 @@ function TSFixOpenEditor(model){
 
         color:#001018!important;
 
-        font-weight:900;
-
         font-size:16px;
-
-        cursor:pointer;
+        font-weight:900;
 
       }
 
     `;
 
+
     document.head.appendChild(
       style
     );
 
-    document
-    .getElementById(
-      "TS_FIX_CLOSE"
-    )
-    .onclick = ()=>{
-
-      modal.classList.remove(
-        "show"
-      );
-
-    };
 
     document
     .getElementById(
-      "TS_FIX_SAVE"
+      "TSNEW_CLOSE"
     )
-    .onclick = ()=>{
+    .onclick =
+      ()=>{
 
-      const oldModel =
-        modal
-        .dataset
-        .oldModel;
-
-      const newModel =
-        document
-        .getElementById(
-          "TS_FIX_MODEL"
-        )
-        .value
-        .trim();
-
-      if(!newModel){
-
-        alert(
-          "Escribe el nombre del modelo."
+        modal.classList.remove(
+          "show"
         );
-
-        return;
-
-      }
-
-      const pes =
-        TSFixNum(
-          document
-          .getElementById(
-            "TS_FIX_PES"
-          )
-          .value
-        );
-
-      const pre =
-        TSFixNum(
-          document
-          .getElementById(
-            "TS_FIX_PRE"
-          )
-          .value
-        );
-
-      const min =
-        TSFixNum(
-          document
-          .getElementById(
-            "TS_FIX_MIN"
-          )
-          .value
-        );
-
-      const current =
-        TSFixCosts();
-
-      const existing =
-        Object.keys(current)
-        .find(
-          x=>
-            TSFixNormalize(x) ===
-            TSFixNormalize(oldModel)
-        );
-
-      if(
-        existing &&
-        TSFixNormalize(existing) !==
-        TSFixNormalize(newModel)
-      ){
-
-        delete current[
-          existing
-        ];
-
-      }
-
-      current[newModel] = {
-
-        pes:pes,
-
-        pre:pre,
-
-        min:min
 
       };
 
-      TSFixSaveJSON(
-        "theStudioCostos_v4",
-        current
-      );
+
+    document
+    .getElementById(
+      "TSNEW_SAVE"
+    )
+    .onclick =
+      ()=>{
+
+        const oldModel =
+          modal.dataset.oldModel;
 
 
-      /* espejo para compatibilidad */
-
-      TSFixSaveJSON(
-        "ts_costos_v1",
-        Object.keys(current)
-        .map(name=>({
-
-          modelo:name,
-
-          pespunte:
-            TSFixNum(
-              current[name].pes
-            ),
-
-          preliminar:
-            TSFixNum(
-              current[name].pre
-            ),
-
-          min:
-            TSFixNum(
-              current[name].min
-            )
-
-        }))
-      );
-
-
-      modal.classList.remove(
-        "show"
-      );
-
-
-      TSFixRefreshCatalog();
-
-
-      try{
-
-        window.dispatchEvent(
-          new StorageEvent(
-            "storage",
-            {
-              key:
-                "theStudioCostos_v4",
-
-              newValue:
-                JSON.stringify(
-                  current
-                ),
-
-              storageArea:
-                localStorage
-
-            }
+        const newModel =
+          document
+          .getElementById(
+            "TSNEW_MODEL"
           )
+          .value
+          .trim();
+
+
+        if(!newModel){
+
+          alert(
+            "Escribe el nombre del modelo."
+          );
+
+          return;
+
+        }
+
+
+        const pes =
+          TSNEWNum(
+            document
+            .getElementById(
+              "TSNEW_PES"
+            )
+            .value
+          );
+
+
+        const pre =
+          TSNEWNum(
+            document
+            .getElementById(
+              "TSNEW_PRE"
+            )
+            .value
+          );
+
+
+        const min =
+          TSNEWNum(
+            document
+            .getElementById(
+              "TSNEW_MIN"
+            )
+            .value
+          );
+
+
+        const current =
+          TSNEWGetCosts();
+
+
+        const existing =
+          Object.keys(current)
+          .find(
+            x=>
+              TSNEWNormalize(x)===
+              TSNEWNormalize(
+                oldModel
+              )
+          );
+
+
+        if(
+          existing &&
+          TSNEWNormalize(existing)!==
+          TSNEWNormalize(newModel)
+        ){
+
+          delete current[
+            existing
+          ];
+
+        }
+
+
+        current[newModel] = {
+
+          pes:pes,
+          pre:pre,
+          min:min
+
+        };
+
+
+        TSNEWSaveJSON(
+          "theStudioCostos_v4",
+          current
         );
 
-      }catch{}
 
-    };
+        TSNEWSaveJSON(
+          "ts_costos_v1",
+          Object.keys(current)
+          .map(name=>({
+
+            modelo:name,
+
+            pespunte:
+              TSNEWNum(
+                current[name].pes
+              ),
+
+            preliminar:
+              TSNEWNum(
+                current[name].pre
+              ),
+
+            min:
+              TSNEWNum(
+                current[name].min
+              )
+
+          }))
+        );
+
+
+        modal.classList.remove(
+          "show"
+        );
+
+
+        try{
+
+          window.dispatchEvent(
+            new StorageEvent(
+              "storage",
+              {
+                key:
+                  "theStudioCostos_v4",
+
+                newValue:
+                  JSON.stringify(
+                    current
+                  ),
+
+                storageArea:
+                  localStorage
+              }
+            )
+          );
+
+        }catch{}
+
+
+        setTimeout(
+          TSNEWRefreshCostTables,
+          100
+        );
+
+      };
 
   }
+
 
   modal.dataset.oldModel =
     model;
 
+
   document
   .getElementById(
-    "TS_FIX_MODEL"
+    "TSNEW_MODEL"
   )
   .value =
     model;
 
-  document
-  .getElementById(
-    "TS_FIX_PES"
-  )
-  .value =
-    TSFixNum(item.pes);
 
   document
   .getElementById(
-    "TS_FIX_PRE"
+    "TSNEW_PES"
   )
   .value =
-    TSFixNum(item.pre);
+    TSNEWNum(item.pes);
+
 
   document
   .getElementById(
-    "TS_FIX_MIN"
+    "TSNEW_PRE"
   )
   .value =
-    TSFixNum(item.min);
+    TSNEWNum(item.pre);
+
+
+  document
+  .getElementById(
+    "TSNEW_MIN"
+  )
+  .value =
+    TSNEWNum(item.min);
+
 
   modal.classList.add(
     "show"
@@ -823,336 +873,45 @@ function TSFixOpenEditor(model){
 
 
 /* ==============================================================
-   ENCONTRAR CATÁLOGO REAL
+   AGREGAR LÁPIZ A CATÁLOGOS
    ============================================================== */
 
-function TSFixFindCatalog(){
+function TSNEWRefreshCostTables(){
 
-  const headings =
-    [
-      ...document.querySelectorAll(
-        "body *"
-      )
-    ];
-
-  const heading =
-    headings.find(
-      el=>{
-
-        if(
-          el.children.length!==0
-        )
-          return false;
-
-        if(
-          el.offsetParent===null
-        )
-          return false;
-
-        const text =
-          TSFixNormalize(
-            el.textContent
-          );
-
-        return (
-          text ===
-            "catalogo de costos" ||
-
-          text ===
-            "catalogo de modelos"
-
-        );
-
-      }
-    );
-
-  if(!heading)
-    return null;
-
-  let node =
-    heading;
-
-  for(
-    let i=0;
-    i<8;
-    i++
-  ){
-
-    if(!node)
-      break;
-
-    const text =
-      TSFixNormalize(
-        node.textContent
-      );
-
-    if(
-      text.includes(
-        "guardar / actualizar modelo"
-      ) &&
-      (
-        text.includes(
-          "pespunte"
-        ) ||
-        text.includes(
-          "preliminar"
-        )
-      )
-    ){
-
-      return node;
-
-    }
-
-    node =
-      node.parentElement;
-
-  }
-
-  return (
-    heading.parentElement
-  );
-
-}
+  const costs =
+    TSNEWGetCosts();
 
 
-/* ==============================================================
-   INSERTAR TIEMPO ESTÁNDAR EN EL FORMULARIO
-   ============================================================== */
-
-function TSFixInstallTimeField(){
-
-  const catalog =
-    TSFixFindCatalog();
-
-  if(!catalog)
-    return;
-
-  if(
-    document.getElementById(
-      "TS_FIX_TIME_FORM"
-    )
+  document
+  .querySelectorAll(
+    "table"
   )
-    return;
-
-  const inputs =
-    [
-      ...catalog.querySelectorAll(
-        "input"
-      )
-    ];
-
-  if(!inputs.length)
-    return;
-
-  const modelInput =
-    inputs.find(
-      x=>
-        TSFixNormalize(
-          x.placeholder
-        ).includes(
-          "verona"
-        )
-    ) ||
-    inputs[0];
-
-  if(!modelInput)
-    return;
-
-  const field =
-    document.createElement(
-      "div"
-    );
-
-  field.id =
-    "TS_FIX_TIME_FORM";
-
-  field.style.cssText = `
-
-    margin-top:12px;
-
-    padding:12px;
-
-    border:
-      1px solid #104456;
-
-    border-radius:14px;
-
-    background:#04131c;
-
-  `;
-
-  field.innerHTML = `
-
-    <div
-      style="
-        color:#48e7ff;
-        font-size:12px;
-        font-weight:900;
-        margin-bottom:7px;
-      "
-    >
-      TIEMPO ESTÁNDAR DEL MODELO · MINUTOS
-    </div>
-
-    <input
-      id="TS_FIX_TIME_INPUT"
-      type="number"
-      min="0"
-      step="0.01"
-      placeholder="Ej. 4.50"
-      style="
-        width:100%;
-        box-sizing:border-box;
-        padding:12px;
-        border:1px solid #15506a;
-        border-radius:10px;
-        background:#071923;
-        color:#e9fbff;
-        font-size:16px;
-      "
-    >
-
-  `;
-
-  const saveButton =
-    [
-      ...catalog.querySelectorAll(
-        "button"
-      )
-    ].find(
-      b=>
-        TSFixNormalize(
-          b.textContent
-        ).includes(
-          "guardar"
-        )
-    );
-
-  if(saveButton){
-
-    saveButton.parentElement
-      ?.insertBefore(
-        field,
-        saveButton
-      );
-
-  }else{
-
-    catalog.appendChild(
-      field
-    );
-
-  }
-
-
-  if(saveButton){
-
-    saveButton.addEventListener(
-      "click",
-      ()=>{
-
-        setTimeout(()=>{
-
-          const model =
-            modelInput.value.trim();
-
-          if(!model)
-            return;
-
-          const time =
-            TSFixNum(
-              document
-              .getElementById(
-                "TS_FIX_TIME_INPUT"
-              )
-              ?.value
-            );
-
-          if(time<=0)
-            return;
-
-          const current =
-            TSFixCosts();
-
-          const existing =
-            Object.keys(current)
-            .find(
-              x=>
-                TSFixNormalize(x)===
-                TSFixNormalize(model)
-            );
-
-          const name =
-            existing || model;
-
-          current[name] = {
-
-            pes:
-              TSFixNum(
-                current[name]?.pes
-              ),
-
-            pre:
-              TSFixNum(
-                current[name]?.pre
-              ),
-
-            min:time
-
-          };
-
-          TSFixSaveJSON(
-            "theStudioCostos_v4",
-            current
-          );
-
-          TSFixRefreshCatalog();
-
-        },150);
-
-      },
-      true
-    );
-
-  }
-
-}
-
-
-/* ==============================================================
-   AGREGAR COLUMNAS + LÁPIZ
-   ============================================================== */
-
-function TSFixRefreshCatalog(){
-
-  const tables =
-    [
-      ...document.querySelectorAll(
-        "table"
-      )
-    ];
-
-  tables.forEach(
+  .forEach(
     table=>{
 
-      const firstRows =
+      const rows =
         [
           ...table.querySelectorAll(
             "tr"
           )
         ];
 
-      if(!firstRows.length)
+
+      if(
+        rows.length<2
+      )
         return;
 
+
       const header =
-        firstRows[0];
+        rows[0];
+
 
       const headerText =
-        TSFixNormalize(
+        TSNEWNormalize(
           header.textContent
         );
+
 
       if(
         !headerText.includes(
@@ -1170,203 +929,147 @@ function TSFixRefreshCatalog(){
 
       }
 
-      const oldMarker =
-        table.dataset.tsFixDone;
-
-      const costs =
-        TSFixCosts();
-
-
-      /* evitar duplicados */
 
       if(
-        oldMarker!=="1"
+        !header.querySelector(
+          ".TSNEW_EDIT_HEAD"
+        )
       ){
 
-        const thTime =
+        const th =
           document.createElement(
             "th"
           );
 
-        thTime.textContent =
-          "TIEMPO STD.";
+        th.className =
+          "TSNEW_EDIT_HEAD";
 
-        thTime.style.cssText =
-          `
-          padding:10px 6px;
-          color:#48e7ff;
-          font-weight:900;
-          text-align:right;
-          white-space:nowrap;
-          `;
-
-        header.appendChild(
-          thTime
-        );
-
-
-        const thEdit =
-          document.createElement(
-            "th"
-          );
-
-        thEdit.textContent =
+        th.textContent =
           "EDITAR";
 
-        thEdit.style.cssText =
+        th.style.cssText =
           `
-          padding:10px 6px;
+          padding:10px;
           color:#48e7ff;
-          font-weight:900;
           text-align:center;
           white-space:nowrap;
           `;
 
         header.appendChild(
-          thEdit
+          th
         );
-
-        table.dataset.tsFixDone =
-          "1";
 
       }
 
 
-      const rows =
-        firstRows.slice(1);
-
-      rows.forEach(
+      rows
+      .slice(1)
+      .forEach(
         row=>{
 
           if(
-            row.dataset.tsFixRow==="1"
+            row.dataset.tsnewEdit==="1"
           )
             return;
+
 
           const cells =
             [
               ...row.children
             ];
 
+
           if(!cells.length)
             return;
+
 
           const model =
             cells[0]
             ?.textContent
             ?.trim();
 
+
           if(!model)
             return;
 
-          const cleanModel =
+
+          const clean =
             Object.keys(costs)
             .find(
               x=>
-                TSFixNormalize(x)===
-                TSFixNormalize(model)
+                TSNEWNormalize(x)===
+                TSNEWNormalize(model)
             );
 
-          const item =
-            costs[
-              cleanModel || model
-            ] ||
-            {
-              pes:0,
-              pre:0,
-              min:0
-            };
 
-
-          const timeCell =
+          const buttonCell =
             document.createElement(
               "td"
             );
 
-          timeCell.style.cssText =
+
+          buttonCell.style.cssText =
             `
-            padding:10px 6px;
-            border-top:1px solid #104456;
-            text-align:right;
-            white-space:nowrap;
-            color:#48e7ff;
-            font-weight:800;
-            `;
-
-          timeCell.textContent =
-            TSFixNum(item.min)>0
-              ? TSFixNum(item.min)+" min"
-              : "—";
-
-
-          const editCell =
-            document.createElement(
-              "td"
-            );
-
-          editCell.style.cssText =
-            `
-            padding:7px 5px;
-            border-top:1px solid #104456;
+            padding:7px;
             text-align:center;
             `;
 
 
-          const editButton =
+          const button =
             document.createElement(
               "button"
             );
 
-          editButton.type =
+
+          button.type =
             "button";
 
-          editButton.textContent =
+
+          button.textContent =
             "✏️";
 
-          editButton.title =
+
+          button.title =
             "Editar modelo";
 
-          editButton.style.cssText =
+
+          button.style.cssText =
             `
-            border:0;
-            border-radius:10px;
             min-width:42px;
             min-height:38px;
-            padding:8px 10px;
+            border:0;
+            border-radius:10px;
             background:#063d55!important;
             color:#48e7ff!important;
             font-size:18px;
             cursor:pointer;
-            box-shadow:
-              0 0 12px
-              rgba(0,191,255,.2);
             `;
 
-          editButton.onclick =
+
+          button.onclick =
             event=>{
 
               event.preventDefault();
               event.stopPropagation();
 
-              TSFixOpenEditor(
-                cleanModel || model
+              TSNEWEditModel(
+                clean || model
               );
 
             };
 
-          editCell.appendChild(
-            editButton
+
+          buttonCell.appendChild(
+            button
           );
+
 
           row.appendChild(
-            timeCell
+            buttonCell
           );
 
-          row.appendChild(
-            editCell
-          );
 
-          row.dataset.tsFixRow =
+          row.dataset.tsnewEdit =
             "1";
 
         }
@@ -1375,108 +1078,1173 @@ function TSFixRefreshCatalog(){
     }
   );
 
+}
 
-  /* ============================================================
-     TAMBIÉN SOPORTAMOS CATÁLOGOS HECHOS CON DIVS
-     ============================================================ */
 
-  const catalog =
-    TSFixFindCatalog();
+/* ==============================================================
+   TIEMPO ESTÁNDAR EN FORMULARIO
+   ============================================================== */
 
-  if(catalog){
+function TSNEWInstallTimeInput(){
 
-    const text =
-      TSFixNormalize(
-        catalog.textContent
+  const existing =
+    document.getElementById(
+      "tsCostMin"
+    );
+
+
+  /*
+  La versión actual de The Studio
+  ya tiene este campo.
+
+  Si existe, no hacemos nada.
+  */
+
+  if(existing)
+    return;
+
+
+  const model =
+    document.getElementById(
+      "tsCostModel"
+    );
+
+
+  const pes =
+    document.getElementById(
+      "tsCostPes"
+    );
+
+
+  const pre =
+    document.getElementById(
+      "tsCostPre"
+    );
+
+
+  const save =
+    document.getElementById(
+      "tsSaveCost"
+    );
+
+
+  if(
+    !model ||
+    !pes ||
+    !pre ||
+    !save
+  )
+    return;
+
+
+  const wrap =
+    document.createElement(
+      "div"
+    );
+
+
+  wrap.style.cssText =
+    `
+    margin-top:10px;
+    `;
+
+
+  wrap.innerHTML = `
+
+    <label
+      style="
+        display:block;
+        color:#48e7ff;
+        font-size:12px;
+        font-weight:900;
+        margin-bottom:5px;
+      "
+    >
+      TIEMPO ESTÁNDAR · MINUTOS
+    </label>
+
+    <input
+      id="tsCostMin"
+      type="number"
+      min="0"
+      step="0.01"
+      placeholder="Ej. 4.50"
+      style="
+        width:100%;
+        box-sizing:border-box;
+        padding:10px;
+        border:1px solid #15506a;
+        border-radius:9px;
+        background:#04131c;
+        color:#e9fbff;
+        font:inherit;
+      "
+    >
+
+  `;
+
+
+  save.parentElement
+    ?.insertBefore(
+      wrap,
+      save
+    );
+
+}
+
+
+/* ==============================================================
+   TABLERO · DATOS DE PROGRAMACIÓN
+   ============================================================== */
+
+function TSNEWProduction(){
+
+  const raw =
+    TSNEWReadJSON(
+      "theStudioProduccion_v4",
+      []
+    );
+
+
+  if(
+    Array.isArray(raw)
+  )
+    return raw;
+
+
+  if(
+    raw &&
+    Array.isArray(
+      raw.prod
+    )
+  )
+    return raw.prod;
+
+
+  if(
+    raw &&
+    Array.isArray(
+      raw.produccion
+    )
+  )
+    return raw.produccion;
+
+
+  return [];
+
+}
+
+
+function TSNEWAdvances(){
+
+  const raw =
+    TSNEWReadJSON(
+      "theStudioAvances_v4",
+      []
+    );
+
+
+  if(
+    Array.isArray(raw)
+  )
+    return raw;
+
+
+  if(
+    raw &&
+    Array.isArray(
+      raw.avances
+    )
+  )
+    return raw.avances;
+
+
+  return [];
+
+}
+
+
+function TSNEWLine(item){
+
+  return String(
+    item.linea ??
+    item.line ??
+    item.lineaProduccion ??
+    item.lineaNombre ??
+    item.Linea ??
+    ""
+  ).trim();
+
+}
+
+
+function TSNEWSameLine(
+  item,
+  line
+){
+
+  const a =
+    TSNEWNormalize(
+      TSNEWLine(item)
+    );
+
+  const b =
+    TSNEWNormalize(
+      line
+    );
+
+
+  if(a===b)
+    return true;
+
+
+  if(
+    b==="linea a"
+  ){
+
+    return (
+      a==="a" ||
+      a==="lineaa" ||
+      a==="linea  a"
+    );
+
+  }
+
+
+  if(
+    b==="linea b"
+  ){
+
+    return (
+      a==="b" ||
+      a==="lineab" ||
+      a==="linea  b"
+    );
+
+  }
+
+
+  return false;
+
+}
+
+
+function TSNEWDateOf(item){
+
+  return TSNEWDate(
+    item.fecha ??
+    item.date ??
+    item.fechaHora ??
+    item.createdAt ??
+    ""
+  );
+
+}
+
+
+function TSNEWProgrammed(
+  date,
+  line
+){
+
+  return TSNEWProduction()
+    .filter(
+      item=>
+        TSNEWDateOf(item)===date &&
+        TSNEWSameLine(
+          item,
+          line
+        )
+    );
+
+}
+
+
+function TSNEWPiecesProgrammed(
+  item
+){
+
+  return TSNEWNum(
+    item.programado ??
+    item.piezasProgramadas ??
+    item.cantidad ??
+    item.qty ??
+    item.piezas
+  );
+
+}
+
+
+function TSNEWOT(item){
+
+  return String(
+    item.ot ??
+    item.OT ??
+    item.numeroOT ??
+    item.otNumber ??
+    item.folio ??
+    item.orden ??
+    item.ordenTrabajo ??
+    item.ordenProduccion ??
+    ""
+  ).trim();
+
+}
+
+
+function TSNEWProcess(
+  item
+){
+
+  return TSNEWNormalize(
+    item.siguienteProceso ??
+    item.procesoNuevo ??
+    item.procesoDestino ??
+    item.destino ??
+    item.hasta ??
+    item.to ??
+    ""
+  );
+
+}
+
+
+function TSNEWIsSalidaPespunte(
+  item
+){
+
+  const destination =
+    TSNEWProcess(
+      item
+    );
+
+
+  const source =
+    TSNEWNormalize(
+      item.procesoAnterior ??
+      item.procesoOrigen ??
+      item.proceso ??
+      item.desde ??
+      item.from ??
+      ""
+    );
+
+
+  if(
+    destination.includes(
+      "salida pespunte"
+    ) ||
+    destination.includes(
+      "salida de pespunte"
+    ) ||
+    destination==="salidapespunte" ||
+    destination==="salidadepespunte"
+  ){
+
+    return true;
+
+  }
+
+
+  return (
+    source.includes(
+      "pespunte"
+    ) &&
+    destination.includes(
+      "clasificacion"
+    )
+  );
+
+}
+
+
+function TSNEWSalida(
+  date,
+  line
+){
+
+  return TSNEWAdvances()
+    .filter(
+      item=>
+        TSNEWDateOf(item)===date &&
+        TSNEWSameLine(
+          item,
+          line
+        ) &&
+        TSNEWIsSalidaPespunte(
+          item
+        )
+    )
+    .reduce(
+      (
+        total,
+        item
+      )=>
+        total+
+        TSNEWNum(
+          item.piezas ??
+          item.cantidad ??
+          item.qty ??
+          item.pares
+        ),
+      0
+    );
+
+}
+
+
+/* ==============================================================
+   TABLERO
+   ============================================================== */
+
+function TSNEWInstallDashboard(){
+
+  let panel =
+    document.getElementById(
+      "TSNEW_DASHBOARD"
+    );
+
+
+  if(!panel){
+
+    panel =
+      document.createElement(
+        "section"
       );
 
+    panel.id =
+      "TSNEW_DASHBOARD";
+
+
+    panel.style.cssText =
+      `
+      margin:18px 0;
+      padding:18px;
+      border:1px solid #104456;
+      border-radius:20px;
+      background:
+        linear-gradient(
+          145deg,
+          #071923,
+          #031018
+        );
+      color:#e9fbff;
+      box-shadow:
+        0 12px 35px #0007;
+      `;
+
+
+    const target =
+      document.querySelector(
+        "main"
+      ) ||
+      document.querySelector(
+        "#app"
+      ) ||
+      document.body;
+
+
     if(
-      text.includes("catalogo de costos") ||
-      text.includes("catalogo de modelos")
+      target &&
+      target.firstElementChild
     ){
 
-      TSFixInstallTimeField();
+      target.insertBefore(
+        panel,
+        target.firstElementChild
+      );
+
+    }else{
+
+      document.body.appendChild(
+        panel
+      );
 
     }
+
+  }
+
+
+  TSNEWRenderDashboard(
+    panel
+  );
+
+}
+
+
+function TSNEWRenderDashboard(
+  panel
+){
+
+  const date =
+    typeof getReferenceDate==="function"
+      ? (
+          getReferenceDate() ||
+          TSNEWDate(
+            new Date()
+          )
+        )
+      : TSNEWDate(
+          new Date()
+        );
+
+
+  const lines =
+    [
+      "Línea A",
+      "Línea B"
+    ];
+
+
+  const data =
+    lines.map(
+      line=>{
+
+        const records =
+          TSNEWProgrammed(
+            date,
+            line
+          );
+
+
+        const programmed =
+          records.reduce(
+            (
+              total,
+              item
+            )=>
+              total+
+              TSNEWPiecesProgrammed(
+                item
+              ),
+            0
+          );
+
+
+        const salida =
+          TSNEWSalida(
+            date,
+            line
+          );
+
+
+        const efficiency =
+          programmed>0
+            ? (
+                salida/
+                programmed
+              )*100
+            : 0;
+
+
+        return {
+
+          line,
+          records,
+          programmed,
+          salida,
+          efficiency
+
+        };
+
+      }
+    );
+
+
+  const totalProgrammed =
+    data[0].programmed+
+    data[1].programmed;
+
+
+  const totalSalida =
+    data[0].salida+
+    data[1].salida;
+
+
+  const totalEfficiency =
+    totalProgrammed>0
+      ? (
+          totalSalida/
+          totalProgrammed
+        )*100
+      : 0;
+
+
+  const format =
+    value=>
+      new Intl.NumberFormat(
+        "es-MX"
+      ).format(
+        TSNEWNum(value)
+      );
+
+
+  const card =
+    item=>{
+
+      const bar =
+        Math.min(
+          100,
+          Math.max(
+            0,
+            item.efficiency
+          )
+        );
+
+
+      const otRows =
+        item.records.length
+          ? item.records
+              .map(
+                r=>`
+
+                  <div
+                    style="
+                      display:grid;
+                      grid-template-columns:
+                        1fr auto;
+                      gap:8px;
+                      padding:8px 0;
+                      border-bottom:
+                        1px solid #104456;
+                    "
+                  >
+
+                    <div>
+
+                      <b>
+                        OT ${String(
+                          TSNEWOT(r) ||
+                          "SIN OT"
+                        )}
+                      </b>
+
+                      <div
+                        style="
+                          color:#83aebb;
+                          font-size:11px;
+                          margin-top:2px;
+                        "
+                      >
+                        ${String(
+                          r.modelo ??
+                          r.model ??
+                          ""
+                        )}
+                      </div>
+
+                    </div>
+
+                    <b
+                      style="
+                        color:#48e7ff;
+                      "
+                    >
+                      ${format(
+                        TSNEWPiecesProgrammed(
+                          r
+                        )
+                      )}
+                    </b>
+
+                  </div>
+
+                `
+              )
+              .join("")
+          : `
+
+              <div
+                style="
+                  color:#83aebb;
+                  padding:10px 0;
+                "
+              >
+                No hay OT programadas
+                para esta línea hoy.
+              </div>
+
+            `;
+
+
+      return `
+
+        <div
+          style="
+            border:1px solid #104456;
+            border-radius:16px;
+            padding:14px;
+            background:#04131c;
+          "
+        >
+
+          <div
+            style="
+              font-size:13px;
+              font-weight:900;
+              color:#48e7ff;
+              letter-spacing:1px;
+            "
+          >
+            ${item.line.toUpperCase()}
+          </div>
+
+
+          <div
+            style="
+              font-size:34px;
+              font-weight:900;
+              margin-top:5px;
+              color:#48e7ff;
+            "
+          >
+            ${item.efficiency.toFixed(1)}%
+          </div>
+
+
+          <div
+            style="
+              display:grid;
+              grid-template-columns:
+                1fr 1fr;
+              gap:8px;
+              margin-top:8px;
+            "
+          >
+
+            <div>
+
+              <small
+                style="
+                  color:#83aebb;
+                "
+              >
+                PROGRAMADO
+              </small>
+
+              <div
+                style="
+                  font-weight:900;
+                  font-size:18px;
+                "
+              >
+                ${format(
+                  item.programmed
+                )}
+              </div>
+
+            </div>
+
+
+            <div>
+
+              <small
+                style="
+                  color:#83aebb;
+                "
+              >
+                SALIDA PESPUNTE
+              </small>
+
+              <div
+                style="
+                  font-weight:900;
+                  font-size:18px;
+                "
+              >
+                ${format(
+                  item.salida
+                )}
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div
+            style="
+              height:10px;
+              margin-top:12px;
+              border-radius:99px;
+              overflow:hidden;
+              background:#06141d;
+              border:1px solid #104456;
+            "
+          >
+
+            <div
+              style="
+                width:${bar}%;
+                height:100%;
+                border-radius:99px;
+                background:
+                  linear-gradient(
+                    90deg,
+                    #007fc4,
+                    #48e7ff
+                  );
+              "
+            ></div>
+
+          </div>
+
+
+          <div
+            style="
+              margin-top:15px;
+              color:#83aebb;
+              font-size:11px;
+              font-weight:900;
+            "
+          >
+            OT PROGRAMADAS
+          </div>
+
+
+          <div
+            style="
+              margin-top:5px;
+            "
+          >
+            ${otRows}
+          </div>
+
+        </div>
+
+      `;
+
+    };
+
+
+  panel.innerHTML = `
+
+    <div
+      style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:10px;
+        flex-wrap:wrap;
+      "
+    >
+
+      <div>
+
+        <div
+          style="
+            color:#48e7ff;
+            font-size:21px;
+            font-weight:900;
+          "
+        >
+          📊 TABLERO · PLAN DEL DÍA
+        </div>
+
+        <div
+          style="
+            color:#83aebb;
+            font-size:12px;
+            margin-top:4px;
+          "
+        >
+          ${date}
+          · Programado vs Salida de Pespunte
+        </div>
+
+      </div>
+
+
+      <div
+        style="
+          padding:8px 12px;
+          border-radius:999px;
+          border:1px solid #15506a;
+          color:#48e7ff;
+          font-weight:900;
+        "
+      >
+        EFICIENCIA
+      </div>
+
+    </div>
+
+
+    <div
+      style="
+        display:grid;
+        grid-template-columns:
+          repeat(3,minmax(0,1fr));
+        gap:10px;
+        margin-top:15px;
+      "
+      class="TSNEW_DASH_GRID"
+    >
+
+      ${card(data[0])}
+
+      ${card(data[1])}
+
+      <div
+        style="
+          border:1px solid #104456;
+          border-radius:16px;
+          padding:14px;
+          background:
+            linear-gradient(
+              145deg,
+              #08212d,
+              #031018
+            );
+        "
+      >
+
+        <div
+          style="
+            color:#83aebb;
+            font-size:11px;
+            font-weight:900;
+          "
+        >
+          GENERAL
+        </div>
+
+
+        <div
+          style="
+            font-size:34px;
+            font-weight:900;
+            color:#48e7ff;
+            margin-top:5px;
+          "
+        >
+          ${totalEfficiency.toFixed(1)}%
+        </div>
+
+
+        <div
+          style="
+            margin-top:12px;
+            display:grid;
+            grid-template-columns:
+              1fr 1fr;
+            gap:8px;
+          "
+        >
+
+          <div>
+
+            <small
+              style="
+                color:#83aebb;
+              "
+            >
+              PROGRAMADO
+            </small>
+
+            <div
+              style="
+                font-weight:900;
+                font-size:18px;
+              "
+            >
+              ${format(
+                totalProgrammed
+              )}
+            </div>
+
+          </div>
+
+
+          <div>
+
+            <small
+              style="
+                color:#83aebb;
+              "
+            >
+              SALIDA PESPUNTE
+            </small>
+
+            <div
+              style="
+                font-weight:900;
+                font-size:18px;
+              "
+            >
+              ${format(
+                totalSalida
+              )}
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div
+          style="
+            margin-top:15px;
+            color:#83aebb;
+            font-size:12px;
+          "
+        >
+          Fórmula:
+          <b
+            style="
+              color:#48e7ff;
+            "
+          >
+            Salida ÷ Programado × 100
+          </b>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      style="
+        margin-top:12px;
+        color:#83aebb;
+        font-size:12px;
+      "
+    >
+      La programación se toma de las OT
+      registradas para el día y la línea.
+    </div>
+
+
+    <style>
+
+      @media(max-width:760px){
+
+        #TSNEW_DASHBOARD
+        .TSNEW_DASH_GRID{
+
+          grid-template-columns:
+            1fr!important;
+
+        }
+
+      }
+
+    </style>
+
+  `;
+
+}
+
+
+/* ==============================================================
+   INICIO
+   ============================================================== */
+
+function TSNEWStart(){
+
+  try{
+
+    TSNEWRefreshCostTables();
+
+    TSNEWInstallTimeInput();
+
+    TSNEWInstallDashboard();
+
+  }catch(e){
+
+    console.error(
+      "The Studio nuevo ajuste:",
+      e
+    );
 
   }
 
 }
 
 
+setTimeout(
+  TSNEWStart,
+  700
+);
+
+setTimeout(
+  TSNEWStart,
+  1600
+);
+
+setTimeout(
+  TSNEWStart,
+  3000
+);
+
+
 /* ==============================================================
    OBSERVADOR
    ============================================================== */
 
-function TSFixStart(){
+if(
+  !window.__TSNEW_OBSERVER__
+){
 
-  TSFixRefreshCatalog();
-
-  TSFixInstallTimeField();
-
-  if(
-    window.__TS_FIX_OBSERVER__
-  )
-    return;
-
-  window.__TS_FIX_OBSERVER__ =
+  window.__TSNEW_OBSERVER__ =
     new MutationObserver(
       ()=>{
 
         try{
 
-          TSFixRefreshCatalog();
+          TSNEWRefreshCostTables();
 
-          TSFixInstallTimeField();
+          TSNEWInstallTimeInput();
+
+          TSNEWInstallDashboard();
 
         }catch{}
 
       }
     );
 
-  window.__TS_FIX_OBSERVER__.observe(
-    document.body,
-    {
-      childList:true,
-      subtree:true
-    }
+
+  setTimeout(
+    ()=>{
+
+      if(document.body){
+
+        window.__TSNEW_OBSERVER__.observe(
+          document.body,
+          {
+            childList:true,
+            subtree:true
+          }
+        );
+
+      }
+
+    },
+    1000
   );
 
 }
 
 
-setTimeout(
-  TSFixStart,
-  700
-);
-
-setTimeout(
-  TSFixStart,
-  1600
-);
-
-setTimeout(
-  TSFixStart,
-  3000
-);
-
-
 /* ==============================================================
-   FIN FIX
+   FIN
    ============================================================== */
 
 `;
 
 
-  /*
-  Insertamos nuestro código dentro del
-  index actual, antes del </script> final.
-  */
+  /* ==============================================================
+     INSERTAR FIX
+     ============================================================== */
 
   const marker =
     /\\s*<\\/script>\\s*$/i;
 
-  if(!marker.test(src)){
+
+  if(
+    !marker.test(src)
+  ){
 
     throw new Error(
       "No se encontró el cierre del código base."
@@ -1484,23 +2252,14 @@ setTimeout(
 
   }
 
+
   src =
     src.replace(
       marker,
-      "\\n" +
-      FIX +
+      "\\n"+
+      FIX+
       "\\n</script>"
     );
-
-
-  /*
-  El código actual ya ejecuta:
-  installCostRepair()
-
-  Nuestro FIX se ejecuta posteriormente,
-  por lo que conserva todas las funciones
-  que ya tienes.
-  */
 
 
   document.open();
