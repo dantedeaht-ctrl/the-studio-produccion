@@ -1,62 +1,101 @@
 <!doctype html>
 <html lang="es">
 <head>
+
 <meta charset="utf-8">
+
 <meta name="viewport"
 content="width=device-width,initial-scale=1,viewport-fit=cover">
+
 <title>The Studio</title>
+
 </head>
 
 <script>
+
 (async()=>{
 
 /* ================================================================
-   THE STUDIO · CARGA DE VERSIÓN BASE
+   THE STUDIO
+   CARGA DE LA VERSIÓN BASE
    ================================================================ */
 
 try{
+
+  /*
+  ================================================================
+  CLAVES PRINCIPALES
+  NO CAMBIAR
+  ================================================================
+  */
 
   const KPROD = "theStudioProduccion_v4";
   const KCOST = "theStudioCostos_v4";
   const KHIST = "theStudioHistorial_v4";
   const KADV  = "theStudioAvances_v4";
 
+  /*
+  ================================================================
+  RECUPERAMOS LOS COSTOS
+  ================================================================
+  */
+
   migrateAllCosts();
 
   const ORIGINAL_URL =
     "https://raw.githubusercontent.com/dantedeaht-ctrl/the-studio-produccion/f07dc9e5221a9b207d205d143d68c0b917ee0e0e/index.html";
 
-  const response = await fetch(
-    ORIGINAL_URL,
-    {cache:"no-store"}
-  );
+  const response =
+    await fetch(
+      ORIGINAL_URL,
+      {
+        cache:"no-store"
+      }
+    );
 
-  const src = await response.text();
+  const src =
+    await response.text();
 
-  const m = src.match(/const b="([^"]+)"/);
+  const m =
+    src.match(
+      /const b="([^"]+)"/
+    );
 
   if(!m){
+
     throw new Error(
       "No se encontró la versión base de The Studio"
     );
+
   }
 
-  const a = Uint8Array.from(
-    atob(m[1]),
-    c=>c.charCodeAt(0)
-  );
+  const a =
+    Uint8Array.from(
+      atob(m[1]),
+      c=>c.charCodeAt(0)
+    );
 
-  const ds = new DecompressionStream("gzip");
+  const ds =
+    new DecompressionStream("gzip");
 
-  const t = await new Response(
-    new Response(a)
+  const t =
+    await new Response(
+      new Response(a)
       .body
       .pipeThrough(ds)
-  ).text();
+    ).text();
 
   document.open();
+
   document.write(t);
+
   document.close();
+
+  /*
+  ================================================================
+  DESPUÉS DE CARGAR LA APP
+  ================================================================
+  */
 
   setTimeout(()=>{
 
@@ -78,20 +117,21 @@ try{
 
       installLineEfficiency();
 
-      replacePairsText();
-
       refreshStudio();
 
-      if(!window.__TS_OBSERVER__){
+      if(
+        !window.__TS_OBSERVER__
+      ){
 
         window.__TS_OBSERVER__ =
-          new MutationObserver(()=>{
-
-            replacePairsText();
-            refreshStudio();
-            installLineEfficiency();
-
-          });
+          new MutationObserver(
+            ()=>{
+              try{
+                refreshStudio();
+                installLineEfficiency();
+              }catch{}
+            }
+          );
 
         window.__TS_OBSERVER__.observe(
           document.body,
@@ -100,6 +140,7 @@ try{
             subtree:true
           }
         );
+
       }
 
     }catch(e){
@@ -115,18 +156,25 @@ try{
 
 }catch(e){
 
-  document.body.innerHTML =
-    '<div style="font:18px system-ui;padding:30px">'+
-    'Error al cargar The Studio<br>'+
-    '<small>'+
-    String(e)+
-    '</small>'+
-    '</div>';
+  setTimeout(()=>{
+
+    if(document.body){
+
+      document.body.innerHTML =
+        '<div style="font:18px system-ui;padding:30px">'+
+        'Error al cargar The Studio<br>'+
+        '<small>'+
+        String(e)+
+        '</small>'+
+        '</div>';
+
+    }
+
+  },100);
 
 }
 
 })();
-
 
 /* ================================================================
    UTILIDADES
@@ -159,7 +207,6 @@ function readJSON(key,fallback){
 
 }
 
-
 function saveJSON(key,value){
 
   localStorage.setItem(
@@ -169,17 +216,16 @@ function saveJSON(key,value){
 
 }
 
-
 function num(value){
 
-  const n=Number(value);
+  const n =
+    Number(value);
 
   return Number.isFinite(n)
     ? n
     : 0;
 
 }
-
 
 function money(value){
 
@@ -190,10 +236,11 @@ function money(value){
       currency:"MXN",
       minimumFractionDigits:2
     }
-  ).format(num(value));
+  ).format(
+    num(value)
+  );
 
 }
-
 
 function esc(value){
 
@@ -201,27 +248,32 @@ function esc(value){
     .replace(
       /[&<>"']/g,
       m=>({
+
         "&":"&amp;",
         "<":"&lt;",
         ">":"&gt;",
         '"':"&quot;",
         "'":"&#39;"
+
       }[m])
     );
 
 }
 
-
 function normalize(value){
 
-  return String(value ?? "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .trim()
-    .toLowerCase();
+  return String(
+    value ?? ""
+  )
+  .normalize("NFD")
+  .replace(
+    /[\u0300-\u036f]/g,
+    ""
+  )
+  .trim()
+  .toLowerCase();
 
 }
-
 
 /* ================================================================
    FECHAS
@@ -234,8 +286,13 @@ function localDateString(date){
       ? new Date(date)
       : new Date(String(date)+"T12:00:00");
 
-  if(Number.isNaN(d.getTime()))
+  if(
+    Number.isNaN(d.getTime())
+  ){
+
     return "";
+
+  }
 
   return [
     d.getFullYear(),
@@ -245,70 +302,89 @@ function localDateString(date){
 
 }
 
-
 function todayLocal(){
 
-  return localDateString(new Date());
+  return localDateString(
+    new Date()
+  );
 
 }
-
 
 function mondayOf(date){
 
   const d =
-    new Date(String(date)+"T12:00:00");
+    new Date(
+      String(date)+"T12:00:00"
+    );
 
-  if(Number.isNaN(d.getTime()))
+  if(
+    Number.isNaN(d.getTime())
+  ){
+
     return todayLocal();
 
-  const day=d.getDay();
+  }
+
+  const day =
+    d.getDay();
 
   const diff =
     day===0
       ? -6
       : 1-day;
 
-  d.setDate(d.getDate()+diff);
+  d.setDate(
+    d.getDate()+diff
+  );
 
   return localDateString(d);
 
 }
-
 
 function addDays(date,n){
 
   const d =
-    new Date(String(date)+"T12:00:00");
+    new Date(
+      String(date)+"T12:00:00"
+    );
 
-  d.setDate(d.getDate()+n);
+  d.setDate(
+    d.getDate()+n
+  );
 
   return localDateString(d);
 
 }
 
-
 function weekRange(reference){
 
-  const start=mondayOf(reference);
+  const start =
+    mondayOf(reference);
 
   return {
+
     start:start,
+
     end:addDays(start,5)
+
   };
 
 }
 
-
 function inWeek(date,reference){
 
-  const d=localDateString(date);
+  const d =
+    localDateString(date);
 
-  const r=weekRange(reference);
+  const r =
+    weekRange(reference);
 
-  return d>=r.start && d<=r.end;
+  return (
+    d>=r.start &&
+    d<=r.end
+  );
 
 }
-
 
 /* ================================================================
    PRODUCCIÓN
@@ -322,19 +398,35 @@ function getProduction(){
       []
     );
 
-  if(Array.isArray(raw))
+  if(
+    Array.isArray(raw)
+  ){
+
     return raw;
 
-  if(raw && Array.isArray(raw.prod))
+  }
+
+  if(
+    raw &&
+    Array.isArray(raw.prod)
+  ){
+
     return raw.prod;
 
-  if(raw && Array.isArray(raw.produccion))
+  }
+
+  if(
+    raw &&
+    Array.isArray(raw.produccion)
+  ){
+
     return raw.produccion;
+
+  }
 
   return [];
 
 }
-
 
 /* ================================================================
    AVANCES
@@ -348,16 +440,26 @@ function getAdvances(){
       []
     );
 
-  if(Array.isArray(raw))
+  if(
+    Array.isArray(raw)
+  ){
+
     return raw;
 
-  if(raw && Array.isArray(raw.avances))
+  }
+
+  if(
+    raw &&
+    Array.isArray(raw.avances)
+  ){
+
     return raw.avances;
+
+  }
 
   return [];
 
 }
-
 
 /* ================================================================
    COSTOS
@@ -365,17 +467,23 @@ function getAdvances(){
 
 function normalizeCostObject(raw){
 
-  const result={};
+  const result = {};
 
   if(
     raw &&
     !Array.isArray(raw) &&
-    typeof raw==="object" &&
-    raw.cost &&
-    typeof raw.cost==="object"
+    typeof raw==="object"
   ){
 
-    raw=raw.cost;
+    if(
+      raw.cost &&
+      typeof raw.cost==="object"
+    ){
+
+      raw =
+        raw.cost;
+
+    }
 
   }
 
@@ -385,45 +493,55 @@ function normalizeCostObject(raw){
     typeof raw==="object"
   ){
 
-    Object.keys(raw).forEach(model=>{
+    Object.keys(raw)
+    .forEach(model=>{
 
-      const item=raw[model];
+      const item =
+        raw[model];
 
       if(
         item &&
         typeof item==="object"
       ){
 
-        result[model]={
+        result[model] = {
 
-          pes:num(
-            item.pes ??
-            item.pespunte ??
-            item.pesPunte ??
-            item.costoPespunte
-          ),
+          pes:
+            num(
+              item.pes ??
+              item.pespunte ??
+              item.pesPunte ??
+              item.costoPespunte
+            ),
 
-          pre:num(
-            item.pre ??
-            item.preliminar ??
-            item.costoPreliminar
-          ),
+          pre:
+            num(
+              item.pre ??
+              item.preliminar ??
+              item.costoPreliminar
+            ),
 
-          min:num(
-            item.min ??
-            item.minutos ??
-            item.tiempoStandard ??
-            item.tiempoEstandar
-          )
+          min:
+            num(
+              item.min ??
+              item.minutos ??
+              item.tiempoEstandar ??
+              item.tiempo ??
+              item.standardTime
+            )
 
         };
 
       }else{
 
-        result[model]={
+        result[model] = {
+
           pes:num(item),
+
           pre:0,
+
           min:0
+
         };
 
       }
@@ -434,15 +552,16 @@ function normalizeCostObject(raw){
 
   }
 
-
-  if(Array.isArray(raw)){
+  if(
+    Array.isArray(raw)
+  ){
 
     raw.forEach(item=>{
 
       if(!item)
         return;
 
-      const model=
+      const model =
         String(
           item.modelo ??
           item.model ??
@@ -454,27 +573,31 @@ function normalizeCostObject(raw){
       if(!model)
         return;
 
-      result[model]={
+      result[model] = {
 
-        pes:num(
-          item.pes ??
-          item.pespunte ??
-          item.pesPunte ??
-          item.costoPespunte
-        ),
+        pes:
+          num(
+            item.pes ??
+            item.pespunte ??
+            item.pesPunte ??
+            item.costoPespunte
+          ),
 
-        pre:num(
-          item.pre ??
-          item.preliminar ??
-          item.costoPreliminar
-        ),
+        pre:
+          num(
+            item.pre ??
+            item.preliminar ??
+            item.costoPreliminar
+          ),
 
-        min:num(
-          item.min ??
-          item.minutos ??
-          item.tiempoStandard ??
-          item.tiempoEstandar
-        )
+        min:
+          num(
+            item.min ??
+            item.minutos ??
+            item.tiempoEstandar ??
+            item.tiempo ??
+            item.standardTime
+          )
 
       };
 
@@ -486,64 +609,90 @@ function normalizeCostObject(raw){
 
 }
 
-
 /* ================================================================
-   RECUPERACIÓN DE COSTOS
+   RECUPERACIÓN COMPLETA DE COSTOS
    ================================================================ */
 
 function migrateAllCosts(){
 
   try{
 
-    const MAIN=
+    const MAIN =
       "theStudioCostos_v4";
 
-    let main=
+    let main =
       normalizeCostObject(
-        readJSON(MAIN,{})
+        readJSON(
+          MAIN,
+          null
+        )
       );
 
-    const OLD_KEYS=[
+    const OLD_KEYS = [
 
       "ts_costos_v1",
+
       "theStudioCostos_v1",
+
       "theStudioCostos_v2",
+
       "theStudioCostos_v3",
+
       "theStudioCostos",
+
       "costos",
+
       "modelos",
+
       "catalogoModelos",
+
       "catalogoCostos"
 
     ];
 
+    function mergeModel(
+      model,
+      incoming
+    ){
 
-    function mergeModel(model,incoming){
-
-      const cleanModel=
-        String(model ?? "").trim();
+      const cleanModel =
+        String(
+          model ?? ""
+        ).trim();
 
       if(!cleanModel)
         return;
 
-      const existingName=
-        Object.keys(main).find(
+      const existingName =
+        Object.keys(main)
+        .find(
           x=>
-            normalize(x)===
+            normalize(x) ===
             normalize(cleanModel)
         );
 
-      const name=
+      const name =
         existingName ||
         cleanModel;
 
       if(!main[name]){
 
-        main[name]={
+        main[name] = {
 
-          pes:num(incoming?.pes),
-          pre:num(incoming?.pre),
-          min:num(incoming?.min)
+          pes:
+            num(
+              incoming?.pes
+            ),
+
+          pre:
+            num(
+              incoming?.pre
+            ),
+
+          min:
+            num(
+              incoming?.min
+            )
 
         };
 
@@ -556,7 +705,7 @@ function migrateAllCosts(){
         num(incoming?.pes)
       ){
 
-        main[name].pes=
+        main[name].pes =
           num(incoming.pes);
 
       }
@@ -566,7 +715,7 @@ function migrateAllCosts(){
         num(incoming?.pre)
       ){
 
-        main[name].pre=
+        main[name].pre =
           num(incoming.pre);
 
       }
@@ -576,23 +725,25 @@ function migrateAllCosts(){
         num(incoming?.min)
       ){
 
-        main[name].min=
+        main[name].min =
           num(incoming.min);
 
       }
 
     }
 
-
     function extractItem(item){
 
       if(
         !item ||
         typeof item!=="object"
-      )
+      ){
+
         return null;
 
-      const model=
+      }
+
+      const model =
         String(
           item.modelo ??
           item.model ??
@@ -604,63 +755,88 @@ function migrateAllCosts(){
       if(!model)
         return null;
 
-      return {
-
-        model:model,
-
-        pes:num(
+      const pes =
+        num(
           item.pes ??
           item.pespunte ??
           item.pesPunte ??
           item.costoPespunte ??
           item.costo_pespunte ??
           item.precioPespunte ??
-          item.precio_pespunte
-        ),
+          item.precio_pespunte ??
+          item.pesCost
+        );
 
-        pre:num(
+      const pre =
+        num(
           item.pre ??
           item.preliminar ??
           item.costoPreliminar ??
           item.costo_preliminar ??
           item.precioPreliminar ??
-          item.precio_preliminar
-        ),
+          item.precio_preliminar ??
+          item.preCost
+        );
 
-        min:num(
+      const min =
+        num(
           item.min ??
           item.minutos ??
-          item.tiempoStandard ??
-          item.tiempoEstandar
-        )
+          item.tiempoEstandar ??
+          item.tiempo ??
+          item.standardTime
+        );
+
+      if(
+        pes===0 &&
+        pre===0 &&
+        min===0
+      ){
+
+        return null;
+
+      }
+
+      return {
+
+        model:model,
+
+        pes:pes,
+
+        pre:pre,
+
+        min:min
 
       };
 
     }
-
 
     function readCostSource(raw){
 
       if(!raw)
         return;
 
-      if(Array.isArray(raw)){
+      if(
+        Array.isArray(raw)
+      ){
 
-        raw.forEach(item=>{
+        raw.forEach(
+          item=>{
 
-          const found=
-            extractItem(item);
+            const found =
+              extractItem(item);
 
-          if(found){
+            if(found){
 
-            mergeModel(
-              found.model,
-              found
-            );
+              mergeModel(
+                found.model,
+                found
+              );
+
+            }
 
           }
-
-        });
+        );
 
         return;
 
@@ -668,9 +844,11 @@ function migrateAllCosts(){
 
       if(
         typeof raw!=="object"
-      )
+      ){
+
         return;
 
+      }
 
       [
         raw.costos,
@@ -678,78 +856,127 @@ function migrateAllCosts(){
         raw.cost,
         raw.catalogo,
         raw.data
-      ].forEach(source=>{
+      ]
+      .forEach(
+        source=>{
 
-        if(
-          source &&
-          source!==raw
-        ){
+          if(
+            source &&
+            source!==raw
+          ){
 
-          readCostSource(source);
+            readCostSource(
+              source
+            );
+
+          }
 
         }
+      );
 
-      });
+      Object.keys(raw)
+      .forEach(
+        key=>{
 
+          if(
+            [
+              "costos",
+              "modelos",
+              "cost",
+              "catalogo",
+              "data"
+            ]
+            .includes(
+              key
+            )
+          ){
 
-      Object.keys(raw).forEach(key=>{
+            return;
 
-        if([
-          "costos",
-          "modelos",
-          "cost",
-          "catalogo",
-          "data"
-        ].includes(key))
-          return;
+          }
 
-        const value=raw[key];
+          const value =
+            raw[key];
 
-        if(
-          !value ||
-          typeof value!=="object" ||
-          Array.isArray(value)
-        )
-          return;
+          if(
+            !value ||
+            typeof value!=="object" ||
+            Array.isArray(value)
+          ){
 
-        mergeModel(
-          key,
-          {
-            pes:num(
+            return;
+
+          }
+
+          const pes =
+            num(
               value.pes ??
               value.pespunte ??
               value.pesPunte ??
-              value.costoPespunte
-            ),
+              value.costoPespunte ??
+              value.costo_pespunte ??
+              value.precioPespunte ??
+              value.precio_pespunte
+            );
 
-            pre:num(
+          const pre =
+            num(
               value.pre ??
               value.preliminar ??
-              value.costoPreliminar
-            ),
+              value.costoPreliminar ??
+              value.costo_preliminar ??
+              value.precioPreliminar ??
+              value.precio_preliminar
+            );
 
-            min:num(
+          const min =
+            num(
               value.min ??
               value.minutos ??
-              value.tiempoStandard ??
-              value.tiempoEstandar
-            )
-          }
-        );
+              value.tiempoEstandar ??
+              value.tiempo ??
+              value.standardTime
+            );
 
-      });
+          if(
+            pes===0 &&
+            pre===0 &&
+            min===0
+          ){
+
+            return;
+
+          }
+
+          mergeModel(
+            key,
+            {
+              pes:pes,
+              pre:pre,
+              min:min
+            }
+          );
+
+        }
+      );
 
     }
 
+    OLD_KEYS.forEach(
+      key=>{
 
-    OLD_KEYS.forEach(key=>{
+        const raw =
+          readJSON(
+            key,
+            null
+          );
 
-      readCostSource(
-        readJSON(key,null)
-      );
+        readCostSource(
+          raw
+        );
 
-    });
-
+      }
+    );
 
     for(
       let i=0;
@@ -757,7 +984,7 @@ function migrateAllCosts(){
       i++
     ){
 
-      const key=
+      const key =
         localStorage.key(i);
 
       if(!key)
@@ -766,14 +993,18 @@ function migrateAllCosts(){
       if(
         OLD_KEYS.includes(key) ||
         key===MAIN
-      )
+      ){
+
         continue;
 
-      let raw=null;
+      }
+
+      let raw =
+        null;
 
       try{
 
-        raw=
+        raw =
           JSON.parse(
             localStorage.getItem(key)
           );
@@ -784,57 +1015,80 @@ function migrateAllCosts(){
 
       }
 
-      if(Array.isArray(raw)){
+      if(
+        Array.isArray(raw)
+      ){
 
-        const possible=
-          raw.some(item=>{
+        const possible =
+          raw.some(
+            item=>{
 
-            if(
-              !item ||
-              typeof item!=="object"
-            )
-              return false;
+              if(
+                !item ||
+                typeof item!=="object"
+              ){
 
-            return (
-              (
+                return false;
+
+              }
+
+              const hasModel =
                 item.modelo!==undefined ||
                 item.model!==undefined ||
                 item.nombre!==undefined ||
-                item.name!==undefined
-              ) &&
-              (
+                item.name!==undefined;
+
+              const hasCost =
                 item.pes!==undefined ||
+                item.pespunte!==undefined ||
                 item.pespunte!==undefined ||
                 item.costoPespunte!==undefined ||
                 item.pre!==undefined ||
                 item.preliminar!==undefined ||
                 item.costoPreliminar!==undefined ||
                 item.min!==undefined ||
-                item.minutos!==undefined
-              )
-            );
+                item.minutos!==undefined ||
+                item.tiempoEstandar!==undefined;
 
-          });
+              return (
+                hasModel &&
+                hasCost
+              );
 
-        if(possible)
-          readCostSource(raw);
+            }
+          );
 
-      }else if(
+        if(possible){
+
+          readCostSource(
+            raw
+          );
+
+        }
+
+      }
+      else
+      if(
         raw &&
         typeof raw==="object"
       ){
 
-        const text=
-          JSON.stringify(raw).toLowerCase();
+        const text =
+          JSON.stringify(
+            raw
+          ).toLowerCase();
 
         if(
           text.includes("pespunte") ||
           text.includes("preliminar") ||
-          text.includes("tiempo") ||
-          text.includes("minutos")
+          text.includes("costopespunte") ||
+          text.includes("costopreliminar") ||
+          text.includes("tiempoestandar")
         ){
 
-          readCostSource(raw);
+          readCostSource(
+            raw
+          );
 
         }
 
@@ -842,31 +1096,40 @@ function migrateAllCosts(){
 
     }
 
-
     saveJSON(
       MAIN,
       main
     );
 
+    const mirror =
+      Object.keys(main)
+      .map(
+        model=>({
+
+          modelo:model,
+
+          pespunte:
+            num(
+              main[model].pes
+            ),
+
+          preliminar:
+            num(
+              main[model].pre
+            ),
+
+          min:
+            num(
+              main[model].min
+            )
+
+        })
+      );
 
     saveJSON(
       "ts_costos_v1",
-      Object.keys(main).map(model=>({
-
-        modelo:model,
-
-        pespunte:
-          num(main[model].pes),
-
-        preliminar:
-          num(main[model].pre),
-
-        min:
-          num(main[model].min)
-
-      }))
+      mirror
     );
-
 
     return main;
 
@@ -888,7 +1151,6 @@ function migrateAllCosts(){
 
 }
 
-
 /* ================================================================
    RESPONSIVE
    ================================================================ */
@@ -899,113 +1161,159 @@ function fixResponsive(){
     document.getElementById(
       "tsResponsiveFix"
     )
-  )
+  ){
+
     return;
 
-  const style=
+  }
+
+  const style =
     document.createElement("style");
 
-  style.id="tsResponsiveFix";
+  style.id =
+    "tsResponsiveFix";
 
-  style.textContent=`
+  style.textContent = `
 
-html,body{
-  width:100%;
-  max-width:100%;
-  margin:0;
-  padding:0;
-  overflow-x:hidden!important;
+    html,
+    body{
+      width:100%;
+      max-width:100%;
+      margin:0;
+      padding:0;
+      overflow-x:hidden!important;
+    }
+
+    *,
+    *::before,
+    *::after{
+      box-sizing:border-box;
+    }
+
+    img,
+    video,
+    canvas,
+    svg{
+      max-width:100%;
+      height:auto;
+    }
+
+    input,
+    select,
+    textarea,
+    button{
+      max-width:100%;
+    }
+
+    table{
+      max-width:100%;
+    }
+
+    pre,
+    code{
+      max-width:100%;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+
+    main,
+    #app,
+    .app,
+    .container,
+    .content,
+    .page,
+    .panel,
+    .card,
+    .section,
+    .wrap,
+    .wrapper{
+      max-width:100%;
+      min-width:0;
+    }
+
+    body > *{
+      min-width:0;
+      max-width:100vw;
+    }
+
+    [style*="width:100vw"]{
+      max-width:100%!important;
+    }
+
+    [style*="min-width"]{
+      min-width:0!important;
+    }
+
+    @media(max-width:720px){
+
+      html,
+      body{
+        font-size:15px;
+      }
+
+      table{
+        font-size:12px;
+      }
+
+      .grid,
+      .grid2,
+      .grid3,
+      .grid4,
+      .kpis,
+      .cards,
+      .form-grid{
+        grid-template-columns:minmax(0,1fr)!important;
+      }
+
+      .row{
+        grid-template-columns:minmax(0,1fr)!important;
+      }
+
+      .toolbar,
+      .actions{
+        flex-wrap:wrap!important;
+      }
+
+      header{
+        max-width:100vw!important;
+        overflow:hidden;
+      }
+
+      nav{
+        max-width:100vw!important;
+        overflow-x:auto!important;
+        overflow-y:hidden!important;
+        -webkit-overflow-scrolling:touch;
+      }
+
+    }
+
+    @media(max-width:420px){
+
+      body{
+        font-size:14px;
+      }
+
+      button,
+      input,
+      select,
+      textarea{
+        font-size:16px;
+      }
+
+    }
+
+  `;
+
+  document.head.appendChild(
+    style
+  );
+
 }
-
-*,*::before,*::after{
-  box-sizing:border-box;
-}
-
-img,video,canvas,svg{
-  max-width:100%;
-  height:auto;
-}
-
-input,select,textarea,button{
-  max-width:100%;
-}
-
-table{
-  max-width:100%;
-}
-
-pre,code{
-  max-width:100%;
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
-}
-
-main,#app,.app,.container,.content,
-.page,.panel,.card,.section,.wrap,.wrapper{
-  max-width:100%;
-  min-width:0;
-}
-
-body>*{
-  min-width:0;
-  max-width:100vw;
-}
-
-@media(max-width:720px){
-
-  html,body{
-    font-size:15px;
-  }
-
-  .grid,
-  .grid2,
-  .grid3,
-  .grid4,
-  .kpis,
-  .cards,
-  .form-grid{
-    grid-template-columns:
-      minmax(0,1fr)!important;
-  }
-
-  .row{
-    grid-template-columns:
-      minmax(0,1fr)!important;
-  }
-
-  .toolbar,.actions{
-    flex-wrap:wrap!important;
-  }
-
-  nav{
-    max-width:100vw!important;
-    overflow-x:auto!important;
-    -webkit-overflow-scrolling:touch;
-  }
-
-}
-
-@media(max-width:420px){
-
-  body{
-    font-size:14px;
-  }
-
-  button,input,select,textarea{
-    font-size:16px;
-  }
-
-}
-
-`;
-
-  document.head.appendChild(style);
-
-}
-
 
 /* ================================================================
-   TEMA BASE OSCURO
+   TEMA ORIGINAL BMW
    ================================================================ */
 
 function installBMWTheme(){
@@ -1014,73 +1322,156 @@ function installBMWTheme(){
     document.getElementById(
       "tsBMWTheme"
     )
-  )
+  ){
+
     return;
 
-  const style=
+  }
+
+  const style =
     document.createElement("style");
 
-  style.id="tsBMWTheme";
+  style.id =
+    "tsBMWTheme";
 
-  style.textContent=`
+  style.textContent = `
 
-:root{
+    :root{
 
-  --ts-navy:#07111f;
-  --ts-navy2:#080f1a;
-  --ts-card:#0d1725;
-  --ts-input:#111e2e;
-  --ts-blue:#1769ff;
-  --ts-blue2:#0b4fc4;
-  --ts-electric:#4d9aff;
-  --ts-white:#eef4fb;
-  --ts-muted:#aebed2;
-  --ts-border:#24364c;
+      --ts-navy:#07111f;
+      --ts-navy2:#080f1a;
+      --ts-card:#0d1725;
+      --ts-input:#111e2e;
+      --ts-blue:#1769ff;
+      --ts-blue2:#0b4fc4;
+      --ts-electric:#4d9aff;
+      --ts-white:#eef4fb;
+      --ts-white2:#f4f8fc;
+      --ts-muted:#aebed2;
+      --ts-border:#24364c;
+      --ts-red:#e05252;
+      --ts-green:#00a878;
+
+    }
+
+    body{
+      background:var(--ts-navy)!important;
+      color:var(--ts-white)!important;
+    }
+
+    header{
+
+      background:
+        linear-gradient(
+          135deg,
+          #050a12 0%,
+          #0b1b32 55%,
+          #123d72 100%
+        )!important;
+
+      color:var(--ts-white)!important;
+
+    }
+
+    main,
+    section,
+    article{
+      color:var(--ts-white);
+    }
+
+    .card,
+    .panel,
+    .section,
+    .box,
+    .kpi,
+    .stat{
+
+      background:var(--ts-card)!important;
+      border-color:var(--ts-border)!important;
+
+    }
+
+    input,
+    select,
+    textarea{
+
+      background:var(--ts-input)!important;
+      color:var(--ts-white)!important;
+      border-color:var(--ts-border)!important;
+
+    }
+
+    input::placeholder,
+    textarea::placeholder{
+      color:#73869e!important;
+    }
+
+    button{
+      border-color:transparent!important;
+    }
+
+    button:not([class*="danger"]){
+
+      background:var(--ts-blue)!important;
+      color:white!important;
+
+    }
+
+    nav button{
+
+      background:#142337!important;
+      color:var(--ts-electric)!important;
+
+    }
+
+    nav button.active,
+    nav button.selected,
+    nav button[aria-selected="true"]{
+
+      background:var(--ts-blue)!important;
+      color:white!important;
+
+    }
+
+    table{
+      color:var(--ts-white)!important;
+    }
+
+    th{
+      color:var(--ts-muted)!important;
+    }
+
+    td{
+      border-color:var(--ts-border)!important;
+    }
+
+    .danger,
+    .btn-danger,
+    button[class*="danger"]{
+
+      background:#351719!important;
+      color:#ffb4b4!important;
+
+    }
+
+    .success,
+    .btn-success{
+
+      background:#0c2a23!important;
+      color:#8ff0d3!important;
+
+    }
+
+  `;
+
+  document.head.appendChild(
+    style
+  );
 
 }
-
-body{
-  background:var(--ts-navy)!important;
-  color:var(--ts-white)!important;
-}
-
-.card,.panel,.section,.box,.kpi,.stat{
-  background:var(--ts-card)!important;
-  border-color:var(--ts-border)!important;
-}
-
-input,select,textarea{
-  background:var(--ts-input)!important;
-  color:var(--ts-white)!important;
-  border-color:var(--ts-border)!important;
-}
-
-input::placeholder,
-textarea::placeholder{
-  color:#73869e!important;
-}
-
-table{
-  color:var(--ts-white)!important;
-}
-
-th{
-  color:var(--ts-muted)!important;
-}
-
-td{
-  border-color:var(--ts-border)!important;
-}
-
-`;
-
-  document.head.appendChild(style);
-
-}
-
 
 /* ================================================================
-   JARVIS / HUD
+   TEMA JARVIS
    ================================================================ */
 
 function installJARVISTheme(){
@@ -1089,580 +1480,402 @@ function installJARVISTheme(){
     document.getElementById(
       "tsJARVISTheme"
     )
-  )
+  ){
+
     return;
 
-  const style=
+  }
+
+  const style =
     document.createElement("style");
 
-  style.id="tsJARVISTheme";
-
-  style.textContent=`
-
-:root{
-
-  --jarvis-bg:#020810;
-  --jarvis-panel:#071522;
-  --jarvis-panel2:#091c2b;
-  --jarvis-cyan:#00d9ff;
-  --jarvis-blue:#1677ff;
-  --jarvis-blue2:#063d91;
-  --jarvis-text:#e9fbff;
-  --jarvis-muted:#7fa8b8;
-  --jarvis-line:#12415a;
-  --jarvis-green:#00e6a8;
-  --jarvis-yellow:#ffd34d;
-  --jarvis-red:#ff5268;
-
-}
-
-
-html{
-  background:#020810!important;
-}
-
-
-body{
-
-  background:
-    radial-gradient(
-      circle at 50% -10%,
-      #06345a 0,
-      #020810 38%,
-      #01050a 100%
-    )!important;
-
-  color:
-    var(--jarvis-text)!important;
-
-}
-
-
-body::before{
-
-  content:"";
-
-  position:fixed;
-
-  inset:0;
-
-  pointer-events:none;
-
-  z-index:2147483000;
-
-  background:
-    linear-gradient(
-      rgba(0,217,255,.025) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(0,217,255,.025) 1px,
-      transparent 1px
-    );
-
-  background-size:
-    34px 34px;
-
-  mask-image:
-    linear-gradient(
-      to bottom,
-      black,
-      transparent 80%
-    );
-
-}
-
-
-header{
-
-  background:
-    linear-gradient(
-      135deg,
-      #020a12,
-      #06243a 55%,
-      #063e65
-    )!important;
-
-  border-bottom:
-    1px solid
-    rgba(0,217,255,.28)!important;
-
-  box-shadow:
-    0 8px 35px
-    rgba(0,190,255,.12)!important;
-
-}
-
-
-.card,
-.panel,
-.section,
-.box,
-.kpi,
-.stat{
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(8,27,42,.96),
-      rgba(3,13,23,.96)
-    )!important;
-
-  border:
-    1px solid
-    rgba(0,217,255,.17)!important;
-
-  box-shadow:
-    0 8px 30px
-    rgba(0,0,0,.32),
-    inset 0 1px 0
-    rgba(255,255,255,.035)!important;
-
-}
-
-
-input,
-select,
-textarea{
-
-  background:
-    rgba(2,15,25,.96)!important;
-
-  color:
-    var(--jarvis-text)!important;
-
-  border:
-    1px solid
-    rgba(0,217,255,.25)!important;
-
-  box-shadow:
-    inset 0 0 15px
-    rgba(0,180,255,.035)!important;
-
-}
-
-
-input:focus,
-select:focus,
-textarea:focus{
-
-  outline:none!important;
-
-  border-color:
-    var(--jarvis-cyan)!important;
-
-  box-shadow:
-    0 0 0 2px
-    rgba(0,217,255,.12),
-    0 0 18px
-    rgba(0,217,255,.13)!important;
-
-}
-
-
-button{
-
-  transition:
-    transform .15s ease,
-    box-shadow .15s ease,
-    filter .15s ease!important;
-
-}
-
-
-button:not(
-  [class*="danger"]
-){
-
-  background:
-    linear-gradient(
-      135deg,
-      #0a67d8,
-      #06408e
-    )!important;
-
-  color:#fff!important;
-
-  border:
-    1px solid
-    rgba(0,217,255,.28)!important;
-
-  box-shadow:
-    0 5px 18px
-    rgba(0,90,180,.24)!important;
-
-}
-
-
-button:not(
-  [class*="danger"]
-  ):hover{
-
-  filter:
-    brightness(1.18)!important;
-
-  box-shadow:
-    0 0 20px
-    rgba(0,217,255,.28)!important;
-
-}
-
-
-button:not(
-  [class*="danger"]
-  ):active{
-
-  transform:
-    scale(.98)!important;
-
-}
-
-
-nav button{
-
-  background:
-    rgba(6,28,43,.9)!important;
-
-  color:
-    #7fdfff!important;
-
-  border:
-    1px solid
-    rgba(0,217,255,.13)!important;
-
-}
-
-
-nav button.active,
-nav button.selected,
-nav button[aria-selected="true"]{
-
-  background:
-    linear-gradient(
-      135deg,
-      #087fdc,
-      #063f91
-    )!important;
-
-  color:#fff!important;
-
-  box-shadow:
-    0 0 18px
-    rgba(0,217,255,.22)!important;
-
-}
-
-
-h1,h2,h3,h4{
-
-  text-shadow:
-    0 0 12px
-    rgba(0,217,255,.09);
-
-}
-
-
-table{
-
-  color:
-    var(--jarvis-text)!important;
-
-}
-
-
-th{
-
-  color:
-    #7fdfff!important;
-
-}
-
-
-td{
-
-  border-color:
-    rgba(0,217,255,.12)!important;
-
-}
-
-
-.success,
-.btn-success{
-
-  background:
-    rgba(0,93,70,.5)!important;
-
-  color:
-    #72ffd0!important;
-
-  border-color:
-    rgba(0,230,168,.28)!important;
-
-}
-
-
-.danger,
-.btn-danger,
-button[class*="danger"]{
-
-  background:
-    rgba(105,15,30,.5)!important;
-
-  color:
-    #ff9dab!important;
-
-}
-
-
-::-webkit-scrollbar{
-
-  width:7px;
-  height:7px;
-
-}
-
-
-::-webkit-scrollbar-track{
-
-  background:#020810;
-
-}
-
-
-::-webkit-scrollbar-thumb{
-
-  background:#0b5674;
-
-  border-radius:99px;
-
-}
-
-
-#tsLineEfficiency{
-
-  position:relative;
-
-  overflow:hidden;
-
-}
-
-
-#tsLineEfficiency::after{
-
-  content:"SYSTEM ONLINE";
-
-  position:absolute;
-
-  top:10px;
-
-  right:12px;
-
-  color:
-    rgba(0,230,168,.7);
-
-  font:
-    800 9px
-    system-ui;
-
-  letter-spacing:1.5px;
-
-}
-
-
-.tsJarvisCard{
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(7,31,48,.97),
-      rgba(2,12,21,.98)
-    );
-
-  border:
-    1px solid
-    rgba(0,217,255,.28);
-
-  border-radius:18px;
-
-  padding:14px;
-
-  box-shadow:
-    0 12px 35px
-    rgba(0,0,0,.35),
-    inset 0 0 25px
-    rgba(0,170,255,.025);
-
-}
-
-
-.tsJarvisTitle{
-
-  color:#dffbff;
-
-  font-weight:900;
-
-  letter-spacing:.3px;
-
-}
-
-
-.tsJarvisSub{
-
-  color:#76a9ba;
-
-  font-size:11px;
-
-}
-
-
-.tsGauge{
-
-  height:8px;
-
-  background:#061522;
-
-  border-radius:99px;
-
-  overflow:hidden;
-
-  margin-top:8px;
-
-  border:
-    1px solid
-    rgba(0,217,255,.12);
-
-}
-
-
-.tsGauge>i{
-
-  display:block;
-
-  height:100%;
-
-  width:0%;
-
-  background:
-    linear-gradient(
-      90deg,
-      #075d9d,
-      #00d9ff,
-      #8df7ff
-    );
-
-  border-radius:99px;
-
-  box-shadow:
-    0 0 12px
-    rgba(0,217,255,.55);
-
-}
-
-
-.tsEffNumber{
-
-  font-size:28px;
-
-  font-weight:950;
-
-  color:#e8fdff;
-
-  line-height:1;
-
-}
-
-
-.tsEffLabel{
-
-  color:#75a8ba;
-
-  font-size:10px;
-
-  font-weight:800;
-
-  letter-spacing:.7px;
-
-}
-
-`;
-
-  document.head.appendChild(style);
-
-}
-
-
-/* ================================================================
-   CAMBIAR "PARES SALIDOS" → "PIEZAS TERMINADAS"
-   ================================================================ */
-
-function replacePairsText(){
-
-  const nodes=
-    document.querySelectorAll(
-      "body *"
-    );
-
-  nodes.forEach(el=>{
-
-    if(el.children.length)
-      return;
-
-    const original=
-      el.textContent || "";
-
-    const n=
-      normalize(original);
-
-    if(
-      n==="pares salidos" ||
-      n==="pares salido" ||
-      n==="pares salidas"
-    ){
-
-      el.textContent=
-        "Piezas Terminadas";
+  style.id =
+    "tsJARVISTheme";
+
+  style.textContent = `
+
+    :root{
+
+      --jarvis-bg:#02070d;
+      --jarvis-bg2:#06121c;
+      --jarvis-panel:#071923;
+      --jarvis-panel2:#0a202d;
+      --jarvis-blue:#00bfff;
+      --jarvis-blue2:#008cff;
+      --jarvis-cyan:#48e7ff;
+      --jarvis-text:#e9fbff;
+      --jarvis-muted:#83aebb;
+      --jarvis-border:#104456;
+      --jarvis-glow:rgba(0,191,255,.42);
 
     }
 
-  });
+    html,
+    body{
+
+      background:
+        radial-gradient(
+          circle at 50% -20%,
+          #0c3044 0%,
+          #02070d 48%,
+          #010408 100%
+        )!important;
+
+      color:
+        var(--jarvis-text)!important;
+
+    }
+
+    body{
+
+      position:relative;
+
+    }
+
+    body::before{
+
+      content:"";
+
+      position:fixed;
+
+      inset:0;
+
+      pointer-events:none;
+
+      z-index:2147483000;
+
+      background:
+
+        linear-gradient(
+          rgba(0,191,255,.018) 50%,
+          transparent 50%
+        );
+
+      background-size:
+        100% 4px;
+
+      mix-blend-mode:
+        screen;
+
+    }
+
+    body::after{
+
+      content:"THE STUDIO // J.A.R.V.I.S.";
+
+      position:fixed;
+
+      right:12px;
+
+      top:8px;
+
+      z-index:2147483001;
+
+      pointer-events:none;
+
+      font:
+        800 9px
+        system-ui;
+
+      letter-spacing:
+        2px;
+
+      color:
+        rgba(72,231,255,.55);
+
+      text-shadow:
+        0 0 10px
+        rgba(0,191,255,.7);
+
+    }
+
+    header{
+
+      background:
+        linear-gradient(
+          135deg,
+          #01070c,
+          #06202d 52%,
+          #063d55
+        )!important;
+
+      border-bottom:
+        1px solid
+        var(--jarvis-border)!important;
+
+      box-shadow:
+        0 0 28px
+        rgba(0,191,255,.18)!important;
+
+    }
+
+    .card,
+    .panel,
+    .section,
+    .box,
+    .kpi,
+    .stat{
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(7,25,35,.97),
+          rgba(3,13,20,.97)
+        )!important;
+
+      border:
+        1px solid
+        var(--jarvis-border)!important;
+
+      box-shadow:
+        inset 0 0 18px
+        rgba(0,191,255,.035),
+        0 8px 30px
+        rgba(0,0,0,.28)!important;
+
+    }
+
+    input,
+    select,
+    textarea{
+
+      background:
+        #04131c!important;
+
+      color:
+        var(--jarvis-text)!important;
+
+      border:
+        1px solid
+        #15506a!important;
+
+      box-shadow:
+        inset 0 0 10px
+        rgba(0,191,255,.04)!important;
+
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus{
+
+      outline:none!important;
+
+      border-color:
+        var(--jarvis-cyan)!important;
+
+      box-shadow:
+        0 0 0 2px
+        rgba(0,191,255,.1),
+        0 0 18px
+        rgba(0,191,255,.22)!important;
+
+    }
+
+    button{
+
+      background:
+        linear-gradient(
+          135deg,
+          #007fc4,
+          #00bfff
+        )!important;
+
+      color:#001018!important;
+
+      box-shadow:
+        0 0 12px
+        rgba(0,191,255,.18)!important;
+
+      font-weight:900!important;
+
+    }
+
+    button:hover{
+
+      background:
+        linear-gradient(
+          135deg,
+          #00bfff,
+          #48e7ff
+        )!important;
+
+      box-shadow:
+        0 0 20px
+        rgba(0,191,255,.42)!important;
+
+    }
+
+    nav button{
+
+      background:
+        #061721!important;
+
+      color:
+        var(--jarvis-cyan)!important;
+
+      border:
+        1px solid
+        #124253!important;
+
+    }
+
+    nav button.active,
+    nav button.selected,
+    nav button[aria-selected="true"]{
+
+      background:
+        linear-gradient(
+          135deg,
+          #006b9f,
+          #00aee5
+        )!important;
+
+      color:#fff!important;
+
+      box-shadow:
+        0 0 18px
+        rgba(0,191,255,.32)!important;
+
+    }
+
+    table{
+
+      color:
+        var(--jarvis-text)!important;
+
+    }
+
+    th{
+
+      color:
+        var(--jarvis-cyan)!important;
+
+    }
+
+    td{
+
+      border-color:
+        #123c4d!important;
+
+    }
+
+    ::-webkit-scrollbar{
+
+      width:7px;
+      height:7px;
+
+    }
+
+    ::-webkit-scrollbar-track{
+
+      background:#02080d;
+
+    }
+
+    ::-webkit-scrollbar-thumb{
+
+      background:#12617d;
+
+      border-radius:99px;
+
+      box-shadow:
+        0 0 8px
+        rgba(0,191,255,.4);
+
+    }
+
+    .tsCard{
+
+      background:
+        linear-gradient(
+          145deg,
+          #071923,
+          #031018
+        )!important;
+
+      border-color:
+        #104456!important;
+
+      box-shadow:
+        inset 0 0 18px
+        rgba(0,191,255,.04),
+        0 10px 35px
+        rgba(0,0,0,.4)!important;
+
+    }
+
+    .tsKpi{
+
+      background:
+        #04131c!important;
+
+      border:
+        1px solid
+        #104456;
+
+    }
+
+    .tsMoney{
+
+      color:
+        var(--jarvis-cyan)!important;
+
+      text-shadow:
+        0 0 12px
+        rgba(0,191,255,.4);
+
+    }
+
+  `;
+
+  document.head.appendChild(
+    style
+  );
 
 }
 
-
 /* ================================================================
-   REFERENCIA DE FECHA
+   FECHA DE REFERENCIA
    ================================================================ */
 
 function getReferenceDate(){
 
-  const inputs=[
-    ...document.querySelectorAll(
-      'input[type="date"]'
-    )
-  ];
+  const inputs =
+    [
+      ...document.querySelectorAll(
+        'input[type="date"]'
+      )
+    ];
 
-  for(const input of inputs){
+  for(
+    const input of inputs
+  ){
 
-    const text=
+    const parent =
+      input.parentElement;
+
+    const text =
       normalize(
-        input.parentElement?.textContent
+        parent?.textContent
       );
 
     if(
       text.includes(
         "fecha de referencia"
-      ) &&
-      input.value
+      )
     ){
 
-      return input.value;
+      if(input.value)
+        return input.value;
 
     }
 
   }
 
-  for(const input of inputs){
+  for(
+    const input of inputs
+  ){
 
     if(
       input.closest("#tsDestajo")
@@ -1684,43 +1897,62 @@ function getReferenceDate(){
 
 }
 
-
 /* ================================================================
-   DATOS SEMANALES
+   SEMANA
    ================================================================ */
 
 function calculateWeek(reference){
 
-  const prod=getProduction();
-  const advances=getAdvances();
-  const range=weekRange(reference);
+  const prod =
+    getProduction();
 
-  const programmed=
+  const advances =
+    getAdvances();
+
+  const range =
+    weekRange(reference);
+
+  const programmed =
     prod.filter(
       item=>
         inWeek(
-          item.fecha,
+          item.fecha ??
+          item.date,
           reference
         )
     );
 
-  const programado=
+  const programado =
     programmed.reduce(
       (total,item)=>
         total+
-        num(item.programado),
+        num(
+          item.programado ??
+          item.piezasProgramadas ??
+          item.cantidad ??
+          item.qty
+        ),
       0
     );
 
-  const empaqueRecords=
+  const empaqueRecords =
     advances.filter(item=>{
 
-      const date=
+      const date =
         item.fecha ??
-        item.fechaHora;
+        item.fechaHora ??
+        item.date;
 
-      if(!inWeek(date,reference))
+      if(
+        !inWeek(
+          date,
+          reference
+        )
+      ){
+
         return false;
+
+      }
 
       return normalize(
         item.siguienteProceso ??
@@ -1728,11 +1960,12 @@ function calculateWeek(reference){
         item.procesoDestino ??
         item.destino ??
         ""
-      )==="empaque";
+      ) ===
+      "empaque";
 
     });
 
-  const empaque=
+  const empaque =
     empaqueRecords.reduce(
       (total,item)=>
         total+
@@ -1744,15 +1977,24 @@ function calculateWeek(reference){
       0
     );
 
-  const auditoriaRecords=
+  const auditoriaRecords =
     advances.filter(item=>{
 
-      const date=
+      const date =
         item.fecha ??
-        item.fechaHora;
+        item.fechaHora ??
+        item.date;
 
-      if(!inWeek(date,reference))
+      if(
+        !inWeek(
+          date,
+          reference
+        )
+      ){
+
         return false;
+
+      }
 
       return normalize(
         item.siguienteProceso ??
@@ -1760,11 +2002,12 @@ function calculateWeek(reference){
         item.procesoDestino ??
         item.destino ??
         ""
-      )==="auditoria";
+      ) ===
+      "auditoria";
 
     });
 
-  const auditoria=
+  const auditoria =
     auditoriaRecords.reduce(
       (total,item)=>
         total+
@@ -1776,23 +2019,26 @@ function calculateWeek(reference){
       0
     );
 
-  const ots=new Set();
+  const ots =
+    new Set();
 
-  empaqueRecords.forEach(item=>{
+  empaqueRecords.forEach(
+    item=>{
 
-    if(
-      item.ot!==undefined &&
-      item.ot!==null &&
-      String(item.ot).trim()
-    ){
-
-      ots.add(
+      if(
+        item.ot!==undefined &&
+        item.ot!==null &&
         String(item.ot).trim()
-      );
+      ){
+
+        ots.add(
+          String(item.ot).trim()
+        );
+
+      }
 
     }
-
-  });
+  );
 
   return {
 
@@ -1810,17 +2056,19 @@ function calculateWeek(reference){
 
 }
 
-
 /* ================================================================
    DASHBOARD
    ================================================================ */
 
-function setDashboardMetric(label,value){
+function setDashboardMetric(
+  label,
+  value
+){
 
-  const target=
+  const target =
     normalize(label);
 
-  const leaves=
+  const leaves =
     [
       ...document.querySelectorAll(
         "body *"
@@ -1832,9 +2080,12 @@ function setDashboardMetric(label,value){
         el.offsetParent!==null
     );
 
-  for(const labelEl of leaves){
+  for(
+    const labelEl of leaves
+  ){
 
-    let box=labelEl.parentElement;
+    let box =
+      labelEl.parentElement;
 
     for(
       let level=0;
@@ -1843,7 +2094,7 @@ function setDashboardMetric(label,value){
       box=box.parentElement
     ){
 
-      const candidates=
+      const candidates =
         [
           ...box.querySelectorAll(
             "strong,b,h1,h2,h3,h4,h5,.value,.number,.num,.stat-value"
@@ -1853,10 +2104,14 @@ function setDashboardMetric(label,value){
           el=>
             el!==labelEl &&
             el.offsetParent!==null &&
-            /\d/.test(el.textContent)
+            /\d/.test(
+              el.textContent
+            )
         );
 
-      if(candidates.length){
+      if(
+        candidates.length
+      ){
 
         candidates.sort(
           (a,b)=>
@@ -1864,10 +2119,12 @@ function setDashboardMetric(label,value){
             b.textContent.length
         );
 
-        candidates[0].textContent=
+        candidates[0].textContent =
           new Intl.NumberFormat(
             "es-MX"
-          ).format(value);
+          ).format(
+            value
+          );
 
         return true;
 
@@ -1881,16 +2138,21 @@ function setDashboardMetric(label,value){
 
 }
 
+/* ================================================================
+   REFRESCAR
+   ================================================================ */
 
 function refreshStudio(){
 
   try{
 
-    const reference=
+    const reference =
       getReferenceDate();
 
-    const data=
-      calculateWeek(reference);
+    const data =
+      calculateWeek(
+        reference
+      );
 
     setDashboardMetric(
       "Programado",
@@ -1927,30 +2189,43 @@ function refreshStudio(){
 
 }
 
-
 /* ================================================================
-   EVENTOS
+   LISTENERS DE SEMANA
    ================================================================ */
 
 function installWeekListeners(){
 
-  if(window.__TS_WEEK_LISTENERS__)
+  if(
+    window.__TS_WEEK_LISTENERS__
+  ){
+
     return;
 
-  window.__TS_WEEK_LISTENERS__=true;
+  }
+
+  window.__TS_WEEK_LISTENERS__ =
+    true;
 
   document.addEventListener(
     "change",
     event=>{
 
+      const el =
+        event.target;
+
       if(
-        event.target.matches(
+        el.matches(
           'input[type="date"]'
         )
       ){
 
         setTimeout(
           refreshStudio,
+          80
+        );
+
+        setTimeout(
+          installLineEfficiency,
           100
         );
 
@@ -1963,7 +2238,7 @@ function installWeekListeners(){
     "click",
     event=>{
 
-      const button=
+      const button =
         event.target.closest(
           "button"
         );
@@ -1971,27 +2246,27 @@ function installWeekListeners(){
       if(!button)
         return;
 
-      const text=
+      const text =
         normalize(
           button.textContent
         );
 
       if(
         text==="actualizar" ||
-        text.includes("actualizar") ||
-        text.includes("guardar") ||
-        text.includes("registrar") ||
-        text.includes("programar") ||
-        text.includes("avanzar")
+        text.includes(
+          "actualizar"
+        )
       ){
 
-        setTimeout(()=>{
+        setTimeout(
+          refreshStudio,
+          120
+        );
 
-          replacePairsText();
-          refreshStudio();
-          installLineEfficiency();
-
-        },180);
+        setTimeout(
+          installLineEfficiency,
+          150
+        );
 
       }
 
@@ -2000,69 +2275,122 @@ function installWeekListeners(){
 
 }
 
+/* ================================================================
+   REPARACIÓN SEMANAL
+   CORRECCIÓN DEL ERROR QUE FALTABA
+   ================================================================ */
+
+function installWeekRepair(){
+
+  if(
+    window.__TS_WEEK_REPAIR__
+  ){
+
+    return;
+
+  }
+
+  window.__TS_WEEK_REPAIR__ =
+    true;
+
+  /*
+  Esta función existe para que el cargador
+  no se detenga antes de Destajo y Eficiencia.
+  */
+
+  installWeekListeners();
+
+}
 
 /* ================================================================
-   COSTOS · EDITAR MODELO + TIEMPO ESTÁNDAR
+   COSTOS + EDITAR MODELO + TIEMPO ESTÁNDAR
    ================================================================ */
 
 function installCostRepair(){
 
-  const costs=
-    migrateAllCosts();
-
-  let panel=
+  const existing =
     document.getElementById(
       "tsCostRepair"
     );
 
-  if(!panel){
+  const costs =
+    migrateAllCosts();
 
-    const heading=
-      [
-        ...document.querySelectorAll(
-          "body *"
-        )
-      ].find(
-        el=>
-          el.children.length===0 &&
-          normalize(el.textContent)===
-          "catalogo de modelos" &&
-          el.offsetParent!==null
-      );
+  if(existing){
 
-    if(!heading)
-      return;
-
-    let container=
-      heading.parentElement;
-
-    for(
-      let i=0;
-      i<4 &&
-      container &&
-      container.parentElement;
-      i++
-    ){
-
-      container=
-        container.parentElement;
-
-    }
-
-    panel=
-      document.createElement(
-        "section"
-      );
-
-    panel.id=
-      "tsCostRepair";
-
-    container.insertBefore(
-      panel,
-      container.firstChild
+    renderCostRepair(
+      existing,
+      costs
     );
 
+    return;
+
   }
+
+  const heading =
+    [
+      ...document.querySelectorAll(
+        "body *"
+      )
+    ].find(
+      el=>
+        el.children.length===0 &&
+        normalize(
+          el.textContent
+        )==="catalogo de modelos" &&
+        el.offsetParent!==null
+    );
+
+  if(!heading)
+    return;
+
+  let container =
+    heading.parentElement;
+
+  for(
+    let i=0;
+    i<4 &&
+    container &&
+    container.parentElement;
+    i++
+  ){
+
+    container =
+      container.parentElement;
+
+  }
+
+  const panel =
+    document.createElement(
+      "section"
+    );
+
+  panel.id =
+    "tsCostRepair";
+
+  panel.style.cssText = `
+
+    margin:18px 0;
+    padding:18px;
+    border:1px solid #104456;
+    border-radius:20px;
+    background:
+      linear-gradient(
+        145deg,
+        #071923,
+        #031018
+      );
+    color:#e9fbff;
+    box-shadow:
+      0 12px 35px #0007,
+      inset 0 0 18px rgba(0,191,255,.04);
+
+  `;
+
+  container.insertBefore(
+    panel,
+    container.firstChild
+  );
 
   renderCostRepair(
     panel,
@@ -2071,10 +2399,16 @@ function installCostRepair(){
 
 }
 
+/* ================================================================
+   RENDER COSTOS
+   ================================================================ */
 
-function renderCostRepair(panel,costs){
+function renderCostRepair(
+  panel,
+  costs
+){
 
-  const models=
+  const models =
     Object.keys(costs)
     .sort(
       (a,b)=>
@@ -2084,132 +2418,144 @@ function renderCostRepair(panel,costs){
         )
     );
 
-  panel.innerHTML=`
+  panel.innerHTML = `
 
-    <div class="tsJarvisCard">
+    <div
+      style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:12px;
+        flex-wrap:wrap;
+      "
+    >
 
-      <div
-        style="
-          display:flex;
-          justify-content:space-between;
-          gap:12px;
-          align-items:center;
-          flex-wrap:wrap;
-        "
-      >
+      <div>
 
-        <div>
+        <div
+          style="
+            font-size:21px;
+            font-weight:900;
+            color:#48e7ff;
+            text-shadow:0 0 12px #00bfff55;
+          "
+        >
 
-          <div
-            class="tsJarvisTitle"
-            style="
-              font-size:21px;
-            "
-          >
-
-            ◈ CATÁLOGO DE MODELOS
-
-          </div>
-
-          <div
-            class="tsJarvisSub"
-            style="
-              margin-top:4px;
-            "
-          >
-
-            Costos de destajo + tiempo estándar
-
-          </div>
+          🤖 Catálogo JARVIS · Modelos
 
         </div>
 
         <div
           style="
-            padding:7px 12px;
-            border-radius:999px;
-            background:#063d5b;
-            color:#8eeeff;
-            font-size:11px;
-            font-weight:900;
+            color:#83aebb;
+            font-size:13px;
+            margin-top:4px;
           "
         >
 
-          ${models.length} MODELOS
+          Modelo · Pespunte · Preliminar ·
+          Tiempo estándar
 
         </div>
 
       </div>
 
-
       <div
         style="
-          margin-top:15px;
-          display:grid;
-          grid-template-columns:
-            minmax(120px,1.3fr)
-            minmax(100px,1fr)
-            minmax(100px,1fr)
-            minmax(100px,1fr)
-            82px;
-          gap:7px;
-          align-items:center;
+          background:#063d55;
+          color:#48e7ff;
+          border-radius:999px;
+          padding:7px 12px;
+          font-weight:800;
+          font-size:12px;
+          box-shadow:0 0 14px #00bfff33;
         "
-        class="tsCostGrid"
       >
 
-        <div class="tsCostHead">
-          MODELO
-        </div>
+        ${models.length}
+        modelos
 
-        <div class="tsCostHead">
-          PESpunte
-        </div>
+      </div>
 
-        <div class="tsCostHead">
-          PRELIMINAR
-        </div>
+    </div>
 
-        <div class="tsCostHead">
-          TIEMPO ESTÁNDAR
-        </div>
+    <div
+      style="
+        margin-top:15px;
+        display:grid;
+        grid-template-columns:
+          minmax(120px,1.2fr)
+          minmax(95px,1fr)
+          minmax(95px,1fr)
+          minmax(100px,1fr)
+          90px;
+        gap:8px;
+        align-items:center;
+      "
+      class="tsCostGrid"
+    >
 
-        <div class="tsCostHead">
-          ACCIÓN
-        </div>
+      <div class="tsCostHead">
+        MODELO
+      </div>
 
+      <div class="tsCostHead">
+        PESpunte
+      </div>
 
-        ${
-          models.map(model=>{
+      <div class="tsCostHead">
+        PRELIMINAR
+      </div>
 
-            const item=
+      <div class="tsCostHead">
+        TIEMPO STD.
+      </div>
+
+      <div class="tsCostHead">
+        ACCIÓN
+      </div>
+
+      ${
+        models.map(
+          model=>{
+
+            const item =
               costs[model] ||
-              {
-                pes:0,
-                pre:0,
-                min:0
-              };
+              {pes:0,pre:0,min:0};
 
             return `
 
-              <div class="tsCostCell">
+              <div
+                class="tsCostCell"
+              >
                 ${esc(model)}
               </div>
 
-              <div class="tsCostCell">
+              <div
+                class="tsCostCell"
+              >
                 ${money(item.pes)}
               </div>
 
-              <div class="tsCostCell">
+              <div
+                class="tsCostCell"
+              >
                 ${money(item.pre)}
               </div>
 
-              <div class="tsCostCell">
-                ${num(item.min).toFixed(2)}
-                min
+              <div
+                class="tsCostCell"
+              >
+                ${
+                  num(item.min)
+                    ? num(item.min)+" min"
+                    : "—"
+                }
               </div>
 
-              <div class="tsCostCell">
+              <div
+                class="tsCostCell"
+              >
 
                 <button
                   type="button"
@@ -2225,96 +2571,80 @@ function renderCostRepair(panel,costs){
 
             `;
 
-          }).join("")
-        }
+          }
+        ).join("")
+      }
 
-      </div>
+    </div>
 
+    <div
+      style="
+        margin-top:18px;
+        padding-top:18px;
+        border-top:1px solid #104456;
+      "
+    >
 
       <div
         style="
-          margin-top:18px;
-          padding-top:18px;
-          border-top:
-            1px solid
-            rgba(0,217,255,.15);
+          font-size:16px;
+          font-weight:900;
+          margin-bottom:10px;
+          color:#48e7ff;
         "
       >
 
-        <div
-          class="tsJarvisTitle"
-          style="
-            font-size:16px;
-            margin-bottom:10px;
-          "
+        ✏️ Agregar / editar modelo
+
+      </div>
+
+      <div
+        class="tsCostForm"
+        style="
+          display:grid;
+          grid-template-columns:
+            1.35fr 1fr 1fr 1fr auto;
+          gap:9px;
+        "
+      >
+
+        <input
+          id="tsCostModel"
+          placeholder="Modelo"
         >
 
-          + AGREGAR / EDITAR MODELO
-
-        </div>
-
-
-        <div
-          class="tsCostForm"
-          style="
-            display:grid;
-            grid-template-columns:
-              1.3fr 1fr 1fr 1fr auto;
-            gap:8px;
-          "
+        <input
+          id="tsCostPes"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="Pespunte"
         >
 
-          <input
-            id="tsCostModel"
-            placeholder="Modelo"
-          >
-
-          <input
-            id="tsCostPes"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Costo pespunte"
-          >
-
-          <input
-            id="tsCostPre"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Costo preliminar"
-          >
-
-          <input
-            id="tsCostMin"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Tiempo estándar"
-          >
-
-          <button
-            type="button"
-            id="tsSaveCost"
-          >
-
-            GUARDAR
-
-          </button>
-
-        </div>
-
-
-        <div
-          class="tsJarvisSub"
-          style="
-            margin-top:8px;
-          "
+        <input
+          id="tsCostPre"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="Preliminar"
         >
 
-          Tiempo estándar = minutos estándar por pieza.
+        <input
+          id="tsCostMin"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="Tiempo estándar min"
+        >
 
-        </div>
+        <button
+          type="button"
+          id="tsSaveCost"
+        >
+
+          Guardar
+
+        </button>
 
       </div>
 
@@ -2322,31 +2652,29 @@ function renderCostRepair(panel,costs){
 
   `;
 
-
   if(
     !document.getElementById(
       "tsCostRepairStyle"
     )
   ){
 
-    const style=
+    const style =
       document.createElement("style");
 
-    style.id=
+    style.id =
       "tsCostRepairStyle";
 
-    style.textContent=`
-
-      #tsCostRepair{
-        margin:18px 0;
-      }
+    style.textContent = `
 
       #tsCostRepair input{
 
         width:100%;
         min-width:0;
         padding:11px;
+        border:1px solid #15506a;
         border-radius:10px;
+        background:#04131c;
+        color:#e9fbff;
         font:inherit;
 
       }
@@ -2356,6 +2684,8 @@ function renderCostRepair(panel,costs){
         border:0;
         border-radius:10px;
         padding:10px 12px;
+        background:#00aee5;
+        color:#001018;
         font-weight:900;
         cursor:pointer;
 
@@ -2363,19 +2693,17 @@ function renderCostRepair(panel,costs){
 
       #tsCostRepair .tsEditCost{
 
-        background:
-          rgba(0,120,170,.22)!important;
-
-        color:#8cefff!important;
-
-        min-width:42px;
+        background:#063d55!important;
+        color:#48e7ff!important;
+        padding:8px 10px;
+        white-space:nowrap;
 
       }
 
       #tsCostRepair .tsCostHead{
 
-        color:#70b8ca;
-        font-size:10px;
+        color:#48e7ff;
+        font-size:11px;
         font-weight:900;
         padding:6px;
 
@@ -2384,16 +2712,9 @@ function renderCostRepair(panel,costs){
       #tsCostRepair .tsCostCell{
 
         padding:10px 6px;
-
-        border-top:
-          1px solid
-          rgba(0,217,255,.11);
-
+        border-top:1px solid #104456;
         min-width:0;
-
         overflow-wrap:anywhere;
-
-        color:#e8fbff;
 
       }
 
@@ -2417,59 +2738,70 @@ function renderCostRepair(panel,costs){
 
     `;
 
-    document.head.appendChild(style);
+    document.head.appendChild(
+      style
+    );
 
   }
-
 
   panel
   .querySelectorAll(
     ".tsEditCost"
   )
-  .forEach(button=>{
+  .forEach(
+    button=>{
 
-    button.onclick=()=>{
+      button.onclick=()=>{
 
-      const model=
-        button.dataset.model;
+        const model =
+          button.dataset.model;
 
-      const item=
-        costs[model] ||
-        {
-          pes:0,
-          pre:0,
-          min:0
-        };
+        const item =
+          costs[model] ||
+          {
+            pes:0,
+            pre:0,
+            min:0
+          };
 
-      document
-      .getElementById(
-        "tsCostModel"
-      ).value=model;
+        document
+        .getElementById(
+          "tsCostModel"
+        )
+        .value =
+          model;
 
-      document
-      .getElementById(
-        "tsCostPes"
-      ).value=num(item.pes);
+        document
+        .getElementById(
+          "tsCostPes"
+        )
+        .value =
+          num(item.pes);
 
-      document
-      .getElementById(
-        "tsCostPre"
-      ).value=num(item.pre);
+        document
+        .getElementById(
+          "tsCostPre"
+        )
+        .value =
+          num(item.pre);
 
-      document
-      .getElementById(
-        "tsCostMin"
-      ).value=num(item.min);
+        document
+        .getElementById(
+          "tsCostMin"
+        )
+        .value =
+          num(item.min);
 
-      document
-      .getElementById(
-        "tsCostModel"
-      ).focus();
+        document
+        .getElementById(
+          "tsCostModel"
+        )
+        .focus();
 
-    };
+      };
 
-  });
-
+    }
+  );
 
   document
   .getElementById(
@@ -2479,7 +2811,7 @@ function renderCostRepair(panel,costs){
     "click",
     ()=>{
 
-      const model=
+      const model =
         document
         .getElementById(
           "tsCostModel"
@@ -2497,8 +2829,7 @@ function renderCostRepair(panel,costs){
 
       }
 
-
-      const pes=
+      const pes =
         num(
           document
           .getElementById(
@@ -2507,7 +2838,7 @@ function renderCostRepair(panel,costs){
           .value
         );
 
-      const pre=
+      const pre =
         num(
           document
           .getElementById(
@@ -2516,7 +2847,7 @@ function renderCostRepair(panel,costs){
           .value
         );
 
-      const min=
+      const minValue =
         num(
           document
           .getElementById(
@@ -2525,8 +2856,7 @@ function renderCostRepair(panel,costs){
           .value
         );
 
-
-      const current=
+      const current =
         normalizeCostObject(
           readJSON(
             "theStudioCostos_v4",
@@ -2534,8 +2864,7 @@ function renderCostRepair(panel,costs){
           )
         );
 
-
-      const oldName=
+      const oldName =
         Object.keys(current)
         .find(
           x=>
@@ -2543,33 +2872,31 @@ function renderCostRepair(panel,costs){
             normalize(model)
         );
 
-
       if(
         oldName &&
         oldName!==model
       ){
 
-        delete current[oldName];
+        delete current[
+          oldName
+        ];
 
       }
 
-
-      current[model]={
+      current[model] = {
 
         pes:pes,
 
         pre:pre,
 
-        min:min
+        min:minValue
 
       };
-
 
       saveJSON(
         "theStudioCostos_v4",
         current
       );
-
 
       saveJSON(
         "ts_costos_v1",
@@ -2579,17 +2906,22 @@ function renderCostRepair(panel,costs){
           modelo:name,
 
           pespunte:
-            num(current[name].pes),
+            num(
+              current[name].pes
+            ),
 
           preliminar:
-            num(current[name].pre),
+            num(
+              current[name].pre
+            ),
 
           min:
-            num(current[name].min)
+            num(
+              current[name].min
+            )
 
         }))
       );
-
 
       try{
 
@@ -2601,7 +2933,9 @@ function renderCostRepair(panel,costs){
                 "theStudioCostos_v4",
 
               newValue:
-                JSON.stringify(current),
+                JSON.stringify(
+                  current
+                ),
 
               storageArea:
                 localStorage
@@ -2611,717 +2945,718 @@ function renderCostRepair(panel,costs){
 
       }catch{}
 
-
       renderCostRepair(
         panel,
         current
       );
 
-
       setTimeout(
-        installLineEfficiency,
-        100
+        installDestajo,
+        80
       );
 
     }
   );
 
 }
-
-
-/* ================================================================
-   REPARACIÓN DEL MÓDULO DE SEMANA
-   ================================================================ */
-
-function installWeekRepair(){
-
-  replacePairsText();
-
-}
-
 
 /* ================================================================
    EFICIENCIA POR LÍNEA
+   PROGRAMADO VS SALIDA DE PESpunte
    ================================================================ */
 
-function getLine(item){
+function getLineName(item){
 
   return String(
-    item?.linea ??
-    item?.line ??
-    item?.lineaProduccion ??
-    item?.lineaProducción ??
-    item?.lineaNombre ??
-    item?.lineName ??
+    item.linea ??
+    item.line ??
+    item.lineaProduccion ??
+    item.lineaNombre ??
+    item.Linea ??
     ""
   ).trim();
 
 }
 
+function sameLine(item,line){
 
-function getOT(item){
+  const a =
+    normalize(
+      getLineName(item)
+    );
 
-  return String(
-    item?.ot ??
-    item?.OT ??
-    item?.ordenTrabajo ??
-    item?.orden ??
-    ""
-  ).trim();
+  const b =
+    normalize(line);
 
-}
+  if(
+    a===b
+  ){
 
+    return true;
 
-function getModel(item){
+  }
 
-  return String(
-    item?.modelo ??
-    item?.model ??
-    ""
-  ).trim();
+  if(
+    b==="linea a"
+  ){
 
-}
+    return (
+      a==="a" ||
+      a==="lineaa" ||
+      a==="linea  a"
+    );
 
+  }
 
-function getPieces(item){
+  if(
+    b==="linea b"
+  ){
 
-  return num(
-    item?.programado ??
-    item?.piezas ??
-    item?.cantidad ??
-    item?.qty ??
-    0
-  );
+    return (
+      a==="b" ||
+      a==="lineab" ||
+      a==="linea  b"
+    );
 
-}
+  }
 
-
-function advancePieces(item){
-
-  return num(
-    item?.piezas ??
-    item?.cantidad ??
-    item?.qty ??
-    0
-  );
+  return false;
 
 }
 
-
-function advanceDate(item){
+function getItemDate(item){
 
   return localDateString(
-    item?.fecha ??
-    item?.fechaHora ??
+    item.fecha ??
+    item.date ??
+    item.fechaHora ??
+    item.createdAt ??
     ""
   );
 
 }
-
 
 function isSalidaPespunte(item){
 
-  const destination=
+  const destination =
     normalize(
-      item?.siguienteProceso ??
-      item?.procesoNuevo ??
-      item?.procesoDestino ??
-      item?.destino ??
+      item.siguienteProceso ??
+      item.procesoNuevo ??
+      item.procesoDestino ??
+      item.destino ??
+      item.hasta ??
+      item.to ??
       ""
     );
 
+  const source =
+    normalize(
+      item.procesoAnterior ??
+      item.procesoOrigen ??
+      item.proceso ??
+      item.desde ??
+      item.from ??
+      ""
+    );
+
+  /*
+  Detectamos explícitamente:
+  Salida pespunte / salida de pespunte.
+  */
+
+  const salida =
+    destination.includes(
+      "salida pespunte"
+    ) ||
+    destination.includes(
+      "salida de pespunte"
+    ) ||
+    destination==="salidapespunte" ||
+    destination==="salidadepespunte";
+
+  if(salida)
+    return true;
+
+  /*
+  También aceptamos movimientos cuyo origen
+  sea Pespunte y cuyo proceso siguiente sea
+  Clasificación, porque en algunas versiones
+  el avance puede quedar registrado así.
+  */
+
+  const origenPespunte =
+    source==="pespunte" ||
+    source.includes("pespunte");
+
+  const siguienteClasificacion =
+    destination==="clasificacion" ||
+    destination.includes("clasificacion");
+
   return (
-    destination==="salida pespunte" ||
-    (
-      destination.includes("salida") &&
-      destination.includes("pespunte")
-    )
+    origenPespunte &&
+    siguienteClasificacion
   );
 
 }
 
+function getProgrammedForLine(
+  date,
+  line
+){
 
-function lineForAdvance(item,productionMap){
-
-  const direct=
-    getLine(item);
-
-  if(direct)
-    return direct;
-
-  const ot=
-    getOT(item);
-
-  if(
-    ot &&
-    productionMap[ot]
-  ){
-
-    return productionMap[ot];
-
-  }
-
-  return "";
-
-}
-
-
-function lineEfficiencyData(line,date){
-
-  const prod=
-    getProduction();
-
-  const advances=
-    getAdvances();
-
-  const productionMap={};
-
-  prod.forEach(item=>{
-
-    const ot=getOT(item);
-    const itemDate=
-      localDateString(item.fecha);
-
-    if(
-      ot &&
-      itemDate===date
-    ){
-
-      productionMap[ot]=
-        getLine(item);
-
-    }
-
-  });
-
-
-  const programmedRecords=
-    prod.filter(item=>{
-
-      return (
-        localDateString(item.fecha)===date &&
-        normalize(
-          getLine(item)
-        )===
-        normalize(line)
-      );
-
-    });
-
-
-  const programmed=
-    programmedRecords.reduce(
-      (sum,item)=>
-        sum+
-        getPieces(item),
+  return getProduction()
+    .filter(
+      item=>
+        getItemDate(item)===date &&
+        sameLine(item,line)
+    )
+    .reduce(
+      (total,item)=>
+        total+
+        num(
+          item.programado ??
+          item.piezasProgramadas ??
+          item.cantidad ??
+          item.qty ??
+          item.piezas
+        ),
       0
     );
 
+}
 
-  const salidaRecords=
-    advances.filter(item=>{
+function getSalidaPespunteForLine(
+  date,
+  line
+){
 
-      if(
-        advanceDate(item)!==date
-      )
-        return false;
-
-      if(
-        !isSalidaPespunte(item)
-      )
-        return false;
-
-      const l=
-        lineForAdvance(
-          item,
-          productionMap
-        );
-
-      return (
-        normalize(l)===
-        normalize(line)
-      );
-
-    });
-
-
-  const salida=
-    salidaRecords.reduce(
-      (sum,item)=>
-        sum+
-        advancePieces(item),
+  return getAdvances()
+    .filter(
+      item=>
+        getItemDate(item)===date &&
+        sameLine(item,line) &&
+        isSalidaPespunte(item)
+    )
+    .reduce(
+      (total,item)=>
+        total+
+        num(
+          item.piezas ??
+          item.cantidad ??
+          item.qty ??
+          item.pares
+        ),
       0
     );
 
+}
 
-  const efficiency=
-    programmed>0
-      ? salida/programmed*100
-      : 0;
+function lineEfficiency(
+  programado,
+  salida
+){
 
+  const p =
+    num(programado);
 
-  return {
+  if(p<=0)
+    return 0;
 
-    programmed,
-    salida,
-    efficiency
-
-  };
+  return (
+    num(salida) /
+    p
+  )*
+  100;
 
 }
 
+function installLineEfficiency(){
 
-function createEfficiencyPanel(){
-
-  if(
+  const old =
     document.getElementById(
       "tsLineEfficiency"
-    )
-  ){
-
-    return document.getElementById(
-      "tsLineEfficiency"
     );
+
+  if(old){
+
+    renderLineEfficiency(
+      old
+    );
+
+    return;
 
   }
 
-
-  const panel=
+  const panel =
     document.createElement(
       "section"
     );
 
-  panel.id=
+  panel.id =
     "tsLineEfficiency";
 
-  panel.className=
-    "tsJarvisCard";
+  panel.innerHTML =
+    "";
 
-  panel.style.cssText=`
+  panel.style.cssText = `
 
     margin:18px 0;
 
-  `;
+    padding:18px;
 
+    border:
+      1px solid #104456;
 
-  panel.innerHTML=`
+    border-radius:20px;
 
-    <div
-      style="
-        display:flex;
-        align-items:center;
-        gap:10px;
-        margin-bottom:13px;
-      "
-    >
+    background:
+      linear-gradient(
+        145deg,
+        #071923,
+        #031018
+      );
 
-      <div
-        style="
-          width:38px;
-          height:38px;
-          border-radius:50%;
-          display:grid;
-          place-items:center;
-          border:
-            1px solid
-            rgba(0,217,255,.4);
-          color:#8df5ff;
-          background:#05243a;
-          box-shadow:
-            0 0 18px
-            rgba(0,217,255,.18);
-        "
-      >
+    color:#e9fbff;
 
-        ◉
-
-      </div>
-
-      <div>
-
-        <div class="tsJarvisTitle">
-
-          JARVIS · CARGA DE LÍNEA
-
-        </div>
-
-        <div class="tsJarvisSub">
-
-          OT programada vs. salida de pespunte
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div
-      style="
-        display:grid;
-        grid-template-columns:
-          1fr 1fr;
-        gap:10px;
-      "
-      class="tsEffGrid"
-    >
-
-      <div class="tsEffBox" id="tsEffA"></div>
-
-      <div class="tsEffBox" id="tsEffB"></div>
-
-    </div>
+    box-shadow:
+      0 12px 35px #0007,
+      inset 0 0 18px
+      rgba(0,191,255,.04);
 
   `;
 
-
-  const style=
-    document.createElement("style");
-
-  style.id=
-    "tsEfficiencyStyle";
-
-  style.textContent=`
-
-    .tsEffBox{
-
-      border:
-        1px solid
-        rgba(0,217,255,.14);
-
-      border-radius:14px;
-
-      padding:13px;
-
-      background:
-        rgba(2,14,24,.65);
-
-    }
-
-    .tsEffTop{
-
-      display:flex;
-
-      justify-content:space-between;
-
-      align-items:center;
-
-      gap:10px;
-
-    }
-
-    .tsEffLine{
-
-      font-weight:900;
-
-      color:#bcefff;
-
-      font-size:13px;
-
-    }
-
-    .tsEffNumber{
-
-      font-size:28px;
-
-      font-weight:950;
-
-      color:#e8fdff;
-
-    }
-
-    .tsEffStats{
-
-      display:grid;
-
-      grid-template-columns:
-        1fr 1fr;
-
-      gap:8px;
-
-      margin-top:10px;
-
-    }
-
-    .tsEffStat{
-
-      background:#04111c;
-
-      border-radius:9px;
-
-      padding:8px;
-
-    }
-
-    .tsEffStat small{
-
-      display:block;
-
-      color:#6d9cad;
-
-      font-size:9px;
-
-      font-weight:900;
-
-      text-transform:uppercase;
-
-    }
-
-    .tsEffStat b{
-
-      color:#dffaff;
-
-      font-size:15px;
-
-    }
-
-    .tsEffNote{
-
-      margin-top:9px;
-
-      color:#6796a7;
-
-      font-size:9px;
-
-    }
-
-    @media(max-width:620px){
-
-      .tsEffGrid{
-
-        grid-template-columns:
-          1fr!important;
-
-      }
-
-    }
-
-  `;
-
-  document.head.appendChild(style);
-
-  return panel;
-
-}
-
-
-function findProgrammingArea(){
-
-  const candidates=[
-    ...document.querySelectorAll(
-      "main,section,article,.page,.content,.container"
-    )
-  ];
-
-  const found=
-    candidates.find(el=>{
-
-      const text=
-        normalize(
-          el.textContent
-        );
-
-      return (
-        text.includes("programacion") &&
-        (
-          text.includes("linea a") ||
-          text.includes("linea b")
-        )
-      );
-
-    });
-
-  return found || document.body;
-
-}
-
-
-function installLineEfficiency(){
-
-  try{
-
-    const date=
-      getReferenceDate();
-
-    let panel=
-      document.getElementById(
-        "tsLineEfficiency"
-      );
-
-    if(!panel){
-
-      panel=
-        createEfficiencyPanel();
-
-      const area=
-        findProgrammingArea();
-
-      area.insertBefore(
-        panel,
-        area.firstChild
-      );
-
-    }
-
-
-    const A=
-      lineEfficiencyData(
-        "Línea A",
-        date
-      );
-
-    const B=
-      lineEfficiencyData(
-        "Línea B",
-        date
-      );
-
-
-    function renderLine(id,line,data){
-
-      const el=
-        document.getElementById(id);
-
-      if(!el)
-        return;
-
-      const pct=
-        Math.max(
-          0,
-          Math.min(
-            100,
-            data.efficiency
-          )
-        );
-
-
-      el.innerHTML=`
-
-        <div class="tsEffTop">
-
-          <div class="tsEffLine">
-
-            ${esc(line)}
-
-          </div>
-
-          <div class="tsEffNumber">
-
-            ${data.efficiency.toFixed(1)}%
-
-          </div>
-
-        </div>
-
-
-        <div class="tsGauge">
-
-          <i
-            style="
-              width:${pct}%;
-            "
-          ></i>
-
-        </div>
-
-
-        <div class="tsEffStats">
-
-          <div class="tsEffStat">
-
-            <small>
-              OT programada
-            </small>
-
-            <b>
-              ${new Intl.NumberFormat("es-MX")
-                .format(data.programmed)}
-              piezas
-            </b>
-
-          </div>
-
-
-          <div class="tsEffStat">
-
-            <small>
-              Salida pespunte
-            </small>
-
-            <b>
-              ${new Intl.NumberFormat("es-MX")
-                .format(data.salida)}
-              piezas
-            </b>
-
-          </div>
-
-        </div>
-
-
-        <div class="tsEffNote">
-
-          EFICIENCIA =
-          SALIDA DE PESpUNTE ÷
-          OT PROGRAMADA × 100
-
-        </div>
-
-      `;
-
-    }
-
-
-    renderLine(
-      "tsEffA",
-      "LÍNEA A",
-      A
+  /*
+  Intentamos colocar el panel cerca del contenido
+  principal sin alterar el HTML original.
+  */
+
+  const target =
+    document.querySelector(
+      "main"
+    ) ||
+    document.querySelector(
+      "#app"
+    ) ||
+    document.body;
+
+  if(
+    target &&
+    target.firstElementChild
+  ){
+
+    target.insertBefore(
+      panel,
+      target.firstElementChild
     );
 
-    renderLine(
-      "tsEffB",
-      "LÍNEA B",
-      B
-    );
+  }else{
 
-
-    const oldA=
-      document.getElementById(
-        "wsEfA"
-      );
-
-    const oldB=
-      document.getElementById(
-        "wsEfB"
-      );
-
-
-    if(oldA){
-
-      oldA.textContent=
-        A.efficiency.toFixed(1)+"%";
-
-    }
-
-    if(oldB){
-
-      oldB.textContent=
-        B.efficiency.toFixed(1)+"%";
-
-    }
-
-
-  }catch(e){
-
-    console.error(
-      "Eficiencia línea:",
-      e
+    document.body.appendChild(
+      panel
     );
 
   }
 
+  renderLineEfficiency(
+    panel
+  );
+
 }
 
+function renderLineEfficiency(
+  panel
+){
+
+  const date =
+    getReferenceDate() ||
+    todayLocal();
+
+  const AProgramado =
+    getProgrammedForLine(
+      date,
+      "Línea A"
+    );
+
+  const BProgramado =
+    getProgrammedForLine(
+      date,
+      "Línea B"
+    );
+
+  const ASalida =
+    getSalidaPespunteForLine(
+      date,
+      "Línea A"
+    );
+
+  const BSalida =
+    getSalidaPespunteForLine(
+      date,
+      "Línea B"
+    );
+
+  const AEff =
+    lineEfficiency(
+      AProgramado,
+      ASalida
+    );
+
+  const BEff =
+    lineEfficiency(
+      BProgramado,
+      BSalida
+    );
+
+  const totalProgramado =
+    AProgramado+
+    BProgramado;
+
+  const totalSalida =
+    ASalida+
+    BSalida;
+
+  const totalEff =
+    lineEfficiency(
+      totalProgramado,
+      totalSalida
+    );
+
+  const effClass=value=>{
+
+    if(value>=100)
+      return "100";
+
+    if(value>=80)
+      return "80";
+
+    if(value>=60)
+      return "60";
+
+    return "low";
+
+  };
+
+  panel.innerHTML = `
+
+    <div
+      style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:12px;
+        flex-wrap:wrap;
+      "
+    >
+
+      <div>
+
+        <div
+          style="
+            font-size:21px;
+            font-weight:900;
+            color:#48e7ff;
+            text-shadow:
+              0 0 12px
+              rgba(0,191,255,.5);
+          "
+        >
+
+          ⚡ JARVIS · Carga de líneas
+
+        </div>
+
+        <div
+          style="
+            color:#83aebb;
+            font-size:13px;
+            margin-top:4px;
+          "
+        >
+
+          ${esc(date)}
+          · Programado vs Salida de Pespunte
+
+        </div>
+
+      </div>
+
+      <div
+        style="
+          border:
+            1px solid #15506a;
+          border-radius:999px;
+          padding:7px 12px;
+          color:#48e7ff;
+          font-weight:900;
+          background:#04131c;
+        "
+      >
+
+        EFICIENCIA
+
+      </div>
+
+    </div>
+
+    <div
+      class="tsEffGrid"
+      style="
+        display:grid;
+        grid-template-columns:
+          repeat(3,minmax(0,1fr));
+        gap:10px;
+        margin-top:15px;
+      "
+    >
+
+      ${lineEfficiencyCard(
+        "LÍNEA A",
+        AProgramado,
+        ASalida,
+        AEff,
+        effClass(AEff)
+      )}
+
+      ${lineEfficiencyCard(
+        "LÍNEA B",
+        BProgramado,
+        BSalida,
+        BEff,
+        effClass(BEff)
+      )}
+
+      ${lineEfficiencyCard(
+        "GENERAL",
+        totalProgramado,
+        totalSalida,
+        totalEff,
+        effClass(totalEff)
+      )}
+
+    </div>
+
+    <div
+      style="
+        margin-top:12px;
+        padding:11px;
+        border:
+          1px solid #104456;
+        border-radius:12px;
+        background:#04131c;
+        color:#83aebb;
+        font-size:12px;
+      "
+    >
+
+      <b style="color:#48e7ff">
+        Fórmula:
+      </b>
+
+      Salida de Pespunte ÷ Programado × 100
+
+    </div>
+
+    <style>
+
+      #tsLineEfficiency
+      .tsEffCard{
+
+        padding:14px;
+
+        border:
+          1px solid #104456;
+
+        border-radius:15px;
+
+        background:
+          linear-gradient(
+            145deg,
+            #08212d,
+            #031018
+          );
+
+      }
+
+      #tsLineEfficiency
+      .tsEffPct{
+
+        font:
+          900 30px
+          system-ui;
+
+        color:#48e7ff;
+
+        text-shadow:
+          0 0 15px
+          rgba(0,191,255,.55);
+
+      }
+
+      #tsLineEfficiency
+      .tsEffBar{
+
+        height:9px;
+
+        margin-top:10px;
+
+        border-radius:99px;
+
+        overflow:hidden;
+
+        background:#06141d;
+
+        border:
+          1px solid #104456;
+
+      }
+
+      #tsLineEfficiency
+      .tsEffFill{
+
+        height:100%;
+
+        border-radius:99px;
+
+        background:
+          linear-gradient(
+            90deg,
+            #007fc4,
+            #48e7ff
+          );
+
+        box-shadow:
+          0 0 12px
+          rgba(0,191,255,.65);
+
+      }
+
+      @media(max-width:720px){
+
+        #tsLineEfficiency
+        .tsEffGrid{
+
+          grid-template-columns:
+            1fr!important;
+
+        }
+
+      }
+
+    </style>
+
+  `;
+
+}
+
+function lineEfficiencyCard(
+  title,
+  programmed,
+  salida,
+  efficiency,
+  cls
+){
+
+  const bar =
+    Math.min(
+      Math.max(
+        num(efficiency),
+        0
+      ),
+      100
+    );
+
+  return `
+
+    <div
+      class="tsEffCard"
+    >
+
+      <div
+        style="
+          color:#83aebb;
+          font-size:11px;
+          font-weight:900;
+          letter-spacing:1px;
+        "
+      >
+
+        ${title}
+
+      </div>
+
+      <div
+        class="tsEffPct"
+      >
+
+        ${num(efficiency).toFixed(1)}%
+
+      </div>
+
+      <div
+        style="
+          display:grid;
+          grid-template-columns:1fr 1fr;
+          gap:8px;
+          margin-top:8px;
+        "
+      >
+
+        <div>
+
+          <div
+            style="
+              color:#83aebb;
+              font-size:10px;
+            "
+          >
+            PROGRAMADO
+          </div>
+
+          <b>
+            ${new Intl.NumberFormat("es-MX")
+              .format(programmed)}
+          </b>
+
+        </div>
+
+        <div>
+
+          <div
+            style="
+              color:#83aebb;
+              font-size:10px;
+            "
+          >
+            SALIDA PESpUNTE
+          </div>
+
+          <b>
+            ${new Intl.NumberFormat("es-MX")
+              .format(salida)}
+          </b>
+
+        </div>
+
+      </div>
+
+      <div
+        class="tsEffBar"
+      >
+
+        <div
+          class="tsEffFill"
+          style="
+            width:${bar}%;
+          "
+        ></div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
 
 /* ================================================================
    DESTAJO
@@ -3333,23 +3668,24 @@ function installDestajo(){
     document.getElementById(
       "tsDestajoBtn"
     )
-  )
+  ){
+
     return;
 
+  }
 
-  const KEYC=
+  const KEYC =
     "theStudioCostos_v4";
 
-  const KEYR=
+  const KEYR =
     "ts_destajo_v1";
 
-  const KEYW=
+  const KEYW =
     "ts_cierres_v1";
-
 
   function costsArray(){
 
-    const object=
+    const object =
       normalizeCostObject(
         readJSON(
           KEYC,
@@ -3358,23 +3694,22 @@ function installDestajo(){
       );
 
     return Object.keys(object)
-      .map(model=>({
+    .map(model=>({
 
-        modelo:model,
+      modelo:model,
 
-        pespunte:
-          num(object[model].pes),
+      pespunte:
+        num(object[model].pes),
 
-        preliminar:
-          num(object[model].pre),
+      preliminar:
+        num(object[model].pre),
 
-        min:
-          num(object[model].min)
+      min:
+        num(object[model].min)
 
-      }));
+    }));
 
   }
-
 
   function records(){
 
@@ -3385,7 +3720,6 @@ function installDestajo(){
 
   }
 
-
   function closes(){
 
     return readJSON(
@@ -3395,14 +3729,27 @@ function installDestajo(){
 
   }
 
+  function save(
+    key,
+    value
+  ){
 
-  const style=
-    document.createElement("style");
+    saveJSON(
+      key,
+      value
+    );
 
-  style.id=
+  }
+
+  const style =
+    document.createElement(
+      "style"
+    );
+
+  style.id =
     "tsDestajoStyle";
 
-  style.textContent=`
+  style.textContent = `
 
 #tsDestajoBtn{
 
@@ -3414,7 +3761,7 @@ function installDestajo(){
 
   z-index:2147483646;
 
-  border:0;
+  border:1px solid #15506a;
 
   border-radius:999px;
 
@@ -3423,20 +3770,19 @@ function installDestajo(){
   background:
     linear-gradient(
       135deg,
-      #031524,
-      #075a83
+      #007fc4,
+      #00bfff
     )!important;
 
-  color:#fff;
+  color:#001018!important;
 
   font:900 15px system-ui;
 
   box-shadow:
-    0 0 25px
-    rgba(0,217,255,.2);
+    0 0 22px
+    rgba(0,191,255,.35);
 
 }
-
 
 #tsDestajoShade{
 
@@ -3444,14 +3790,13 @@ function installDestajo(){
 
   inset:0;
 
-  background:#0009;
+  background:#000b;
 
   z-index:2147483645;
 
   display:none;
 
 }
-
 
 #tsDestajo{
 
@@ -3463,7 +3808,7 @@ function installDestajo(){
 
   width:
     min(
-      650px,
+      620px,
       calc(100vw - 24px)
     );
 
@@ -3471,32 +3816,36 @@ function installDestajo(){
 
   overflow:auto;
 
-  background:#03101b;
+  background:
+    linear-gradient(
+      145deg,
+      #071923,
+      #020a10
+    );
 
-  color:#eefcff;
+  color:#e9fbff;
 
   border:
-    1px solid
-    rgba(0,217,255,.25);
+    1px solid #104456;
 
   border-radius:18px;
 
   z-index:2147483647;
 
   box-shadow:
-    0 20px 70px #000b,
+    0 20px 70px #0009,
     0 0 35px
-    rgba(0,180,255,.08);
+    rgba(0,191,255,.12);
 
   font:14px system-ui;
 
 }
 
-
 #tsDestajo *{
-  box-sizing:border-box;
-}
 
+  box-sizing:border-box;
+
+}
 
 .tsHead{
 
@@ -3504,11 +3853,10 @@ function installDestajo(){
 
   top:0;
 
-  background:#020b13;
+  background:#031018;
 
   border-bottom:
-    1px solid
-    rgba(0,217,255,.16);
+    1px solid #104456;
 
   padding:14px 16px;
 
@@ -3522,19 +3870,21 @@ function installDestajo(){
 
 }
 
-
 .tsHead b{
-  font-size:18px;
-}
 
+  font-size:18px;
+
+  color:#48e7ff;
+
+}
 
 .tsClose{
 
-  border:0;
+  border:1px solid #15506a!important;
 
-  background:#092235!important;
+  background:#061721!important;
 
-  color:#fff;
+  color:#48e7ff!important;
 
   border-radius:10px;
 
@@ -3543,7 +3893,6 @@ function installDestajo(){
   font-size:18px;
 
 }
-
 
 .tsTabs{
 
@@ -3554,21 +3903,19 @@ function installDestajo(){
   padding:10px 14px;
 
   border-bottom:
-    1px solid
-    rgba(0,217,255,.13);
+    1px solid #104456;
 
   overflow:auto;
 
 }
 
-
 .tsTab{
 
-  border:0;
+  border:1px solid #104456!important;
 
-  background:#061a28!important;
+  background:#061721!important;
 
-  color:#75b5c7!important;
+  color:#83aebb!important;
 
   border-radius:10px;
 
@@ -3580,20 +3927,13 @@ function installDestajo(){
 
 }
 
-
 .tsTab.on{
 
-  background:
-    linear-gradient(
-      135deg,
-      #087fdc,
-      #06438f
-    )!important;
+  background:#00aee5!important;
 
-  color:#fff!important;
+  color:#001018!important;
 
 }
-
 
 .tsPane{
 
@@ -3603,11 +3943,11 @@ function installDestajo(){
 
 }
 
-
 .tsPane.on{
-  display:block;
-}
 
+  display:block;
+
+}
 
 .tsGrid{
 
@@ -3620,7 +3960,6 @@ function installDestajo(){
 
 }
 
-
 .tsGrid3{
 
   display:grid;
@@ -3632,7 +3971,6 @@ function installDestajo(){
 
 }
 
-
 .tsField label{
 
   display:block;
@@ -3641,12 +3979,11 @@ function installDestajo(){
 
   font-weight:900;
 
-  color:#73a9bb;
+  color:#83aebb;
 
   margin:0 0 4px;
 
 }
-
 
 .tsField input,
 .tsField select{
@@ -3654,21 +3991,19 @@ function installDestajo(){
   width:100%;
 
   border:
-    1px solid
-    rgba(0,217,255,.2);
+    1px solid #15506a;
 
   border-radius:9px;
 
   padding:10px;
 
-  background:#041522!important;
+  background:#04131c;
 
-  color:#eefcff!important;
+  color:#e9fbff;
 
   font:inherit;
 
 }
-
 
 .tsBtn{
 
@@ -3680,47 +4015,41 @@ function installDestajo(){
 
   font-weight:900;
 
-  background:
-    linear-gradient(
-      135deg,
-      #087fdc,
-      #06438f
-    )!important;
+  background:#00aee5!important;
 
-  color:#fff;
+  color:#001018!important;
 
 }
-
 
 .tsBtn.alt{
 
-  background:#092235!important;
+  background:#061721!important;
 
-  color:#dff9ff;
+  color:#48e7ff!important;
+
+  border:
+    1px solid #15506a!important;
 
 }
-
 
 .tsBtn.good{
 
-  background:#063c32!important;
+  background:#0c5d54!important;
 
-  color:#7effd6;
+  color:#9dfff1!important;
 
 }
-
 
 .tsCard{
 
   border:
-    1px solid
-    rgba(0,217,255,.15);
+    1px solid #104456;
 
   background:
     linear-gradient(
       145deg,
-      #071d2c,
-      #03101a
+      #071923,
+      #031018
     );
 
   border-radius:13px;
@@ -3731,17 +4060,15 @@ function installDestajo(){
 
 }
 
-
 .tsMoney{
 
   font-size:21px;
 
   font-weight:900;
 
-  color:#e9fdff;
+  color:#48e7ff;
 
 }
-
 
 .tsKpis{
 
@@ -3754,10 +4081,12 @@ function installDestajo(){
 
 }
 
-
 .tsKpi{
 
-  background:#041522;
+  background:#04131c;
+
+  border:
+    1px solid #104456;
 
   border-radius:12px;
 
@@ -3765,15 +4094,13 @@ function installDestajo(){
 
 }
 
-
 .tsKpi small{
 
   display:block;
 
-  color:#70a5b6;
+  color:#83aebb;
 
 }
-
 
 .tsTable{
 
@@ -3785,15 +4112,13 @@ function installDestajo(){
 
 }
 
-
 .tsTable th,
 .tsTable td{
 
   padding:7px 5px;
 
   border-bottom:
-    1px solid
-    rgba(0,217,255,.1);
+    1px solid #104456;
 
   text-align:left;
 
@@ -3801,18 +4126,17 @@ function installDestajo(){
 
 }
 
-
 .tsTable th{
 
-  color:#70b8ca;
+  color:#48e7ff;
 
 }
-
 
 .tsRight{
-  text-align:right!important;
-}
 
+  text-align:right!important;
+
+}
 
 .tsLine{
 
@@ -3825,20 +4149,17 @@ function installDestajo(){
   padding:8px 0;
 
   border-bottom:
-    1px solid
-    rgba(0,217,255,.1);
+    1px solid #104456;
 
 }
 
-
 .tsMuted{
 
-  color:#70a5b6;
+  color:#83aebb;
 
   font-size:12px;
 
 }
-
 
 @media(max-width:520px){
 
@@ -3866,7 +4187,6 @@ function installDestajo(){
 
 }
 
-
 @media(max-width:420px){
 
   #tsDestajo{
@@ -3880,10 +4200,14 @@ function installDestajo(){
 
     max-height:84vh;
 
+    border-radius:16px;
+
   }
 
   .tsPane{
+
     padding:10px;
+
   }
 
   .tsGrid,
@@ -3911,8 +4235,9 @@ function installDestajo(){
 
 `;
 
-  document.head.appendChild(style);
-
+  document.head.appendChild(
+    style
+  );
 
   document.body.insertAdjacentHTML(
     "beforeend",
@@ -3923,7 +4248,8 @@ function installDestajo(){
 💰 Destajo
 </button>
 
-<div id="tsDestajoShade"></div>
+<div id="tsDestajoShade">
+</div>
 
 <section
 id="tsDestajo"
@@ -3933,7 +4259,7 @@ aria-label="Destajo The Studio"
 <div class="tsHead">
 
 <b>
-◈ Destajo · Nómina
+🤖 Destajo · Nómina
 </b>
 
 <button
@@ -3944,7 +4270,6 @@ id="tsClose"
 </button>
 
 </div>
-
 
 <div class="tsTabs">
 
@@ -3971,113 +4296,140 @@ Resumen semanal
 
 </div>
 
-
 <div
 id="tsCap"
 class="tsPane on"
-></div>
-
+>
+</div>
 
 <div
 id="tsCost"
 class="tsPane"
-></div>
-
+>
+</div>
 
 <div
 id="tsRes"
 class="tsPane"
-></div>
-
+>
+</div>
 
 </section>
 
 `
   );
 
-
-  const btn=
+  const btn =
     document.getElementById(
       "tsDestajoBtn"
     );
 
-  const shade=
+  const shade =
     document.getElementById(
       "tsDestajoShade"
     );
 
-  const panel=
+  const panel =
     document.getElementById(
       "tsDestajo"
     );
 
-
   const open=()=>{
 
-    shade.style.display="block";
-    panel.style.display="block";
+    shade.style.display =
+      "block";
+
+    panel.style.display =
+      "block";
 
     renderAll();
 
   };
 
-
   const close=()=>{
 
-    shade.style.display="none";
-    panel.style.display="none";
+    shade.style.display =
+      "none";
+
+    panel.style.display =
+      "none";
 
   };
 
+  btn.onclick =
+    open;
 
-  btn.onclick=open;
-  shade.onclick=close;
-
-  document
-  .getElementById("tsClose")
-  .onclick=close;
-
+  shade.onclick =
+    close;
 
   document
-  .querySelectorAll(".tsTab")
-  .forEach(tab=>{
+  .getElementById(
+    "tsClose"
+  )
+  .onclick =
+    close;
 
-    tab.onclick=()=>{
+  document
+  .querySelectorAll(
+    ".tsTab"
+  )
+  .forEach(
+    tab=>{
 
-      document
-      .querySelectorAll(".tsTab")
-      .forEach(x=>
-        x.classList.remove("on")
-      );
+      tab.onclick=()=>{
 
-      tab.classList.add("on");
+        document
+        .querySelectorAll(
+          ".tsTab"
+        )
+        .forEach(
+          x=>
+            x.classList.remove(
+              "on"
+            )
+        );
 
-      document
-      .querySelectorAll(".tsPane")
-      .forEach(x=>
-        x.classList.remove("on")
-      );
+        tab.classList.add(
+          "on"
+        );
 
-      const pane={
+        document
+        .querySelectorAll(
+          ".tsPane"
+        )
+        .forEach(
+          x=>
+            x.classList.remove(
+              "on"
+            )
+        );
 
-        cap:"Cap",
-        cost:"Cost",
-        res:"Res"
+        const pane = {
 
-      }[tab.dataset.tab];
+          cap:"Cap",
 
-      document
-      .getElementById(
-        "ts"+pane
-      )
-      .classList.add("on");
+          cost:"Cost",
 
-      renderAll();
+          res:"Res"
 
-    };
+        }[
+          tab.dataset.tab
+        ];
 
-  });
+        document
+        .getElementById(
+          "ts"+pane
+        )
+        .classList.add(
+          "on"
+        );
 
+        renderAll();
+
+      };
+
+    }
+  );
 
   function modelOptions(){
 
@@ -4089,9 +4441,12 @@ class="tsPane"
         >
 
           ${esc(c.modelo)}
-          · P ${money(c.pespunte)}
-          · Pre ${money(c.preliminar)}
-          · ${num(c.min).toFixed(2)} min
+
+          · P
+          ${money(c.pespunte)}
+
+          · Pre
+          ${money(c.preliminar)}
 
         </option>
 
@@ -4100,19 +4455,20 @@ class="tsPane"
 
   }
 
-
   /* ==============================================================
      CAPTURA
      ============================================================== */
 
   function renderCap(){
 
-    const c=
+    const c =
       costsArray();
 
     document
-    .getElementById("tsCap")
-    .innerHTML=`
+    .getElementById(
+      "tsCap"
+    )
+    .innerHTML = `
 
       <div class="tsCard">
 
@@ -4124,10 +4480,11 @@ class="tsPane"
 
           El destajo se calcula con
           piezas capturadas como salida.
-          Semana: lunes a sábado.
+
+          Semana:
+          lunes a sábado.
 
         </div>
-
 
         <div
           class="tsGrid"
@@ -4136,7 +4493,9 @@ class="tsPane"
 
           <div class="tsField">
 
-            <label>Fecha</label>
+            <label>
+              Fecha
+            </label>
 
             <input
               id="tsDate"
@@ -4146,29 +4505,37 @@ class="tsPane"
 
           </div>
 
-
           <div class="tsField">
 
-            <label>Línea</label>
+            <label>
+              Línea
+            </label>
 
             <select id="tsLine">
 
-              <option>Línea A</option>
-              <option>Línea B</option>
+              <option>
+                Línea A
+              </option>
+
+              <option>
+                Línea B
+              </option>
 
             </select>
 
           </div>
 
-
           <div class="tsField">
 
-            <label>Modelo</label>
+            <label>
+              Modelo
+            </label>
 
             <select id="tsModel">
 
               ${
-                modelOptions() ||
+                modelOptions()
+                ||
                 '<option value="">Primero agrega un modelo</option>'
               }
 
@@ -4176,11 +4543,10 @@ class="tsPane"
 
           </div>
 
-
           <div class="tsField">
 
             <label>
-              Piezas Terminadas
+              Piezas salidas
             </label>
 
             <input
@@ -4195,7 +4561,6 @@ class="tsPane"
 
         </div>
 
-
         <div
           class="tsGrid3"
           style="margin-top:10px"
@@ -4204,24 +4569,26 @@ class="tsPane"
           <div class="tsKpi">
 
             <small>
-              Pespunte / pieza
+              Pespunte/pieza
             </small>
 
-            <b id="tsCP">$0.00</b>
+            <b id="tsCP">
+              $0.00
+            </b>
 
           </div>
-
 
           <div class="tsKpi">
 
             <small>
-              Preliminar / pieza
+              Preliminar/pieza
             </small>
 
-            <b id="tsCR">$0.00</b>
+            <b id="tsCR">
+              $0.00
+            </b>
 
           </div>
-
 
           <div class="tsKpi">
 
@@ -4229,12 +4596,13 @@ class="tsPane"
               Destajo registro
             </small>
 
-            <b id="tsCT">$0.00</b>
+            <b id="tsCT">
+              $0.00
+            </b>
 
           </div>
 
         </div>
-
 
         <div
           style="
@@ -4262,56 +4630,64 @@ class="tsPane"
 
       </div>
 
-
       <div class="tsCard">
 
         <b>
           Registros recientes
         </b>
 
-        <div id="tsRecent"></div>
+        <div id="tsRecent">
+        </div>
 
       </div>
 
     `;
 
-
     const update=()=>{
 
-      const model=
+      const model =
         c.find(
           x=>
-            x.modelo===
+            x.modelo ===
             document
             .getElementById(
               "tsModel"
-            )?.value
+            )
+            ?.value
         );
 
-      const pieces=
+      const pieces =
         num(
           document
           .getElementById(
             "tsPairs"
-          )?.value
+          )
+          ?.value
         );
 
       document
       .getElementById(
         "tsCP"
-      ).textContent=
-        money(model?.pespunte);
+      )
+      .textContent =
+        money(
+          model?.pespunte
+        );
 
       document
       .getElementById(
         "tsCR"
-      ).textContent=
-        money(model?.preliminar);
+      )
+      .textContent =
+        money(
+          model?.preliminar
+        );
 
       document
       .getElementById(
         "tsCT"
-      ).textContent=
+      )
+      .textContent =
         money(
           pieces*
           (
@@ -4322,16 +4698,19 @@ class="tsPane"
 
     };
 
-
     document
-    .getElementById("tsModel")
+    .getElementById(
+      "tsModel"
+    )
     ?.addEventListener(
       "change",
       update
     );
 
     document
-    .getElementById("tsPairs")
+    .getElementById(
+      "tsPairs"
+    )
     ?.addEventListener(
       "input",
       update
@@ -4339,29 +4718,32 @@ class="tsPane"
 
     update();
 
-
     document
-    .getElementById("tsAdd")
+    .getElementById(
+      "tsAdd"
+    )
     ?.addEventListener(
       "click",
       ()=>{
 
-        const model=
+        const model =
           c.find(
             x=>
-              x.modelo===
+              x.modelo ===
               document
               .getElementById(
                 "tsModel"
-              ).value
+              )
+              .value
           );
 
-        const pieces=
+        const pieces =
           num(
             document
             .getElementById(
               "tsPairs"
-            ).value
+            )
+            .value
           );
 
         if(
@@ -4370,32 +4752,34 @@ class="tsPane"
         ){
 
           alert(
-            "Selecciona un modelo y captura las piezas terminadas."
+            "Selecciona un modelo y captura las piezas salidas."
           );
 
           return;
 
         }
 
-
-        const r=
+        const r =
           records();
 
         r.push({
 
-          id:Date.now(),
+          id:
+            Date.now(),
 
           date:
             document
             .getElementById(
               "tsDate"
-            ).value,
+            )
+            .value,
 
           line:
             document
             .getElementById(
               "tsLine"
-            ).value,
+            )
+            .value,
 
           modelo:
             model.modelo,
@@ -4407,27 +4791,36 @@ class="tsPane"
             pieces,
 
           pespunte:
-            num(model.pespunte),
+            num(
+              model.pespunte
+            ),
 
           preliminar:
-            num(model.preliminar)
+            num(
+              model.preliminar
+            )
 
         });
 
-
-        saveJSON(
+        save(
           KEYR,
           r
         );
 
         renderAll();
 
+        setTimeout(
+          installLineEfficiency,
+          100
+        );
+
       }
     );
 
-
     document
-    .getElementById("tsClear")
+    .getElementById(
+      "tsClear"
+    )
     ?.addEventListener(
       "click",
       ()=>{
@@ -4435,26 +4828,28 @@ class="tsPane"
         document
         .getElementById(
           "tsPairs"
-        ).value="";
+        )
+        .value =
+          "";
 
         update();
 
       }
     );
 
-
-    const rr=
+    const rr =
       records()
       .slice(-12)
       .reverse();
-
 
     document
     .getElementById(
       "tsRecent"
     )
-    .innerHTML=
+    .innerHTML =
+
       rr.length
+
       ?
 
       `
@@ -4463,9 +4858,17 @@ class="tsPane"
 
         <tr>
 
-          <th>Fecha</th>
-          <th>Línea</th>
-          <th>Modelo</th>
+          <th>
+            Fecha
+          </th>
+
+          <th>
+            Línea
+          </th>
+
+          <th>
+            Modelo
+          </th>
 
           <th class="tsRight">
             Piezas
@@ -4477,56 +4880,58 @@ class="tsPane"
 
         </tr>
 
-
         ${
-          rr.map(r=>`
+          rr.map(
+            r=>`
 
-            <tr>
+              <tr>
 
-              <td>
-                ${esc(r.date)}
-              </td>
+                <td>
+                  ${esc(r.date)}
+                </td>
 
-              <td>
-                ${esc(
-                  String(
-                    r.line || ""
-                  ).replace(
-                    "Línea ",
-                    ""
-                  )
-                )}
-              </td>
+                <td>
+                  ${esc(
+                    String(
+                      r.line || ""
+                    )
+                    .replace(
+                      "Línea ",
+                      ""
+                    )
+                  )}
+                </td>
 
-              <td>
-                ${esc(r.modelo)}
-              </td>
+                <td>
+                  ${esc(r.modelo)}
+                </td>
 
-              <td class="tsRight">
-                ${num(
-                  r.piezas ??
-                  r.pares
-                )}
-              </td>
-
-              <td class="tsRight">
-
-                ${money(
-                  num(
+                <td class="tsRight">
+                  ${num(
                     r.piezas ??
                     r.pares
-                  )*
-                  (
-                    num(r.pespunte)+
-                    num(r.preliminar)
-                  )
-                )}
+                  )}
+                </td>
 
-              </td>
+                <td class="tsRight">
 
-            </tr>
+                  ${money(
+                    num(
+                      r.piezas ??
+                      r.pares
+                    )*
+                    (
+                      num(r.pespunte)+
+                      num(r.preliminar)
+                    )
+                  )}
 
-          `).join("")
+                </td>
+
+              </tr>
+
+            `
+          ).join("")
         }
 
       </table>
@@ -4550,33 +4955,35 @@ class="tsPane"
 
   }
 
-
   /* ==============================================================
-     COSTOS DESTAJO
+     COSTOS DESTAJO + TIEMPO ESTÁNDAR
      ============================================================== */
 
   function renderCost(){
 
-    const c=
+    const c =
       costsArray();
 
     document
-    .getElementById("tsCost")
-    .innerHTML=`
+    .getElementById(
+      "tsCost"
+    )
+    .innerHTML = `
 
       <div class="tsCard">
 
         <b>
-          Catálogo de costos
+          🤖 Catálogo de costos
         </b>
 
         <div class="tsMuted">
 
-          Modelo · Pespunte · Preliminar ·
-          Tiempo estándar
+          Pespunte + Preliminar +
+          Tiempo estándar.
+
+          Los costos existentes se conservan.
 
         </div>
-
 
         <div
           class="tsGrid"
@@ -4596,7 +5003,6 @@ class="tsPane"
 
           </div>
 
-
           <div class="tsField">
 
             <label>
@@ -4613,7 +5019,6 @@ class="tsPane"
 
           </div>
 
-
           <div class="tsField">
 
             <label>
@@ -4625,16 +5030,15 @@ class="tsPane"
               type="number"
               min="0"
               step="0.01"
-              placeholder="8.00"
+              placeholder="0.00"
             >
 
           </div>
 
-
           <div class="tsField">
 
             <label>
-              Tiempo estándar
+              Tiempo estándar (min)
             </label>
 
             <input
@@ -4642,13 +5046,12 @@ class="tsPane"
               type="number"
               min="0"
               step="0.01"
-              placeholder="4.50"
+              placeholder="0.00"
             >
 
           </div>
 
         </div>
-
 
         <button
           class="tsBtn"
@@ -4656,17 +5059,17 @@ class="tsPane"
           style="margin-top:10px"
         >
 
-          Guardar / actualizar modelo
+          💾 Guardar / actualizar modelo
 
         </button>
 
       </div>
 
-
       <div class="tsCard">
 
         ${
           c.length
+
           ?
 
           `
@@ -4675,7 +5078,9 @@ class="tsPane"
 
             <tr>
 
-              <th>Modelo</th>
+              <th>
+                Modelo
+              </th>
 
               <th class="tsRight">
                 Pespunte
@@ -4689,49 +5094,59 @@ class="tsPane"
                 Tiempo
               </th>
 
-              <th>Acción</th>
+              <th>
+                Acción
+              </th>
 
             </tr>
 
-
             ${
-              c.map(x=>`
+              c.map(
+                x=>`
 
-                <tr>
+                  <tr>
 
-                  <td>
-                    ${esc(x.modelo)}
-                  </td>
+                    <td>
+                      ${esc(x.modelo)}
+                    </td>
 
-                  <td class="tsRight">
-                    ${money(x.pespunte)}
-                  </td>
+                    <td class="tsRight">
+                      ${money(
+                        x.pespunte
+                      )}
+                    </td>
 
-                  <td class="tsRight">
-                    ${money(x.preliminar)}
-                  </td>
+                    <td class="tsRight">
+                      ${money(
+                        x.preliminar
+                      )}
+                    </td>
 
-                  <td class="tsRight">
-                    ${num(x.min).toFixed(2)}
-                    min
-                  </td>
+                    <td class="tsRight">
 
-                  <td>
+                      ${
+                        num(x.min)
+                          ? num(x.min)+" min"
+                          : "—"
+                      }
 
-                    <button
-                      class="tsBtn alt tsDestEdit"
-                      data-model="${esc(x.modelo)}"
-                    >
+                    </td>
 
-                      ✏️
+                    <td>
 
-                    </button>
+                      <button
+                        class="tsBtn alt tsDestEdit"
+                        data-model="${esc(x.modelo)}"
+                      >
+                        ✏️
+                      </button>
 
-                  </td>
+                    </td>
 
-                </tr>
+                  </tr>
 
-              `).join("")
+                `
+              ).join("")
             }
 
           </table>
@@ -4756,14 +5171,15 @@ class="tsPane"
 
     `;
 
-
     document
-    .getElementById("tsSaveC")
+    .getElementById(
+      "tsSaveC"
+    )
     ?.addEventListener(
       "click",
       ()=>{
 
-        const model=
+        const model =
           document
           .getElementById(
             "tsNewM"
@@ -4781,33 +5197,34 @@ class="tsPane"
 
         }
 
-
-        const p=
+        const p =
           num(
             document
             .getElementById(
               "tsNewP"
-            ).value
+            )
+            .value
           );
 
-        const r=
+        const r =
           num(
             document
             .getElementById(
               "tsNewR"
-            ).value
+            )
+            .value
           );
 
-        const min=
+        const min =
           num(
             document
             .getElementById(
               "tsNewMin"
-            ).value
+            )
+            .value
           );
 
-
-        const arr=
+        const arr =
           normalizeCostObject(
             readJSON(
               KEYC,
@@ -4815,8 +5232,7 @@ class="tsPane"
             )
           );
 
-
-        const existing=
+        const existing =
           Object.keys(arr)
           .find(
             x=>
@@ -4824,18 +5240,18 @@ class="tsPane"
               normalize(model)
           );
 
-
         if(
           existing &&
           existing!==model
         ){
 
-          delete arr[existing];
+          delete arr[
+            existing
+          ];
 
         }
 
-
-        arr[model]={
+        arr[model] = {
 
           pes:p,
 
@@ -4845,12 +5261,10 @@ class="tsPane"
 
         };
 
-
         saveJSON(
           KEYC,
           arr
         );
-
 
         saveJSON(
           "ts_costos_v1",
@@ -4871,73 +5285,83 @@ class="tsPane"
           }))
         );
 
-
         renderAll();
 
         setTimeout(
           installCostRepair,
-          80
+          50
         );
 
       }
     );
 
-
     document
     .querySelectorAll(
       ".tsDestEdit"
     )
-    .forEach(button=>{
+    .forEach(
+      button=>{
 
-      button.onclick=()=>{
+        button.onclick=()=>{
 
-        const model=
-          button.dataset.model;
+          const model =
+            button.dataset.model;
 
-        const item=
-          c.find(
-            x=>
-              x.modelo===model
-          );
+          const item =
+            c.find(
+              x=>
+                x.modelo===model
+            );
 
-        if(!item)
-          return;
+          if(!item)
+            return;
 
-        document
-        .getElementById(
-          "tsNewM"
-        ).value=
-          item.modelo;
+          document
+          .getElementById(
+            "tsNewM"
+          )
+          .value =
+            item.modelo;
 
-        document
-        .getElementById(
-          "tsNewP"
-        ).value=
-          num(item.pespunte);
+          document
+          .getElementById(
+            "tsNewP"
+          )
+          .value =
+            num(
+              item.pespunte
+            );
 
-        document
-        .getElementById(
-          "tsNewR"
-        ).value=
-          num(item.preliminar);
+          document
+          .getElementById(
+            "tsNewR"
+          )
+          .value =
+            num(
+              item.preliminar
+            );
 
-        document
-        .getElementById(
-          "tsNewMin"
-        ).value=
-          num(item.min);
+          document
+          .getElementById(
+            "tsNewMin"
+          )
+          .value =
+            num(
+              item.min
+            );
 
-        document
-        .getElementById(
-          "tsNewM"
-        ).focus();
+          document
+          .getElementById(
+            "tsNewM"
+          )
+          .focus();
 
-      };
+        };
 
-    });
+      }
+    );
 
   }
-
 
   /* ==============================================================
      RESUMEN DESTAJO
@@ -4945,19 +5369,18 @@ class="tsPane"
 
   function renderRes(){
 
-    const start=
+    const start =
       mondayOf(
         todayLocal()
       );
 
-    const end=
+    const end =
       addDays(
         start,
         5
       );
 
-
-    const rr=
+    const rr =
       records()
       .filter(
         r=>
@@ -4965,8 +5388,7 @@ class="tsPane"
           r.date<=end
       );
 
-
-    const sum=
+    const sum =
       arr=>
         arr.reduce(
           (a,r)=>
@@ -4978,8 +5400,7 @@ class="tsPane"
           0
         );
 
-
-    const calc=
+    const calc =
       (arr,key)=>
         arr.reduce(
           (a,r)=>
@@ -4988,44 +5409,58 @@ class="tsPane"
               r.piezas ??
               r.pares
             )*
-            num(r[key]),
+            num(
+              r[key]
+            ),
           0
         );
 
-
-    const A=
+    const A =
       rr.filter(
         r=>
-          r.line==="Línea A"
+          r.line===
+          "Línea A"
       );
 
-    const B=
+    const B =
       rr.filter(
         r=>
-          r.line==="Línea B"
+          r.line===
+          "Línea B"
       );
 
+    const pA =
+      calc(
+        A,
+        "pespunte"
+      );
 
-    const pA=
-      calc(A,"pespunte");
+    const pB =
+      calc(
+        B,
+        "pespunte"
+      );
 
-    const pB=
-      calc(B,"pespunte");
+    const rA =
+      calc(
+        A,
+        "preliminar"
+      );
 
-    const rA=
-      calc(A,"preliminar");
+    const rB =
+      calc(
+        B,
+        "preliminar"
+      );
 
-    const rB=
-      calc(B,"preliminar");
-
-
-    const total=
+    const total =
       pA+pB+rA+rB;
 
-
     document
-    .getElementById("tsRes")
-    .innerHTML=`
+    .getElementById(
+      "tsRes"
+    )
+    .innerHTML = `
 
       <div class="tsCard">
 
@@ -5043,7 +5478,6 @@ class="tsPane"
 
         </div>
 
-
         <div
           class="tsKpis"
           style="margin-top:10px"
@@ -5056,11 +5490,14 @@ class="tsPane"
             </small>
 
             <div class="tsMoney">
-              ${money(pA+rA)}
+
+              ${money(
+                pA+rA
+              )}
+
             </div>
 
           </div>
-
 
           <div class="tsKpi">
 
@@ -5069,11 +5506,14 @@ class="tsPane"
             </small>
 
             <div class="tsMoney">
-              ${money(pB+rB)}
+
+              ${money(
+                pB+rB
+              )}
+
             </div>
 
           </div>
-
 
           <div class="tsKpi">
 
@@ -5082,7 +5522,11 @@ class="tsPane"
             </small>
 
             <div class="tsMoney">
-              ${money(total)}
+
+              ${money(
+                total
+              )}
+
             </div>
 
           </div>
@@ -5091,13 +5535,11 @@ class="tsPane"
 
       </div>
 
-
       <div class="tsCard">
 
         <b>
           Desglose por línea
         </b>
-
 
         <div class="tsLine">
 
@@ -5108,7 +5550,6 @@ class="tsPane"
             piezas
 
           </span>
-
 
           <span>
 
@@ -5124,7 +5565,6 @@ class="tsPane"
 
         </div>
 
-
         <div class="tsLine">
 
           <span>
@@ -5134,7 +5574,6 @@ class="tsPane"
             piezas
 
           </span>
-
 
           <span>
 
@@ -5150,21 +5589,25 @@ class="tsPane"
 
         </div>
 
-
         <div class="tsLine">
 
           <span>
-            <b>Total</b>
+            <b>
+              Total
+            </b>
           </span>
 
           <span>
-            <b>${money(total)}</b>
+
+            <b>
+              ${money(total)}
+            </b>
+
           </span>
 
         </div>
 
       </div>
-
 
       <div class="tsCard">
 
@@ -5176,10 +5619,10 @@ class="tsPane"
 
           El cierre guarda el total
           de lunes a sábado.
+
           Los registros no se borran.
 
         </div>
-
 
         <button
           class="tsBtn good"
@@ -5193,19 +5636,18 @@ class="tsPane"
 
       </div>
 
-
       <div class="tsCard">
 
         <b>
           Histórico de cierres
         </b>
 
-        <div id="tsHistory"></div>
+        <div id="tsHistory">
+        </div>
 
       </div>
 
     `;
-
 
     document
     .getElementById(
@@ -5215,13 +5657,14 @@ class="tsPane"
       "click",
       ()=>{
 
-        const h=
+        const h =
           closes();
 
         if(
           h.some(
             x=>
-              x.week===start
+              x.week===
+              start
           )
         ){
 
@@ -5232,7 +5675,6 @@ class="tsPane"
           return;
 
         }
-
 
         h.unshift({
 
@@ -5260,8 +5702,7 @@ class="tsPane"
 
         });
 
-
-        saveJSON(
+        save(
           KEYW,
           h
         );
@@ -5271,16 +5712,15 @@ class="tsPane"
       }
     );
 
-
-    const h=
+    const h =
       closes();
-
 
     document
     .getElementById(
       "tsHistory"
     )
-    .innerHTML=
+    .innerHTML =
+
       h.length
 
       ?
@@ -5291,9 +5731,17 @@ class="tsPane"
 
         <tr>
 
-          <th>Semana</th>
-          <th>A</th>
-          <th>B</th>
+          <th>
+            Semana
+          </th>
+
+          <th>
+            A
+          </th>
+
+          <th>
+            B
+          </th>
 
           <th class="tsRight">
             Total
@@ -5301,35 +5749,36 @@ class="tsPane"
 
         </tr>
 
-
         ${
-          h.map(x=>`
+          h.map(
+            x=>`
 
-            <tr>
+              <tr>
 
-              <td>
-                ${esc(x.week)}
-              </td>
+                <td>
+                  ${esc(x.week)}
+                </td>
 
-              <td>
-                ${money(x.lineA)}
-              </td>
+                <td>
+                  ${money(x.lineA)}
+                </td>
 
-              <td>
-                ${money(x.lineB)}
-              </td>
+                <td>
+                  ${money(x.lineB)}
+                </td>
 
-              <td class="tsRight">
+                <td class="tsRight">
 
-                <b>
-                  ${money(x.total)}
-                </b>
+                  <b>
+                    ${money(x.total)}
+                  </b>
 
-              </td>
+                </td>
 
-            </tr>
+              </tr>
 
-          `).join("")
+            `
+          ).join("")
         }
 
       </table>
@@ -5353,7 +5802,6 @@ class="tsPane"
 
   }
 
-
   function renderAll(){
 
     renderCap();
@@ -5362,18 +5810,15 @@ class="tsPane"
 
     renderRes();
 
-    replacePairsText();
-
   }
 
-
-  panel.style.display="none";
+  panel.style.display =
+    "none";
 
 }
 
-
 /* ================================================================
-   FIN
+   FINAL
    ================================================================ */
 
 </script>
