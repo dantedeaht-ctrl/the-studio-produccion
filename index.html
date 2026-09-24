@@ -1,69 +1,324 @@
 <!doctype html>
 <html lang="es">
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>The Studio</title>
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<title>The Studio · JARVIS</title>
+
 </head>
 
 <script>
+
 (async()=>{
 
 /* ================================================================
-   THE STUDIO · CARGADOR MAESTRO
-   VERSIÓN CON:
-   • COSTOS + TIEMPO ESTÁNDAR
-   • EDICIÓN CON ✏️
-   • TABLERO DE EFICIENCIA
-   • DETALLE DE OT PROGRAMADAS
+   ================================================================
+   THE STUDIO · JARVIS EDITION
+   PARCHE PRINCIPAL
+   ================================================================
    ================================================================ */
+
+
+/*
+================================================================
+CLAVES PRINCIPALES
+NO CAMBIAR
+================================================================
+*/
+
+const KPROD =
+  "theStudioProduccion_v4";
+
+const KCOST =
+  "theStudioCostos_v4";
+
+const KHIST =
+  "theStudioHistorial_v4";
+
+const KADV =
+  "theStudioAvances_v4";
+
 
 try{
 
-  const CURRENT_VERSION =
-    "https://raw.githubusercontent.com/dantedeaht-ctrl/the-studio-produccion/11f7c94a0753df8741e92f422a471ba14d28a914/index.html";
+  /*
+  ================================================================
+  RECUPERAMOS COSTOS ANTES DE CARGAR LA APP
+  ================================================================
+  */
+
+  migrateAllCosts();
+
+
+  /*
+  ================================================================
+  VERSIÓN BASE
+  ================================================================
+  */
+
+  const ORIGINAL_URL =
+    "https://raw.githubusercontent.com/dantedeaht-ctrl/the-studio-produccion/f07dc9e5221a9b207d205d143d68c0b917ee0e0e/index.html";
+
 
   const response =
     await fetch(
-      CURRENT_VERSION,
+      ORIGINAL_URL,
       {
         cache:"no-store"
       }
     );
 
-  let src =
-    await response.text();
 
-  if(!src){
+  if(!response.ok){
 
     throw new Error(
-      "No se pudo recuperar The Studio."
+      "No se pudo cargar la versión base de The Studio."
     );
 
   }
 
 
-  /* ==============================================================
-     FIX NUEVO
-     ============================================================== */
-
-  const FIX = `
-
-/* ==============================================================
-   THE STUDIO · AJUSTES NUEVOS
-   ============================================================== */
+  const src =
+    await response.text();
 
 
-/* ==============================================================
-   UTILIDADES SEGURAS
-   ============================================================== */
+  const m =
+    src.match(
+      /const b="([^"]+)"/
+    );
 
-function TSNEWReadJSON(key,fallback){
+
+  if(!m){
+
+    throw new Error(
+      "No se encontró la versión base de The Studio."
+    );
+
+  }
+
+
+  const a =
+    Uint8Array.from(
+      atob(m[1]),
+      c=>c.charCodeAt(0)
+    );
+
+
+  const ds =
+    new DecompressionStream("gzip");
+
+
+  const t =
+    await new Response(
+      new Response(a)
+      .body
+      .pipeThrough(ds)
+    ).text();
+
+
+  document.open();
+
+  document.write(t);
+
+  document.close();
+
+
+  /*
+  ================================================================
+  DESPUÉS DE CARGAR LA APP
+  ================================================================
+  */
+
+  setTimeout(()=>{
+
+    try{
+
+      /*
+      --------------------------------------------------------------
+      RECUPERAMOS OTRA VEZ LOS COSTOS
+      --------------------------------------------------------------
+      */
+
+      migrateAllCosts();
+
+
+      /*
+      --------------------------------------------------------------
+      RESPONSIVE
+      --------------------------------------------------------------
+      */
+
+      fixResponsive();
+
+
+      /*
+      --------------------------------------------------------------
+      TEMA JARVIS
+      --------------------------------------------------------------
+      */
+
+      installBMWTheme();
+
+      installJARVISTheme();
+
+
+      /*
+      --------------------------------------------------------------
+      COSTOS
+      --------------------------------------------------------------
+      */
+
+      installCostRepair();
+
+
+      /*
+      --------------------------------------------------------------
+      TABLERO
+      --------------------------------------------------------------
+      */
+
+      installTablero();
+
+
+      /*
+      --------------------------------------------------------------
+      SEMANA
+      --------------------------------------------------------------
+      */
+
+      installWeekListeners();
+
+
+      /*
+      --------------------------------------------------------------
+      DESTAJO
+      --------------------------------------------------------------
+      */
+
+      installDestajo();
+
+
+      /*
+      --------------------------------------------------------------
+      ACTUALIZACIÓN INICIAL
+      --------------------------------------------------------------
+      */
+
+      refreshStudio();
+
+
+      /*
+      --------------------------------------------------------------
+      OBSERVADOR
+      --------------------------------------------------------------
+      */
+
+      if(
+        !window.__TS_OBSERVER__
+      ){
+
+        window.__TS_OBSERVER__ =
+          new MutationObserver(
+            ()=>{
+
+              /*
+              Evitamos actualizar inmediatamente
+              cientos de veces cuando la app pinta.
+              */
+
+              clearTimeout(
+                window.__TS_REFRESH_TIMER__
+              );
+
+
+              window.__TS_REFRESH_TIMER__ =
+                setTimeout(
+                  ()=>{
+
+                    try{
+
+                      refreshStudio();
+
+                      refreshTablero();
+
+                    }catch{}
+
+                  },
+                  120
+                );
+
+            }
+          );
+
+
+        window.__TS_OBSERVER__.observe(
+          document.body,
+          {
+            childList:true,
+            subtree:true
+          }
+        );
+
+      }
+
+
+    }catch(e){
+
+      console.error(
+        "The Studio patch:",
+        e
+      );
+
+    }
+
+  },350);
+
+
+}catch(e){
+
+  document.body.innerHTML =
+    '<div style="'+
+    'font:18px system-ui;'+
+    'padding:30px;'+
+    'background:#07111f;'+
+    'color:#eef4fb;'+
+    'min-height:100vh;'+
+    '">' +
+
+    '<b>The Studio no pudo cargar.</b><br><br>' +
+
+    '<small>'+
+    esc(e?.message || e)+
+    '</small>'+
+
+    '</div>';
+
+}
+
+})();
+
+
+/* ================================================================
+   ================================================================
+   UTILIDADES
+   ================================================================
+   ================================================================ */
+
+
+function readJSON(
+  key,
+  fallback
+){
 
   try{
 
     const value =
       localStorage.getItem(key);
+
 
     if(
       value===null ||
@@ -74,6 +329,7 @@ function TSNEWReadJSON(key,fallback){
       return fallback;
 
     }
+
 
     return JSON.parse(value);
 
@@ -86,24 +342,24 @@ function TSNEWReadJSON(key,fallback){
 }
 
 
-function TSNEWSaveJSON(key,value){
+function saveJSON(
+  key,
+  value
+){
 
-  try{
-
-    localStorage.setItem(
-      key,
-      JSON.stringify(value)
-    );
-
-  }catch{}
+  localStorage.setItem(
+    key,
+    JSON.stringify(value)
+  );
 
 }
 
 
-function TSNEWNum(value){
+function num(value){
 
   const n =
     Number(value);
+
 
   return Number.isFinite(n)
     ? n
@@ -112,23 +368,7 @@ function TSNEWNum(value){
 }
 
 
-function TSNEWNormalize(value){
-
-  return String(
-    value ?? ""
-  )
-  .normalize("NFD")
-  .replace(
-    /[\\\\u0300-\\\\u036f]/g,
-    ""
-  )
-  .trim()
-  .toLowerCase();
-
-}
-
-
-function TSNEWMoney(value){
+function money(value){
 
   return new Intl.NumberFormat(
     "es-MX",
@@ -138,29 +378,65 @@ function TSNEWMoney(value){
       minimumFractionDigits:2
     }
   ).format(
-    TSNEWNum(value)
+    num(value)
   );
 
 }
 
 
-function TSNEWDate(value){
+function esc(value){
 
-  if(
-    typeof localDateString ===
-    "function"
-  ){
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /[&<>"']/g,
+    m=>({
 
-    return localDateString(
-      value
-    );
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
 
-  }
+    }[m])
+  );
+
+}
+
+
+function normalize(value){
+
+  return String(
+    value ?? ""
+  )
+  .normalize("NFD")
+  .replace(
+    /[\u0300-\u036f]/g,
+    ""
+  )
+  .trim()
+  .toLowerCase();
+
+}
+
+
+/* ================================================================
+   ================================================================
+   FECHAS
+   ================================================================
+   ================================================================ */
+
+
+function localDateString(date){
 
   const d =
-    new Date(
-      value
-    );
+    date instanceof Date
+      ? new Date(date)
+      : new Date(
+          String(date)+"T12:00:00"
+        );
+
 
   if(
     Number.isNaN(
@@ -172,907 +448,4091 @@ function TSNEWDate(value){
 
   }
 
+
   return [
+
     d.getFullYear(),
+
     String(
       d.getMonth()+1
-    ).padStart(2,"0"),
+    ).padStart(
+      2,
+      "0"
+    ),
+
     String(
       d.getDate()
-    ).padStart(2,"0")
+    ).padStart(
+      2,
+      "0"
+    )
+
   ].join("-");
 
 }
 
 
-/* ==============================================================
-   COSTOS
-   CONSERVA theStudioCostos_v4
-   ============================================================== */
+function todayLocal(){
 
-function TSNEWGetCosts(){
+  return localDateString(
+    new Date()
+  );
 
-  const raw =
-    TSNEWReadJSON(
-      "theStudioCostos_v4",
-      {}
+}
+
+
+function mondayOf(date){
+
+  const d =
+    new Date(
+      String(date)+"T12:00:00"
     );
 
-  const result = {};
+
+  if(
+    Number.isNaN(
+      d.getTime()
+    )
+  ){
+
+    return todayLocal();
+
+  }
+
+
+  const day =
+    d.getDay();
+
+
+  const diff =
+    day===0
+      ? -6
+      : 1-day;
+
+
+  d.setDate(
+    d.getDate()+diff
+  );
+
+
+  return localDateString(
+    d
+  );
+
+}
+
+
+function addDays(
+  date,
+  n
+){
+
+  const d =
+    new Date(
+      String(date)+"T12:00:00"
+    );
+
+
+  d.setDate(
+    d.getDate()+n
+  );
+
+
+  return localDateString(
+    d
+  );
+
+}
+
+
+function weekRange(
+  reference
+){
+
+  const start =
+    mondayOf(
+      reference
+    );
+
+
+  return {
+
+    start:start,
+
+    end:addDays(
+      start,
+      5
+    )
+
+  };
+
+}
+
+
+function inWeek(
+  date,
+  reference
+){
+
+  const d =
+    localDateString(
+      date
+    );
+
+
+  const r =
+    weekRange(
+      reference
+    );
+
+
+  return (
+    d>=r.start &&
+    d<=r.end
+  );
+
+}
+
+
+/* ================================================================
+   ================================================================
+   PRODUCCIÓN
+   ================================================================
+   ================================================================ */
+
+
+function getProduction(){
+
+  const raw =
+    readJSON(
+      "theStudioProduccion_v4",
+      []
+    );
 
 
   if(
     Array.isArray(raw)
   ){
 
-    raw.forEach(item=>{
-
-      if(!item)
-        return;
-
-      const model =
-        String(
-          item.modelo ??
-          item.model ??
-          item.nombre ??
-          ""
-        ).trim();
-
-      if(!model)
-        return;
-
-      result[model] = {
-
-        pes:
-          TSNEWNum(
-            item.pes ??
-            item.pespunte ??
-            item.costoPespunte
-          ),
-
-        pre:
-          TSNEWNum(
-            item.pre ??
-            item.preliminar ??
-            item.costoPreliminar
-          ),
-
-        min:
-          TSNEWNum(
-            item.min ??
-            item.minutos ??
-            item.tiempoEstandar ??
-            item.tiempo ??
-            item.standardTime
-          )
-
-      };
-
-    });
-
-    return result;
+    return raw;
 
   }
 
 
   if(
     raw &&
+    Array.isArray(
+      raw.prod
+    )
+  ){
+
+    return raw.prod;
+
+  }
+
+
+  if(
+    raw &&
+    Array.isArray(
+      raw.produccion
+    )
+  ){
+
+    return raw.produccion;
+
+  }
+
+
+  return [];
+
+}
+
+
+/* ================================================================
+   ================================================================
+   AVANCES
+   ================================================================
+   ================================================================ */
+
+
+function getAdvances(){
+
+  const raw =
+    readJSON(
+      "theStudioAvances_v4",
+      []
+    );
+
+
+  if(
+    Array.isArray(raw)
+  ){
+
+    return raw;
+
+  }
+
+
+  if(
+    raw &&
+    Array.isArray(
+      raw.avances
+    )
+  ){
+
+    return raw.avances;
+
+  }
+
+
+  return [];
+
+}
+
+
+/* ================================================================
+   ================================================================
+   COSTOS
+   ================================================================
+   ================================================================ */
+
+
+function normalizeCostObject(
+  raw
+){
+
+  const result = {};
+
+
+  /*
+  ------------------------------------------------
+  FORMATO NUEVO
+  ------------------------------------------------
+  */
+
+  if(
+    raw &&
+    !Array.isArray(raw) &&
     typeof raw==="object"
   ){
 
-    const source =
+    if(
       raw.cost &&
       typeof raw.cost==="object"
-        ? raw.cost
-        : raw;
+    ){
 
-    Object.keys(source)
-    .forEach(model=>{
+      raw =
+        raw.cost;
 
-      const item =
-        source[model];
-
-      if(
-        !item ||
-        typeof item!=="object"
-      )
-        return;
-
-      result[model] = {
-
-        pes:
-          TSNEWNum(
-            item.pes ??
-            item.pespunte ??
-            item.costoPespunte
-          ),
-
-        pre:
-          TSNEWNum(
-            item.pre ??
-            item.preliminar ??
-            item.costoPreliminar
-          ),
-
-        min:
-          TSNEWNum(
-            item.min ??
-            item.minutos ??
-            item.tiempoEstandar ??
-            item.tiempo ??
-            item.standardTime
-          )
-
-      };
-
-    });
+    }
 
   }
+
+
+  /*
+  ------------------------------------------------
+  OBJETO
+  ------------------------------------------------
+  */
+
+  if(
+    raw &&
+    !Array.isArray(raw) &&
+    typeof raw==="object"
+  ){
+
+    Object.keys(raw)
+    .forEach(
+      model=>{
+
+        const item =
+          raw[model];
+
+
+        if(
+          item &&
+          typeof item==="object"
+        ){
+
+          result[model] = {
+
+            pes:
+              num(
+                item.pes ??
+                item.pespunte ??
+                item.pesPunte ??
+                item.costoPespunte ??
+                item.costo_pespunte
+              ),
+
+            pre:
+              num(
+                item.pre ??
+                item.preliminar ??
+                item.costoPreliminar ??
+                item.costo_preliminar
+              ),
+
+            min:
+              num(
+                item.min ??
+                item.minutos
+              )
+
+          };
+
+        }else{
+
+          result[model] = {
+
+            pes:
+              num(item),
+
+            pre:0,
+
+            min:0
+
+          };
+
+        }
+
+      }
+    );
+
+
+    return result;
+
+  }
+
+
+  /*
+  ------------------------------------------------
+  ARRAY ANTIGUO
+  ------------------------------------------------
+  */
+
+  if(
+    Array.isArray(raw)
+  ){
+
+    raw.forEach(
+      item=>{
+
+        if(!item)
+          return;
+
+
+        const model =
+          String(
+            item.modelo ??
+            item.model ??
+            item.nombre ??
+            item.name ??
+            ""
+          ).trim();
+
+
+        if(!model)
+          return;
+
+
+        result[model] = {
+
+          pes:
+            num(
+              item.pes ??
+              item.pespunte ??
+              item.pesPunte ??
+              item.costoPespunte ??
+              item.costo_pespunte
+            ),
+
+          pre:
+            num(
+              item.pre ??
+              item.preliminar ??
+              item.costoPreliminar ??
+              item.costo_preliminar
+            ),
+
+          min:
+            num(
+              item.min ??
+              item.minutos
+            )
+
+        };
+
+      }
+    );
+
+  }
+
 
   return result;
 
 }
 
 
-/* ==============================================================
-   EDITOR DE MODELO
-   ============================================================== */
-
-function TSNEWEditModel(model){
-
-  const costs =
-    TSNEWGetCosts();
-
-  const item =
-    costs[model] ||
-    {
-      pes:0,
-      pre:0,
-      min:0
-    };
+/* ================================================================
+   ================================================================
+   RECUPERACIÓN COMPLETA DE COSTOS
+   ================================================================
+   ================================================================ */
 
 
-  let modal =
-    document.getElementById(
-      "TSNEW_EDITOR"
-    );
+function migrateAllCosts(){
+
+  try{
+
+    const MAIN =
+      "theStudioCostos_v4";
 
 
-  if(!modal){
-
-    modal =
-      document.createElement(
-        "div"
-      );
-
-    modal.id =
-      "TSNEW_EDITOR";
-
-
-    modal.innerHTML = `
-
-      <div class="TSNEW_BACK">
-
-        <div class="TSNEW_MODAL">
-
-          <div class="TSNEW_TITLE">
-
-            <span>
-              ✏️ Editar modelo
-            </span>
-
-            <button
-              type="button"
-              id="TSNEW_CLOSE"
-            >
-              ×
-            </button>
-
-          </div>
-
-
-          <div class="TSNEW_SUB">
-
-            Puedes modificar el nombre,
-            costo de pespunte,
-            costo preliminar
-            y tiempo estándar.
-
-          </div>
-
-
-          <label>
-            Modelo
-          </label>
-
-          <input
-            id="TSNEW_MODEL"
-            type="text"
-          >
-
-
-          <label>
-            Costo pespunte
-          </label>
-
-          <input
-            id="TSNEW_PES"
-            type="number"
-            min="0"
-            step="0.01"
-          >
-
-
-          <label>
-            Costo preliminar
-          </label>
-
-          <input
-            id="TSNEW_PRE"
-            type="number"
-            min="0"
-            step="0.01"
-          >
-
-
-          <label>
-            Tiempo estándar · minutos
-          </label>
-
-          <input
-            id="TSNEW_MIN"
-            type="number"
-            min="0"
-            step="0.01"
-          >
-
-
-          <button
-            id="TSNEW_SAVE"
-            type="button"
-          >
-            💾 Guardar cambios
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
-
-    document.body.appendChild(
-      modal
-    );
-
-
-    const style =
-      document.createElement(
-        "style"
+    let main =
+      normalizeCostObject(
+        readJSON(
+          MAIN,
+          null
+        )
       );
 
 
-    style.id =
-      "TSNEW_STYLE";
+    /*
+    --------------------------------------------------------------
+    CLAVES ANTIGUAS
+    --------------------------------------------------------------
+    */
 
+    const OLD_KEYS = [
 
-    style.textContent = `
+      "ts_costos_v1",
 
-      #TSNEW_EDITOR{
+      "theStudioCostos_v1",
 
-        position:fixed;
-        inset:0;
-        z-index:2147483647;
-        display:none;
+      "theStudioCostos_v2",
 
-      }
+      "theStudioCostos_v3",
 
+      "theStudioCostos",
 
-      #TSNEW_EDITOR.show{
+      "costos",
 
-        display:block;
+      "modelos",
 
-      }
+      "catalogoModelos",
 
+      "catalogoCostos"
 
-      .TSNEW_BACK{
+    ];
 
-        position:absolute;
-        inset:0;
 
-        background:
-          rgba(0,0,0,.80);
+    /*
+    --------------------------------------------------------------
+    FUNCIÓN DE MERGE
+    --------------------------------------------------------------
+    */
 
-        display:flex;
-        align-items:center;
-        justify-content:center;
+    function mergeModel(
+      model,
+      incoming
+    ){
 
-        padding:20px;
+      const clean =
+        String(
+          model ?? ""
+        ).trim();
 
-        backdrop-filter:
-          blur(8px);
 
-      }
+      if(!clean)
+        return;
 
 
-      .TSNEW_MODAL{
-
-        width:
-          min(
-            520px,
-            100%
-          );
-
-        max-height:90vh;
-        overflow:auto;
-
-        padding:20px;
-
-        border-radius:22px;
-
-        background:
-          linear-gradient(
-            145deg,
-            #071923,
-            #020a10
-          );
-
-        color:#e9fbff;
-
-        border:
-          1px solid #104456;
-
-        box-shadow:
-          0 25px 80px #000c;
-
-        font-family:
-          system-ui,
-          -apple-system,
-          sans-serif;
-
-      }
-
-
-      .TSNEW_TITLE{
-
-        display:flex;
-
-        justify-content:space-between;
-        align-items:center;
-
-        color:#48e7ff;
-
-        font-size:21px;
-        font-weight:900;
-
-        margin-bottom:8px;
-
-      }
-
-
-      #TSNEW_CLOSE{
-
-        width:40px;
-        height:40px;
-
-        border:0;
-        border-radius:12px;
-
-        background:#092534!important;
-        color:#48e7ff!important;
-
-        font-size:25px;
-
-      }
-
-
-      .TSNEW_SUB{
-
-        color:#83aebb;
-        font-size:13px;
-        margin-bottom:18px;
-
-      }
-
-
-      .TSNEW_MODAL label{
-
-        display:block;
-
-        margin:
-          12px 0 6px;
-
-        color:#48e7ff;
-
-        font-size:12px;
-        font-weight:900;
-
-        text-transform:uppercase;
-
-      }
-
-
-      .TSNEW_MODAL input{
-
-        width:100%;
-        box-sizing:border-box;
-
-        padding:13px;
-
-        border-radius:12px;
-
-        border:
-          1px solid #15506a;
-
-        background:#04131c;
-
-        color:#e9fbff;
-
-        font-size:16px;
-
-      }
-
-
-      #TSNEW_SAVE{
-
-        width:100%;
-
-        margin-top:20px;
-
-        padding:14px;
-
-        border:0;
-
-        border-radius:12px;
-
-        background:
-          linear-gradient(
-            135deg,
-            #007fc4,
-            #00bfff
-          )!important;
-
-        color:#001018!important;
-
-        font-size:16px;
-        font-weight:900;
-
-      }
-
-    `;
-
-
-    document.head.appendChild(
-      style
-    );
-
-
-    document
-    .getElementById(
-      "TSNEW_CLOSE"
-    )
-    .onclick =
-      ()=>{
-
-        modal.classList.remove(
-          "show"
+      const existingName =
+        Object.keys(main)
+        .find(
+          x=>
+            normalize(x)===
+            normalize(clean)
         );
 
-      };
+
+      const name =
+        existingName ||
+        clean;
 
 
-    document
-    .getElementById(
-      "TSNEW_SAVE"
-    )
-    .onclick =
-      ()=>{
+      if(
+        !main[name]
+      ){
 
-        const oldModel =
-          modal.dataset.oldModel;
+        main[name] = {
 
+          pes:
+            num(
+              incoming?.pes
+            ),
 
-        const newModel =
-          document
-          .getElementById(
-            "TSNEW_MODEL"
-          )
-          .value
-          .trim();
+          pre:
+            num(
+              incoming?.pre
+            ),
 
-
-        if(!newModel){
-
-          alert(
-            "Escribe el nombre del modelo."
-          );
-
-          return;
-
-        }
-
-
-        const pes =
-          TSNEWNum(
-            document
-            .getElementById(
-              "TSNEW_PES"
+          min:
+            num(
+              incoming?.min
             )
-            .value
-          );
-
-
-        const pre =
-          TSNEWNum(
-            document
-            .getElementById(
-              "TSNEW_PRE"
-            )
-            .value
-          );
-
-
-        const min =
-          TSNEWNum(
-            document
-            .getElementById(
-              "TSNEW_MIN"
-            )
-            .value
-          );
-
-
-        const current =
-          TSNEWGetCosts();
-
-
-        const existing =
-          Object.keys(current)
-          .find(
-            x=>
-              TSNEWNormalize(x)===
-              TSNEWNormalize(
-                oldModel
-              )
-          );
-
-
-        if(
-          existing &&
-          TSNEWNormalize(existing)!==
-          TSNEWNormalize(newModel)
-        ){
-
-          delete current[
-            existing
-          ];
-
-        }
-
-
-        current[newModel] = {
-
-          pes:pes,
-          pre:pre,
-          min:min
 
         };
 
+        return;
 
-        TSNEWSaveJSON(
-          "theStudioCostos_v4",
-          current
-        );
+      }
 
 
-        TSNEWSaveJSON(
-          "ts_costos_v1",
-          Object.keys(current)
-          .map(name=>({
+      if(
+        !num(main[name].pes) &&
+        num(incoming?.pes)
+      ){
 
-            modelo:name,
-
-            pespunte:
-              TSNEWNum(
-                current[name].pes
-              ),
-
-            preliminar:
-              TSNEWNum(
-                current[name].pre
-              ),
-
-            min:
-              TSNEWNum(
-                current[name].min
-              )
-
-          }))
-        );
-
-
-        modal.classList.remove(
-          "show"
-        );
-
-
-        try{
-
-          window.dispatchEvent(
-            new StorageEvent(
-              "storage",
-              {
-                key:
-                  "theStudioCostos_v4",
-
-                newValue:
-                  JSON.stringify(
-                    current
-                  ),
-
-                storageArea:
-                  localStorage
-              }
-            )
+        main[name].pes =
+          num(
+            incoming.pes
           );
 
-        }catch{}
+      }
 
 
-        setTimeout(
-          TSNEWRefreshCostTables,
-          100
+      if(
+        !num(main[name].pre) &&
+        num(incoming?.pre)
+      ){
+
+        main[name].pre =
+          num(
+            incoming.pre
+          );
+
+      }
+
+
+      if(
+        !num(main[name].min) &&
+        num(incoming?.min)
+      ){
+
+        main[name].min =
+          num(
+            incoming.min
+          );
+
+      }
+
+    }
+
+
+    /*
+    --------------------------------------------------------------
+    LEER FUENTES
+    --------------------------------------------------------------
+    */
+
+    function readCostSource(
+      raw
+    ){
+
+      if(!raw)
+        return;
+
+
+      if(
+        Array.isArray(raw)
+      ){
+
+        raw.forEach(
+          item=>{
+
+            if(
+              !item ||
+              typeof item!=="object"
+            )
+              return;
+
+
+            const model =
+              String(
+                item.modelo ??
+                item.model ??
+                item.nombre ??
+                item.name ??
+                ""
+              ).trim();
+
+
+            if(!model)
+              return;
+
+
+            const pes =
+              num(
+                item.pes ??
+                item.pespunte ??
+                item.pesPunte ??
+                item.costoPespunte ??
+                item.costo_pespunte ??
+                item.precioPespunte
+              );
+
+
+            const pre =
+              num(
+                item.pre ??
+                item.preliminar ??
+                item.costoPreliminar ??
+                item.costo_preliminar ??
+                item.precioPreliminar
+              );
+
+
+            const min =
+              num(
+                item.min ??
+                item.minutos
+              );
+
+
+            if(
+              pes===0 &&
+              pre===0 &&
+              min===0
+            ){
+
+              return;
+
+            }
+
+
+            mergeModel(
+              model,
+              {
+                pes,
+                pre,
+                min
+              }
+            );
+
+          }
         );
 
-      };
+        return;
+
+      }
+
+
+      if(
+        typeof raw!=="object"
+      ){
+
+        return;
+
+      }
+
+
+      [
+        raw.costos,
+        raw.modelos,
+        raw.cost,
+        raw.catalogo,
+        raw.data
+      ]
+      .forEach(
+        source=>{
+
+          if(
+            source &&
+            source!==raw
+          ){
+
+            readCostSource(
+              source
+            );
+
+          }
+
+        }
+      );
+
+
+      Object.keys(raw)
+      .forEach(
+        key=>{
+
+          if(
+            [
+              "costos",
+              "modelos",
+              "cost",
+              "catalogo",
+              "data"
+            ].includes(key)
+          ){
+
+            return;
+
+          }
+
+
+          const value =
+            raw[key];
+
+
+          if(
+            !value ||
+            typeof value!=="object" ||
+            Array.isArray(value)
+          ){
+
+            return;
+
+          }
+
+
+          const pes =
+            num(
+              value.pes ??
+              value.pespunte ??
+              value.pesPunte ??
+              value.costoPespunte ??
+              value.costo_pespunte
+            );
+
+
+          const pre =
+            num(
+              value.pre ??
+              value.preliminar ??
+              value.costoPreliminar ??
+              value.costo_preliminar
+            );
+
+
+          const min =
+            num(
+              value.min ??
+              value.minutos
+            );
+
+
+          if(
+            pes===0 &&
+            pre===0 &&
+            min===0
+          ){
+
+            return;
+
+          }
+
+
+          mergeModel(
+            key,
+            {
+              pes,
+              pre,
+              min
+            }
+          );
+
+        }
+      );
+
+    }
+
+
+    /*
+    --------------------------------------------------------------
+    CLAVES ANTIGUAS
+    --------------------------------------------------------------
+    */
+
+    OLD_KEYS.forEach(
+      key=>{
+
+        const raw =
+          readJSON(
+            key,
+            null
+          );
+
+
+        readCostSource(
+          raw
+        );
+
+      }
+    );
+
+
+    /*
+    --------------------------------------------------------------
+    GUARDAR PRINCIPAL
+    --------------------------------------------------------------
+    */
+
+    saveJSON(
+      MAIN,
+      main
+    );
+
+
+    /*
+    --------------------------------------------------------------
+    ESPEJO
+    --------------------------------------------------------------
+    */
+
+    saveJSON(
+      "ts_costos_v1",
+      Object.keys(main)
+      .map(
+        model=>({
+
+          modelo:model,
+
+          pespunte:
+            num(
+              main[model].pes
+            ),
+
+          preliminar:
+            num(
+              main[model].pre
+            ),
+
+          min:
+            num(
+              main[model].min
+            )
+
+        })
+      )
+    );
+
+
+    return main;
+
+  }catch(e){
+
+    console.error(
+      "Error recuperando costos:",
+      e
+    );
+
+
+    return normalizeCostObject(
+      readJSON(
+        "theStudioCostos_v4",
+        {}
+      )
+    );
+
+  }
+
+}
+
+
+/* ================================================================
+   ================================================================
+   RESPONSIVE
+   ================================================================
+   ================================================================ */
+
+
+function fixResponsive(){
+
+  if(
+    document.getElementById(
+      "tsResponsiveFix"
+    )
+  ){
+
+    return;
 
   }
 
 
-  modal.dataset.oldModel =
-    model;
+  const style =
+    document.createElement(
+      "style"
+    );
 
 
-  document
-  .getElementById(
-    "TSNEW_MODEL"
-  )
-  .value =
-    model;
+  style.id =
+    "tsResponsiveFix";
 
 
-  document
-  .getElementById(
-    "TSNEW_PES"
-  )
-  .value =
-    TSNEWNum(item.pes);
+  style.textContent = `
+
+html,
+body{
+
+  width:100%;
+  max-width:100%;
+
+  margin:0;
+  padding:0;
+
+  overflow-x:hidden!important;
+
+}
 
 
-  document
-  .getElementById(
-    "TSNEW_PRE"
-  )
-  .value =
-    TSNEWNum(item.pre);
+*,
+*::before,
+*::after{
+
+  box-sizing:border-box;
+
+}
 
 
-  document
-  .getElementById(
-    "TSNEW_MIN"
-  )
-  .value =
-    TSNEWNum(item.min);
+img,
+video,
+canvas,
+svg{
+
+  max-width:100%;
+  height:auto;
+
+}
 
 
-  modal.classList.add(
-    "show"
+input,
+select,
+textarea,
+button{
+
+  max-width:100%;
+
+}
+
+
+table{
+
+  max-width:100%;
+
+}
+
+
+pre,
+code{
+
+  max-width:100%;
+
+  white-space:pre-wrap;
+
+  overflow-wrap:anywhere;
+
+  word-break:break-word;
+
+}
+
+
+main,
+#app,
+.app,
+.container,
+.content,
+.page,
+.panel,
+.card,
+.section,
+.wrap,
+.wrapper{
+
+  max-width:100%;
+  min-width:0;
+
+}
+
+
+body > *{
+
+  min-width:0;
+  max-width:100vw;
+
+}
+
+
+[style*="width:100vw"]{
+
+  max-width:100%!important;
+
+}
+
+
+[style*="min-width"]{
+
+  min-width:0!important;
+
+}
+
+
+@media(max-width:720px){
+
+  html,
+  body{
+
+    font-size:15px;
+
+  }
+
+
+  table{
+
+    font-size:12px;
+
+  }
+
+
+  .grid,
+  .grid2,
+  .grid3,
+  .grid4,
+  .kpis,
+  .cards,
+  .form-grid{
+
+    grid-template-columns:
+      minmax(0,1fr)!important;
+
+  }
+
+
+  .row{
+
+    grid-template-columns:
+      minmax(0,1fr)!important;
+
+  }
+
+
+  .toolbar,
+  .actions{
+
+    flex-wrap:wrap!important;
+
+  }
+
+
+  header{
+
+    max-width:100vw!important;
+
+    overflow:hidden;
+
+  }
+
+
+  nav{
+
+    max-width:100vw!important;
+
+    overflow-x:auto!important;
+
+    overflow-y:hidden!important;
+
+    -webkit-overflow-scrolling:touch;
+
+  }
+
+}
+
+
+@media(max-width:420px){
+
+  body{
+
+    font-size:14px;
+
+  }
+
+
+  button,
+  input,
+  select,
+  textarea{
+
+    font-size:16px;
+
+  }
+
+}
+
+`;
+
+
+  document.head.appendChild(
+    style
   );
 
 }
 
 
-/* ==============================================================
-   AGREGAR LÁPIZ A CATÁLOGOS
-   ============================================================== */
+/* ================================================================
+   ================================================================
+   TEMA BMW BASE
+   ================================================================
+   ================================================================ */
 
-function TSNEWRefreshCostTables(){
 
-  const costs =
-    TSNEWGetCosts();
+function installBMWTheme(){
+
+  if(
+    document.getElementById(
+      "tsBMWTheme"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const style =
+    document.createElement(
+      "style"
+    );
+
+
+  style.id =
+    "tsBMWTheme";
+
+
+  style.textContent = `
+
+:root{
+
+  --ts-navy:#07111f;
+
+  --ts-navy2:#080f1a;
+
+  --ts-card:#0d1725;
+
+  --ts-input:#111e2e;
+
+  --ts-blue:#1769ff;
+
+  --ts-blue2:#0b4fc4;
+
+  --ts-electric:#4d9aff;
+
+  --ts-white:#eef4fb;
+
+  --ts-white2:#f4f8fc;
+
+  --ts-muted:#aebed2;
+
+  --ts-border:#24364c;
+
+  --ts-red:#e05252;
+
+  --ts-green:#00a878;
+
+}
+
+
+body{
+
+  background:
+    var(--ts-navy)!important;
+
+  color:
+    var(--ts-white)!important;
+
+}
+
+
+header{
+
+  background:
+    linear-gradient(
+      135deg,
+      #050a12 0%,
+      #0b1b32 55%,
+      #123d72 100%
+    )!important;
+
+  color:
+    var(--ts-white)!important;
+
+}
+
+
+main,
+section,
+article{
+
+  color:
+    var(--ts-white);
+
+}
+
+
+.card,
+.panel,
+.section,
+.box,
+.kpi,
+.stat{
+
+  background:
+    var(--ts-card)!important;
+
+  border-color:
+    var(--ts-border)!important;
+
+}
+
+
+input,
+select,
+textarea{
+
+  background:
+    var(--ts-input)!important;
+
+  color:
+    var(--ts-white)!important;
+
+  border-color:
+    var(--ts-border)!important;
+
+}
+
+
+input::placeholder,
+textarea::placeholder{
+
+  color:
+    #73869e!important;
+
+}
+
+
+button{
+
+  border-color:
+    transparent!important;
+
+}
+
+
+button:not(
+  [class*="danger"]
+){
+
+  background:
+    var(--ts-blue)!important;
+
+  color:
+    white!important;
+
+}
+
+
+button:hover{
+
+  background:
+    var(--ts-electric)!important;
+
+}
+
+
+nav button{
+
+  background:
+    #142337!important;
+
+  color:
+    var(--ts-electric)!important;
+
+}
+
+
+nav button.active,
+nav button.selected,
+nav button[aria-selected="true"]{
+
+  background:
+    var(--ts-blue)!important;
+
+  color:
+    white!important;
+
+}
+
+
+table{
+
+  color:
+    var(--ts-white)!important;
+
+}
+
+
+th{
+
+  color:
+    var(--ts-muted)!important;
+
+}
+
+
+td{
+
+  border-color:
+    var(--ts-border)!important;
+
+}
+
+
+.danger,
+.btn-danger,
+button[class*="danger"]{
+
+  background:
+    #351719!important;
+
+  color:
+    #ffb4b4!important;
+
+}
+
+
+.success,
+.btn-success{
+
+  background:
+    #0c2a23!important;
+
+  color:
+    #8ff0d3!important;
+
+}
+
+
+::-webkit-scrollbar{
+
+  width:8px;
+  height:8px;
+
+}
+
+
+::-webkit-scrollbar-track{
+
+  background:
+    var(--ts-navy2);
+
+}
+
+
+::-webkit-scrollbar-thumb{
+
+  background:
+    #29405a;
+
+  border-radius:99px;
+
+}
+
+`;
+
+
+  document.head.appendChild(
+    style
+  );
+
+}
+
+
+/* ================================================================
+   ================================================================
+   JARVIS
+   ================================================================
+   ================================================================ */
+
+
+function installJARVISTheme(){
+
+  if(
+    document.getElementById(
+      "tsJARVISTheme"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const style =
+    document.createElement(
+      "style"
+    );
+
+
+  style.id =
+    "tsJARVISTheme";
+
+
+  style.textContent = `
+
+:root{
+
+  --jarvis-blue:#19bfff;
+
+  --jarvis-blue2:#0879c9;
+
+  --jarvis-cyan:#56e7ff;
+
+  --jarvis-dark:#030b14;
+
+  --jarvis-panel:#071521;
+
+  --jarvis-line:#104765;
+
+}
+
+
+#tsJarvisLauncher{
+
+  position:fixed;
+
+  left:14px;
+
+  bottom:14px;
+
+  z-index:2147483646;
+
+  border:1px solid
+    rgba(25,191,255,.55)!important;
+
+  border-radius:999px;
+
+  padding:11px 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #04101c,
+      #073657
+    )!important;
+
+  color:#dffaff!important;
+
+  font:
+    900 12px
+    system-ui;
+
+  letter-spacing:.8px;
+
+  box-shadow:
+    0 0 20px
+    rgba(25,191,255,.25),
+
+    inset 0 0 15px
+    rgba(25,191,255,.08);
+
+}
+
+
+#tsJarvisLauncher::before{
+
+  content:"";
+
+  display:inline-block;
+
+  width:7px;
+  height:7px;
+
+  border-radius:50%;
+
+  background:
+    var(--jarvis-cyan);
+
+  margin-right:7px;
+
+  box-shadow:
+    0 0 10px
+    var(--jarvis-cyan);
+
+}
+
+
+#tsJarvisPanel{
+
+  position:fixed;
+
+  left:12px;
+
+  bottom:65px;
+
+  width:
+    min(
+      390px,
+      calc(100vw - 24px)
+    );
+
+  max-height:72vh;
+
+  overflow:auto;
+
+  z-index:2147483647;
+
+  display:none;
+
+  color:#dffaff;
+
+  border:
+    1px solid
+    rgba(25,191,255,.45);
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(3,11,20,.98),
+      rgba(5,28,45,.98)
+    );
+
+  box-shadow:
+    0 20px 70px
+    rgba(0,0,0,.65),
+
+    0 0 35px
+    rgba(25,191,255,.12);
+
+  font:
+    13px system-ui;
+
+  backdrop-filter:
+    blur(15px);
+
+}
+
+
+#tsJarvisPanel *{
+
+  box-sizing:border-box;
+
+}
+
+
+.tsJHead{
+
+  position:sticky;
+
+  top:0;
+
+  z-index:2;
+
+  padding:15px;
+
+  border-bottom:
+    1px solid
+    rgba(25,191,255,.25);
+
+  background:
+    rgba(3,11,20,.94);
+
+}
+
+
+.tsJTitle{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+
+.tsJArc{
+
+  width:32px;
+  height:32px;
+
+  border-radius:50%;
+
+  border:
+    2px solid
+    var(--jarvis-blue);
+
+  box-shadow:
+    0 0 15px
+    rgba(25,191,255,.45);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  color:
+    var(--jarvis-cyan);
+
+  font-weight:900;
+
+}
+
+
+.tsJBody{
+
+  padding:14px;
+
+}
+
+
+.tsJCard{
+
+  padding:12px;
+
+  margin-bottom:10px;
+
+  border:
+    1px solid
+    rgba(25,191,255,.20);
+
+  border-radius:14px;
+
+  background:
+    rgba(7,21,33,.78);
+
+}
+
+
+.tsJLabel{
+
+  font-size:10px;
+
+  color:#75aeca;
+
+  text-transform:uppercase;
+
+  letter-spacing:1.2px;
+
+}
+
+
+.tsJValue{
+
+  margin-top:4px;
+
+  font-size:24px;
+
+  font-weight:900;
+
+  color:#e7fbff;
+
+}
+
+
+.tsJStatus{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  color:#83eaff;
+
+}
+
+
+.tsJDot{
+
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  background:
+    #20e3a2;
+
+  box-shadow:
+    0 0 10px
+    #20e3a2;
+
+}
+
+
+.tsJClose{
+
+  position:absolute;
+
+  right:12px;
+
+  top:12px;
+
+  border:1px solid
+    rgba(25,191,255,.25)!important;
+
+  background:#071a28!important;
+
+  color:#9feeff!important;
+
+  border-radius:9px;
+
+  padding:6px 9px;
+
+}
+
+
+.tsJBar{
+
+  height:8px;
+
+  margin-top:8px;
+
+  border-radius:99px;
+
+  background:#0b2637;
+
+  overflow:hidden;
+
+}
+
+
+.tsJBar > span{
+
+  display:block;
+
+  height:100%;
+
+  border-radius:99px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0879c9,
+      #56e7ff
+    );
+
+  box-shadow:
+    0 0 12px
+    rgba(86,231,255,.45);
+
+}
+
+
+#tsJarvisPanel::after{
+
+  content:"";
+
+  pointer-events:none;
+
+  position:absolute;
+
+  inset:0;
+
+  border-radius:20px;
+
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 3px,
+      rgba(86,231,255,.018) 4px
+    );
+
+}
+
+
+@media(max-width:520px){
+
+  #tsJarvisLauncher{
+
+    bottom:10px;
+    left:10px;
+
+  }
+
+
+  #tsJarvisPanel{
+
+    left:8px;
+    bottom:60px;
+
+    width:
+      calc(100vw - 16px);
+
+    max-height:76vh;
+
+  }
+
+}
+
+`;
+
+
+  document.head.appendChild(
+    style
+  );
+
+
+  document.body.insertAdjacentHTML(
+    "beforeend",
+
+    `
+
+<button
+  id="tsJarvisLauncher"
+  type="button"
+>
+  JARVIS
+</button>
+
+
+<section
+  id="tsJarvisPanel"
+>
+
+  <div class="tsJHead">
+
+    <button
+      class="tsJClose"
+      id="tsJarvisClose"
+      type="button"
+    >
+      ×
+    </button>
+
+    <div class="tsJTitle">
+
+      <div class="tsJArc">
+        J
+      </div>
+
+      <div>
+
+        <div
+          style="
+            font-weight:900;
+            letter-spacing:1px;
+          "
+        >
+          THE STUDIO
+        </div>
+
+        <div
+          style="
+            color:#6ba9c1;
+            font-size:10px;
+            letter-spacing:1.5px;
+          "
+        >
+          JARVIS CONTROL SYSTEM
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    id="tsJarvisBody"
+    class="tsJBody"
+  >
+  </div>
+
+</section>
+
+`
+  );
 
 
   document
-  .querySelectorAll(
-    "table"
+  .getElementById(
+    "tsJarvisLauncher"
   )
-  .forEach(
-    table=>{
+  ?.addEventListener(
+    "click",
+    ()=>{
 
-      const rows =
-        [
-          ...table.querySelectorAll(
-            "tr"
-          )
-        ];
+      const panel =
+        document.getElementById(
+          "tsJarvisPanel"
+        );
 
 
-      if(
-        rows.length<2
+      if(!panel)
+        return;
+
+
+      const open =
+        panel.style.display !==
+        "block";
+
+
+      panel.style.display =
+        open
+          ? "block"
+          : "none";
+
+
+      if(open){
+
+        refreshJarvis();
+
+      }
+
+    }
+  );
+
+
+  document
+  .getElementById(
+    "tsJarvisClose"
+  )
+  ?.addEventListener(
+    "click",
+    ()=>{
+
+      const panel =
+        document.getElementById(
+          "tsJarvisPanel"
+        );
+
+
+      if(panel){
+
+        panel.style.display =
+          "none";
+
+      }
+
+    }
+  );
+
+
+  refreshJarvis();
+
+}
+
+
+/* ================================================================
+   ================================================================
+   JARVIS · INFORMACIÓN
+   ================================================================
+   ================================================================ */
+
+
+function refreshJarvis(){
+
+  const body =
+    document.getElementById(
+      "tsJarvisBody"
+    );
+
+
+  if(!body)
+    return;
+
+
+  const reference =
+    getReferenceDate();
+
+
+  const data =
+    calculateWeek(
+      reference
+    );
+
+
+  const pct =
+    data.programado>0
+
+      ?
+
+      Math.min(
+        100,
+        (
+          data.empaque /
+          data.programado
+        )*100
       )
-        return;
+
+      :
+
+      0;
 
 
-      const header =
-        rows[0];
+  const lineA =
+    calculateDayLine(
+      todayLocal(),
+      "Línea A"
+    );
 
 
-      const headerText =
-        TSNEWNormalize(
-          header.textContent
-        );
+  const lineB =
+    calculateDayLine(
+      todayLocal(),
+      "Línea B"
+    );
 
 
-      if(
-        !headerText.includes(
-          "modelo"
-        ) ||
-        !headerText.includes(
-          "pespunte"
-        ) ||
-        !headerText.includes(
-          "preliminar"
+  body.innerHTML = `
+
+    <div class="tsJCard">
+
+      <div class="tsJStatus">
+
+        <span class="tsJDot"></span>
+
+        SISTEMA OPERATIVO
+
+      </div>
+
+      <div
+        style="
+          margin-top:7px;
+          color:#7299ab;
+          font-size:11px;
+        "
+      >
+
+        Monitoreo activo ·
+        semana lunes–sábado
+
+      </div>
+
+    </div>
+
+
+    <div
+      style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:9px;
+      "
+    >
+
+      <div class="tsJCard">
+
+        <div class="tsJLabel">
+          Programado semana
+        </div>
+
+        <div class="tsJValue">
+          ${formatNumber(data.programado)}
+        </div>
+
+      </div>
+
+
+      <div class="tsJCard">
+
+        <div class="tsJLabel">
+          Empaque semana
+        </div>
+
+        <div class="tsJValue">
+          ${formatNumber(data.empaque)}
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="tsJCard">
+
+      <div class="tsJLabel">
+        Cumplimiento Empaque
+      </div>
+
+      <div class="tsJValue">
+        ${pct.toFixed(1)}%
+      </div>
+
+      <div class="tsJBar">
+
+        <span
+          style="
+            width:${pct}%;
+          "
+        ></span>
+
+      </div>
+
+    </div>
+
+
+    <div
+      style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:9px;
+      "
+    >
+
+      ${jarvisLineCard(
+        "LÍNEA A",
+        lineA
+      )}
+
+      ${jarvisLineCard(
+        "LÍNEA B",
+        lineB
+      )}
+
+    </div>
+
+
+    <div class="tsJCard">
+
+      <div class="tsJLabel">
+        Auditoría
+      </div>
+
+      <div class="tsJValue">
+        ${formatNumber(data.auditoria)}
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function jarvisLineCard(
+  title,
+  data
+){
+
+  return `
+
+    <div class="tsJCard">
+
+      <div class="tsJLabel">
+        ${title}
+      </div>
+
+      <div
+        style="
+          margin-top:9px;
+          display:grid;
+          gap:5px;
+        "
+      >
+
+        <div>
+          Programado:
+          <b>
+            ${formatNumber(
+              data.programado
+            )}
+          </b>
+        </div>
+
+        <div>
+          En proceso:
+          <b>
+            ${formatNumber(
+              data.enProceso
+            )}
+          </b>
+        </div>
+
+        <div>
+          Clasificación:
+          <b>
+            ${formatNumber(
+              data.clasificacion
+            )}
+          </b>
+        </div>
+
+        <div>
+          Empaque:
+          <b>
+            ${formatNumber(
+              data.empaque
+            )}
+          </b>
+        </div>
+
+        <div>
+          Eficiencia:
+          <b>
+            ${data.eficiencia.toFixed(1)}%
+          </b>
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function formatNumber(
+  value
+){
+
+  return new Intl.NumberFormat(
+    "es-MX"
+  ).format(
+    num(value)
+  );
+
+}
+
+
+/* ================================================================
+   ================================================================
+   FECHA DE REFERENCIA
+   ================================================================
+   ================================================================ */
+
+
+function getReferenceDate(){
+
+  const inputs =
+    [
+      ...document.querySelectorAll(
+        'input[type="date"]'
+      )
+    ];
+
+
+  for(
+    const input of inputs
+  ){
+
+    const parent =
+      input.parentElement;
+
+
+    const text =
+      normalize(
+        parent?.textContent
+      );
+
+
+    if(
+      text.includes(
+        "fecha de referencia"
+      )
+    ){
+
+      if(input.value)
+        return input.value;
+
+    }
+
+  }
+
+
+  for(
+    const input of inputs
+  ){
+
+    if(
+      input.closest(
+        "#tsDestajo"
+      )
+    )
+      continue;
+
+
+    if(
+      input.closest(
+        "#tsJarvisPanel"
+      )
+    )
+      continue;
+
+
+    if(
+      input.offsetParent!==null &&
+      input.value
+    ){
+
+      return input.value;
+
+    }
+
+  }
+
+
+  return todayLocal();
+
+}
+
+
+/* ================================================================
+   ================================================================
+   CÁLCULO SEMANAL
+   ================================================================
+   ================================================================ */
+
+
+function calculateWeek(
+  reference
+){
+
+  const prod =
+    getProduction();
+
+
+  const advances =
+    getAdvances();
+
+
+  const range =
+    weekRange(
+      reference
+    );
+
+
+  const programmed =
+    prod.filter(
+      item=>
+        inWeek(
+          item.fecha,
+          reference
         )
-      ){
-
-        return;
-
-      }
+    );
 
 
-      if(
-        !header.querySelector(
-          ".TSNEW_EDIT_HEAD"
-        )
-      ){
-
-        const th =
-          document.createElement(
-            "th"
-          );
-
-        th.className =
-          "TSNEW_EDIT_HEAD";
-
-        th.textContent =
-          "EDITAR";
-
-        th.style.cssText =
-          `
-          padding:10px;
-          color:#48e7ff;
-          text-align:center;
-          white-space:nowrap;
-          `;
-
-        header.appendChild(
-          th
-        );
-
-      }
+  const programado =
+    programmed.reduce(
+      (
+        total,
+        item
+      )=>
+        total+
+        num(
+          item.programado
+        ),
+      0
+    );
 
 
-      rows
-      .slice(1)
-      .forEach(
-        row=>{
+  const empaqueRecords =
+    advances.filter(
+      item=>{
 
-          if(
-            row.dataset.tsnewEdit==="1"
+        const date =
+          item.fecha ??
+          item.fechaHora;
+
+
+        if(
+          !inWeek(
+            date,
+            reference
           )
-            return;
+        ){
 
-
-          const cells =
-            [
-              ...row.children
-            ];
-
-
-          if(!cells.length)
-            return;
-
-
-          const model =
-            cells[0]
-            ?.textContent
-            ?.trim();
-
-
-          if(!model)
-            return;
-
-
-          const clean =
-            Object.keys(costs)
-            .find(
-              x=>
-                TSNEWNormalize(x)===
-                TSNEWNormalize(model)
-            );
-
-
-          const buttonCell =
-            document.createElement(
-              "td"
-            );
-
-
-          buttonCell.style.cssText =
-            `
-            padding:7px;
-            text-align:center;
-            `;
-
-
-          const button =
-            document.createElement(
-              "button"
-            );
-
-
-          button.type =
-            "button";
-
-
-          button.textContent =
-            "✏️";
-
-
-          button.title =
-            "Editar modelo";
-
-
-          button.style.cssText =
-            `
-            min-width:42px;
-            min-height:38px;
-            border:0;
-            border-radius:10px;
-            background:#063d55!important;
-            color:#48e7ff!important;
-            font-size:18px;
-            cursor:pointer;
-            `;
-
-
-          button.onclick =
-            event=>{
-
-              event.preventDefault();
-              event.stopPropagation();
-
-              TSNEWEditModel(
-                clean || model
-              );
-
-            };
-
-
-          buttonCell.appendChild(
-            button
-          );
-
-
-          row.appendChild(
-            buttonCell
-          );
-
-
-          row.dataset.tsnewEdit =
-            "1";
+          return false;
 
         }
+
+
+        return normalize(
+          item.siguienteProceso ??
+          item.procesoNuevo ??
+          item.procesoDestino ??
+          item.destino ??
+          ""
+        ) ===
+        "empaque";
+
+      }
+    );
+
+
+  const empaque =
+    empaqueRecords.reduce(
+      (
+        total,
+        item
+      )=>
+        total+
+        num(
+          item.piezas ??
+          item.cantidad ??
+          item.qty
+        ),
+      0
+    );
+
+
+  const auditoriaRecords =
+    advances.filter(
+      item=>{
+
+        const date =
+          item.fecha ??
+          item.fechaHora;
+
+
+        if(
+          !inWeek(
+            date,
+            reference
+          )
+        ){
+
+          return false;
+
+        }
+
+
+        return normalize(
+          item.siguienteProceso ??
+          item.procesoNuevo ??
+          item.procesoDestino ??
+          item.destino ??
+          ""
+        ) ===
+        "auditoria";
+
+      }
+    );
+
+
+  const auditoria =
+    auditoriaRecords.reduce(
+      (
+        total,
+        item
+      )=>
+        total+
+        num(
+          item.piezas ??
+          item.cantidad ??
+          item.qty
+        ),
+      0
+    );
+
+
+  const ots =
+    new Set();
+
+
+  empaqueRecords.forEach(
+    item=>{
+
+      if(
+        item.ot!==undefined &&
+        item.ot!==null &&
+        String(
+          item.ot
+        ).trim()
+      ){
+
+        ots.add(
+          String(
+            item.ot
+          ).trim()
+        );
+
+      }
+
+    }
+  );
+
+
+  return {
+
+    start:
+      range.start,
+
+    end:
+      range.end,
+
+    programado,
+
+    empaque,
+
+    auditoria,
+
+    otsEmpaque:
+      ots.size,
+
+    programmedRecords:
+      programmed,
+
+    empaqueRecords,
+
+    auditoriaRecords
+
+  };
+
+}
+
+
+/* ================================================================
+   ================================================================
+   NORMALIZACIÓN DE PROCESOS
+   ================================================================
+   ================================================================ */
+
+
+function processName(
+  value
+){
+
+  const x =
+    normalize(
+      value
+    );
+
+
+  if(
+    x.includes("armado")
+  ){
+
+    return "armado";
+
+  }
+
+
+  if(
+    x.includes("salida") &&
+    x.includes("pespunte")
+  ){
+
+    return "salida pespunte";
+
+  }
+
+
+  if(
+    x==="pespunte"
+  ){
+
+    return "salida pespunte";
+
+  }
+
+
+  if(
+    x.includes("clasificacion")
+  ){
+
+    return "clasificacion";
+
+  }
+
+
+  if(
+    x.includes("empaque")
+  ){
+
+    return "empaque";
+
+  }
+
+
+  if(
+    x.includes("auditoria")
+  ){
+
+    return "auditoria";
+
+  }
+
+
+  if(
+    x.includes("programado")
+  ){
+
+    return "programado";
+
+  }
+
+
+  return x;
+
+}
+
+
+function getAdvanceOrigin(
+  item
+){
+
+  return processName(
+    item.procesoAnterior ??
+    item.procesoOrigen ??
+    item.procesoActual ??
+    item.origen ??
+    item.proceso ??
+    ""
+  );
+
+}
+
+
+function getAdvanceDestination(
+  item
+){
+
+  return processName(
+    item.siguienteProceso ??
+    item.procesoNuevo ??
+    item.procesoDestino ??
+    item.destino ??
+    ""
+  );
+
+}
+
+
+function getAdvancePieces(
+  item
+){
+
+  return num(
+    item.piezas ??
+    item.cantidad ??
+    item.qty ??
+    item.piece ??
+    item.pieces
+  );
+
+}
+
+
+function getItemLine(
+  item
+){
+
+  const raw =
+    item.linea ??
+    item.line ??
+    item.lineaProduccion ??
+    item.lineProduction ??
+    "";
+
+
+  const n =
+    normalize(
+      raw
+    );
+
+
+  if(
+    n.includes("b")
+  ){
+
+    return "Línea B";
+
+  }
+
+
+  if(
+    n.includes("a")
+  ){
+
+    return "Línea A";
+
+  }
+
+
+  return String(
+    raw || ""
+  );
+
+}
+
+
+/* ================================================================
+   ================================================================
+   CÁLCULO DIARIO POR LÍNEA
+   ================================================================
+   ================================================================ */
+
+
+function calculateDayLine(
+  date,
+  line
+){
+
+  const prod =
+    getProduction();
+
+
+  const advances =
+    getAdvances();
+
+
+  const programmed =
+    prod.filter(
+      item=>{
+
+        if(
+          localDateString(
+            item.fecha
+          )!==date
+        ){
+
+          return false;
+
+        }
+
+
+        const itemLine =
+          getItemLine(
+            item
+          );
+
+
+        if(
+          itemLine &&
+          itemLine!==line
+        ){
+
+          return false;
+
+        }
+
+
+        return true;
+
+      }
+    );
+
+
+  const programado =
+    programmed.reduce(
+      (
+        total,
+        item
+      )=>
+        total+
+        num(
+          item.programado
+        ),
+      0
+    );
+
+
+  const dailyAdvances =
+    advances.filter(
+      item=>{
+
+        const itemDate =
+          localDateString(
+            item.fecha ??
+            item.fechaHora
+          );
+
+
+        if(
+          itemDate!==date
+        ){
+
+          return false;
+
+        }
+
+
+        const itemLine =
+          getItemLine(
+            item
+          );
+
+
+        if(
+          itemLine &&
+          itemLine!==line
+        ){
+
+          return false;
+
+        }
+
+
+        return true;
+
+      }
+    );
+
+
+  /*
+  --------------------------------------------------------------
+  EMPAQUE DEL DÍA
+  --------------------------------------------------------------
+  */
+
+  const empaque =
+    dailyAdvances
+    .filter(
+      item=>
+        getAdvanceDestination(
+          item
+        )===
+        "empaque"
+    )
+    .reduce(
+      (
+        total,
+        item
+      )=>
+        total+
+        getAdvancePieces(
+          item
+        ),
+      0
+    );
+
+
+  /*
+  --------------------------------------------------------------
+  CLASIFICACIÓN
+  --------------------------------------------------------------
+  */
+
+  const clasificacion =
+    dailyAdvances
+    .filter(
+      item=>
+        getAdvanceDestination(
+          item
+        )===
+        "clasificacion"
+    )
+    .reduce(
+      (
+        total,
+        item
+      )=>
+        total+
+        getAdvancePieces(
+          item
+        ),
+      0
+    );
+
+
+  /*
+  --------------------------------------------------------------
+  ARMADO
+  --------------------------------------------------------------
+  */
+
+  const armado =
+    dailyAdvances
+    .filter(
+      item=>
+        getAdvanceDestination(
+          item
+        )===
+        "armado"
+    )
+    .reduce(
+      (
+        total,
+        item
+      )=>
+        total+
+        getAdvancePieces(
+          item
+        ),
+      0
+    );
+
+
+  /*
+  --------------------------------------------------------------
+  SALIDA PESpunte
+  --------------------------------------------------------------
+  */
+
+  const salidaPespunte =
+    dailyAdvances
+    .filter(
+      item=>
+        getAdvanceDestination(
+          item
+        )===
+        "salida pespunte"
+    )
+    .reduce(
+      (
+        total,
+        item
+      )=>
+        total+
+        getAdvancePieces(
+          item
+        ),
+      0
+    );
+
+
+  /*
+  --------------------------------------------------------------
+  EN PROCESO
+  ARMADO + SALIDA PESpunte
+  --------------------------------------------------------------
+  */
+
+  const enProceso =
+    armado+
+    salidaPespunte;
+
+
+  /*
+  --------------------------------------------------------------
+  EFICIENCIA
+  --------------------------------------------------------------
+  */
+
+  const eficiencia =
+    programado>0
+
+      ?
+
+      (
+        empaque/
+        programado
+      )*100
+
+      :
+
+      0;
+
+
+  return {
+
+    date,
+
+    line,
+
+    programado,
+
+    armado,
+
+    salidaPespunte,
+
+    enProceso,
+
+    clasificacion,
+
+    empaque,
+
+    eficiencia,
+
+    programmedRecords:
+      programmed
+
+  };
+
+}
+
+
+/* ================================================================
+   ================================================================
+   TABLERO JARVIS
+   ================================================================
+   ================================================================ */
+
+
+function installTablero(){
+
+  if(
+    document.getElementById(
+      "tsTablero"
+    )
+  ){
+
+    refreshTablero();
+
+    return;
+
+  }
+
+
+  const style =
+    document.createElement(
+      "style"
+    );
+
+
+  style.id =
+    "tsTableroStyle";
+
+
+  style.textContent = `
+
+#tsTablero{
+
+  margin:
+    16px 0 22px;
+
+  padding:0;
+
+  color:#dffaff;
+
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+}
+
+
+.tsBoard{
+
+  border:
+    1px solid
+    rgba(25,191,255,.30);
+
+  border-radius:22px;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      145deg,
+      #030b14,
+      #071827
+    );
+
+  box-shadow:
+    0 15px 50px
+    rgba(0,0,0,.35),
+
+    inset 0 0 30px
+    rgba(25,191,255,.025);
+
+}
+
+
+.tsBoardHeader{
+
+  padding:17px;
+
+  display:flex;
+
+  justify-content:
+    space-between;
+
+  align-items:center;
+
+  gap:12px;
+
+  flex-wrap:wrap;
+
+  border-bottom:
+    1px solid
+    rgba(25,191,255,.20);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7,38,59,.95),
+      rgba(3,16,27,.95)
+    );
+
+}
+
+
+.tsBoardTitle{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:11px;
+
+}
+
+
+.tsBoardIcon{
+
+  width:39px;
+  height:39px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  border:
+    1px solid
+    #19bfff;
+
+  color:
+    #56e7ff;
+
+  font-weight:900;
+
+  box-shadow:
+    0 0 18px
+    rgba(25,191,255,.25);
+
+}
+
+
+.tsBoardTitle b{
+
+  display:block;
+
+  font-size:19px;
+
+  letter-spacing:.5px;
+
+}
+
+
+.tsBoardTitle span{
+
+  display:block;
+
+  margin-top:2px;
+
+  color:#6c9caf;
+
+  font-size:10px;
+
+  text-transform:uppercase;
+
+  letter-spacing:1.4px;
+
+}
+
+
+.tsBoardDate{
+
+  border:
+    1px solid
+    rgba(25,191,255,.22);
+
+  border-radius:999px;
+
+  padding:8px 12px;
+
+  color:#a9eaff;
+
+  background:
+    rgba(4,25,39,.75);
+
+  font-size:11px;
+
+  font-weight:800;
+
+}
+
+
+.tsBoardBody{
+
+  padding:14px;
+
+}
+
+
+.tsDayGrid{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:12px;
+
+}
+
+
+.tsLineBoard{
+
+  border:
+    1px solid
+    rgba(25,191,255,.18);
+
+  border-radius:18px;
+
+  overflow:hidden;
+
+  background:
+    rgba(6,23,36,.90);
+
+}
+
+
+.tsLineHead{
+
+  padding:13px 14px;
+
+  display:flex;
+
+  justify-content:
+    space-between;
+
+  align-items:center;
+
+  border-bottom:
+    1px solid
+    rgba(25,191,255,.14);
+
+}
+
+
+.tsLineHead b{
+
+  font-size:15px;
+
+}
+
+
+.tsLive{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  color:#7feaff;
+
+  font-size:10px;
+
+  font-weight:900;
+
+}
+
+
+.tsLive i{
+
+  width:6px;
+  height:6px;
+
+  border-radius:50%;
+
+  background:#20e3a2;
+
+  box-shadow:
+    0 0 9px
+    #20e3a2;
+
+}
+
+
+.tsBoardKpis{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:7px;
+
+  padding:10px;
+
+}
+
+
+.tsBoardKpi{
+
+  min-width:0;
+
+  padding:11px 9px;
+
+  border-radius:12px;
+
+  background:
+    rgba(10,36,54,.80);
+
+  border:
+    1px solid
+    rgba(25,191,255,.10);
+
+}
+
+
+.tsBoardKpi.clickable{
+
+  cursor:pointer;
+
+}
+
+
+.tsBoardKpi.clickable:active{
+
+  transform:scale(.98);
+
+}
+
+
+.tsBoardKpi small{
+
+  display:block;
+
+  color:#7098aa;
+
+  font-size:9px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.7px;
+
+}
+
+
+.tsBoardKpi strong{
+
+  display:block;
+
+  margin-top:4px;
+
+  font-size:21px;
+
+  color:#e5fbff;
+
+}
+
+
+.tsBoardKpi .sub{
+
+  margin-top:2px;
+
+  color:#527f93;
+
+  font-size:9px;
+
+}
+
+
+.tsEfficiency{
+
+  padding:0 10px 13px;
+
+}
+
+
+.tsEffRow{
+
+  display:flex;
+
+  justify-content:
+    space-between;
+
+  align-items:center;
+
+  font-size:10px;
+
+  color:#77a1b3;
+
+}
+
+
+.tsEffRow b{
+
+  color:#56e7ff;
+
+  font-size:13px;
+
+}
+
+
+.tsEffBar{
+
+  height:7px;
+
+  margin-top:6px;
+
+  border-radius:99px;
+
+  background:#0a2738;
+
+  overflow:hidden;
+
+}
+
+
+.tsEffBar span{
+
+  display:block;
+
+  height:100%;
+
+  border-radius:99px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0879c9,
+      #56e7ff
+    );
+
+  box-shadow:
+    0 0 12px
+    rgba(86,231,255,.35);
+
+}
+
+
+.tsWeekly{
+
+  margin-top:12px;
+
+  border:
+    1px solid
+    rgba(25,191,255,.18);
+
+  border-radius:18px;
+
+  background:
+    rgba(5,20,32,.92);
+
+  overflow:hidden;
+
+}
+
+
+.tsWeeklyHead{
+
+  padding:13px 14px;
+
+  border-bottom:
+    1px solid
+    rgba(25,191,255,.14);
+
+  display:flex;
+
+  justify-content:
+    space-between;
+
+  gap:10px;
+
+  align-items:center;
+
+}
+
+
+.tsWeeklyHead b{
+
+  font-size:14px;
+
+}
+
+
+.tsWeeklyHead span{
+
+  color:#638da0;
+
+  font-size:10px;
+
+}
+
+
+.tsWeeklyGrid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+}
+
+
+.tsWeeklyItem{
+
+  padding:14px;
+
+  border-right:
+    1px solid
+    rgba(25,191,255,.12);
+
+}
+
+
+.tsWeeklyItem:last-child{
+
+  border-right:0;
+
+}
+
+
+.tsWeeklyItem small{
+
+  display:block;
+
+  color:#6c95a8;
+
+  font-size:9px;
+
+  text-transform:uppercase;
+
+}
+
+
+.tsWeeklyItem strong{
+
+  display:block;
+
+  margin-top:4px;
+
+  color:#e5fbff;
+
+  font-size:23px;
+
+}
+
+
+.tsBoardModalShade{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:2147483640;
+
+  background:
+    rgba(0,0,0,.72);
+
+  display:none;
+
+}
+
+
+.tsBoardModal{
+
+  position:fixed;
+
+  left:50%;
+
+  top:50%;
+
+  transform:
+    translate(-50%,-50%);
+
+  width:
+    min(
+      650px,
+      calc(100vw - 24px)
+    );
+
+  max-height:
+    82vh;
+
+  overflow:auto;
+
+  z-index:2147483641;
+
+  display:none;
+
+  border:
+    1px solid
+    rgba(25,191,255,.40);
+
+  border-radius:20px;
+
+  background:
+    #04111c;
+
+  color:#dffaff;
+
+  box-shadow:
+    0 25px 90px
+    rgba(0,0,0,.75);
+
+}
+
+
+.tsBoardModalHead{
+
+  position:sticky;
+
+  top:0;
+
+  z-index:2;
+
+  padding:14px;
+
+  background:
+    rgba(3,13,22,.98);
+
+  border-bottom:
+    1px solid
+    rgba(25,191,255,.18);
+
+  display:flex;
+
+  justify-content:
+    space-between;
+
+  align-items:center;
+
+}
+
+
+.tsBoardModalHead b{
+
+  font-size:16px;
+
+}
+
+
+.tsBoardClose{
+
+  border:
+    1px solid
+    rgba(25,191,255,.20)!important;
+
+  background:
+    #0a2638!important;
+
+  color:
+    #9feeff!important;
+
+  border-radius:9px;
+
+  padding:7px 10px;
+
+}
+
+
+.tsOTRow{
+
+  padding:12px 14px;
+
+  border-bottom:
+    1px solid
+    rgba(25,191,255,.10);
+
+}
+
+
+.tsOTTop{
+
+  display:flex;
+
+  justify-content:
+    space-between;
+
+  gap:10px;
+
+}
+
+
+.tsOT{
+
+  font-weight:900;
+
+  color:#e9fcff;
+
+}
+
+
+.tsOTPieces{
+
+  color:#56e7ff;
+
+  font-weight:900;
+
+}
+
+
+.tsOTMeta{
+
+  margin-top:4px;
+
+  color:#7298a9;
+
+  font-size:10px;
+
+}
+
+
+@media(max-width:720px){
+
+  .tsDayGrid{
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+
+  .tsWeeklyGrid{
+
+    grid-template-columns:
+      1fr 1fr;
+
+  }
+
+
+  .tsWeeklyItem:nth-child(2){
+
+    border-right:0;
+
+  }
+
+
+  .tsWeeklyItem:nth-child(3){
+
+    grid-column:
+      1/-1;
+
+    border-top:
+      1px solid
+      rgba(25,191,255,.12);
+
+    border-right:0;
+
+  }
+
+}
+
+
+@media(max-width:420px){
+
+  .tsBoardBody{
+
+    padding:9px;
+
+  }
+
+
+  .tsBoardKpis{
+
+    grid-template-columns:
+      1fr 1fr;
+
+  }
+
+
+  .tsBoardKpi:last-child{
+
+    grid-column:
+      1/-1;
+
+  }
+
+
+  .tsWeeklyGrid{
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+
+  .tsWeeklyItem{
+
+    border-right:0;
+
+    border-bottom:
+      1px solid
+      rgba(25,191,255,.12);
+
+  }
+
+
+  .tsWeeklyItem:last-child{
+
+    border-bottom:0;
+
+  }
+
+}
+
+`;
+
+
+  document.head.appendChild(
+    style
+  );
+
+
+  /*
+  --------------------------------------------------------------
+  CREAMOS EL TABLERO
+  --------------------------------------------------------------
+  */
+
+  const board =
+    document.createElement(
+      "section"
+    );
+
+
+  board.id =
+    "tsTablero";
+
+
+  board.innerHTML = `
+
+<div class="tsBoard">
+
+  <div class="tsBoardHeader">
+
+    <div class="tsBoardTitle">
+
+      <div class="tsBoardIcon">
+        J
+      </div>
+
+      <div>
+
+        <b>
+          TABLERO JARVIS
+        </b>
+
+        <span>
+          Control de producción · Línea A / Línea B
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="tsBoardDate"
+      class="tsBoardDate"
+    >
+    </div>
+
+  </div>
+
+
+  <div
+    id="tsBoardBody"
+    class="tsBoardBody"
+  >
+  </div>
+
+</div>
+
+
+<div
+  id="tsBoardShade"
+  class="tsBoardModalShade"
+>
+</div>
+
+
+<section
+  id="tsBoardModal"
+  class="tsBoardModal"
+>
+
+  <div
+    class="tsBoardModalHead"
+  >
+
+    <b
+      id="tsBoardModalTitle"
+    >
+      OTs programadas
+    </b>
+
+    <button
+      class="tsBoardClose"
+      id="tsBoardModalClose"
+      type="button"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <div
+    id="tsBoardModalBody"
+  >
+  </div>
+
+</section>
+
+`;
+
+
+  /*
+  --------------------------------------------------------------
+  UBICAR EL TABLERO
+  --------------------------------------------------------------
+  */
+
+  const heading =
+    findTextElement(
+      [
+        "work shop",
+        "workshop",
+        "produccion del dia",
+        "tablero"
+      ]
+    );
+
+
+  if(
+    heading &&
+    heading.parentElement
+  ){
+
+    let parent =
+      heading.parentElement;
+
+
+    for(
+      let i=0;
+      i<4 &&
+      parent.parentElement;
+      i++
+    ){
+
+      parent =
+        parent.parentElement;
+
+    }
+
+
+    parent.insertBefore(
+      board,
+      parent.firstChild
+    );
+
+  }else{
+
+    /*
+    Si no encontramos un lugar claro,
+    lo ponemos antes del contenido principal.
+    */
+
+    const main =
+      document.querySelector(
+        "main"
+      );
+
+
+    if(main){
+
+      main.insertBefore(
+        board,
+        main.firstChild
+      );
+
+    }else{
+
+      document.body.prepend(
+        board
+      );
+
+    }
+
+  }
+
+
+  /*
+  --------------------------------------------------------------
+  MODAL
+  --------------------------------------------------------------
+  */
+
+  document
+  .getElementById(
+    "tsBoardModalClose"
+  )
+  ?.addEventListener(
+    "click",
+    closeBoardModal
+  );
+
+
+  document
+  .getElementById(
+    "tsBoardShade"
+  )
+  ?.addEventListener(
+    "click",
+    closeBoardModal
+  );
+
+
+  refreshTablero();
+
+}
+
+
+/* ================================================================
+   ================================================================
+   ENCONTRAR TEXTO
+   ================================================================
+   ================================================================ */
+
+
+function findTextElement(
+  phrases
+){
+
+  const wanted =
+    phrases.map(
+      normalize
+    );
+
+
+  const elements =
+    [
+      ...document.querySelectorAll(
+        "body *"
+      )
+    ];
+
+
+  return elements.find(
+    el=>{
+
+      if(
+        el.children.length>0
+      ){
+
+        return false;
+
+      }
+
+
+      if(
+        !el.offsetParent
+      ){
+
+        return false;
+
+      }
+
+
+      const text =
+        normalize(
+          el.textContent
+        );
+
+
+      return wanted.some(
+        x=>
+          text===x ||
+          text.includes(x)
       );
 
     }
@@ -1081,245 +4541,983 @@ function TSNEWRefreshCostTables(){
 }
 
 
-/* ==============================================================
-   TIEMPO ESTÁNDAR EN FORMULARIO
-   ============================================================== */
+/* ================================================================
+   ================================================================
+   REFRESCAR TABLERO
+   ================================================================
+   ================================================================ */
 
-function TSNEWInstallTimeInput(){
 
-  const existing =
+function refreshTablero(){
+
+  const board =
     document.getElementById(
-      "tsCostMin"
+      "tsTablero"
     );
 
 
-  /*
-  La versión actual de The Studio
-  ya tiene este campo.
-
-  Si existe, no hacemos nada.
-  */
-
-  if(existing)
+  if(!board)
     return;
 
 
-  const model =
+  const body =
     document.getElementById(
-      "tsCostModel"
+      "tsBoardBody"
     );
 
 
-  const pes =
-    document.getElementById(
-      "tsCostPes"
-    );
-
-
-  const pre =
-    document.getElementById(
-      "tsCostPre"
-    );
-
-
-  const save =
-    document.getElementById(
-      "tsSaveCost"
-    );
-
-
-  if(
-    !model ||
-    !pes ||
-    !pre ||
-    !save
-  )
+  if(!body)
     return;
 
 
-  const wrap =
-    document.createElement(
-      "div"
+  const date =
+    getReferenceDate();
+
+
+  const A =
+    calculateDayLine(
+      date,
+      "Línea A"
     );
 
 
-  wrap.style.cssText =
-    `
-    margin-top:10px;
-    `;
+  const B =
+    calculateDayLine(
+      date,
+      "Línea B"
+    );
 
 
-  wrap.innerHTML = `
+  const week =
+    calculateWeek(
+      date
+    );
 
-    <label
-      style="
-        display:block;
-        color:#48e7ff;
-        font-size:12px;
-        font-weight:900;
-        margin-bottom:5px;
-      "
-    >
-      TIEMPO ESTÁNDAR · MINUTOS
-    </label>
 
-    <input
-      id="tsCostMin"
-      type="number"
-      min="0"
-      step="0.01"
-      placeholder="Ej. 4.50"
-      style="
-        width:100%;
-        box-sizing:border-box;
-        padding:10px;
-        border:1px solid #15506a;
-        border-radius:9px;
-        background:#04131c;
-        color:#e9fbff;
-        font:inherit;
-      "
-    >
+  const efficiency =
+    week.programado>0
+
+      ?
+
+      (
+        week.empaque/
+        week.programado
+      )*100
+
+      :
+
+      0;
+
+
+  const dateLabel =
+    formatDateLong(
+      date
+    );
+
+
+  const dateElement =
+    document.getElementById(
+      "tsBoardDate"
+    );
+
+
+  if(dateElement){
+
+    dateElement.textContent =
+      dateLabel;
+
+  }
+
+
+  body.innerHTML = `
+
+    <div class="tsDayGrid">
+
+      ${renderBoardLine(
+        A
+      )}
+
+      ${renderBoardLine(
+        B
+      )}
+
+    </div>
+
+
+    <div class="tsWeekly">
+
+      <div class="tsWeeklyHead">
+
+        <b>
+          GENERAL DE LA SEMANA
+        </b>
+
+        <span>
+          ${week.start}
+          →
+          ${week.end}
+          · lunes–sábado
+        </span>
+
+      </div>
+
+
+      <div class="tsWeeklyGrid">
+
+        <div class="tsWeeklyItem">
+
+          <small>
+            Programado
+          </small>
+
+          <strong>
+            ${formatNumber(
+              week.programado
+            )}
+          </strong>
+
+        </div>
+
+
+        <div class="tsWeeklyItem">
+
+          <small>
+            Empaque
+          </small>
+
+          <strong>
+            ${formatNumber(
+              week.empaque
+            )}
+          </strong>
+
+        </div>
+
+
+        <div class="tsWeeklyItem">
+
+          <small>
+            Eficiencia semanal
+          </small>
+
+          <strong>
+            ${efficiency.toFixed(1)}%
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
 
   `;
 
 
-  save.parentElement
-    ?.insertBefore(
-      wrap,
-      save
-    );
+  /*
+  --------------------------------------------------------------
+  CLICK EN PROGRAMADO
+  --------------------------------------------------------------
+  */
+
+  board
+  .querySelectorAll(
+    "[data-board-programado]"
+  )
+  .forEach(
+    element=>{
+
+      element.onclick = ()=>{
+
+        openProgrammedOTs(
+          date
+        );
+
+      };
+
+    }
+  );
+
+
+  /*
+  --------------------------------------------------------------
+  CLICK EN EN PROCESO
+  --------------------------------------------------------------
+  */
+
+  board
+  .querySelectorAll(
+    "[data-board-proceso]"
+  )
+  .forEach(
+    element=>{
+
+      element.onclick = ()=>{
+
+        openProcessOTs(
+          date
+        );
+
+      };
+
+    }
+  );
+
+
+  refreshJarvis();
 
 }
 
 
-/* ==============================================================
-   TABLERO · DATOS DE PROGRAMACIÓN
-   ============================================================== */
-
-function TSNEWProduction(){
-
-  const raw =
-    TSNEWReadJSON(
-      "theStudioProduccion_v4",
-      []
-    );
+/* ================================================================
+   ================================================================
+   RENDER DE LÍNEA
+   ================================================================
+   ================================================================ */
 
 
-  if(
-    Array.isArray(raw)
-  )
-    return raw;
-
-
-  if(
-    raw &&
-    Array.isArray(
-      raw.prod
-    )
-  )
-    return raw.prod;
-
-
-  if(
-    raw &&
-    Array.isArray(
-      raw.produccion
-    )
-  )
-    return raw.produccion;
-
-
-  return [];
-
-}
-
-
-function TSNEWAdvances(){
-
-  const raw =
-    TSNEWReadJSON(
-      "theStudioAvances_v4",
-      []
-    );
-
-
-  if(
-    Array.isArray(raw)
-  )
-    return raw;
-
-
-  if(
-    raw &&
-    Array.isArray(
-      raw.avances
-    )
-  )
-    return raw.avances;
-
-
-  return [];
-
-}
-
-
-function TSNEWLine(item){
-
-  return String(
-    item.linea ??
-    item.line ??
-    item.lineaProduccion ??
-    item.lineaNombre ??
-    item.Linea ??
-    ""
-  ).trim();
-
-}
-
-
-function TSNEWSameLine(
-  item,
-  line
+function renderBoardLine(
+  data
 ){
 
-  const a =
-    TSNEWNormalize(
-      TSNEWLine(item)
+  const eff =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        num(
+          data.eficiencia
+        )
+      )
     );
 
-  const b =
-    TSNEWNormalize(
-      line
+
+  return `
+
+<div class="tsLineBoard">
+
+  <div class="tsLineHead">
+
+    <b>
+      ${esc(data.line)}
+    </b>
+
+    <span class="tsLive">
+
+      <i></i>
+
+      EN VIVO
+
+    </span>
+
+  </div>
+
+
+  <div class="tsBoardKpis">
+
+    <div
+      class="
+        tsBoardKpi
+        clickable
+      "
+      data-board-programado="1"
+    >
+
+      <small>
+        Programado
+      </small>
+
+      <strong>
+        ${formatNumber(
+          data.programado
+        )}
+      </strong>
+
+      <div class="sub">
+        tocar para ver OTs
+      </div>
+
+    </div>
+
+
+    <div
+      class="
+        tsBoardKpi
+        clickable
+      "
+      data-board-proceso="1"
+    >
+
+      <small>
+        En proceso
+      </small>
+
+      <strong>
+        ${formatNumber(
+          data.enProceso
+        )}
+      </strong>
+
+      <div class="sub">
+        Armado + salida pespunte
+      </div>
+
+    </div>
+
+
+    <div class="tsBoardKpi">
+
+      <small>
+        Clasificación
+      </small>
+
+      <strong>
+        ${formatNumber(
+          data.clasificacion
+        )}
+      </strong>
+
+      <div class="sub">
+        inventario
+      </div>
+
+    </div>
+
+
+    <div class="tsBoardKpi">
+
+      <small>
+        Empaque
+      </small>
+
+      <strong>
+        ${formatNumber(
+          data.empaque
+        )}
+      </strong>
+
+      <div class="sub">
+        piezas del día
+      </div>
+
+    </div>
+
+
+    <div class="tsBoardKpi">
+
+      <small>
+        Armado
+      </small>
+
+      <strong>
+        ${formatNumber(
+          data.armado
+        )}
+      </strong>
+
+      <div class="sub">
+        proceso
+      </div>
+
+    </div>
+
+
+    <div class="tsBoardKpi">
+
+      <small>
+        Salida pespunte
+      </small>
+
+      <strong>
+        ${formatNumber(
+          data.salidaPespunte
+        )}
+      </strong>
+
+      <div class="sub">
+        proceso
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="tsEfficiency">
+
+    <div class="tsEffRow">
+
+      <span>
+        EFICIENCIA
+      </span>
+
+      <b>
+        ${eff.toFixed(1)}%
+      </b>
+
+    </div>
+
+
+    <div class="tsEffBar">
+
+      <span
+        style="
+          width:${eff}%;
+        "
+      ></span>
+
+    </div>
+
+  </div>
+
+</div>
+
+`;
+
+}
+
+
+/* ================================================================
+   ================================================================
+   FECHA BONITA
+   ================================================================
+   ================================================================ */
+
+
+function formatDateLong(
+  date
+){
+
+  try{
+
+    const d =
+      new Date(
+        String(date)+"T12:00:00"
+      );
+
+
+    return new Intl.DateTimeFormat(
+      "es-MX",
+      {
+        weekday:"long",
+        day:"2-digit",
+        month:"short",
+        year:"numeric"
+      }
+    ).format(
+      d
+    );
+
+  }catch{
+
+    return date;
+
+  }
+
+}
+
+
+/* ================================================================
+   ================================================================
+   OTs PROGRAMADAS
+   ================================================================
+   ================================================================ */
+
+
+function openProgrammedOTs(
+  date
+){
+
+  const prod =
+    getProduction();
+
+
+  const records =
+    prod.filter(
+      item=>
+        localDateString(
+          item.fecha
+        )===date
     );
 
 
-  if(a===b)
-    return true;
-
-
-  if(
-    b==="linea a"
-  ){
-
-    return (
-      a==="a" ||
-      a==="lineaa" ||
-      a==="linea  a"
+  const modal =
+    document.getElementById(
+      "tsBoardModal"
     );
+
+
+  const shade =
+    document.getElementById(
+      "tsBoardShade"
+    );
+
+
+  const title =
+    document.getElementById(
+      "tsBoardModalTitle"
+    );
+
+
+  const body =
+    document.getElementById(
+      "tsBoardModalBody"
+    );
+
+
+  if(!modal || !shade || !body)
+    return;
+
+
+  if(title){
+
+    title.textContent =
+      "OTs programadas · "+
+      formatDateLong(
+        date
+      );
 
   }
 
 
   if(
-    b==="linea b"
+    !records.length
   ){
 
-    return (
-      a==="b" ||
-      a==="lineab" ||
-      a==="linea  b"
+    body.innerHTML = `
+
+      <div
+        style="
+          padding:30px 16px;
+          text-align:center;
+          color:#6e9aab;
+        "
+      >
+
+        No hay OTs programadas
+        para este día.
+
+      </div>
+
+    `;
+
+  }else{
+
+    body.innerHTML =
+      records
+      .map(
+        item=>{
+
+          const line =
+            getItemLine(
+              item
+            ) ||
+            "Sin línea";
+
+
+          const ot =
+            item.ot ??
+            item.OT ??
+            item.numeroOT ??
+            item.folio ??
+            "—";
+
+
+          const model =
+            item.modelo ??
+            item.model ??
+            item.nombreModelo ??
+            "";
+
+
+          const pieces =
+            num(
+              item.programado
+            );
+
+
+          return `
+
+            <div class="tsOTRow">
+
+              <div class="tsOTTop">
+
+                <span class="tsOT">
+                  OT ${esc(ot)}
+                </span>
+
+                <span
+                  class="tsOTPieces"
+                >
+                  ${formatNumber(
+                    pieces
+                  )} piezas
+                </span>
+
+              </div>
+
+
+              <div class="tsOTMeta">
+
+                ${esc(line)}
+
+                ${
+                  model
+                    ? " · Modelo: "+
+                      esc(model)
+                    : ""
+                }
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+  }
+
+
+  shade.style.display =
+    "block";
+
+
+  modal.style.display =
+    "block";
+
+}
+
+
+/* ================================================================
+   ================================================================
+   OTs EN PROCESO
+   ================================================================
+   ================================================================ */
+
+
+function openProcessOTs(
+  date
+){
+
+  const advances =
+    getAdvances();
+
+
+  const records =
+    advances.filter(
+      item=>{
+
+        const itemDate =
+          localDateString(
+            item.fecha ??
+            item.fechaHora
+          );
+
+
+        if(
+          itemDate!==date
+        ){
+
+          return false;
+
+        }
+
+
+        const destination =
+          getAdvanceDestination(
+            item
+          );
+
+
+        return (
+          destination===
+            "armado" ||
+          destination===
+            "salida pespunte"
+        );
+
+      }
     );
+
+
+  const modal =
+    document.getElementById(
+      "tsBoardModal"
+    );
+
+
+  const shade =
+    document.getElementById(
+      "tsBoardShade"
+    );
+
+
+  const title =
+    document.getElementById(
+      "tsBoardModalTitle"
+    );
+
+
+  const body =
+    document.getElementById(
+      "tsBoardModalBody"
+    );
+
+
+  if(!modal || !shade || !body)
+    return;
+
+
+  if(title){
+
+    title.textContent =
+      "OTs en proceso · "+
+      formatDateLong(
+        date
+      );
+
+  }
+
+
+  if(
+    !records.length
+  ){
+
+    body.innerHTML = `
+
+      <div
+        style="
+          padding:30px 16px;
+          text-align:center;
+          color:#6e9aab;
+        "
+      >
+
+        No hay movimientos de
+        proceso registrados para este día.
+
+      </div>
+
+    `;
+
+  }else{
+
+    body.innerHTML =
+      records
+      .map(
+        item=>{
+
+          const ot =
+            item.ot ??
+            item.OT ??
+            item.numeroOT ??
+            item.folio ??
+            "—";
+
+
+          const destination =
+            getAdvanceDestination(
+              item
+            );
+
+
+          const pieces =
+            getAdvancePieces(
+              item
+            );
+
+
+          const line =
+            getItemLine(
+              item
+            ) ||
+            "Sin línea";
+
+
+          return `
+
+            <div class="tsOTRow">
+
+              <div class="tsOTTop">
+
+                <span class="tsOT">
+
+                  OT ${esc(ot)}
+
+                </span>
+
+
+                <span
+                  class="tsOTPieces"
+                >
+
+                  ${formatNumber(
+                    pieces
+                  )}
+
+                </span>
+
+              </div>
+
+
+              <div class="tsOTMeta">
+
+                ${esc(line)}
+                ·
+                ${esc(
+                  destination
+                )}
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+  }
+
+
+  shade.style.display =
+    "block";
+
+
+  modal.style.display =
+    "block";
+
+}
+
+
+function closeBoardModal(){
+
+  const modal =
+    document.getElementById(
+      "tsBoardModal"
+    );
+
+
+  const shade =
+    document.getElementById(
+      "tsBoardShade"
+    );
+
+
+  if(modal){
+
+    modal.style.display =
+      "none";
+
+  }
+
+
+  if(shade){
+
+    shade.style.display =
+      "none";
+
+  }
+
+}
+
+
+/* ================================================================
+   ================================================================
+   DASHBOARD ORIGINAL
+   ================================================================
+   ================================================================ */
+
+
+function setDashboardMetric(
+  label,
+  value
+){
+
+  const target =
+    normalize(
+      label
+    );
+
+
+  const leaves =
+    [
+      ...document.querySelectorAll(
+        "body *"
+      )
+    ]
+    .filter(
+      el=>
+        el.children.length===0 &&
+        normalize(
+          el.textContent
+        )===target &&
+        el.offsetParent!==null
+    );
+
+
+  for(
+    const labelEl of leaves
+  ){
+
+    let box =
+      labelEl.parentElement;
+
+
+    for(
+      let level=0;
+      level<5 &&
+      box;
+      level++,
+      box=box.parentElement
+    ){
+
+      const candidates =
+        [
+          ...box.querySelectorAll(
+            "strong,b,h1,h2,h3,h4,h5,.value,.number,.num,.stat-value"
+          )
+        ]
+        .filter(
+          el=>
+            el!==labelEl &&
+            el.offsetParent!==null &&
+            /\d/.test(
+              el.textContent
+            )
+        );
+
+
+      if(
+        candidates.length
+      ){
+
+        candidates.sort(
+          (
+            a,
+            b
+          )=>
+            a.textContent.length-
+            b.textContent.length
+        );
+
+
+        candidates[0].textContent =
+          new Intl.NumberFormat(
+            "es-MX"
+          ).format(
+            value
+          );
+
+
+        return true;
+
+      }
+
+    }
 
   }
 
@@ -1329,832 +5527,64 @@ function TSNEWSameLine(
 }
 
 
-function TSNEWDateOf(item){
+/* ================================================================
+   ================================================================
+   REFRESH STUDIO
+   ================================================================
+   ================================================================ */
 
-  return TSNEWDate(
-    item.fecha ??
-    item.date ??
-    item.fechaHora ??
-    item.createdAt ??
-    ""
-  );
 
-}
-
-
-function TSNEWProgrammed(
-  date,
-  line
-){
-
-  return TSNEWProduction()
-    .filter(
-      item=>
-        TSNEWDateOf(item)===date &&
-        TSNEWSameLine(
-          item,
-          line
-        )
-    );
-
-}
-
-
-function TSNEWPiecesProgrammed(
-  item
-){
-
-  return TSNEWNum(
-    item.programado ??
-    item.piezasProgramadas ??
-    item.cantidad ??
-    item.qty ??
-    item.piezas
-  );
-
-}
-
-
-function TSNEWOT(item){
-
-  return String(
-    item.ot ??
-    item.OT ??
-    item.numeroOT ??
-    item.otNumber ??
-    item.folio ??
-    item.orden ??
-    item.ordenTrabajo ??
-    item.ordenProduccion ??
-    ""
-  ).trim();
-
-}
-
-
-function TSNEWProcess(
-  item
-){
-
-  return TSNEWNormalize(
-    item.siguienteProceso ??
-    item.procesoNuevo ??
-    item.procesoDestino ??
-    item.destino ??
-    item.hasta ??
-    item.to ??
-    ""
-  );
-
-}
-
-
-function TSNEWIsSalidaPespunte(
-  item
-){
-
-  const destination =
-    TSNEWProcess(
-      item
-    );
-
-
-  const source =
-    TSNEWNormalize(
-      item.procesoAnterior ??
-      item.procesoOrigen ??
-      item.proceso ??
-      item.desde ??
-      item.from ??
-      ""
-    );
-
-
-  if(
-    destination.includes(
-      "salida pespunte"
-    ) ||
-    destination.includes(
-      "salida de pespunte"
-    ) ||
-    destination==="salidapespunte" ||
-    destination==="salidadepespunte"
-  ){
-
-    return true;
-
-  }
-
-
-  return (
-    source.includes(
-      "pespunte"
-    ) &&
-    destination.includes(
-      "clasificacion"
-    )
-  );
-
-}
-
-
-function TSNEWSalida(
-  date,
-  line
-){
-
-  return TSNEWAdvances()
-    .filter(
-      item=>
-        TSNEWDateOf(item)===date &&
-        TSNEWSameLine(
-          item,
-          line
-        ) &&
-        TSNEWIsSalidaPespunte(
-          item
-        )
-    )
-    .reduce(
-      (
-        total,
-        item
-      )=>
-        total+
-        TSNEWNum(
-          item.piezas ??
-          item.cantidad ??
-          item.qty ??
-          item.pares
-        ),
-      0
-    );
-
-}
-
-
-/* ==============================================================
-   TABLERO
-   ============================================================== */
-
-function TSNEWInstallDashboard(){
-
-  let panel =
-    document.getElementById(
-      "TSNEW_DASHBOARD"
-    );
-
-
-  if(!panel){
-
-    panel =
-      document.createElement(
-        "section"
-      );
-
-    panel.id =
-      "TSNEW_DASHBOARD";
-
-
-    panel.style.cssText =
-      `
-      margin:18px 0;
-      padding:18px;
-      border:1px solid #104456;
-      border-radius:20px;
-      background:
-        linear-gradient(
-          145deg,
-          #071923,
-          #031018
-        );
-      color:#e9fbff;
-      box-shadow:
-        0 12px 35px #0007;
-      `;
-
-
-    const target =
-      document.querySelector(
-        "main"
-      ) ||
-      document.querySelector(
-        "#app"
-      ) ||
-      document.body;
-
-
-    if(
-      target &&
-      target.firstElementChild
-    ){
-
-      target.insertBefore(
-        panel,
-        target.firstElementChild
-      );
-
-    }else{
-
-      document.body.appendChild(
-        panel
-      );
-
-    }
-
-  }
-
-
-  TSNEWRenderDashboard(
-    panel
-  );
-
-}
-
-
-function TSNEWRenderDashboard(
-  panel
-){
-
-  const date =
-    typeof getReferenceDate==="function"
-      ? (
-          getReferenceDate() ||
-          TSNEWDate(
-            new Date()
-          )
-        )
-      : TSNEWDate(
-          new Date()
-        );
-
-
-  const lines =
-    [
-      "Línea A",
-      "Línea B"
-    ];
-
-
-  const data =
-    lines.map(
-      line=>{
-
-        const records =
-          TSNEWProgrammed(
-            date,
-            line
-          );
-
-
-        const programmed =
-          records.reduce(
-            (
-              total,
-              item
-            )=>
-              total+
-              TSNEWPiecesProgrammed(
-                item
-              ),
-            0
-          );
-
-
-        const salida =
-          TSNEWSalida(
-            date,
-            line
-          );
-
-
-        const efficiency =
-          programmed>0
-            ? (
-                salida/
-                programmed
-              )*100
-            : 0;
-
-
-        return {
-
-          line,
-          records,
-          programmed,
-          salida,
-          efficiency
-
-        };
-
-      }
-    );
-
-
-  const totalProgrammed =
-    data[0].programmed+
-    data[1].programmed;
-
-
-  const totalSalida =
-    data[0].salida+
-    data[1].salida;
-
-
-  const totalEfficiency =
-    totalProgrammed>0
-      ? (
-          totalSalida/
-          totalProgrammed
-        )*100
-      : 0;
-
-
-  const format =
-    value=>
-      new Intl.NumberFormat(
-        "es-MX"
-      ).format(
-        TSNEWNum(value)
-      );
-
-
-  const card =
-    item=>{
-
-      const bar =
-        Math.min(
-          100,
-          Math.max(
-            0,
-            item.efficiency
-          )
-        );
-
-
-      const otRows =
-        item.records.length
-          ? item.records
-              .map(
-                r=>`
-
-                  <div
-                    style="
-                      display:grid;
-                      grid-template-columns:
-                        1fr auto;
-                      gap:8px;
-                      padding:8px 0;
-                      border-bottom:
-                        1px solid #104456;
-                    "
-                  >
-
-                    <div>
-
-                      <b>
-                        OT ${String(
-                          TSNEWOT(r) ||
-                          "SIN OT"
-                        )}
-                      </b>
-
-                      <div
-                        style="
-                          color:#83aebb;
-                          font-size:11px;
-                          margin-top:2px;
-                        "
-                      >
-                        ${String(
-                          r.modelo ??
-                          r.model ??
-                          ""
-                        )}
-                      </div>
-
-                    </div>
-
-                    <b
-                      style="
-                        color:#48e7ff;
-                      "
-                    >
-                      ${format(
-                        TSNEWPiecesProgrammed(
-                          r
-                        )
-                      )}
-                    </b>
-
-                  </div>
-
-                `
-              )
-              .join("")
-          : `
-
-              <div
-                style="
-                  color:#83aebb;
-                  padding:10px 0;
-                "
-              >
-                No hay OT programadas
-                para esta línea hoy.
-              </div>
-
-            `;
-
-
-      return `
-
-        <div
-          style="
-            border:1px solid #104456;
-            border-radius:16px;
-            padding:14px;
-            background:#04131c;
-          "
-        >
-
-          <div
-            style="
-              font-size:13px;
-              font-weight:900;
-              color:#48e7ff;
-              letter-spacing:1px;
-            "
-          >
-            ${item.line.toUpperCase()}
-          </div>
-
-
-          <div
-            style="
-              font-size:34px;
-              font-weight:900;
-              margin-top:5px;
-              color:#48e7ff;
-            "
-          >
-            ${item.efficiency.toFixed(1)}%
-          </div>
-
-
-          <div
-            style="
-              display:grid;
-              grid-template-columns:
-                1fr 1fr;
-              gap:8px;
-              margin-top:8px;
-            "
-          >
-
-            <div>
-
-              <small
-                style="
-                  color:#83aebb;
-                "
-              >
-                PROGRAMADO
-              </small>
-
-              <div
-                style="
-                  font-weight:900;
-                  font-size:18px;
-                "
-              >
-                ${format(
-                  item.programmed
-                )}
-              </div>
-
-            </div>
-
-
-            <div>
-
-              <small
-                style="
-                  color:#83aebb;
-                "
-              >
-                SALIDA PESPUNTE
-              </small>
-
-              <div
-                style="
-                  font-weight:900;
-                  font-size:18px;
-                "
-              >
-                ${format(
-                  item.salida
-                )}
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div
-            style="
-              height:10px;
-              margin-top:12px;
-              border-radius:99px;
-              overflow:hidden;
-              background:#06141d;
-              border:1px solid #104456;
-            "
-          >
-
-            <div
-              style="
-                width:${bar}%;
-                height:100%;
-                border-radius:99px;
-                background:
-                  linear-gradient(
-                    90deg,
-                    #007fc4,
-                    #48e7ff
-                  );
-              "
-            ></div>
-
-          </div>
-
-
-          <div
-            style="
-              margin-top:15px;
-              color:#83aebb;
-              font-size:11px;
-              font-weight:900;
-            "
-          >
-            OT PROGRAMADAS
-          </div>
-
-
-          <div
-            style="
-              margin-top:5px;
-            "
-          >
-            ${otRows}
-          </div>
-
-        </div>
-
-      `;
-
-    };
-
-
-  panel.innerHTML = `
-
-    <div
-      style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        gap:10px;
-        flex-wrap:wrap;
-      "
-    >
-
-      <div>
-
-        <div
-          style="
-            color:#48e7ff;
-            font-size:21px;
-            font-weight:900;
-          "
-        >
-          📊 TABLERO · PLAN DEL DÍA
-        </div>
-
-        <div
-          style="
-            color:#83aebb;
-            font-size:12px;
-            margin-top:4px;
-          "
-        >
-          ${date}
-          · Programado vs Salida de Pespunte
-        </div>
-
-      </div>
-
-
-      <div
-        style="
-          padding:8px 12px;
-          border-radius:999px;
-          border:1px solid #15506a;
-          color:#48e7ff;
-          font-weight:900;
-        "
-      >
-        EFICIENCIA
-      </div>
-
-    </div>
-
-
-    <div
-      style="
-        display:grid;
-        grid-template-columns:
-          repeat(3,minmax(0,1fr));
-        gap:10px;
-        margin-top:15px;
-      "
-      class="TSNEW_DASH_GRID"
-    >
-
-      ${card(data[0])}
-
-      ${card(data[1])}
-
-      <div
-        style="
-          border:1px solid #104456;
-          border-radius:16px;
-          padding:14px;
-          background:
-            linear-gradient(
-              145deg,
-              #08212d,
-              #031018
-            );
-        "
-      >
-
-        <div
-          style="
-            color:#83aebb;
-            font-size:11px;
-            font-weight:900;
-          "
-        >
-          GENERAL
-        </div>
-
-
-        <div
-          style="
-            font-size:34px;
-            font-weight:900;
-            color:#48e7ff;
-            margin-top:5px;
-          "
-        >
-          ${totalEfficiency.toFixed(1)}%
-        </div>
-
-
-        <div
-          style="
-            margin-top:12px;
-            display:grid;
-            grid-template-columns:
-              1fr 1fr;
-            gap:8px;
-          "
-        >
-
-          <div>
-
-            <small
-              style="
-                color:#83aebb;
-              "
-            >
-              PROGRAMADO
-            </small>
-
-            <div
-              style="
-                font-weight:900;
-                font-size:18px;
-              "
-            >
-              ${format(
-                totalProgrammed
-              )}
-            </div>
-
-          </div>
-
-
-          <div>
-
-            <small
-              style="
-                color:#83aebb;
-              "
-            >
-              SALIDA PESPUNTE
-            </small>
-
-            <div
-              style="
-                font-weight:900;
-                font-size:18px;
-              "
-            >
-              ${format(
-                totalSalida
-              )}
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div
-          style="
-            margin-top:15px;
-            color:#83aebb;
-            font-size:12px;
-          "
-        >
-          Fórmula:
-          <b
-            style="
-              color:#48e7ff;
-            "
-          >
-            Salida ÷ Programado × 100
-          </b>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div
-      style="
-        margin-top:12px;
-        color:#83aebb;
-        font-size:12px;
-      "
-    >
-      La programación se toma de las OT
-      registradas para el día y la línea.
-    </div>
-
-
-    <style>
-
-      @media(max-width:760px){
-
-        #TSNEW_DASHBOARD
-        .TSNEW_DASH_GRID{
-
-          grid-template-columns:
-            1fr!important;
-
-        }
-
-      }
-
-    </style>
-
-  `;
-
-}
-
-
-/* ==============================================================
-   INICIO
-   ============================================================== */
-
-function TSNEWStart(){
+function refreshStudio(){
 
   try{
 
-    TSNEWRefreshCostTables();
+    const reference =
+      getReferenceDate();
 
-    TSNEWInstallTimeInput();
 
-    TSNEWInstallDashboard();
+    const data =
+      calculateWeek(
+        reference
+      );
+
+
+    setDashboardMetric(
+      "Programado",
+      data.programado
+    );
+
+
+    setDashboardMetric(
+      "Empaque para nómina",
+      data.empaque
+    );
+
+
+    setDashboardMetric(
+      "Auditoría",
+      data.auditoria
+    );
+
+
+    setDashboardMetric(
+      "OTs con Empaque",
+      data.otsEmpaque
+    );
+
+
+    installWeekListeners();
+
+
+    installCostRepair();
+
+
+    refreshTablero();
+
 
   }catch(e){
 
     console.error(
-      "The Studio nuevo ajuste:",
+      "refreshStudio:",
       e
     );
 
@@ -2163,145 +5593,3323 @@ function TSNEWStart(){
 }
 
 
-setTimeout(
-  TSNEWStart,
-  700
-);
-
-setTimeout(
-  TSNEWStart,
-  1600
-);
-
-setTimeout(
-  TSNEWStart,
-  3000
-);
+/* ================================================================
+   ================================================================
+   EVENTOS DE SEMANA
+   ================================================================
+   ================================================================ */
 
 
-/* ==============================================================
-   OBSERVADOR
-   ============================================================== */
+function installWeekListeners(){
 
-if(
-  !window.__TSNEW_OBSERVER__
-){
+  if(
+    window.__TS_WEEK_LISTENERS__
+  ){
 
-  window.__TSNEW_OBSERVER__ =
-    new MutationObserver(
-      ()=>{
+    return;
 
-        try{
-
-          TSNEWRefreshCostTables();
-
-          TSNEWInstallTimeInput();
-
-          TSNEWInstallDashboard();
-
-        }catch{}
-
-      }
-    );
+  }
 
 
-  setTimeout(
-    ()=>{
+  window.__TS_WEEK_LISTENERS__ =
+    true;
 
-      if(document.body){
 
-        window.__TSNEW_OBSERVER__.observe(
-          document.body,
-          {
-            childList:true,
-            subtree:true
-          }
+  document.addEventListener(
+    "change",
+    event=>{
+
+      const el =
+        event.target;
+
+
+      if(
+        el &&
+        el.matches(
+          'input[type="date"]'
+        )
+      ){
+
+        setTimeout(
+          ()=>{
+            refreshStudio();
+            refreshTablero();
+          },
+          100
         );
 
       }
 
-    },
-    1000
+    }
+  );
+
+
+  document.addEventListener(
+    "click",
+    event=>{
+
+      const button =
+        event.target.closest(
+          "button"
+        );
+
+
+      if(!button)
+        return;
+
+
+      const text =
+        normalize(
+          button.textContent
+        );
+
+
+      if(
+        text==="actualizar" ||
+        text.includes(
+          "actualizar"
+        )
+      ){
+
+        setTimeout(
+          ()=>{
+            refreshStudio();
+            refreshTablero();
+          },
+          150
+        );
+
+      }
+
+    }
   );
 
 }
 
 
-/* ==============================================================
-   FIN
-   ============================================================== */
+/* ================================================================
+   ================================================================
+   COSTOS EN PANTALLA
+   ================================================================
+   ================================================================ */
+
+
+function installCostRepair(){
+
+  const costs =
+    migrateAllCosts();
+
+
+  const existing =
+    document.getElementById(
+      "tsCostRepair"
+    );
+
+
+  if(existing){
+
+    renderCostRepair(
+      existing,
+      costs
+    );
+
+    return;
+
+  }
+
+
+  const heading =
+    findTextElement(
+      [
+        "catalogo de modelos"
+      ]
+    );
+
+
+  if(!heading)
+    return;
+
+
+  let container =
+    heading.parentElement;
+
+
+  for(
+    let i=0;
+    i<4 &&
+    container &&
+    container.parentElement;
+    i++
+  ){
+
+    container =
+      container.parentElement;
+
+  }
+
+
+  const panel =
+    document.createElement(
+      "section"
+    );
+
+
+  panel.id =
+    "tsCostRepair";
+
+
+  panel.style.cssText = `
+
+    margin:18px 0;
+
+    padding:18px;
+
+    border:
+      1px solid #104765;
+
+    border-radius:20px;
+
+    background:
+      linear-gradient(
+        145deg,
+        #071521,
+        #030c15
+      );
+
+    color:#eef4fb;
+
+    box-shadow:
+      0 12px 35px
+      rgba(0,0,0,.30);
+
+  `;
+
+
+  container.insertBefore(
+    panel,
+    container.firstChild
+  );
+
+
+  renderCostRepair(
+    panel,
+    costs
+  );
+
+}
+
+
+/* ================================================================
+   ================================================================
+   RENDER COSTOS
+   ================================================================
+   ================================================================ */
+
+
+function renderCostRepair(
+  panel,
+  costs
+){
+
+  if(!panel)
+    return;
+
+
+  const models =
+    Object.keys(
+      costs
+    )
+    .sort(
+      (
+        a,
+        b
+      )=>
+        a.localeCompare(
+          b,
+          "es"
+        )
+    );
+
+
+  panel.innerHTML = `
+
+<div
+  style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+  "
+>
+
+  <div>
+
+    <div
+      style="
+        font-size:21px;
+        font-weight:900;
+      "
+    >
+
+      💰 Costos por modelo
+
+    </div>
+
+    <div
+      style="
+        color:#7fa8ba;
+        font-size:13px;
+        margin-top:4px;
+      "
+    >
+
+      Pespunte + Preliminar ·
+      catálogo editable
+
+    </div>
+
+  </div>
+
+
+  <div
+    style="
+      background:#073657;
+      color:#9feeff;
+      border-radius:999px;
+      padding:7px 12px;
+      font-weight:800;
+      font-size:12px;
+      border:1px solid #105274;
+    "
+  >
+
+    ${models.length}
+    modelos
+
+  </div>
+
+</div>
+
+
+<div
+  style="
+    margin-top:15px;
+    display:grid;
+    grid-template-columns:
+      minmax(130px,1.3fr)
+      minmax(110px,1fr)
+      minmax(110px,1fr)
+      80px;
+    gap:8px;
+    align-items:center;
+  "
+  class="tsCostGrid"
+>
+
+  <div class="tsCostHead">
+    MODELO
+  </div>
+
+  <div class="tsCostHead">
+    PESpunte
+  </div>
+
+  <div class="tsCostHead">
+    PRELIMINAR
+  </div>
+
+  <div class="tsCostHead">
+    EDITAR
+  </div>
+
+
+  ${
+    models.map(
+      model=>{
+
+        const item =
+          costs[model] ||
+          {
+            pes:0,
+            pre:0,
+            min:0
+          };
+
+
+        return `
+
+<div
+  class="tsCostCell"
+>
+  ${esc(model)}
+</div>
+
+
+<div
+  class="tsCostCell"
+>
+  ${money(item.pes)}
+</div>
+
+
+<div
+  class="tsCostCell"
+>
+  ${money(item.pre)}
+</div>
+
+
+<div
+  class="tsCostCell"
+>
+
+  <button
+    type="button"
+    class="tsEditCost"
+    data-model="${esc(model)}"
+    title="Editar costo"
+    aria-label="Editar costo de ${esc(model)}"
+  >
+    ✏️
+  </button>
+
+</div>
+
+`;
+
+      }
+    ).join("")
+  }
+
+</div>
+
+
+<div
+  style="
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px solid #104765;
+  "
+>
+
+  <div
+    style="
+      font-size:16px;
+      font-weight:900;
+      margin-bottom:10px;
+    "
+  >
+
+    Agregar / editar modelo
+
+  </div>
+
+
+  <div
+    class="tsCostForm"
+    style="
+      display:grid;
+      grid-template-columns:
+        1.4fr 1fr 1fr auto;
+      gap:9px;
+    "
+  >
+
+    <input
+      id="tsCostModel"
+      placeholder="Ej. Verona"
+    >
+
+
+    <input
+      id="tsCostPes"
+      type="number"
+      min="0"
+      step="0.01"
+      placeholder="Pespunte"
+    >
+
+
+    <input
+      id="tsCostPre"
+      type="number"
+      min="0"
+      step="0.01"
+      placeholder="Preliminar"
+    >
+
+
+    <button
+      type="button"
+      id="tsSaveCost"
+    >
+
+      Guardar
+
+    </button>
+
+  </div>
+
+</div>
 
 `;
 
 
-  /* ==============================================================
-     INSERTAR FIX
-     ============================================================== */
-
-  const marker =
-    /\\s*<\\/script>\\s*$/i;
-
-
   if(
-    !marker.test(src)
+    !document.getElementById(
+      "tsCostRepairStyle"
+    )
   ){
 
-    throw new Error(
-      "No se encontró el cierre del código base."
+    const style =
+      document.createElement(
+        "style"
+      );
+
+
+    style.id =
+      "tsCostRepairStyle";
+
+
+    style.textContent = `
+
+#tsCostRepair input{
+
+  width:100%;
+
+  min-width:0;
+
+  padding:11px;
+
+  border:
+    1px solid #104765;
+
+  border-radius:10px;
+
+  background:#071a28;
+
+  color:#eef4fb;
+
+  font:inherit;
+
+}
+
+
+#tsCostRepair button{
+
+  border:0;
+
+  border-radius:10px;
+
+  padding:10px 12px;
+
+  background:#0879c9;
+
+  color:#fff;
+
+  font-weight:900;
+
+  cursor:pointer;
+
+}
+
+
+#tsCostRepair .tsEditCost{
+
+  width:38px;
+  height:38px;
+
+  padding:0;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  background:#082a40!important;
+
+  color:#56e7ff!important;
+
+  border:
+    1px solid
+    rgba(25,191,255,.25)!important;
+
+  font-size:17px;
+
+}
+
+
+#tsCostRepair .tsEditCost:hover{
+
+  background:#0b4665!important;
+
+}
+
+
+#tsCostRepair .tsCostHead{
+
+  color:#6e9bad;
+
+  font-size:11px;
+
+  font-weight:900;
+
+  padding:6px;
+
+}
+
+
+#tsCostRepair .tsCostCell{
+
+  padding:10px 6px;
+
+  border-top:
+    1px solid #104765;
+
+  min-width:0;
+
+  overflow-wrap:anywhere;
+
+}
+
+
+@media(max-width:650px){
+
+  #tsCostRepair .tsCostGrid{
+
+    grid-template-columns:
+      1fr 1fr!important;
+
+  }
+
+
+  #tsCostRepair .tsCostForm{
+
+    grid-template-columns:
+      1fr!important;
+
+  }
+
+}
+
+`;
+
+
+    document.head.appendChild(
+      style
     );
 
   }
 
 
-  src =
-    src.replace(
-      marker,
-      "\\n"+
-      FIX+
-      "\\n</script>"
-    );
+  /*
+  --------------------------------------------------------------
+  BOTONES DE EDICIÓN
+  --------------------------------------------------------------
+  */
+
+  panel
+  .querySelectorAll(
+    ".tsEditCost"
+  )
+  .forEach(
+    button=>{
+
+      button.onclick =
+        ()=>{
+
+          const model =
+            button.dataset.model;
 
 
-  document.open();
+          const item =
+            costs[model] ||
+            {
+              pes:0,
+              pre:0,
+              min:0
+            };
 
-  document.write(
-    src
+
+          const modelInput =
+            document.getElementById(
+              "tsCostModel"
+            );
+
+
+          const pesInput =
+            document.getElementById(
+              "tsCostPes"
+            );
+
+
+          const preInput =
+            document.getElementById(
+              "tsCostPre"
+            );
+
+
+          if(modelInput){
+
+            modelInput.value =
+              model;
+
+          }
+
+
+          if(pesInput){
+
+            pesInput.value =
+              num(
+                item.pes
+              );
+
+          }
+
+
+          if(preInput){
+
+            preInput.value =
+              num(
+                item.pre
+              );
+
+          }
+
+
+          if(modelInput){
+
+            modelInput.focus();
+
+          }
+
+        };
+
+    }
   );
 
-  document.close();
+
+  /*
+  --------------------------------------------------------------
+  GUARDAR
+  --------------------------------------------------------------
+  */
+
+  document
+  .getElementById(
+    "tsSaveCost"
+  )
+  ?.addEventListener(
+    "click",
+    ()=>{
+
+      const modelInput =
+        document.getElementById(
+          "tsCostModel"
+        );
 
 
-}catch(error){
+      const pesInput =
+        document.getElementById(
+          "tsCostPes"
+        );
 
-  document.body.innerHTML = `
 
-    <div
-      style="
-        font-family:system-ui;
-        padding:30px;
-        color:#fff;
-        background:#02070d;
-        min-height:100vh;
-      "
-    >
+      const preInput =
+        document.getElementById(
+          "tsCostPre"
+        );
 
-      <h2>
-        The Studio
-      </h2>
 
-      <p>
-        Error al cargar la versión guardada.
-      </p>
+      const model =
+        modelInput
+          ?.value
+          ?.trim();
 
-      <small>
-        ${String(error)}
-      </small>
 
-    </div>
+      if(!model){
 
-  `;
+        alert(
+          "Escribe el nombre del modelo."
+        );
+
+        return;
+
+      }
+
+
+      const pes =
+        num(
+          pesInput?.value
+        );
+
+
+      const pre =
+        num(
+          preInput?.value
+        );
+
+
+      const current =
+        normalizeCostObject(
+          readJSON(
+            "theStudioCostos_v4",
+            {}
+          )
+        );
+
+
+      const existingName =
+        Object.keys(
+          current
+        )
+        .find(
+          x=>
+            normalize(x)===
+            normalize(model)
+        );
+
+
+      let minValue =
+        0;
+
+
+      if(
+        existingName &&
+        current[existingName]
+      ){
+
+        minValue =
+          num(
+            current[
+              existingName
+            ].min
+          );
+
+      }
+
+
+      /*
+      Si se cambió el nombre,
+      quitamos solamente el nombre anterior.
+      */
+
+      if(
+        existingName &&
+        existingName!==model
+      ){
+
+        delete current[
+          existingName
+        ];
+
+      }
+
+
+      /*
+      GUARDAMOS NUEVO VALOR.
+      */
+
+      current[model] = {
+
+        pes:pes,
+
+        pre:pre,
+
+        min:minValue
+
+      };
+
+
+      saveJSON(
+        "theStudioCostos_v4",
+        current
+      );
+
+
+      /*
+      ESPEJO.
+      */
+
+      saveJSON(
+        "ts_costos_v1",
+        Object.keys(
+          current
+        )
+        .map(
+          name=>({
+
+            modelo:name,
+
+            pespunte:
+              num(
+                current[name].pes
+              ),
+
+            preliminar:
+              num(
+                current[name].pre
+              ),
+
+            min:
+              num(
+                current[name].min
+              )
+
+          })
+        )
+      );
+
+
+      /*
+      AVISAMOS A LA APP.
+      */
+
+      try{
+
+        window.dispatchEvent(
+          new StorageEvent(
+            "storage",
+            {
+              key:
+                "theStudioCostos_v4",
+
+              newValue:
+                JSON.stringify(
+                  current
+                ),
+
+              storageArea:
+                localStorage
+            }
+          )
+        );
+
+      }catch{}
+
+
+      renderCostRepair(
+        panel,
+        current
+      );
+
+
+      /*
+      Actualizamos también el destajo
+      si está abierto.
+      */
+
+      try{
+
+        if(
+          typeof window.__TS_RENDER_DESTajo__===
+          "function"
+        ){
+
+          window.__TS_RENDER_DESTajo__();
+
+        }
+
+      }catch{}
+
+
+      alert(
+        "Costo actualizado correctamente."
+      );
+
+    }
+  );
 
 }
 
-})();
+
+/* ================================================================
+   ================================================================
+   DESTAJO
+   ================================================================
+   ================================================================ */
+
+
+function installDestajo(){
+
+  if(
+    document.getElementById(
+      "tsDestajoBtn"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const KEYC =
+    "theStudioCostos_v4";
+
+
+  const KEYR =
+    "ts_destajo_v1";
+
+
+  const KEYW =
+    "ts_cierres_v1";
+
+
+  function costsArray(){
+
+    const object =
+      normalizeCostObject(
+        readJSON(
+          KEYC,
+          {}
+        )
+      );
+
+
+    return Object.keys(
+      object
+    )
+    .map(
+      model=>({
+
+        modelo:model,
+
+        pespunte:
+          num(
+            object[model].pes
+          ),
+
+        preliminar:
+          num(
+            object[model].pre
+          ),
+
+        min:
+          num(
+            object[model].min
+          )
+
+      })
+    );
+
+  }
+
+
+  function records(){
+
+    return readJSON(
+      KEYR,
+      []
+    );
+
+  }
+
+
+  function closes(){
+
+    return readJSON(
+      KEYW,
+      []
+    );
+
+  }
+
+
+  function save(
+    key,
+    value
+  ){
+
+    saveJSON(
+      key,
+      value
+    );
+
+  }
+
+
+  const style =
+    document.createElement(
+      "style"
+    );
+
+
+  style.id =
+    "tsDestajoStyle";
+
+
+  style.textContent = `
+
+#tsDestajoBtn{
+
+  position:fixed;
+
+  right:14px;
+
+  bottom:14px;
+
+  z-index:2147483646;
+
+  border:
+    1px solid
+    rgba(25,191,255,.40)!important;
+
+  border-radius:999px;
+
+  padding:14px 19px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #04101c,
+      #123d72
+    )!important;
+
+  color:#fff!important;
+
+  font:
+    900 15px system-ui;
+
+  box-shadow:
+    0 8px 30px
+    rgba(0,0,0,.45),
+
+    0 0 20px
+    rgba(25,191,255,.12);
+
+}
+
+
+#tsDestajoShade{
+
+  position:fixed;
+
+  inset:0;
+
+  background:#0008;
+
+  z-index:2147483645;
+
+  display:none;
+
+}
+
+
+#tsDestajo{
+
+  position:fixed;
+
+  right:12px;
+
+  bottom:70px;
+
+  width:
+    min(
+      620px,
+      calc(100vw - 24px)
+    );
+
+  max-height:82vh;
+
+  overflow:auto;
+
+  background:#071521;
+
+  color:#eef4fb;
+
+  border:
+    1px solid #104765;
+
+  border-radius:18px;
+
+  z-index:2147483647;
+
+  box-shadow:
+    0 20px 70px
+    #0009;
+
+  font:
+    14px system-ui;
+
+}
+
+
+#tsDestajo *{
+
+  box-sizing:border-box;
+
+}
+
+
+.tsHead{
+
+  position:sticky;
+
+  top:0;
+
+  background:#030b14;
+
+  border-bottom:
+    1px solid #104765;
+
+  padding:14px 16px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  z-index:2;
+
+}
+
+
+.tsHead b{
+
+  font-size:18px;
+
+}
+
+
+.tsClose{
+
+  border:0;
+
+  background:#0b2638!important;
+
+  color:#fff!important;
+
+  border-radius:10px;
+
+  padding:8px 11px;
+
+  font-size:18px;
+
+}
+
+
+.tsTabs{
+
+  display:flex;
+
+  gap:7px;
+
+  padding:10px 14px;
+
+  border-bottom:
+    1px solid #104765;
+
+  overflow:auto;
+
+}
+
+
+.tsTab{
+
+  border:0;
+
+  background:#0b2638!important;
+
+  color:#8fb4c4!important;
+
+  border-radius:10px;
+
+  padding:9px 12px;
+
+  white-space:nowrap;
+
+  font-weight:900;
+
+}
+
+
+.tsTab.on{
+
+  background:#0879c9!important;
+
+  color:#fff!important;
+
+}
+
+
+.tsPane{
+
+  display:none;
+
+  padding:14px;
+
+}
+
+
+.tsPane.on{
+
+  display:block;
+
+}
+
+
+.tsGrid{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:9px;
+
+}
+
+
+.tsGrid3{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr;
+
+  gap:9px;
+
+}
+
+
+.tsField label{
+
+  display:block;
+
+  font-size:11px;
+
+  font-weight:900;
+
+  color:#8db0bf;
+
+  margin:0 0 4px;
+
+}
+
+
+.tsField input,
+.tsField select{
+
+  width:100%;
+
+  border:
+    1px solid #104765;
+
+  border-radius:9px;
+
+  padding:10px;
+
+  background:#071a28;
+
+  color:#eef4fb;
+
+  font:inherit;
+
+}
+
+
+.tsBtn{
+
+  border:0;
+
+  border-radius:10px;
+
+  padding:10px 13px;
+
+  font-weight:900;
+
+  background:#0879c9!important;
+
+  color:#fff!important;
+
+}
+
+
+.tsBtn.alt{
+
+  background:#102b3c!important;
+
+  color:#dffaff!important;
+
+}
+
+
+.tsBtn.good{
+
+  background:#0c2a23!important;
+
+  color:#8ff0d3!important;
+
+}
+
+
+.tsCard{
+
+  border:
+    1px solid #104765;
+
+  background:#071521;
+
+  border-radius:13px;
+
+  padding:12px;
+
+  margin:10px 0;
+
+}
+
+
+.tsMoney{
+
+  font-size:21px;
+
+  font-weight:900;
+
+}
+
+
+.tsKpis{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:8px;
+
+}
+
+
+.tsKpi{
+
+  background:#071a28;
+
+  border-radius:12px;
+
+  padding:10px;
+
+}
+
+
+.tsKpi small{
+
+  display:block;
+
+  color:#8baebb;
+
+}
+
+
+.tsTable{
+
+  width:100%;
+
+  border-collapse:collapse;
+
+  margin-top:9px;
+
+}
+
+
+.tsTable th,
+.tsTable td{
+
+  padding:7px 5px;
+
+  border-bottom:
+    1px solid #104765;
+
+  text-align:left;
+
+  font-size:12px;
+
+}
+
+
+.tsTable th{
+
+  color:#8baebb;
+
+}
+
+
+.tsRight{
+
+  text-align:right!important;
+
+}
+
+
+.tsLine{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:8px;
+
+  padding:8px 0;
+
+  border-bottom:
+    1px solid #104765;
+
+}
+
+
+.tsMuted{
+
+  color:#8baebb;
+
+  font-size:12px;
+
+}
+
+
+@media(max-width:520px){
+
+  .tsGrid,
+  .tsGrid3{
+
+    grid-template-columns:
+      1fr 1fr;
+
+  }
+
+
+  .tsKpis{
+
+    grid-template-columns:
+      1fr 1fr;
+
+  }
+
+
+  .tsKpi:last-child{
+
+    grid-column:
+      1/-1;
+
+  }
+
+}
+
+
+@media(max-width:420px){
+
+  #tsDestajo{
+
+    right:8px;
+
+    bottom:64px;
+
+    width:
+      calc(100vw - 16px);
+
+    max-height:84vh;
+
+    border-radius:16px;
+
+  }
+
+
+  .tsPane{
+
+    padding:10px;
+
+  }
+
+
+  .tsGrid,
+  .tsGrid3,
+  .tsKpis{
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+
+  .tsLine{
+
+    flex-direction:column;
+
+  }
+
+
+  .tsBtn{
+
+    min-height:44px;
+
+  }
+
+}
+
+`;
+
+
+  document.head.appendChild(
+    style
+  );
+
+
+  document.body.insertAdjacentHTML(
+    "beforeend",
+
+    `
+
+<button
+  id="tsDestajoBtn"
+>
+💰 Destajo
+</button>
+
+
+<div
+  id="tsDestajoShade"
+>
+</div>
+
+
+<section
+  id="tsDestajo"
+  aria-label="Destajo The Studio"
+>
+
+
+<div class="tsHead">
+
+  <b>
+    💰 Destajo · Nómina
+  </b>
+
+  <button
+    class="tsClose"
+    id="tsClose"
+  >
+    ×
+  </button>
+
+</div>
+
+
+<div class="tsTabs">
+
+  <button
+    class="tsTab on"
+    data-tab="cap"
+  >
+    Captura
+  </button>
+
+
+  <button
+    class="tsTab"
+    data-tab="cost"
+  >
+    Costos por modelo
+  </button>
+
+
+  <button
+    class="tsTab"
+    data-tab="res"
+  >
+    Resumen semanal
+  </button>
+
+</div>
+
+
+<div
+  id="tsCap"
+  class="tsPane on"
+>
+</div>
+
+
+<div
+  id="tsCost"
+  class="tsPane"
+>
+</div>
+
+
+<div
+  id="tsRes"
+  class="tsPane"
+>
+</div>
+
+
+</section>
+
+`
+  );
+
+
+  const btn =
+    document.getElementById(
+      "tsDestajoBtn"
+    );
+
+
+  const shade =
+    document.getElementById(
+      "tsDestajoShade"
+    );
+
+
+  const panel =
+    document.getElementById(
+      "tsDestajo"
+    );
+
+
+  const open=()=>{
+
+    shade.style.display =
+      "block";
+
+    panel.style.display =
+      "block";
+
+    renderAll();
+
+  };
+
+
+  const close=()=>{
+
+    shade.style.display =
+      "none";
+
+    panel.style.display =
+      "none";
+
+  };
+
+
+  btn.onclick =
+    open;
+
+
+  shade.onclick =
+    close;
+
+
+  document
+  .getElementById(
+    "tsClose"
+  )
+  .onclick =
+    close;
+
+
+  document
+  .querySelectorAll(
+    ".tsTab"
+  )
+  .forEach(
+    tab=>{
+
+      tab.onclick=()=>{
+
+        document
+        .querySelectorAll(
+          ".tsTab"
+        )
+        .forEach(
+          x=>
+            x.classList.remove(
+              "on"
+            )
+        );
+
+
+        tab.classList.add(
+          "on"
+        );
+
+
+        document
+        .querySelectorAll(
+          ".tsPane"
+        )
+        .forEach(
+          x=>
+            x.classList.remove(
+              "on"
+            )
+        );
+
+
+        const pane={
+
+          cap:"Cap",
+
+          cost:"Cost",
+
+          res:"Res"
+
+        }[
+          tab.dataset.tab
+        ];
+
+
+        document
+        .getElementById(
+          "ts"+pane
+        )
+        .classList.add(
+          "on"
+        );
+
+
+        renderAll();
+
+      };
+
+    }
+  );
+
+
+  function modelOptions(){
+
+    return costsArray()
+      .map(
+        c=>`
+
+<option
+  value="${esc(c.modelo)}"
+>
+
+  ${esc(c.modelo)}
+
+  · P
+  ${money(c.pespunte)}
+
+  · Pre
+  ${money(c.preliminar)}
+
+</option>
+
+`
+      )
+      .join("");
+
+  }
+
+
+  /* ==============================================================
+     CAPTURA
+     ============================================================== */
+
+
+  function renderCap(){
+
+    const c =
+      costsArray();
+
+
+    document
+    .getElementById(
+      "tsCap"
+    )
+    .innerHTML = `
+
+<div class="tsCard">
+
+  <b>
+    Registrar producción
+  </b>
+
+
+  <div class="tsMuted">
+
+    El destajo se calcula con
+    piezas capturadas como salida.
+
+    Semana:
+    lunes a sábado.
+
+  </div>
+
+
+  <div
+    class="tsGrid"
+    style="margin-top:10px"
+  >
+
+    <div class="tsField">
+
+      <label>
+        Fecha
+      </label>
+
+      <input
+        id="tsDate"
+        type="date"
+        value="${todayLocal()}"
+      >
+
+    </div>
+
+
+    <div class="tsField">
+
+      <label>
+        Línea
+      </label>
+
+      <select id="tsLine">
+
+        <option>
+          Línea A
+        </option>
+
+        <option>
+          Línea B
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="tsField">
+
+      <label>
+        Modelo
+      </label>
+
+      <select id="tsModel">
+
+        ${
+          modelOptions()
+          ||
+          '<option value="">Primero agrega un modelo</option>'
+        }
+
+      </select>
+
+    </div>
+
+
+    <div class="tsField">
+
+      <label>
+        Piezas salidas
+      </label>
+
+      <input
+        id="tsPairs"
+        type="number"
+        min="0"
+        step="1"
+        placeholder="0"
+      >
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="tsGrid3"
+    style="margin-top:10px"
+  >
+
+    <div class="tsKpi">
+
+      <small>
+        Pespunte/pieza
+      </small>
+
+      <b id="tsCP">
+        $0.00
+      </b>
+
+    </div>
+
+
+    <div class="tsKpi">
+
+      <small>
+        Preliminar/pieza
+      </small>
+
+      <b id="tsCR">
+        $0.00
+      </b>
+
+    </div>
+
+
+    <div class="tsKpi">
+
+      <small>
+        Destajo registro
+      </small>
+
+      <b id="tsCT">
+        $0.00
+      </b>
+
+    </div>
+
+  </div>
+
+
+  <div
+    style="
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+    "
+  >
+
+    <button
+      class="tsBtn"
+      id="tsAdd"
+    >
+      Agregar
+    </button>
+
+
+    <button
+      class="tsBtn alt"
+      id="tsClear"
+    >
+      Limpiar
+    </button>
+
+  </div>
+
+</div>
+
+
+<div class="tsCard">
+
+  <b>
+    Registros recientes
+  </b>
+
+  <div id="tsRecent">
+  </div>
+
+</div>
+
+`;
+
+
+    const update=()=>{
+
+      const model =
+        c.find(
+          x=>
+            x.modelo===
+            document
+            .getElementById(
+              "tsModel"
+            )
+            ?.value
+        );
+
+
+      const pieces =
+        num(
+          document
+          .getElementById(
+            "tsPairs"
+          )
+          ?.value
+        );
+
+
+      const cp =
+        document.getElementById(
+          "tsCP"
+        );
+
+
+      const cr =
+        document.getElementById(
+          "tsCR"
+        );
+
+
+      const ct =
+        document.getElementById(
+          "tsCT"
+        );
+
+
+      if(cp){
+
+        cp.textContent =
+          money(
+            model?.pespunte
+          );
+
+      }
+
+
+      if(cr){
+
+        cr.textContent =
+          money(
+            model?.preliminar
+          );
+
+      }
+
+
+      if(ct){
+
+        ct.textContent =
+          money(
+            pieces*
+            (
+              num(
+                model?.pespunte
+              )+
+              num(
+                model?.preliminar
+              )
+            )
+          );
+
+      }
+
+    };
+
+
+    document
+    .getElementById(
+      "tsModel"
+    )
+    ?.addEventListener(
+      "change",
+      update
+    );
+
+
+    document
+    .getElementById(
+      "tsPairs"
+    )
+    ?.addEventListener(
+      "input",
+      update
+    );
+
+
+    update();
+
+
+    document
+    .getElementById(
+      "tsAdd"
+    )
+    ?.addEventListener(
+      "click",
+      ()=>{
+
+        const model =
+          c.find(
+            x=>
+              x.modelo===
+              document
+              .getElementById(
+                "tsModel"
+              )
+              .value
+          );
+
+
+        const pieces =
+          num(
+            document
+            .getElementById(
+              "tsPairs"
+            )
+            .value
+          );
+
+
+        if(
+          !model ||
+          pieces<=0
+        ){
+
+          alert(
+            "Selecciona un modelo y captura las piezas salidas."
+          );
+
+          return;
+
+        }
+
+
+        const r =
+          records();
+
+
+        r.push({
+
+          id:
+            Date.now(),
+
+          date:
+            document
+            .getElementById(
+              "tsDate"
+            )
+            .value,
+
+          line:
+            document
+            .getElementById(
+              "tsLine"
+            )
+            .value,
+
+          modelo:
+            model.modelo,
+
+          piezas:
+            pieces,
+
+          pares:
+            pieces,
+
+          pespunte:
+            num(
+              model.pespunte
+            ),
+
+          preliminar:
+            num(
+              model.preliminar
+            )
+
+        });
+
+
+        save(
+          KEYR,
+          r
+        );
+
+
+        renderAll();
+
+        refreshStudio();
+
+      }
+    );
+
+
+    document
+    .getElementById(
+      "tsClear"
+    )
+    ?.addEventListener(
+      "click",
+      ()=>{
+
+        const input =
+          document.getElementById(
+            "tsPairs"
+          );
+
+
+        if(input){
+
+          input.value =
+            "";
+
+        }
+
+
+        update();
+
+      }
+    );
+
+
+    const rr =
+      records()
+      .slice(-12)
+      .reverse();
+
+
+    const recent =
+      document.getElementById(
+        "tsRecent"
+      );
+
+
+    if(!recent)
+      return;
+
+
+    recent.innerHTML =
+
+      rr.length
+
+      ?
+
+      `
+
+<table class="tsTable">
+
+<tr>
+
+  <th>
+    Fecha
+  </th>
+
+  <th>
+    Línea
+  </th>
+
+  <th>
+    Modelo
+  </th>
+
+  <th class="tsRight">
+    Piezas
+  </th>
+
+  <th class="tsRight">
+    Destajo
+  </th>
+
+</tr>
+
+
+${
+  rr.map(
+    r=>`
+
+<tr>
+
+  <td>
+    ${esc(r.date)}
+  </td>
+
+  <td>
+    ${esc(
+      String(
+        r.line || ""
+      )
+      .replace(
+        "Línea ",
+        ""
+      )
+    )}
+  </td>
+
+  <td>
+    ${esc(r.modelo)}
+  </td>
+
+  <td class="tsRight">
+
+    ${num(
+      r.piezas ??
+      r.pares
+    )}
+
+  </td>
+
+  <td class="tsRight">
+
+    ${money(
+      num(
+        r.piezas ??
+        r.pares
+      )*
+      (
+        num(r.pespunte)+
+        num(r.preliminar)
+      )
+    )}
+
+  </td>
+
+</tr>
+
+`
+  ).join("")
+}
+
+</table>
+
+`
+
+      :
+
+      `
+
+<div
+  class="tsMuted"
+  style="padding:10px 0"
+>
+
+  Aún no hay registros.
+
+</div>
+
+`;
+
+  }
+
+
+  /* ==============================================================
+     COSTOS DESTAJO
+     ============================================================== */
+
+
+  function renderCost(){
+
+    const c =
+      costsArray();
+
+
+    document
+    .getElementById(
+      "tsCost"
+    )
+    .innerHTML = `
+
+<div class="tsCard">
+
+  <b>
+    Catálogo de costos
+  </b>
+
+
+  <div class="tsMuted">
+
+    Los costos se guardan en
+    theStudioCostos_v4.
+
+    Puedes editarlos cuando cambien.
+
+  </div>
+
+
+  <div
+    class="tsGrid3"
+    style="margin-top:10px"
+  >
+
+    <div class="tsField">
+
+      <label>
+        Modelo
+      </label>
+
+      <input
+        id="tsNewM"
+        placeholder="Verona"
+      >
+
+    </div>
+
+
+    <div class="tsField">
+
+      <label>
+        Costo pespunte $
+      </label>
+
+      <input
+        id="tsNewP"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="12.50"
+      >
+
+    </div>
+
+
+    <div class="tsField">
+
+      <label>
+        Costo preliminar $
+      </label>
+
+      <input
+        id="tsNewR"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="8.00"
+      >
+
+    </div>
+
+  </div>
+
+
+  <button
+    class="tsBtn"
+    id="tsSaveC"
+    style="margin-top:10px"
+  >
+
+    Guardar / actualizar modelo
+
+  </button>
+
+</div>
+
+
+<div class="tsCard">
+
+${
+  c.length
+
+  ?
+
+`
+
+<table class="tsTable">
+
+<tr>
+
+  <th>
+    Modelo
+  </th>
+
+  <th class="tsRight">
+    Pespunte
+  </th>
+
+  <th class="tsRight">
+    Preliminar
+  </th>
+
+  <th>
+    Acción
+  </th>
+
+</tr>
+
+
+${
+  c.map(
+    x=>`
+
+<tr>
+
+  <td>
+    ${esc(x.modelo)}
+  </td>
+
+  <td class="tsRight">
+    ${money(
+      x.pespunte
+    )}
+  </td>
+
+  <td class="tsRight">
+    ${money(
+      x.preliminar
+    )}
+  </td>
+
+  <td>
+
+    <button
+      class="tsBtn alt tsDestEdit"
+      data-model="${esc(x.modelo)}"
+      title="Editar"
+    >
+      ✏️
+    </button>
+
+  </td>
+
+</tr>
+
+`
+  ).join("")
+}
+
+</table>
+
+`
+
+  :
+
+`
+
+<div class="tsMuted">
+
+  No hay modelos capturados.
+
+</div>
+
+`
+
+}
+
+</div>
+
+`;
+
+
+    document
+    .getElementById(
+      "tsSaveC"
+    )
+    ?.addEventListener(
+      "click",
+      ()=>{
+
+        const model =
+          document
+          .getElementById(
+            "tsNewM"
+          )
+          .value
+          .trim();
+
+
+        if(!model){
+
+          alert(
+            "Escribe el modelo."
+          );
+
+          return;
+
+        }
+
+
+        const p =
+          num(
+            document
+            .getElementById(
+              "tsNewP"
+            )
+            .value
+          );
+
+
+        const r =
+          num(
+            document
+            .getElementById(
+              "tsNewR"
+            )
+            .value
+          );
+
+
+        const arr =
+          normalizeCostObject(
+            readJSON(
+              KEYC,
+              {}
+            )
+          );
+
+
+        const existing =
+          Object.keys(
+            arr
+          )
+          .find(
+            x=>
+              normalize(x)===
+              normalize(model)
+          );
+
+
+        let min =
+          0;
+
+
+        if(
+          existing &&
+          arr[existing]
+        ){
+
+          min =
+            num(
+              arr[existing].min
+            );
+
+        }
+
+
+        if(
+          existing &&
+          existing!==model
+        ){
+
+          delete arr[
+            existing
+          ];
+
+        }
+
+
+        arr[model] = {
+
+          pes:p,
+
+          pre:r,
+
+          min:min
+
+        };
+
+
+        saveJSON(
+          KEYC,
+          arr
+        );
+
+
+        saveJSON(
+          "ts_costos_v1",
+          Object.keys(arr)
+          .map(
+            x=>({
+
+              modelo:x,
+
+              pespunte:
+                num(
+                  arr[x].pes
+                ),
+
+              preliminar:
+                num(
+                  arr[x].pre
+                ),
+
+              min:
+                num(
+                  arr[x].min
+                )
+
+            })
+          )
+        );
+
+
+        renderAll();
+
+
+        setTimeout(
+          ()=>{
+            installCostRepair();
+            refreshTablero();
+          },
+          80
+        );
+
+      }
+    );
+
+
+    document
+    .querySelectorAll(
+      ".tsDestEdit"
+    )
+    .forEach(
+      button=>{
+
+        button.onclick=()=>{
+
+          const model =
+            button.dataset.model;
+
+
+          const item =
+            c.find(
+              x=>
+                x.modelo===
+                model
+            );
+
+
+          if(!item)
+            return;
+
+
+          document
+          .getElementById(
+            "tsNewM"
+          )
+          .value =
+            item.modelo;
+
+
+          document
+          .getElementById(
+            "tsNewP"
+          )
+          .value =
+            num(
+              item.pespunte
+            );
+
+
+          document
+          .getElementById(
+            "tsNewR"
+          )
+          .value =
+            num(
+              item.preliminar
+            );
+
+
+          document
+          .getElementById(
+            "tsNewM"
+          )
+          .focus();
+
+        };
+
+      }
+    );
+
+  }
+
+
+  /* ==============================================================
+     RESUMEN
+     ============================================================== */
+
+
+  function renderRes(){
+
+    const start =
+      mondayOf(
+        todayLocal()
+      );
+
+
+    const end =
+      addDays(
+        start,
+        5
+      );
+
+
+    const rr =
+      records()
+      .filter(
+        r=>
+          r.date>=start &&
+          r.date<=end
+      );
+
+
+    const sum =
+      arr=>
+        arr.reduce(
+          (
+            a,
+            r
+          )=>
+            a+
+            num(
+              r.piezas ??
+              r.pares
+            ),
+          0
+        );
+
+
+    const calc =
+      (
+        arr,
+        key
+      )=>
+        arr.reduce(
+          (
+            a,
+            r
+          )=>
+            a+
+            num(
+              r.piezas ??
+              r.pares
+            )*
+            num(
+              r[key]
+            ),
+          0
+        );
+
+
+    const A =
+      rr.filter(
+        r=>
+          r.line===
+          "Línea A"
+      );
+
+
+    const B =
+      rr.filter(
+        r=>
+          r.line===
+          "Línea B"
+      );
+
+
+    const pA =
+      calc(
+        A,
+        "pespunte"
+      );
+
+
+    const pB =
+      calc(
+        B,
+        "pespunte"
+      );
+
+
+    const rA =
+      calc(
+        A,
+        "preliminar"
+      );
+
+
+    const rB =
+      calc(
+        B,
+        "preliminar"
+      );
+
+
+    const total =
+      pA+
+      pB+
+      rA+
+      rB;
+
+
+    document
+    .getElementById(
+      "tsRes"
+    )
+    .innerHTML = `
+
+<div class="tsCard">
+
+  <b>
+    Semana de nómina
+  </b>
+
+
+  <div class="tsMuted">
+
+    ${start}
+    →
+    ${end}
+
+    · cierre el sábado
+
+  </div>
+
+
+  <div
+    class="tsKpis"
+    style="margin-top:10px"
+  >
+
+    <div class="tsKpi">
+
+      <small>
+        Línea A · destajo
+      </small>
+
+      <div class="tsMoney">
+
+        ${money(
+          pA+rA
+        )}
+
+      </div>
+
+    </div>
+
+
+    <div class="tsKpi">
+
+      <small>
+        Línea B · destajo
+      </small>
+
+      <div class="tsMoney">
+
+        ${money(
+          pB+rB
+        )}
+
+      </div>
+
+    </div>
+
+
+    <div class="tsKpi">
+
+      <small>
+        Acumulado semanal
+      </small>
+
+      <div class="tsMoney">
+
+        ${money(
+          total
+        )}
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="tsCard">
+
+  <b>
+    Desglose por línea
+  </b>
+
+
+  <div class="tsLine">
+
+    <span>
+
+      Línea A ·
+      ${sum(A)}
+      piezas
+
+    </span>
+
+
+    <span>
+
+      <b>
+        Pespunte
+        ${money(pA)}
+      </b>
+
+      · Preliminar
+      ${money(rA)}
+
+    </span>
+
+  </div>
+
+
+  <div class="tsLine">
+
+    <span>
+
+      Línea B ·
+      ${sum(B)}
+      piezas
+
+    </span>
+
+
+    <span>
+
+      <b>
+        Pespunte
+        ${money(pB)}
+      </b>
+
+      · Preliminar
+      ${money(rB)}
+
+    </span>
+
+  </div>
+
+
+  <div class="tsLine">
+
+    <span>
+
+      <b>
+        Total
+      </b>
+
+    </span>
+
+
+    <span>
+
+      <b>
+        ${money(total)}
+      </b>
+
+    </span>
+
+  </div>
+
+</div>
+
+
+<div class="tsCard">
+
+  <b>
+    Cerrar semana
+  </b>
+
+
+  <div class="tsMuted">
+
+    El cierre guarda el total
+    de lunes a sábado.
+
+    Los registros no se borran.
+
+  </div>
+
+
+  <button
+    class="tsBtn good"
+    id="tsCloseWeek"
+    style="margin-top:10px"
+  >
+
+    Cerrar semana y guardar histórico
+
+  </button>
+
+</div>
+
+
+<div class="tsCard">
+
+  <b>
+    Histórico de cierres
+  </b>
+
+
+  <div id="tsHistory">
+  </div>
+
+</div>
+
+`;
+
+
+    document
+    .getElementById(
+      "tsCloseWeek"
+    )
+    ?.addEventListener(
+      "click",
+      ()=>{
+
+        const h =
+          closes();
+
+
+        if(
+          h.some(
+            x=>
+              x.week===
+              start
+          )
+        ){
+
+          alert(
+            "Esta semana ya está cerrada."
+          );
+
+          return;
+
+        }
+
+
+        h.unshift({
+
+          week:start,
+
+          end:end,
+
+          total:total,
+
+          pespunte:
+            pA+pB,
+
+          preliminar:
+            rA+rB,
+
+          lineA:
+            pA+rA,
+
+          lineB:
+            pB+rB,
+
+          closedAt:
+            new Date()
+            .toISOString()
+
+        });
+
+
+        save(
+          KEYW,
+          h
+        );
+
+
+        renderRes();
+
+      }
+    );
+
+
+    const h =
+      closes();
+
+
+    document
+    .getElementById(
+      "tsHistory"
+    )
+    .innerHTML =
+
+      h.length
+
+      ?
+
+`
+
+<table class="tsTable">
+
+<tr>
+
+  <th>
+    Semana
+  </th>
+
+  <th>
+    A
+  </th>
+
+  <th>
+    B
+  </th>
+
+  <th class="tsRight">
+    Total
+  </th>
+
+</tr>
+
+
+${
+  h.map(
+    x=>`
+
+<tr>
+
+  <td>
+    ${esc(x.week)}
+  </td>
+
+  <td>
+    ${money(x.lineA)}
+  </td>
+
+  <td>
+    ${money(x.lineB)}
+  </td>
+
+  <td class="tsRight">
+
+    <b>
+      ${money(x.total)}
+    </b>
+
+  </td>
+
+</tr>
+
+`
+  ).join("")
+}
+
+</table>
+
+`
+
+      :
+
+`
+
+<div
+  class="tsMuted"
+  style="padding-top:8px"
+>
+
+  No hay semanas cerradas todavía.
+
+</div>
+
+`;
+
+  }
+
+
+  function renderAll(){
+
+    renderCap();
+
+    renderCost();
+
+    renderRes();
+
+
+    window.__TS_RENDER_DESTajo__ =
+      renderAll;
+
+  }
+
+
+  panel.style.display =
+    "none";
+
+
+  window.__TS_RENDER_DESTajo__ =
+    renderAll;
+
+}
+
+
+/* ================================================================
+   ================================================================
+   FIN
+   ================================================================
+   ================================================================ */
+
 </script>
