@@ -1,30 +1,679 @@
 <!doctype html>
 <html lang="es">
 <head>
+
 <meta charset="utf-8">
 
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1,viewport-fit=cover"
->
+<meta name="viewport"
+content="width=device-width,initial-scale=1,viewport-fit=cover">
 
 <meta name="theme-color" content="#07111f">
 
-<title>The Studio</title>
+<title>THE STUDIO · CONTROL DE PRODUCCIÓN</title>
 
 <style>
 
-*{
-  box-sizing:border-box;
+:root{
+  --bg:#06101d;
+  --panel:#0b1929;
+  --panel2:#0f2033;
+  --panel3:#132941;
+  --line:#233a53;
+  --text:#f5f8fc;
+  --muted:#93a7bd;
+  --blue:#4b9cff;
+  --blue2:#1769c7;
+  --green:#2fd37c;
+  --yellow:#f3c75f;
+  --red:#ff6574;
+  --white:#ffffff;
+  --shadow:0 18px 45px rgba(0,0,0,.25);
+  --radius:22px;
 }
 
-html,
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  background:var(--bg);
+  min-height:100%;
+}
+
 body{
   margin:0;
-  padding:0;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(44,117,194,.13),transparent 35%),
+    radial-gradient(circle at 100% 20%,rgba(47,211,124,.05),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  min-height:100vh;
+  padding-bottom:45px;
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  width:min(1180px,100%);
+  margin:auto;
+  padding:18px 14px 40px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+  background:linear-gradient(145deg,#0b1b2d,#081522);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:22px;
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+}
+
+.header-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand-icon{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  background:#10325a;
+  font-size:25px;
+}
+
+.brand h1{
+  margin:0;
+  font-size:24px;
+  letter-spacing:-.5px;
+}
+
+.brand p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.day-badge{
+  border:1px solid #2d5277;
+  background:#0b233b;
+  color:#a9c8e9;
+  padding:10px 14px;
+  border-radius:14px;
+  font-weight:800;
+  font-size:13px;
+}
+
+/* =========================================================
+   NAV
+========================================================= */
+
+.nav{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:4px 0 10px;
+  margin-bottom:8px;
+  scrollbar-width:none;
+}
+
+.nav::-webkit-scrollbar{
+  display:none;
+}
+
+.nav button{
+  flex:0 0 auto;
+  border:1px solid var(--line);
+  background:#0b1827;
+  color:#a9b9ca;
+  border-radius:14px;
+  padding:12px 15px;
+  font-weight:800;
+  font-size:13px;
+}
+
+.nav button.active{
+  background:#1769c7;
+  color:white;
+  border-color:#398be8;
+  box-shadow:0 8px 20px rgba(23,105,199,.25);
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.view{
+  display:none;
+}
+
+.view.active{
+  display:block;
+}
+
+.section{
+  background:linear-gradient(145deg,#0b1929,#081522);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px;
+  margin-bottom:14px;
+  box-shadow:var(--shadow);
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.section-title h2{
+  margin:0;
+  font-size:21px;
+}
+
+.section-title p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* =========================================================
+   FORMS
+========================================================= */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+
+.grid-4{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+.field label{
+  color:#aabbd0;
+  font-size:12px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+input,
+select,
+textarea{
   width:100%;
-  min-height:100%;
-  overflow-x:hidden;
+  border:1px solid #29415b;
+  background:#081521;
+  color:white;
+  border-radius:14px;
+  padding:13px 14px;
+  outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#4b9cff;
+  box-shadow:0 0 0 3px rgba(75,156,255,.12);
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.btn-row{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.btn{
+  border:0;
+  border-radius:14px;
+  padding:13px 17px;
+  font-weight:900;
+  color:white;
+  background:#1769c7;
+  box-shadow:0 8px 20px rgba(23,105,199,.22);
+}
+
+.btn:hover{
+  filter:brightness(1.08);
+}
+
+.btn.secondary{
+  background:#16283b;
+  border:1px solid #2a435d;
+  box-shadow:none;
+}
+
+.btn.green{
+  background:#13874e;
+}
+
+.btn.red{
+  background:#9c2635;
+}
+
+.btn.yellow{
+  background:#9b7512;
+}
+
+.btn.small{
+  padding:8px 11px;
+  font-size:12px;
+  border-radius:10px;
+}
+
+/* =========================================================
+   LINE SELECTOR
+========================================================= */
+
+.line-selector{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.line-selector button{
+  border:1px solid #29415b;
+  background:#0b1929;
+  color:#aabbd0;
+  padding:15px;
+  border-radius:16px;
+  font-weight:900;
+  font-size:15px;
+}
+
+.line-selector button.active{
+  background:#103f70;
+  border-color:#4b9cff;
+  color:white;
+  box-shadow:0 8px 20px rgba(75,156,255,.15);
+}
+
+/* =========================================================
+   KPI
+========================================================= */
+
+.kpis{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+}
+
+.kpi{
+  background:#0e2033;
+  border:1px solid #263f59;
+  border-radius:18px;
+  padding:16px;
+}
+
+.kpi .label{
+  color:#9eb0c4;
+  font-size:11px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+}
+
+.kpi .value{
+  margin-top:6px;
+  font-size:27px;
+  font-weight:950;
+  color:#4b9cff;
+}
+
+.kpi .sub{
+  margin-top:3px;
+  color:#7f93aa;
+  font-size:12px;
+}
+
+/* =========================================================
+   CAPACITY
+========================================================= */
+
+.capacity-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.capacity-card{
+  border:1px solid #29415b;
+  border-radius:19px;
+  padding:18px;
+  background:#0c1c2d;
+}
+
+.capacity-card h3{
+  margin:0 0 8px;
+  font-size:15px;
+  color:#b5c5d8;
+}
+
+.big{
+  font-size:31px;
+  font-weight:950;
+  color:#4b9cff;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+.progress{
+  height:10px;
+  background:#07111c;
+  border:1px solid #243b53;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:12px;
+}
+
+.progress > div{
+  height:100%;
+  background:#4b9cff;
+  border-radius:99px;
+  width:0%;
+}
+
+/* =========================================================
+   TABLES
+========================================================= */
+
+.table-wrap{
+  width:100%;
+  overflow-x:auto;
+  border:1px solid #263e58;
+  border-radius:18px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:760px;
+}
+
+th{
+  text-align:left;
+  background:#102337;
+  color:#aebfd2;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  padding:12px;
+  white-space:nowrap;
+}
+
+td{
+  border-top:1px solid #1d3349;
+  padding:12px;
+  color:#e9f0f7;
+  font-size:13px;
+  vertical-align:middle;
+}
+
+tr:hover td{
+  background:rgba(255,255,255,.015);
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  border-radius:99px;
+  padding:6px 9px;
+  font-size:11px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.badge.blue{
+  background:#123d68;
+  color:#79b7ff;
+}
+
+.badge.green{
+  background:#103d2b;
+  color:#55e39a;
+}
+
+.badge.yellow{
+  background:#4b3a0d;
+  color:#f4d875;
+}
+
+.badge.red{
+  background:#4b1720;
+  color:#ff7e89;
+}
+
+.badge.gray{
+  background:#1a2938;
+  color:#a7b5c3;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-back{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(8px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  z-index:9999;
+}
+
+.modal-back.open{
+  display:flex;
+}
+
+.modal{
+  width:min(650px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:#0b1929;
+  border:1px solid #31506f;
+  border-radius:24px;
+  padding:20px;
+  box-shadow:0 25px 70px rgba(0,0,0,.5);
+}
+
+.modal h3{
+  margin:0 0 16px;
+}
+
+.modal-close{
+  float:right;
+  border:0;
+  background:#172b40;
+  color:white;
+  border-radius:10px;
+  padding:7px 10px;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+  text-align:center;
+  padding:30px 15px;
+  color:#778ca2;
+}
+
+.empty strong{
+  display:block;
+  color:#a8b9ca;
+  margin-bottom:5px;
+}
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.alert{
+  padding:13px 15px;
+  border-radius:14px;
+  border:1px solid #2c4761;
+  background:#0d2033;
+  color:#a9bed2;
+  font-size:13px;
+  margin-bottom:12px;
+}
+
+.alert.success{
+  border-color:#236b48;
+  background:#0c2b1d;
+  color:#76e5aa;
+}
+
+.alert.warning{
+  border-color:#725b1e;
+  background:#2a220b;
+  color:#f2d875;
+}
+
+.alert.error{
+  border-color:#74313b;
+  background:#2b1116;
+  color:#ff9aa3;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:800px){
+
+  .grid,
+  .grid-3,
+  .grid-4,
+  .capacity-grid{
+    grid-template-columns:1fr;
+  }
+
+  .kpis{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .header{
+    border-radius:22px;
+  }
+
+  .section{
+    border-radius:20px;
+  }
+
+}
+
+@media(max-width:520px){
+
+  .app{
+    padding:10px 10px 35px;
+  }
+
+  .kpis{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .kpi{
+    padding:13px;
+  }
+
+  .kpi .value{
+    font-size:23px;
+  }
+
+  .brand h1{
+    font-size:20px;
+  }
+
+  .line-selector{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print{
+
+  body{
+    background:white;
+    color:black;
+  }
+
+  .nav,
+  .btn,
+  .modal-back{
+    display:none!important;
+  }
+
+  .section,
+  .header{
+    box-shadow:none;
+    border:1px solid #aaa;
+  }
+
 }
 
 </style>
@@ -33,29 +682,1178 @@ body{
 
 <body>
 
+<div class="app">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="header">
+
+    <div class="header-top">
+
+      <div class="brand">
+
+        <div class="brand-icon">
+          🎯
+        </div>
+
+        <div>
+          <h1>THE STUDIO</h1>
+          <p>Control de Producción · Línea 20</p>
+        </div>
+
+      </div>
+
+      <div class="day-badge" id="todayBadge">
+        Cargando fecha...
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       NAV
+  ====================================================== -->
+
+  <nav class="nav">
+
+    <button
+      class="active"
+      data-view="programacion">
+      📋 Programación
+    </button>
+
+    <button
+      data-view="avance">
+      🚚 Avance
+    </button>
+
+    <button
+      data-view="workshop">
+      🏭 Workshop
+    </button>
+
+    <button
+      data-view="nomina">
+      💰 Nómina
+    </button>
+
+    <button
+      data-view="capacidad">
+      🎯 Capacidad
+    </button>
+
+  </nav>
+
+
+  <!-- =====================================================
+       PROGRAMACIÓN
+  ====================================================== -->
+
+  <section
+    id="programacion"
+    class="view active">
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <div>
+          <h2>📋 Programación</h2>
+          <p>
+            Programa las OT por línea y calcula la carga contra
+            los minutos disponibles de la jornada.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div
+        id="programAlert">
+      </div>
+
+
+      <div class="line-selector">
+
+        <button
+          id="lineBtnA"
+          class="active"
+          onclick="setProgrammingLine('A')">
+
+          Línea 20-A
+
+        </button>
+
+        <button
+          id="lineBtnB"
+          onclick="setProgrammingLine('B')">
+
+          Línea 20-B
+
+        </button>
+
+      </div>
+
+
+      <div class="grid">
+
+        <div class="field">
+
+          <label>
+            OT
+          </label>
+
+          <input
+            id="pOT"
+            type="text"
+            placeholder="Ej. OT-1025">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Modelo
+          </label>
+
+          <select
+            id="pModelo">
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Piezas
+          </label>
+
+          <input
+            id="pPiezas"
+            type="number"
+            min="1"
+            inputmode="numeric"
+            placeholder="Cantidad">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Fecha
+          </label>
+
+          <input
+            id="pFecha"
+            type="date">
+
+        </div>
+
+
+        <div class="field full">
+
+          <label>
+            Observaciones
+          </label>
+
+          <textarea
+            id="pObs"
+            placeholder="Observaciones de la programación..."></textarea>
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="programPreview"
+        class="capacity-grid"
+        style="margin-top:14px;">
+
+      </div>
+
+
+      <div class="btn-row">
+
+        <button
+          class="btn"
+          id="saveProgramBtn"
+          onclick="saveProgramming()">
+
+          + PROGRAMAR OT
+
+        </button>
+
+        <button
+          class="btn secondary"
+          onclick="clearProgrammingForm()">
+
+          Limpiar
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- KPIS -->
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <div>
+          <h2>📊 Resultado del día</h2>
+          <p>
+            La eficiencia se calcula contra la salida real de pespunte.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="kpis">
+
+        <div class="kpi">
+
+          <div class="label">
+            Programado A
+          </div>
+
+          <div
+            class="value"
+            id="kpiProgA">
+            0
+          </div>
+
+          <div class="sub">
+            piezas
+          </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+          <div class="label">
+            Salida Pespunte A
+          </div>
+
+          <div
+            class="value"
+            id="kpiPesA">
+            0
+          </div>
+
+          <div class="sub">
+            piezas
+          </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+          <div class="label">
+            Eficiencia A
+          </div>
+
+          <div
+            class="value"
+            id="kpiEffA">
+            0%
+          </div>
+
+          <div class="sub">
+            salida / programado
+          </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+          <div class="label">
+            Minutos A
+          </div>
+
+          <div
+            class="value"
+            id="kpiMinA">
+            0
+          </div>
+
+          <div class="sub">
+            ocupados
+          </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+          <div class="label">
+            Programado B
+          </div>
+
+          <div
+            class="value"
+            id="kpiProgB">
+            0
+          </div>
+
+          <div class="sub">
+            piezas
+          </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+          <div class="label">
+            Salida Pespunte B
+          </div>
+
+          <div
+            class="value"
+            id="kpiPesB">
+            0
+          </div>
+
+          <div class="sub">
+            piezas
+          </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+          <div class="label">
+            Eficiencia B
+          </div>
+
+          <div
+            class="value"
+            id="kpiEffB">
+            0%
+          </div>
+
+          <div class="sub">
+            salida / programado
+          </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+          <div class="label">
+            Minutos B
+          </div>
+
+          <div
+            class="value"
+            id="kpiMinB">
+            0
+          </div>
+
+          <div class="sub">
+            ocupados
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- TABLA PROGRAMACIÓN -->
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <div>
+          <h2>OT programadas</h2>
+          <p>
+            Aquí puedes corregir cantidades, modelo, línea u observaciones.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div
+        id="programTable">
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       AVANCE
+  ====================================================== -->
+
+  <section
+    id="avance"
+    class="view">
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <div>
+          <h2>🚚 Avance de producción</h2>
+          <p>
+            Mueve la OT por los procesos y registra las piezas reales.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="grid">
+
+        <div class="field">
+
+          <label>
+            OT
+          </label>
+
+          <select
+            id="aOT"
+            onchange="loadAdvanceOT()">
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Cantidad a mover
+          </label>
+
+          <input
+            id="aCantidad"
+            type="number"
+            min="1"
+            inputmode="numeric"
+            placeholder="Piezas">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Desde
+          </label>
+
+          <select
+            id="aDesde">
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Hasta
+          </label>
+
+          <select
+            id="aHasta">
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="advanceOTInfo"
+        style="margin-top:14px;">
+      </div>
+
+
+      <div class="btn-row">
+
+        <button
+          class="btn green"
+          onclick="registerAdvance()">
+
+          REGISTRAR AVANCE
+
+        </button>
+
+        <button
+          class="btn secondary"
+          onclick="clearAdvanceForm()">
+
+          Limpiar
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <div>
+          <h2>Historial de avances</h2>
+          <p>
+            Cada movimiento queda registrado con fecha y hora.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div
+        id="advanceTable">
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       WORKSHOP
+  ====================================================== -->
+
+  <section
+    id="workshop"
+    class="view">
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <div>
+          <h2>🏭 Workshop</h2>
+          <p>
+            Inventario vivo de las OT y ubicación actual.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div
+        class="kpis"
+        id="workshopKPIs">
+      </div>
+
+    </div>
+
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <div>
+          <h2>Inventario por OT</h2>
+          <p>
+            El sistema determina dónde se encuentra cada pieza.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div
+        id="workshopTable">
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       NOMINA
+  ====================================================== -->
+
+  <section
+    id="nomina"
+    class="view">
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <div>
+          <h2>💰 Nómina / Destajo</h2>
+          <p>
+            Se toma la cantidad que llegó a Empaque y se multiplica
+            por el costo registrado para el modelo.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div
+        class="kpis">
+
+        <div class="kpi">
+
+          <div class="label">
+            Línea 20-A
+          </div>
+
+          <div
+            class="value"
+            id="nominaA">
+            $0
+          </div>
+
+          <div
+            class="sub"
+            id="nominaAPiezas">
+            0 piezas
+          </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+          <div class="label">
+            Línea 20-B
+          </div>
+
+          <div
+            class="value"
+            id="nominaB">
+            $0
+          </div>
+
+          <div
+            class="sub"
+            id="nominaBPiezas">
+            0 piezas
+          </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+          <div class="label">
+            Pespunte
+          </div>
+
+          <div
+            class="value"
+            id="nominaPes">
+            $0
+          </div>
+
+          <div
+            class="sub">
+            costo separado
+          </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+          <div class="label">
+            Preliminar
+          </div>
+
+          <div
+            class="value"
+            id="nominaPre">
+            $0
+          </div>
+
+          <div
+            class="sub">
+            costo separado
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <div>
+          <h2>Detalle de Empaque</h2>
+          <p>
+            Cada modelo utiliza el costo guardado en la base.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div
+        id="payrollTable">
+      </div>
+
+    </div>
+
+
+    <!-- COSTOS -->
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <div>
+          <h2>💵 Base de costos y TSTD</h2>
+          <p>
+            Puedes editar el costo y los tiempos estándar cuando cambien.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div
+        id="costTable">
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       CAPACIDAD
+  ====================================================== -->
+
+  <section
+    id="capacidad"
+    class="view">
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <div>
+          <h2>🎯 Control de capacidad · Hoy</h2>
+
+          <p>
+            Jornada 8:00 a.m. → 1:00 p.m.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="alert">
+
+        <strong>300 MIN / PERSONA</strong>
+
+        <br>
+
+        5 Pespuntadores · 6 Preliminares
+
+      </div>
+
+
+      <div
+        class="capacity-grid">
+
+        <div class="capacity-card">
+
+          <h3>
+            PESPUNTE
+          </h3>
+
+          <div
+            class="big"
+            id="capPes">
+            1,500
+          </div>
+
+          <div class="muted">
+            minutos disponibles
+          </div>
+
+          <div
+            class="progress">
+
+            <div
+              id="capPesBar">
+            </div>
+
+          </div>
+
+          <div
+            class="muted"
+            style="margin-top:8px"
+            id="capPesDetail">
+            0 ocupados
+          </div>
+
+        </div>
+
+
+        <div class="capacity-card">
+
+          <h3>
+            PRELIMINAR
+          </h3>
+
+          <div
+            class="big"
+            id="capPre">
+            1,800
+          </div>
+
+          <div class="muted">
+            minutos disponibles
+          </div>
+
+          <div
+            class="progress">
+
+            <div
+              id="capPreBar">
+            </div>
+
+          </div>
+
+          <div
+            class="muted"
+            style="margin-top:8px"
+            id="capPreDetail">
+            0 ocupados
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <div>
+          <h2>Programación contra jornada</h2>
+          <p>
+            Aquí se ve exactamente cuánto tiempo consume lo programado.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div
+        id="capacityLines">
+      </div>
+
+    </div>
+
+  </section>
+
+
+</div>
+
+
+<!-- =======================================================
+     MODAL EDITAR PROGRAMACIÓN
+======================================================= -->
+
+<div
+  id="editModal"
+  class="modal-back">
+
+  <div class="modal">
+
+    <button
+      class="modal-close"
+      onclick="closeEditModal()">
+      ✕
+    </button>
+
+    <h3>
+      ✏️ Editar programación
+    </h3>
+
+
+    <input
+      id="editId"
+      type="hidden">
+
+
+    <div class="grid">
+
+      <div class="field">
+
+        <label>
+          Línea
+        </label>
+
+        <select
+          id="editLinea">
+
+          <option value="A">
+            Línea 20-A
+          </option>
+
+          <option value="B">
+            Línea 20-B
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          OT
+        </label>
+
+        <input
+          id="editOT"
+          type="text">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Modelo
+        </label>
+
+        <select
+          id="editModelo">
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Piezas
+        </label>
+
+        <input
+          id="editPiezas"
+          type="number"
+          min="1">
+
+      </div>
+
+
+      <div class="field full">
+
+        <label>
+          Observaciones
+        </label>
+
+        <textarea
+          id="editObs">
+        </textarea>
+
+      </div>
+
+    </div>
+
+
+    <div class="btn-row">
+
+      <button
+        class="btn"
+        onclick="saveEditedProgramming()">
+
+        GUARDAR CAMBIOS
+
+      </button>
+
+      <button
+        class="btn secondary"
+        onclick="closeEditModal()">
+
+        Cancelar
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =======================================================
+     MODAL COSTO
+======================================================= -->
+
+<div
+  id="costModal"
+  class="modal-back">
+
+  <div class="modal">
+
+    <button
+      class="modal-close"
+      onclick="closeCostModal()">
+      ✕
+    </button>
+
+    <h3>
+      ✏️ Editar costo / TSTD
+    </h3>
+
+
+    <input
+      id="costEditId"
+      type="hidden">
+
+
+    <div class="grid">
+
+      <div class="field full">
+
+        <label>
+          Modelo
+        </label>
+
+        <input
+          id="costEditModelo"
+          type="text">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Costo Pespunte
+        </label>
+
+        <input
+          id="costEditPes"
+          type="number"
+          step="0.01"
+          min="0">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Costo Preliminar
+        </label>
+
+        <input
+          id="costEditPre"
+          type="number"
+          step="0.01"
+          min="0">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          TSTD Pespunte · min/pieza
+        </label>
+
+        <input
+          id="costEditTstdPes"
+          type="number"
+          step="0.01"
+          min="0">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          TSTD Preliminar · min/pieza
+        </label>
+
+        <input
+          id="costEditTstdPre"
+          type="number"
+          step="0.01"
+          min="0">
+
+      </div>
+
+    </div>
+
+
+    <div class="btn-row">
+
+      <button
+        class="btn"
+        onclick="saveCostEdit()">
+
+        GUARDAR COSTOS
+
+      </button>
+
+      <button
+        class="btn secondary"
+        onclick="closeCostModal()">
+
+        Cancelar
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
 <script>
 
-/* ================================================================
+/* =========================================================
    THE STUDIO
    CONTROL DE PRODUCCIÓN
-   PATCH COMPLETO
-   ================================================================
 
-   IMPORTANTE:
-
-   NO CAMBIAR ESTAS CLAVES
-
-   theStudioProduccion_v4
-   theStudioCostos_v4
-   theStudioHistorial_v4
-   theStudioAvances_v4
-
-   ================================================================ */
-
-
-/* ================================================================
    CLAVES PRINCIPALES
-   ================================================================ */
+   NO CAMBIAR
+
+========================================================= */
 
 const KPROD = "theStudioProduccion_v4";
 const KCOST = "theStudioCostos_v4";
@@ -63,160 +1861,235 @@ const KHIST = "theStudioHistorial_v4";
 const KADV  = "theStudioAvances_v4";
 
 
-/* ================================================================
-   CONFIGURACIÓN ACTUAL
-   ================================================================ */
+/* =========================================================
+   CONFIGURACIÓN DE JORNADA
+========================================================= */
 
-const TS_CONFIG = {
+const CONFIG = {
 
-  horaInicio:"08:00",
+  startHour:8,
 
-  horaFin:"13:00",
+  endHour:13,
 
-  minutosJornada:300,
+  minutesPerPerson:300,
 
   pespuntadores:5,
 
-  preliminares:6
+  preliminares:6,
 
-};
+  lineas:["A","B"],
 
-
-/* ================================================================
-   TSTD CONOCIDOS
-   ================================================================ */
-
-const TS_TSTD = {
-
-  "patchwork zipper montana tote":{
-    pes:7.84,
-    pre:8.84
-  },
-
-  "patchwork montana":{
-    pes:7.84,
-    pre:8.84
-  },
-
-  "patchwork montana tote":{
-    pes:7.84,
-    pre:8.84
-  },
-
-  "patchwork montana amber stone":{
-    pes:7.84,
-    pre:8.84
-  },
-
-  "large zipper montana tote":{
-    pes:16.38,
-    pre:19.88
-  },
-
-  "zipper montana tote":{
-    pes:16.38,
-    pre:19.88
+  nombresLinea:{
+    A:"Línea 20-A",
+    B:"Línea 20-B"
   }
 
 };
 
 
-/* ================================================================
+/* =========================================================
+   PROCESOS
+========================================================= */
+
+const STAGES = [
+  "Programado",
+  "Armado",
+  "Salida Pespunte",
+  "Clasificación",
+  "Empaque",
+  "Auditoría"
+];
+
+
+/* =========================================================
+   COSTOS / TSTD BASE
+========================================================= */
+
+const DEFAULT_COSTS = [
+
+  {
+    id:"patchwork zipper montana tote",
+    modelo:"Patchwork Zipper Montana Tote",
+    costoPes:7.84,
+    costoPre:8.84,
+    tstdPes:7.84,
+    tstdPre:8.84
+  },
+
+  {
+    id:"patchwork montana",
+    modelo:"Patchwork Montana",
+    costoPes:7.84,
+    costoPre:8.84,
+    tstdPes:7.84,
+    tstdPre:8.84
+  },
+
+  {
+    id:"patchwork montana tote",
+    modelo:"Patchwork Montana Tote",
+    costoPes:7.84,
+    costoPre:8.84,
+    tstdPes:7.84,
+    tstdPre:8.84
+  },
+
+  {
+    id:"patchwork montana amber stone",
+    modelo:"Patchwork Montana Amber Stone",
+    costoPes:7.84,
+    costoPre:8.84,
+    tstdPes:7.84,
+    tstdPre:8.84
+  },
+
+  {
+    id:"large zipper montana tote",
+    modelo:"Large Zipper Montana Tote",
+    costoPes:16.38,
+    costoPre:19.88,
+    tstdPes:16.38,
+    tstdPre:19.88
+  },
+
+  {
+    id:"zipper montana tote",
+    modelo:"Zipper Montana Tote",
+    costoPes:16.38,
+    costoPre:19.88,
+    tstdPes:16.38,
+    tstdPre:19.88
+  }
+
+];
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+let programmingLine = "A";
+
+let editingProgrammingId = null;
+
+let costs = [];
+
+let programs = [];
+
+let advances = [];
+
+
+/* =========================================================
    UTILIDADES
-   ================================================================ */
+========================================================= */
 
-function num(value){
+function uid(prefix="id"){
 
-  const n=Number(value);
-
-  return Number.isFinite(n)?n:0;
-
-}
-
-
-function money(value){
-
-  return new Intl.NumberFormat(
-    "es-MX",
-    {
-      style:"currency",
-      currency:"MXN",
-      minimumFractionDigits:2
-    }
-  ).format(num(value));
+  return prefix + "_" +
+    Date.now().toString(36) +
+    "_" +
+    Math.random().toString(36).slice(2,8);
 
 }
 
 
-function numberMX(value){
+function num(v){
 
-  return new Intl.NumberFormat(
-    "es-MX",
-    {
-      maximumFractionDigits:2
-    }
-  ).format(num(value));
+  const n = Number(v);
+
+  return Number.isFinite(n) ? n : 0;
 
 }
 
 
-function esc(value){
+function fmt(v){
 
-  return String(value??"")
-    .replace(
-      /[&<>"']/g,
-      m=>({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#39;"
-      }[m])
-    );
+  return num(v).toLocaleString("es-MX",{
+    maximumFractionDigits:2
+  });
 
 }
 
 
-function normalize(value){
+function money(v){
 
-  return String(value??"")
+  return num(v).toLocaleString("es-MX",{
+    style:"currency",
+    currency:"MXN",
+    minimumFractionDigits:2
+  });
+
+}
+
+
+function pct(v){
+
+  return num(v).toLocaleString("es-MX",{
+    maximumFractionDigits:1
+  }) + "%";
+
+}
+
+
+function normalize(v){
+
+  return String(v || "")
+    .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g,"")
-    .trim()
-    .toLowerCase();
+    .replace(/\s+/g," ")
+    .trim();
 
 }
 
 
-/* ================================================================
-   LOCAL STORAGE
-   ================================================================ */
+function todayISO(){
 
-function readJSON(key,fallback){
+  const d = new Date();
+
+  const y = d.getFullYear();
+
+  const m = String(d.getMonth()+1).padStart(2,"0");
+
+  const day = String(d.getDate()).padStart(2,"0");
+
+  return `${y}-${m}-${day}`;
+
+}
+
+
+function nowISO(){
+
+  return new Date().toISOString();
+
+}
+
+
+function localDateTime(){
+
+  return new Date().toLocaleString("es-MX",{
+    dateStyle:"short",
+    timeStyle:"short"
+  });
+
+}
+
+
+function parseJSON(key,fallback){
 
   try{
 
-    const value=localStorage.getItem(key);
+    const raw = localStorage.getItem(key);
 
-    if(
-      value===null ||
-      value===undefined ||
-      value===""
-    ){
+    if(!raw) return fallback;
 
-      return fallback;
+    const data = JSON.parse(raw);
 
-    }
+    return data ?? fallback;
 
-    return JSON.parse(value);
+  }catch(e){
 
-  }catch(error){
-
-    console.error(
-      "Error leyendo",
-      key,
-      error
-    );
+    console.warn("Error leyendo",key,e);
 
     return fallback;
 
@@ -225,1478 +2098,2958 @@ function readJSON(key,fallback){
 }
 
 
-function saveJSON(key,value){
+function saveJSON(key,data){
 
-  try{
-
-    localStorage.setItem(
-      key,
-      JSON.stringify(value)
-    );
-
-  }catch(error){
-
-    console.error(
-      "Error guardando",
-      key,
-      error
-    );
-
-  }
-
-}
-
-
-/* ================================================================
-   FECHAS
-   ================================================================ */
-
-function localDateString(date){
-
-  if(!date){
-    return "";
-  }
-
-  const d =
-    date instanceof Date
-      ? new Date(date)
-      : new Date(String(date).includes("T")
-          ? String(date)
-          : String(date)+"T12:00:00"
-        );
-
-  if(Number.isNaN(d.getTime())){
-    return "";
-  }
-
-  return [
-
-    d.getFullYear(),
-
-    String(
-      d.getMonth()+1
-    ).padStart(2,"0"),
-
-    String(
-      d.getDate()
-    ).padStart(2,"0")
-
-  ].join("-");
-
-}
-
-
-function todayLocal(){
-
-  return localDateString(
-    new Date()
+  localStorage.setItem(
+    key,
+    JSON.stringify(data)
   );
 
 }
 
 
-function mondayOf(date){
+/* =========================================================
+   CARGA DE DATOS
+========================================================= */
 
-  const d=
-    new Date(
-      String(date)+"T12:00:00"
-    );
+function loadData(){
 
-  const day=d.getDay();
+  let rawPrograms = parseJSON(KPROD,[]);
 
-  const diff=
-    day===0
-      ? -6
-      : 1-day;
+  let rawCosts = parseJSON(KCOST,[]);
 
-  d.setDate(
-    d.getDate()+diff
-  );
-
-  return localDateString(d);
-
-}
+  let rawAdvances = parseJSON(KADV,[]);
 
 
-function addDays(date,n){
+  /*
+    La versión anterior podía guardar un objeto
+    en lugar de un arreglo.
+  */
 
-  const d=
-    new Date(
-      String(date)+"T12:00:00"
-    );
+  if(!Array.isArray(rawPrograms)){
 
-  d.setDate(
-    d.getDate()+n
-  );
+    if(Array.isArray(rawPrograms?.programaciones)){
 
-  return localDateString(d);
+      rawPrograms = rawPrograms.programaciones;
 
-}
+    }else{
 
-
-function weekRange(reference){
-
-  const start=
-    mondayOf(reference);
-
-  return {
-
-    start:start,
-
-    end:addDays(
-      start,
-      5
-    )
-
-  };
-
-}
-
-
-function inWeek(date,reference){
-
-  const d=
-    localDateString(date);
-
-  const r=
-    weekRange(reference);
-
-  return (
-    d>=r.start &&
-    d<=r.end
-  );
-
-}
-
-
-/* ================================================================
-   PRODUCCIÓN
-   ================================================================ */
-
-function getProduction(){
-
-  const raw=
-    readJSON(
-      KPROD,
-      []
-    );
-
-  if(Array.isArray(raw)){
-    return raw;
-  }
-
-  if(
-    raw &&
-    Array.isArray(raw.prod)
-  ){
-    return raw.prod;
-  }
-
-  if(
-    raw &&
-    Array.isArray(raw.produccion)
-  ){
-    return raw.produccion;
-  }
-
-  if(
-    raw &&
-    Array.isArray(raw.programacion)
-  ){
-    return raw.programacion;
-  }
-
-  return [];
-
-}
-
-
-/* ================================================================
-   AVANCES
-   ================================================================ */
-
-function getAdvances(){
-
-  const raw=
-    readJSON(
-      KADV,
-      []
-    );
-
-  if(Array.isArray(raw)){
-    return raw;
-  }
-
-  if(
-    raw &&
-    Array.isArray(raw.avances)
-  ){
-    return raw.avances;
-  }
-
-  return [];
-
-}
-
-
-/* ================================================================
-   COSTOS
-   ================================================================ */
-
-function normalizeCostObject(raw){
-
-  const result={};
-
-  if(!raw){
-    return result;
-  }
-
-
-  if(
-    raw &&
-    !Array.isArray(raw) &&
-    typeof raw==="object"
-  ){
-
-    if(
-      raw.cost &&
-      typeof raw.cost==="object"
-    ){
-
-      raw=raw.cost;
+      rawPrograms = [];
 
     }
 
   }
 
 
-  if(
-    !Array.isArray(raw) &&
-    typeof raw==="object"
-  ){
+  if(!Array.isArray(rawCosts)){
 
-    Object.keys(raw).forEach(
-      model=>{
+    if(Array.isArray(rawCosts?.costos)){
 
-        const item=raw[model];
+      rawCosts = rawCosts.costos;
 
-        if(
-          !item ||
-          typeof item!=="object"
-        ){
+    }else{
 
-          result[model]={
+      rawCosts = [];
 
-            pes:num(item),
-
-            pre:0,
-
-            min:0,
-
-            tstdPes:0,
-
-            tstdPre:0
-
-          };
-
-          return;
-
-        }
-
-
-        result[model]={
-
-          pes:num(
-            item.pes ??
-            item.pespunte ??
-            item.pesPunte ??
-            item.costoPespunte ??
-            item.costo_pespunte
-          ),
-
-          pre:num(
-            item.pre ??
-            item.preliminar ??
-            item.costoPreliminar ??
-            item.costo_preliminar
-          ),
-
-          min:num(
-            item.min ??
-            item.minutos
-          ),
-
-          tstdPes:num(
-            item.tstdPes ??
-            item.tstdPespunte ??
-            item.tstd_pespunte ??
-            item.tiempoPespunte ??
-            item.tiempo_pespunte
-          ),
-
-          tstdPre:num(
-            item.tstdPre ??
-            item.tstdPreliminar ??
-            item.tstd_preliminar ??
-            item.tiempoPreliminar ??
-            item.tiempo_preliminar
-          )
-
-        };
-
-      }
-    );
-
-    return result;
+    }
 
   }
 
 
-  if(Array.isArray(raw)){
+  if(!Array.isArray(rawAdvances)){
 
-    raw.forEach(
-      item=>{
+    if(Array.isArray(rawAdvances?.avances)){
 
-        if(!item){
-          return;
-        }
+      rawAdvances = rawAdvances.avances;
 
-        const model=
-          String(
-            item.modelo ??
-            item.model ??
-            item.nombre ??
-            item.name ??
-            ""
-          ).trim();
+    }else{
 
-        if(!model){
-          return;
-        }
+      rawAdvances = [];
 
-        result[model]={
-
-          pes:num(
-            item.pes ??
-            item.pespunte ??
-            item.pesPunte ??
-            item.costoPespunte
-          ),
-
-          pre:num(
-            item.pre ??
-            item.preliminar ??
-            item.costoPreliminar
-          ),
-
-          min:num(
-            item.min ??
-            item.minutos
-          ),
-
-          tstdPes:num(
-            item.tstdPes ??
-            item.tstdPespunte ??
-            item.tiempoPespunte
-          ),
-
-          tstdPre:num(
-            item.tstdPre ??
-            item.tstdPreliminar ??
-            item.tiempoPreliminar
-          )
-
-        };
-
-      }
-    );
+    }
 
   }
+
+
+  costs = migrateCosts(rawCosts);
+
+  programs = migratePrograms(rawPrograms);
+
+  advances = migrateAdvances(rawAdvances);
+
+
+  saveJSON(KCOST,costs);
+
+  saveJSON(KPROD,programs);
+
+  saveJSON(KADV,advances);
+
+}
+
+
+/* =========================================================
+   MIGRACIÓN COSTOS
+========================================================= */
+
+function migrateCosts(arr){
+
+  const result = [];
+
+  const map = new Map();
+
+
+  for(const c of DEFAULT_COSTS){
+
+    const item = {
+
+      id:c.id,
+
+      modelo:c.modelo,
+
+      costoPes:num(c.costoPes),
+
+      costoPre:num(c.costoPre),
+
+      tstdPes:num(c.tstdPes),
+
+      tstdPre:num(c.tstdPre)
+
+    };
+
+    map.set(normalize(item.modelo),item);
+
+  }
+
+
+  for(const c of arr){
+
+    const modelo =
+      c.modelo ||
+      c.nombre ||
+      c.model ||
+      "";
+
+    if(!modelo) continue;
+
+
+    const key = normalize(modelo);
+
+    const old = map.get(key);
+
+
+    const item = {
+
+      id:c.id || old?.id || key,
+
+      modelo:modelo,
+
+      costoPes:
+        num(
+          c.costoPes ??
+          c.pespunte ??
+          c.costoPespunte ??
+          old?.costoPes
+        ),
+
+      costoPre:
+        num(
+          c.costoPre ??
+          c.preliminar ??
+          c.costoPreliminar ??
+          old?.costoPre
+        ),
+
+      tstdPes:
+        num(
+          c.tstdPes ??
+          c.tstdPespunte ??
+          c.tiempoPespunte ??
+          old?.tstdPes
+        ),
+
+      tstdPre:
+        num(
+          c.tstdPre ??
+          c.tstdPreliminar ??
+          c.tiempoPreliminar ??
+          old?.tstdPre
+        )
+
+    };
+
+
+    map.set(key,item);
+
+  }
+
+
+  for(const item of map.values()){
+
+    result.push(item);
+
+  }
+
 
   return result;
 
 }
 
 
-/* ================================================================
-   RECUPERAR COSTOS ANTIGUOS
-   ================================================================ */
+/* =========================================================
+   MIGRACIÓN PROGRAMACIÓN
+========================================================= */
 
-function migrateAllCosts(){
+function migratePrograms(arr){
 
-  let main=
-    normalizeCostObject(
-      readJSON(
-        KCOST,
-        {}
-      )
+  return arr.map((p,index)=>{
+
+    const pieces =
+      num(
+        p.piezas ??
+        p.cantidad ??
+        p.qty ??
+        p.pieces
+      );
+
+
+    const lineaRaw =
+      p.linea ??
+      p.line ??
+      p.lineaProduccion ??
+      "A";
+
+
+    let linea =
+      String(lineaRaw)
+        .toUpperCase()
+        .includes("B")
+        ? "B"
+        : "A";
+
+
+    const modelo =
+      p.modelo ??
+      p.model ??
+      "";
+
+
+    const fecha =
+      p.fecha ??
+      p.date ??
+      todayISO();
+
+
+    const id =
+      p.id ||
+      uid("prog");
+
+
+    return {
+
+      id,
+
+      linea,
+
+      ot:
+        String(
+          p.ot ??
+          p.orden ??
+          p.ordenTrabajo ??
+          ""
+        ),
+
+      modelo,
+
+      piezas,
+
+      fecha,
+
+      obs:
+        p.obs ??
+        p.observaciones ??
+        "",
+
+      createdAt:
+        p.createdAt ||
+        nowISO()
+
+    };
+
+  });
+
+}
+
+
+/* =========================================================
+   MIGRACIÓN AVANCES
+========================================================= */
+
+function migrateAdvances(arr){
+
+  return arr.map(a=>{
+
+    return {
+
+      id:a.id || uid("adv"),
+
+      programId:
+        a.programId ||
+        a.otId ||
+        "",
+
+      ot:
+        a.ot ||
+        a.orden ||
+        "",
+
+      linea:
+        a.linea ||
+        "A",
+
+      from:
+        a.from ||
+        a.desde ||
+        "Programado",
+
+      to:
+        a.to ||
+        a.hasta ||
+        "Armado",
+
+      cantidad:
+        num(
+          a.cantidad ??
+          a.piezas ??
+          a.qty
+        ),
+
+      date:
+        a.date ||
+        a.fecha ||
+        nowISO()
+
+    };
+
+  });
+
+}
+
+
+/* =========================================================
+   COSTOS
+========================================================= */
+
+function getCost(modelo){
+
+  const key = normalize(modelo);
+
+  let c =
+    costs.find(
+      x=>normalize(x.modelo)===key
     );
 
 
-  const oldKeys=[
+  if(c) return c;
 
-    "ts_costos_v1",
 
-    "theStudioCostos_v1",
+  /*
+    Si no existe, se crea automáticamente
+    para que la programación no se rompa.
+  */
 
-    "theStudioCostos_v2",
+  c = {
 
-    "theStudioCostos_v3",
+    id:key || uid("cost"),
 
-    "theStudioCostos",
+    modelo:modelo || "Modelo sin costo",
 
-    "costos",
+    costoPes:0,
 
-    "modelos",
+    costoPre:0,
 
-    "catalogoModelos",
+    tstdPes:0,
 
-    "catalogoCostos"
+    tstdPre:0
+
+  };
+
+
+  return c;
+
+}
+
+
+function ensureCost(modelo){
+
+  const key = normalize(modelo);
+
+  let c =
+    costs.find(
+      x=>normalize(x.modelo)===key
+    );
+
+
+  if(!c){
+
+    c = {
+
+      id:uid("cost"),
+
+      modelo:modelo,
+
+      costoPes:0,
+
+      costoPre:0,
+
+      tstdPes:0,
+
+      tstdPre:0
+
+    };
+
+
+    costs.push(c);
+
+    saveJSON(KCOST,costs);
+
+  }
+
+
+  return c;
+
+}
+
+
+/* =========================================================
+   FECHA
+========================================================= */
+
+function formatDate(date){
+
+  if(!date) return "";
+
+  const d =
+    new Date(
+      date + "T12:00:00"
+    );
+
+  if(Number.isNaN(d.getTime())){
+
+    return date;
+
+  }
+
+
+  return d.toLocaleDateString(
+    "es-MX",
+    {
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric"
+    }
+  );
+
+}
+
+
+/* =========================================================
+   VALIDAR DOMINGO
+========================================================= */
+
+function isSunday(dateISO){
+
+  if(!dateISO) return false;
+
+  const d =
+    new Date(
+      dateISO+"T12:00:00"
+    );
+
+  return d.getDay()===0;
+
+}
+
+
+/* =========================================================
+   CAPACIDAD POR LÍNEA
+========================================================= */
+
+function availableMinutesPes(){
+
+  return CONFIG.pespuntadores *
+    CONFIG.minutesPerPerson;
+
+}
+
+
+function availableMinutesPre(){
+
+  return CONFIG.preliminares *
+    CONFIG.minutesPerPerson;
+
+}
+
+
+function programsForDate(date=todayISO()){
+
+  return programs.filter(
+    p=>p.fecha===date
+  );
+
+}
+
+
+function programsForLine(
+  line,
+  date=todayISO()
+){
+
+  return programsForDate(date)
+    .filter(p=>p.linea===line);
+
+}
+
+
+function programmedPieces(
+  line,
+  date=todayISO()
+){
+
+  return programsForLine(
+    line,
+    date
+  ).reduce(
+    (s,p)=>s+num(p.piezas),
+    0
+  );
+
+}
+
+
+/* =========================================================
+   MINUTOS PROGRAMADOS
+========================================================= */
+
+function programmedMinutes(
+  line,
+  process,
+  date=todayISO()
+){
+
+  return programsForLine(
+    line,
+    date
+  ).reduce((sum,p)=>{
+
+    const c=getCost(p.modelo);
+
+    const t =
+      process==="pes"
+      ? num(c.tstdPes)
+      : num(c.tstdPre);
+
+    return sum +
+      num(p.piezas)*t;
+
+  },0);
+
+}
+
+
+/* =========================================================
+   AVANCE ACUMULADO DE UNA OT
+========================================================= */
+
+function getProgram(id){
+
+  return programs.find(
+    p=>p.id===id
+  );
+
+}
+
+
+function getAdvancesForProgram(id){
+
+  return advances.filter(
+    a=>a.programId===id
+  );
+
+}
+
+
+function getStageTotals(program){
+
+  const totals = {};
+
+  for(const s of STAGES){
+
+    totals[s]=
+      s==="Programado"
+      ? num(program.piezas)
+      : 0;
+
+  }
+
+
+  const list =
+    getAdvancesForProgram(
+      program.id
+    );
+
+
+  /*
+    Cada avance de un proceso a otro
+    incrementa todos los procesos
+    intermedios.
+
+    Ejemplo:
+    Armado -> Empaque 100
+
+    incrementa:
+    Salida Pespunte +100
+    Clasificación +100
+    Empaque +100
+
+  */
+
+  for(const a of list){
+
+    const fromIndex =
+      STAGES.indexOf(a.from);
+
+    const toIndex =
+      STAGES.indexOf(a.to);
+
+    if(
+      fromIndex<0 ||
+      toIndex<0 ||
+      toIndex<=fromIndex
+    ){
+      continue;
+    }
+
+
+    for(
+      let i=fromIndex+1;
+      i<=toIndex;
+      i++
+    ){
+
+      totals[STAGES[i]] +=
+        num(a.cantidad);
+
+    }
+
+  }
+
+
+  return totals;
+
+}
+
+
+/* =========================================================
+   INVENTARIO ACTUAL
+========================================================= */
+
+function getCurrentStage(program){
+
+  const totals =
+    getStageTotals(program);
+
+
+  /*
+    El proceso actual es el último
+    que tiene cantidad acumulada,
+    siempre que todavía tenga inventario.
+  */
+
+  for(
+    let i=STAGES.length-1;
+    i>=0;
+    i--
+  ){
+
+    const stage =
+      STAGES[i];
+
+    const qty =
+      num(totals[stage]);
+
+
+    if(qty<=0) continue;
+
+
+    const next =
+      STAGES[i+1];
+
+
+    if(!next){
+
+      return {
+        stage,
+        inventory:qty
+      };
+
+    }
+
+
+    const nextQty =
+      num(totals[next]);
+
+
+    const inventory =
+      qty-nextQty;
+
+
+    if(inventory>0){
+
+      return {
+        stage,
+        inventory
+      };
+
+    }
+
+  }
+
+
+  return {
+    stage:"Programado",
+    inventory:num(program.piezas)
+  };
+
+}
+
+
+/* =========================================================
+   SALIDA PESPUENTE
+========================================================= */
+
+function outputPespunte(
+  program
+){
+
+  const totals =
+    getStageTotals(program);
+
+  return num(
+    totals["Salida Pespunte"]
+  );
+
+}
+
+
+/* =========================================================
+   EMPAQUE
+========================================================= */
+
+function outputEmpaque(
+  program
+){
+
+  const totals =
+    getStageTotals(program);
+
+  return num(
+    totals["Empaque"]
+  );
+
+}
+
+
+/* =========================================================
+   AUDITORÍA
+========================================================= */
+
+function outputAuditoria(
+  program
+){
+
+  const totals =
+    getStageTotals(program);
+
+  return num(
+    totals["Auditoría"]
+  );
+
+}
+
+
+/* =========================================================
+   EFICIENCIA
+========================================================= */
+
+function lineEfficiency(
+  line,
+  date=todayISO()
+){
+
+  const list =
+    programsForLine(
+      line,
+      date
+    );
+
+
+  const programmed =
+    list.reduce(
+      (s,p)=>s+num(p.piezas),
+      0
+    );
+
+
+  const pespunte =
+    list.reduce(
+      (s,p)=>s+outputPespunte(p),
+      0
+    );
+
+
+  if(programmed<=0) return 0;
+
+  return (
+    pespunte /
+    programmed
+  )*100;
+
+}
+
+
+/* =========================================================
+   CAPACIDAD TEÓRICA DE PIEZAS
+========================================================= */
+
+function theoreticalCapacity(
+  line,
+  process
+){
+
+  const available =
+    process==="pes"
+    ? availableMinutesPes()
+    : availableMinutesPre();
+
+
+  const list =
+    programsForLine(
+      line,
+      todayISO()
+    );
+
+
+  if(list.length===0){
+
+    return 0;
+
+  }
+
+
+  const totalPieces =
+    list.reduce(
+      (s,p)=>s+num(p.piezas),
+      0
+    );
+
+
+  if(totalPieces<=0) return 0;
+
+
+  const weightedMinutes =
+    list.reduce(
+      (s,p)=>{
+
+        const c=getCost(p.modelo);
+
+        const t =
+          process==="pes"
+          ? num(c.tstdPes)
+          : num(c.tstdPre);
+
+        return s+
+          num(p.piezas)*t;
+
+      },
+      0
+    );
+
+
+  if(weightedMinutes<=0) return 0;
+
+
+  const avgTSTD =
+    weightedMinutes /
+    totalPieces;
+
+
+  return Math.floor(
+    available /
+    avgTSTD
+  );
+
+}
+
+
+/* =========================================================
+   LEAD TIME
+========================================================= */
+
+function leadTimeEstimate(
+  program
+){
+
+  const current =
+    getCurrentStage(program);
+
+
+  const remaining =
+    num(program.piezas) -
+    outputAuditoria(program);
+
+
+  if(remaining<=0){
+
+    return "Terminado";
+
+  }
+
+
+  const c =
+    getCost(program.modelo);
+
+
+  /*
+    Para no inventar tiempos de procesos
+    que todavía no tienen estudio cargado,
+    utilizamos el TSTD real disponible
+    del modelo.
+
+    Se calcula el tiempo técnico de carga
+    restante y se expresa en horas.
+  */
+
+  const baseTSTD =
+    Math.max(
+      num(c.tstdPes),
+      num(c.tstdPre)
+    );
+
+
+  if(baseTSTD<=0){
+
+    return "Sin TSTD";
+
+  }
+
+
+  const minutes =
+    remaining *
+    baseTSTD;
+
+
+  const hours =
+    minutes /
+    60;
+
+
+  return hours<1
+    ? Math.round(minutes)+" min"
+    : hours.toFixed(1)+" h";
+
+}
+
+
+/* =========================================================
+   TIEMPO TRANSCURRIDO
+========================================================= */
+
+function elapsedFrom(
+  iso
+){
+
+  if(!iso) return "—";
+
+
+  const start =
+    new Date(iso);
+
+
+  const diff =
+    Math.max(
+      0,
+      Date.now()-start.getTime()
+    );
+
+
+  const mins =
+    Math.floor(
+      diff/60000
+    );
+
+
+  const h =
+    Math.floor(
+      mins/60
+    );
+
+
+  const m =
+    mins%60;
+
+
+  if(h<=0){
+
+    return m+" min";
+
+  }
+
+
+  return h+" h "+m+" min";
+
+}
+
+
+/* =========================================================
+   NAVEGACIÓN
+========================================================= */
+
+document
+  .querySelectorAll(".nav button")
+  .forEach(btn=>{
+
+    btn.addEventListener(
+      "click",
+      ()=>{
+
+        document
+          .querySelectorAll(".nav button")
+          .forEach(b=>
+            b.classList.remove("active")
+          );
+
+
+        btn.classList.add("active");
+
+
+        document
+          .querySelectorAll(".view")
+          .forEach(v=>
+            v.classList.remove("active")
+          );
+
+
+        const view =
+          document.getElementById(
+            btn.dataset.view
+          );
+
+
+        if(view){
+
+          view.classList.add("active");
+
+        }
+
+
+        refreshAll();
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   LÍNEA DE PROGRAMACIÓN
+========================================================= */
+
+function setProgrammingLine(line){
+
+  programmingLine=line;
+
+
+  document
+    .getElementById("lineBtnA")
+    .classList.toggle(
+      "active",
+      line==="A"
+    );
+
+
+  document
+    .getElementById("lineBtnB")
+    .classList.toggle(
+      "active",
+      line==="B"
+    );
+
+
+  renderProgramPreview();
+
+}
+
+
+/* =========================================================
+   MODELOS
+========================================================= */
+
+function populateModelSelects(){
+
+  const selects = [
+
+    document.getElementById("pModelo"),
+
+    document.getElementById("editModelo")
 
   ];
 
 
-  function mergeModel(
-    model,
-    incoming
-  ){
-
-    const clean=
-      String(
-        model??""
-      ).trim();
-
-    if(!clean){
-      return;
-    }
-
-
-    const existing=
-      Object.keys(main)
-      .find(
-        x=>
-          normalize(x)===
-          normalize(clean)
-      );
-
-
-    const name=
-      existing ||
-      clean;
-
-
-    if(!main[name]){
-
-      main[name]={
-
-        pes:num(incoming?.pes),
-
-        pre:num(incoming?.pre),
-
-        min:num(incoming?.min),
-
-        tstdPes:num(
-          incoming?.tstdPes
-        ),
-
-        tstdPre:num(
-          incoming?.tstdPre
+  const sorted =
+    [...costs].sort(
+      (a,b)=>
+        a.modelo.localeCompare(
+          b.modelo
         )
-
-      };
-
-      return;
-
-    }
-
-
-    if(
-      !num(main[name].pes) &&
-      num(incoming?.pes)
-    ){
-
-      main[name].pes=
-        num(incoming.pes);
-
-    }
-
-
-    if(
-      !num(main[name].pre) &&
-      num(incoming?.pre)
-    ){
-
-      main[name].pre=
-        num(incoming.pre);
-
-    }
-
-
-    if(
-      !num(main[name].min) &&
-      num(incoming?.min)
-    ){
-
-      main[name].min=
-        num(incoming.min);
-
-    }
-
-
-    if(
-      !num(main[name].tstdPes) &&
-      num(incoming?.tstdPes)
-    ){
-
-      main[name].tstdPes=
-        num(incoming.tstdPes);
-
-    }
-
-
-    if(
-      !num(main[name].tstdPre) &&
-      num(incoming?.tstdPre)
-    ){
-
-      main[name].tstdPre=
-        num(incoming.tstdPre);
-
-    }
-
-  }
-
-
-  function readSource(raw){
-
-    if(!raw){
-      return;
-    }
-
-
-    if(Array.isArray(raw)){
-
-      raw.forEach(
-        item=>{
-
-          if(
-            !item ||
-            typeof item!=="object"
-          ){
-            return;
-          }
-
-
-          const model=
-            String(
-              item.modelo ??
-              item.model ??
-              item.nombre ??
-              item.name ??
-              ""
-            ).trim();
-
-
-          if(!model){
-            return;
-          }
-
-
-          mergeModel(
-            model,
-            {
-
-              pes:num(
-                item.pes ??
-                item.pespunte ??
-                item.costoPespunte
-              ),
-
-              pre:num(
-                item.pre ??
-                item.preliminar ??
-                item.costoPreliminar
-              ),
-
-              min:num(
-                item.min ??
-                item.minutos
-              ),
-
-              tstdPes:num(
-                item.tstdPes ??
-                item.tstdPespunte ??
-                item.tiempoPespunte
-              ),
-
-              tstdPre:num(
-                item.tstdPre ??
-                item.tstdPreliminar ??
-                item.tiempoPreliminar
-              )
-
-            }
-          );
-
-        }
-      );
-
-      return;
-
-    }
-
-
-    if(
-      typeof raw!=="object"
-    ){
-      return;
-    }
-
-
-    if(raw.costos){
-      readSource(raw.costos);
-    }
-
-    if(raw.modelos){
-      readSource(raw.modelos);
-    }
-
-    if(raw.catalogo){
-      readSource(raw.catalogo);
-    }
-
-    if(raw.data){
-      readSource(raw.data);
-    }
-
-
-    Object.keys(raw).forEach(
-      key=>{
-
-        if(
-          [
-            "costos",
-            "modelos",
-            "catalogo",
-            "data"
-          ].includes(key)
-        ){
-          return;
-        }
-
-
-        const value=raw[key];
-
-
-        if(
-          !value ||
-          typeof value!=="object" ||
-          Array.isArray(value)
-        ){
-          return;
-        }
-
-
-        const pes=
-          num(
-            value.pes ??
-            value.pespunte ??
-            value.costoPespunte
-          );
-
-
-        const pre=
-          num(
-            value.pre ??
-            value.preliminar ??
-            value.costoPreliminar
-          );
-
-
-        const min=
-          num(
-            value.min ??
-            value.minutos
-          );
-
-
-        const tstdPes=
-          num(
-            value.tstdPes ??
-            value.tstdPespunte ??
-            value.tiempoPespunte
-          );
-
-
-        const tstdPre=
-          num(
-            value.tstdPre ??
-            value.tstdPreliminar ??
-            value.tiempoPreliminar
-          );
-
-
-        if(
-          pes===0 &&
-          pre===0 &&
-          min===0 &&
-          tstdPes===0 &&
-          tstdPre===0
-        ){
-          return;
-        }
-
-
-        mergeModel(
-          key,
-          {
-            pes,
-            pre,
-            min,
-            tstdPes,
-            tstdPre
-          }
-        );
-
-      }
     );
 
+
+  for(const select of selects){
+
+    if(!select) continue;
+
+
+    const current =
+      select.value;
+
+
+    select.innerHTML="";
+
+
+    const empty =
+      document.createElement("option");
+
+    empty.value="";
+
+    empty.textContent=
+      "Selecciona modelo";
+
+    select.appendChild(empty);
+
+
+    for(const c of sorted){
+
+      const op =
+        document.createElement("option");
+
+      op.value=c.modelo;
+
+      op.textContent=c.modelo;
+
+      select.appendChild(op);
+
+    }
+
+
+    if(current){
+
+      select.value=current;
+
+    }
+
   }
-
-
-  oldKeys.forEach(
-    key=>{
-      readSource(
-        readJSON(
-          key,
-          null
-        )
-      );
-    }
-  );
-
-
-  Object.keys(TS_TSTD).forEach(
-    key=>{
-
-      const existing=
-        Object.keys(main)
-        .find(
-          model=>
-            normalize(model)===
-            key
-        );
-
-
-      if(!existing){
-        return;
-      }
-
-
-      if(
-        !num(
-          main[existing].tstdPes
-        )
-      ){
-
-        main[existing].tstdPes=
-          TS_TSTD[key].pes;
-
-      }
-
-
-      if(
-        !num(
-          main[existing].tstdPre
-        )
-      ){
-
-        main[existing].tstdPre=
-          TS_TSTD[key].pre;
-
-      }
-
-    }
-  );
-
-
-  saveJSON(
-    KCOST,
-    main
-  );
-
-
-  saveJSON(
-    "ts_costos_v1",
-    Object.keys(main).map(
-      model=>({
-
-        modelo:model,
-
-        pespunte:
-          num(main[model].pes),
-
-        preliminar:
-          num(main[model].pre),
-
-        min:
-          num(main[model].min),
-
-        tstdPes:
-          num(main[model].tstdPes),
-
-        tstdPre:
-          num(main[model].tstdPre)
-
-      })
-    )
-  );
-
-
-  return main;
 
 }
 
 
-function getCosts(){
+/* =========================================================
+   PREVIEW PROGRAMACIÓN
+========================================================= */
 
-  return migrateAllCosts();
+function renderProgramPreview(){
 
-}
-
-
-/* ================================================================
-   TSTD DEL MODELO
-   ================================================================ */
-
-function getModelTSTD(model){
-
-  const name=
-    normalize(model);
+  const modelo =
+    document.getElementById(
+      "pModelo"
+    ).value;
 
 
-  const costs=
-    getCosts();
-
-
-  const existing=
-    Object.keys(costs)
-    .find(
-      x=>
-        normalize(x)===name
+  const pieces =
+    num(
+      document.getElementById(
+        "pPiezas"
+      ).value
     );
 
 
-  if(existing){
-
-    const item=costs[existing];
-
-    let pes=
-      num(item.tstdPes);
-
-    let pre=
-      num(item.tstdPre);
+  const container =
+    document.getElementById(
+      "programPreview"
+    );
 
 
-    if(
-      pes<=0 &&
-      pre<=0 &&
-      num(item.min)>0
-    ){
+  if(!modelo || pieces<=0){
 
-      pes=num(item.min);
-      pre=num(item.min);
+    container.innerHTML = `
 
-    }
+      <div class="capacity-card">
 
+        <h3>
+          PESPUENTE
+        </h3>
 
-    const known=
-      Object.keys(TS_TSTD)
-      .find(
-        key=>
-          name.includes(key) ||
-          key.includes(name)
-      );
+        <div class="big">
+          —
+        </div>
 
+        <div class="muted">
+          Selecciona modelo y piezas
+        </div>
 
-    if(known){
-
-      if(pes<=0){
-        pes=TS_TSTD[known].pes;
-      }
-
-      if(pre<=0){
-        pre=TS_TSTD[known].pre;
-      }
-
-    }
+      </div>
 
 
-    return {
-      pes,
-      pre
-    };
+      <div class="capacity-card">
+
+        <h3>
+          PRELIMINAR
+        </h3>
+
+        <div class="big">
+          —
+        </div>
+
+        <div class="muted">
+          Selecciona modelo y piezas
+        </div>
+
+      </div>
+
+    `;
+
+    return;
 
   }
 
 
-  const known=
-    Object.keys(TS_TSTD)
-    .find(
-      key=>
-        name.includes(key) ||
-        key.includes(name)
-    );
+  const c =
+    getCost(modelo);
 
 
-  if(known){
-
-    return {
-
-      pes:TS_TSTD[known].pes,
-
-      pre:TS_TSTD[known].pre
-
-    };
-
-  }
+  const pesMin =
+    pieces*num(c.tstdPes);
 
 
-  return {
-    pes:0,
-    pre:0
-  };
+  const preMin =
+    pieces*num(c.tstdPre);
+
+
+  const pesAvailable =
+    availableMinutesPes();
+
+
+  const preAvailable =
+    availableMinutesPre();
+
+
+  const pesPct =
+    pesAvailable>0
+    ? pesMin/pesAvailable*100
+    : 0;
+
+
+  const prePct =
+    preAvailable>0
+    ? preMin/preAvailable*100
+    : 0;
+
+
+  container.innerHTML = `
+
+    <div class="capacity-card">
+
+      <h3>
+        PESPUENTE
+      </h3>
+
+      <div class="big">
+        ${fmt(pesMin)} min
+      </div>
+
+      <div class="muted">
+        ${fmt(c.tstdPes)} min/pieza
+      </div>
+
+      <div class="progress">
+        <div
+          style="width:${Math.min(100,pesPct)}%">
+        </div>
+      </div>
+
+      <div
+        class="muted"
+        style="margin-top:8px">
+
+        ${pct(pesPct)}
+        de los ${fmt(pesAvailable)} min disponibles
+
+      </div>
+
+    </div>
+
+
+    <div class="capacity-card">
+
+      <h3>
+        PRELIMINAR
+      </h3>
+
+      <div class="big">
+        ${fmt(preMin)} min
+      </div>
+
+      <div class="muted">
+        ${fmt(c.tstdPre)} min/pieza
+      </div>
+
+      <div class="progress">
+        <div
+          style="width:${Math.min(100,prePct)}%">
+        </div>
+      </div>
+
+      <div
+        class="muted"
+        style="margin-top:8px">
+
+        ${pct(prePct)}
+        de los ${fmt(preAvailable)} min disponibles
+
+      </div>
+
+    </div>
+
+  `;
 
 }
 
 
-/* ================================================================
-   CAPACIDAD DE LA JORNADA
-   ================================================================ */
+document
+  .getElementById("pModelo")
+  .addEventListener(
+    "change",
+    renderProgramPreview
+  );
 
-function getShift(){
 
-  return {
+document
+  .getElementById("pPiezas")
+  .addEventListener(
+    "input",
+    renderProgramPreview
+  );
 
-    minutes:
-      TS_CONFIG.minutosJornada,
 
-    pespunte:
-      TS_CONFIG.pespuntadores *
-      TS_CONFIG.minutosJornada,
+/* =========================================================
+   GUARDAR PROGRAMACIÓN
+========================================================= */
 
-    preliminar:
-      TS_CONFIG.preliminares *
-      TS_CONFIG.minutosJornada,
+function saveProgramming(){
 
-    totalWorkers:
-      TS_CONFIG.pespuntadores+
-      TS_CONFIG.preliminares
+  const ot =
+    document.getElementById(
+      "pOT"
+    ).value.trim();
+
+
+  const modelo =
+    document.getElementById(
+      "pModelo"
+    ).value;
+
+
+  const piezas =
+    num(
+      document.getElementById(
+        "pPiezas"
+      ).value
+    );
+
+
+  const fecha =
+    document.getElementById(
+      "pFecha"
+    ).value;
+
+
+  const obs =
+    document.getElementById(
+      "pObs"
+    ).value.trim();
+
+
+  const alertBox =
+    document.getElementById(
+      "programAlert"
+    );
+
+
+  alertBox.innerHTML="";
+
+
+  if(!ot){
+
+    showAlert(
+      alertBox,
+      "Captura la OT.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(!modelo){
+
+    showAlert(
+      alertBox,
+      "Selecciona el modelo.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(piezas<=0){
+
+    showAlert(
+      alertBox,
+      "Captura una cantidad de piezas mayor a cero.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(!fecha){
+
+    showAlert(
+      alertBox,
+      "Selecciona la fecha.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(isSunday(fecha)){
+
+    showAlert(
+      alertBox,
+      "La programación no permite domingos.",
+      "warning"
+    );
+
+    return;
+
+  }
+
+
+  /*
+    La misma OT puede existir en A y B,
+    pero no repetida en la misma línea.
+  */
+
+  const duplicate =
+    programs.find(
+      p=>
+        p.linea===programmingLine &&
+        normalize(p.ot)===normalize(ot) &&
+        p.fecha===fecha
+    );
+
+
+  if(duplicate){
+
+    showAlert(
+      alertBox,
+      "Esa OT ya está programada en esta línea para esa fecha. Utiliza el botón ✏️ Editar.",
+      "warning"
+    );
+
+    return;
+
+  }
+
+
+  ensureCost(modelo);
+
+
+  const program={
+
+    id:uid("prog"),
+
+    linea:programmingLine,
+
+    ot,
+
+    modelo,
+
+    piezas,
+
+    fecha,
+
+    obs,
+
+    createdAt:nowISO()
 
   };
 
+
+  programs.push(program);
+
+  saveJSON(KPROD,programs);
+
+
+  showAlert(
+    alertBox,
+    "OT programada correctamente.",
+    "success"
+  );
+
+
+  clearProgrammingForm(false);
+
+  refreshAll();
+
 }
 
 
-/* ================================================================
-   DATOS DE PROGRAMACIÓN
-   ================================================================ */
+/* =========================================================
+   LIMPIAR FORMULARIO
+========================================================= */
 
-function getTodayProgramming(){
+function clearProgrammingForm(
+  clearAlert=true
+){
 
-  const today=
-    todayLocal();
+  document.getElementById("pOT").value="";
+
+  document.getElementById("pModelo").value="";
+
+  document.getElementById("pPiezas").value="";
+
+  document.getElementById("pObs").value="";
+
+  document.getElementById("pFecha").value=
+    todayISO();
 
 
-  return getProduction()
-    .filter(
-      item=>{
+  if(clearAlert){
 
-        const date=
-          item.fecha ??
-          item.date ??
-          item.dia ??
-          item.fechaProgramacion;
+    document.getElementById(
+      "programAlert"
+    ).innerHTML="";
+
+  }
 
 
-        return (
-          localDateString(date)===today
-        );
+  renderProgramPreview();
 
-      }
+}
+
+
+/* =========================================================
+   EDITAR PROGRAMACIÓN
+========================================================= */
+
+function openEditProgram(id){
+
+  const p =
+    getProgram(id);
+
+
+  if(!p) return;
+
+
+  editingProgrammingId=id;
+
+
+  document.getElementById(
+    "editId"
+  ).value=id;
+
+
+  document.getElementById(
+    "editLinea"
+  ).value=p.linea;
+
+
+  document.getElementById(
+    "editOT"
+  ).value=p.ot;
+
+
+  document.getElementById(
+    "editModelo"
+  ).value=p.modelo;
+
+
+  document.getElementById(
+    "editPiezas"
+  ).value=p.piezas;
+
+
+  document.getElementById(
+    "editObs"
+  ).value=p.obs || "";
+
+
+  document.getElementById(
+    "editModal"
+  ).classList.add("open");
+
+}
+
+
+function closeEditModal(){
+
+  document
+    .getElementById("editModal")
+    .classList.remove("open");
+
+  editingProgrammingId=null;
+
+}
+
+
+function saveEditedProgramming(){
+
+  if(!editingProgrammingId) return;
+
+
+  const p =
+    getProgram(
+      editingProgrammingId
     );
 
-}
+
+  if(!p) return;
 
 
-function getProgrammedPieces(item){
+  const linea =
+    document.getElementById(
+      "editLinea"
+    ).value;
 
-  return num(
 
-    item.programado ??
+  const ot =
+    document.getElementById(
+      "editOT"
+    ).value.trim();
 
-    item.cantidadProgramada ??
 
-    item.cantidad ??
+  const modelo =
+    document.getElementById(
+      "editModelo"
+    ).value;
 
-    item.piezas ??
 
-    item.qty ??
+  const piezas =
+    num(
+      document.getElementById(
+        "editPiezas"
+      ).value
+    );
 
-    item.cantidadProg ??
 
-    item.cantProg
+  const obs =
+    document.getElementById(
+      "editObs"
+    ).value.trim();
 
+
+  if(!ot || !modelo || piezas<=0){
+
+    alert(
+      "Revisa OT, modelo y cantidad de piezas."
+    );
+
+    return;
+
+  }
+
+
+  /*
+    Si se cambia cantidad a una cifra menor
+    que ya salió de programación, no permitimos
+    que se rompa el inventario.
+  */
+
+  const salida =
+    outputPespunte(p);
+
+
+  const empaque =
+    outputEmpaque(p);
+
+
+  const auditoria =
+    outputAuditoria(p);
+
+
+  const minRequired =
+    Math.max(
+      salida,
+      empaque,
+      auditoria
+    );
+
+
+  if(piezas<minRequired){
+
+    alert(
+      "No puedes bajar la programación a " +
+      piezas +
+      " porque ya existen " +
+      minRequired +
+      " piezas registradas en avances."
+    );
+
+    return;
+
+  }
+
+
+  p.linea=linea;
+
+  p.ot=ot;
+
+  p.modelo=modelo;
+
+  p.piezas=piezas;
+
+  p.obs=obs;
+
+
+  ensureCost(modelo);
+
+  saveJSON(KPROD,programs);
+
+  closeEditModal();
+
+  refreshAll();
+
+
+  alert(
+    "La programación fue actualizada correctamente."
   );
 
 }
 
 
-function getProgrammedModel(item){
+/* =========================================================
+   ELIMINAR PROGRAMACIÓN
+========================================================= */
 
-  return String(
+function deleteProgram(id){
 
-    item.modelo ??
+  const p=getProgram(id);
 
-    item.model ??
+  if(!p) return;
 
-    item.nombreModelo ??
 
-    item.producto ??
+  const hasAdvances =
+    advances.some(
+      a=>a.programId===id
+    );
 
-    ""
 
-  ).trim();
+  if(hasAdvances){
 
-}
+    alert(
+      "No puedes eliminar una OT que ya tiene avances registrados."
+    );
 
+    return;
 
-/* ================================================================
-   CAPACIDAD DE LA PROGRAMACIÓN
-   ================================================================ */
-
-function calculateTodayCapacity(){
-
-  const rows=
-    getTodayProgramming();
-
-
-  let programmedPieces=0;
-
-  let requiredPesMinutes=0;
-
-  let requiredPreMinutes=0;
-
-  let moneyPes=0;
-
-  let moneyPre=0;
-
-  const details=[];
-
-
-  rows.forEach(
-    item=>{
-
-      const model=
-        getProgrammedModel(item);
-
-
-      const pieces=
-        getProgrammedPieces(item);
-
-
-      if(
-        !model ||
-        pieces<=0
-      ){
-        return;
-      }
-
-
-      const tstd=
-        getModelTSTD(model);
-
-
-      const costs=
-        getCosts();
-
-
-      const costName=
-        Object.keys(costs)
-        .find(
-          x=>
-            normalize(x)===
-            normalize(model)
-        );
-
-
-      const cost=
-        costName
-          ? costs[costName]
-          : null;
-
-
-      const pesCost=
-        num(cost?.pes);
-
-
-      const preCost=
-        num(cost?.pre);
-
-
-      const pesMinutes=
-        pieces*tstd.pes;
-
-
-      const preMinutes=
-        pieces*tstd.pre;
-
-
-      programmedPieces+=pieces;
-
-      requiredPesMinutes+=pesMinutes;
-
-      requiredPreMinutes+=preMinutes;
-
-      moneyPes+=
-        pieces*pesCost;
-
-      moneyPre+=
-        pieces*preCost;
-
-
-      details.push({
-
-        model,
-
-        pieces,
-
-        tstdPes:tstd.pes,
-
-        tstdPre:tstd.pre,
-
-        pesMinutes,
-
-        preMinutes,
-
-        pesCost,
-
-        preCost,
-
-        money:
-          pieces*
-          (
-            pesCost+
-            preCost
-          )
-
-      });
-
-    }
-  );
-
-
-  const shift=
-    getShift();
-
-
-  const capacityPes=
-    requiredPesMinutes>0
-
-      ? shift.pespunte /
-        (
-          requiredPesMinutes/
-          programmedPieces
-        )
-
-      : 0;
-
-
-  const capacityPre=
-    requiredPreMinutes>0
-
-      ? shift.preliminar /
-        (
-          requiredPreMinutes/
-          programmedPieces
-        )
-
-      : 0;
-
-
-  let capacityLine=0;
+  }
 
 
   if(
-    programmedPieces>0
+    !confirm(
+      "¿Eliminar la OT "+p.ot+" de la programación?"
+    )
   ){
 
-    capacityLine=
-      Math.floor(
-        Math.min(
-          capacityPes,
-          capacityPre
-        )
+    return;
+
+  }
+
+
+  programs =
+    programs.filter(
+      x=>x.id!==id
+    );
+
+
+  saveJSON(
+    KPROD,
+    programs
+  );
+
+
+  refreshAll();
+
+}
+
+
+/* =========================================================
+   TABLA PROGRAMACIÓN
+========================================================= */
+
+function renderProgramTable(){
+
+  const box =
+    document.getElementById(
+      "programTable"
+    );
+
+
+  const list =
+    programsForDate(
+      todayISO()
+    );
+
+
+  if(!list.length){
+
+    box.innerHTML = `
+
+      <div class="empty">
+
+        <strong>
+          No hay OT programadas hoy.
+        </strong>
+
+        Programa una OT arriba para comenzar.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  const sorted =
+    [...list].sort(
+      (a,b)=>
+        a.linea.localeCompare(b.linea) ||
+        a.ot.localeCompare(b.ot)
+    );
+
+
+  let html = `
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Línea</th>
+            <th>OT</th>
+            <th>Modelo</th>
+            <th>Piezas</th>
+            <th>TSTD Pes</th>
+            <th>Min Pes</th>
+            <th>Salida Pes</th>
+            <th>Eficiencia</th>
+            <th>Observaciones</th>
+            <th>Acciones</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+  `;
+
+
+  for(const p of sorted){
+
+    const c=getCost(p.modelo);
+
+    const min =
+      p.piezas *
+      num(c.tstdPes);
+
+    const salida =
+      outputPespunte(p);
+
+    const eff =
+      p.piezas>0
+      ? salida/p.piezas*100
+      : 0;
+
+
+    html += `
+
+      <tr>
+
+        <td>
+          <span class="badge blue">
+            Línea 20-${p.linea}
+          </span>
+        </td>
+
+        <td>
+          <strong>${esc(p.ot)}</strong>
+        </td>
+
+        <td>
+          ${esc(p.modelo)}
+        </td>
+
+        <td>
+          <strong>${fmt(p.piezas)}</strong>
+        </td>
+
+        <td>
+          ${fmt(c.tstdPes)}
+        </td>
+
+        <td>
+          ${fmt(min)}
+        </td>
+
+        <td>
+          ${fmt(salida)}
+        </td>
+
+        <td>
+          <span class="badge ${
+            eff>=100
+            ?"green"
+            :eff>=80
+              ?"yellow"
+              :"gray"
+          }">
+            ${pct(eff)}
+          </span>
+        </td>
+
+        <td>
+          ${esc(p.obs || "—")}
+        </td>
+
+        <td>
+
+          <div class="btn-row"
+               style="margin:0">
+
+            <button
+              class="btn small"
+              onclick="openEditProgram('${p.id}')">
+
+              ✏️ Editar
+
+            </button>
+
+            <button
+              class="btn small red"
+              onclick="deleteProgram('${p.id}')">
+
+              🗑️
+
+            </button>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `;
+
+  }
+
+
+  html += `
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+
+  box.innerHTML=html;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   ALERTA
+========================================================= */
+
+function showAlert(
+  element,
+  message,
+  type="success"
+){
+
+  if(!element) return;
+
+
+  element.innerHTML = `
+
+    <div class="alert ${type}">
+      ${esc(message)}
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   AVANCE
+========================================================= */
+
+function populateAdvanceOT(){
+
+  const select =
+    document.getElementById(
+      "aOT"
+    );
+
+
+  const current =
+    select.value;
+
+
+  select.innerHTML="";
+
+
+  const empty =
+    document.createElement("option");
+
+  empty.value="";
+
+  empty.textContent=
+    "Selecciona una OT";
+
+  select.appendChild(empty);
+
+
+  const sorted =
+    [...programs]
+      .filter(
+        p=>p.piezas>0
+      )
+      .sort(
+        (a,b)=>
+          a.linea.localeCompare(b.linea) ||
+          a.ot.localeCompare(b.ot)
+      );
+
+
+  for(const p of sorted){
+
+    const op =
+      document.createElement("option");
+
+    op.value=p.id;
+
+    op.textContent=
+      `Línea 20-${p.linea} · ${p.ot} · ${p.modelo} · ${fmt(p.piezas)} piezas`;
+
+    select.appendChild(op);
+
+  }
+
+
+  if(current){
+
+    select.value=current;
+
+  }
+
+}
+
+
+function populateStageSelects(){
+
+  const from =
+    document.getElementById(
+      "aDesde"
+    );
+
+
+  const to =
+    document.getElementById(
+      "aHasta"
+    );
+
+
+  from.innerHTML="";
+
+  to.innerHTML="";
+
+
+  for(let i=0;i<STAGES.length-1;i++){
+
+    const op =
+      document.createElement("option");
+
+    op.value=STAGES[i];
+
+    op.textContent=STAGES[i];
+
+    from.appendChild(op);
+
+  }
+
+
+  for(let i=1;i<STAGES.length;i++){
+
+    const op =
+      document.createElement("option");
+
+    op.value=STAGES[i];
+
+    op.textContent=STAGES[i];
+
+    to.appendChild(op);
+
+  }
+
+
+  from.value="Programado";
+
+  to.value="Armado";
+
+}
+
+
+function loadAdvanceOT(){
+
+  const id =
+    document.getElementById(
+      "aOT"
+    ).value;
+
+
+  const box =
+    document.getElementById(
+      "advanceOTInfo"
+    );
+
+
+  if(!id){
+
+    box.innerHTML="";
+
+    return;
+
+  }
+
+
+  const p=getProgram(id);
+
+
+  if(!p){
+
+    box.innerHTML="";
+
+    return;
+
+  }
+
+
+  const current =
+    getCurrentStage(p);
+
+
+  const totals =
+    getStageTotals(p);
+
+
+  let rows="";
+
+
+  for(const s of STAGES){
+
+    const q =
+      num(totals[s]);
+
+
+    rows += `
+
+      <tr>
+
+        <td>
+          ${s}
+        </td>
+
+        <td>
+          ${fmt(q)}
+        </td>
+
+      </tr>
+
+    `;
+
+  }
+
+
+  box.innerHTML = `
+
+    <div class="alert">
+
+      <strong>
+        ${esc(p.ot)}
+      </strong>
+
+      · ${esc(p.modelo)}
+
+      · Línea 20-${p.linea}
+
+      <br><br>
+
+      <strong>
+        Ubicación actual:
+      </strong>
+
+      <span class="badge blue">
+        ${current.stage}
+      </span>
+
+      <strong>
+        ${fmt(current.inventory)} piezas
+      </strong>
+
+    </div>
+
+    <div class="table-wrap">
+
+      <table style="min-width:500px">
+
+        <thead>
+
+          <tr>
+
+            <th>Proceso</th>
+            <th>Acumulado</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${rows}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+}
+
+
+function registerAdvance(){
+
+  const id =
+    document.getElementById(
+      "aOT"
+    ).value;
+
+
+  const from =
+    document.getElementById(
+      "aDesde"
+    ).value;
+
+
+  const to =
+    document.getElementById(
+      "aHasta"
+    ).value;
+
+
+  const qty =
+    num(
+      document.getElementById(
+        "aCantidad"
+      ).value
+    );
+
+
+  if(!id){
+
+    alert(
+      "Selecciona una OT."
+    );
+
+    return;
+
+  }
+
+
+  if(qty<=0){
+
+    alert(
+      "Captura una cantidad mayor a cero."
+    );
+
+    return;
+
+  }
+
+
+  const p=getProgram(id);
+
+
+  if(!p){
+
+    alert(
+      "No se encontró la OT."
+    );
+
+    return;
+
+  }
+
+
+  const fi =
+    STAGES.indexOf(from);
+
+  const ti =
+    STAGES.indexOf(to);
+
+
+  if(
+    fi<0 ||
+    ti<0 ||
+    ti<=fi
+  ){
+
+    alert(
+      "El proceso destino debe ser posterior al proceso origen."
+    );
+
+    return;
+
+  }
+
+
+  const current =
+    getCurrentStage(p);
+
+
+  /*
+    Para evitar inventarios negativos,
+    la cantidad a mover debe salir del
+    inventario real del proceso origen.
+  */
+
+  const totals =
+    getStageTotals(p);
+
+
+  let available=0;
+
+
+  if(from==="Programado"){
+
+    available =
+      num(p.piezas) -
+      num(totals["Armado"]);
+
+  }else{
+
+    available =
+      num(totals[from]) -
+      (
+        STAGES[
+          STAGES.indexOf(from)+1
+        ]
+        ? num(
+            totals[
+              STAGES[
+                STAGES.indexOf(from)+1
+              ]
+            ]
+          )
+        : 0
       );
 
   }
 
 
-  const limitingProcess=
-    requiredPesMinutes>=
-    requiredPreMinutes
+  /*
+    Cuando se captura exactamente desde
+    el proceso donde está la OT,
+    usamos el inventario actual.
+  */
 
-      ? "Pespunte"
+  if(
+    current.stage===from
+  ){
 
-      : "Preliminar";
+    available =
+      current.inventory;
 
-
-  const occupiedPercentPes=
-    shift.pespunte>0
-
-      ? (
-          requiredPesMinutes/
-          shift.pespunte
-        )*100
-
-      : 0;
+  }
 
 
-  const occupiedPercentPre=
-    shift.preliminar>0
+  if(qty>available){
 
-      ? (
-          requiredPreMinutes/
-          shift.preliminar
-        )*100
+    alert(
+      "No puedes mover " +
+      fmt(qty) +
+      " piezas. Solo hay " +
+      fmt(available) +
+      " piezas disponibles en " +
+      from +
+      "."
+    );
 
-      : 0;
+    return;
 
-
-  const targetPerHour=
-    shift.minutes>0
-
-      ? capacityLine/
-        (
-          shift.minutes/60
-        )
-
-      : 0;
+  }
 
 
-  return {
+  const movement={
 
-    rows,
+    id:uid("adv"),
 
-    details,
+    programId:p.id,
 
-    programmedPieces,
+    ot:p.ot,
 
-    requiredPesMinutes,
+    linea:p.linea,
 
-    requiredPreMinutes,
+    from,
 
-    availablePesMinutes:
-      shift.pespunte,
+    to,
 
-    availablePreMinutes:
-      shift.preliminar,
+    cantidad:qty,
 
-    capacityPes,
-
-    capacityPre,
-
-    capacityLine,
-
-    limitingProcess,
-
-    targetPerHour,
-
-    occupiedPercentPes,
-
-    occupiedPercentPre,
-
-    moneyPes,
-
-    moneyPre,
-
-    moneyTotal:
-      moneyPes+
-      moneyPre
+    date:nowISO()
 
   };
 
-}
 
+  advances.push(movement);
 
-/* ================================================================
-   PRODUCCIÓN REAL DEL DÍA
-   ================================================================ */
-
-function getTodayActual(){
-
-  const today=
-    todayLocal();
-
-
-  let total=0;
-
-  let moneyTotal=0;
-
-  let standardMinutesPes=0;
-
-  let standardMinutesPre=0;
-
-
-  getAdvances()
-  .filter(
-    item=>{
-
-      const date=
-        item.fecha ??
-        item.fechaHora ??
-        item.date;
-
-      return (
-        localDateString(date)===today
-      );
-
-    }
-  )
-  .forEach(
-    item=>{
-
-      const destination=
-        normalize(
-
-          item.siguienteProceso ??
-
-          item.procesoNuevo ??
-
-          item.procesoDestino ??
-
-          item.destino ??
-
-          ""
-
-        );
-
-
-      if(
-        destination!=="empaque" &&
-        destination!=="auditoria"
-      ){
-
-        return;
-
-      }
-
-
-      const pieces=
-        num(
-
-          item.piezas ??
-
-          item.cantidad ??
-
-          item.qty
-
-        );
-
-
-      if(pieces<=0){
-        return;
-      }
-
-
-      const model=
-        String(
-
-          item.modelo ??
-
-          item.model ??
-
-          ""
-
-        ).trim();
-
-
-      const tstd=
-        getModelTSTD(model);
-
-
-      const costs=
-        getCosts();
-
-
-      const costName=
-        Object.keys(costs)
-        .find(
-          x=>
-            normalize(x)===
-            normalize(model)
-        );
-
-
-      const cost=
-        costName
-          ? costs[costName]
-          : null;
-
-
-      total+=pieces;
-
-
-      standardMinutesPes+=
-        pieces*tstd.pes;
-
-
-      standardMinutesPre+=
-        pieces*tstd.pre;
-
-
-      moneyTotal+=
-        pieces*
-        (
-          num(cost?.pes)+
-          num(cost?.pre)
-        );
-
-    }
+  saveJSON(
+    KADV,
+    advances
   );
 
 
-  return {
+  document.getElementById(
+    "aCantidad"
+  ).value="";
 
-    pieces:total,
 
-    money:moneyTotal,
+  loadAdvanceOT();
 
-    standardMinutesPes,
+  refreshAll();
 
-    standardMinutesPre
 
-  };
+  alert(
+    "Avance registrado correctamente."
+  );
 
 }
 
 
-/* ================================================================
-   DESTAJO REAL
-   ================================================================ */
+/* =========================================================
+   LIMPIAR AVANCE
+========================================================= */
 
-function calculateActualDestajo(){
+function clearAdvanceForm(){
 
-  const today=
-    todayLocal();
-
-
-  const advances=
-    getAdvances();
+  document.getElementById(
+    "aOT"
+  ).value="";
 
 
-  const costs=
-    getCosts();
+  document.getElementById(
+    "aCantidad"
+  ).value="";
+
+
+  document.getElementById(
+    "advanceOTInfo"
+  ).innerHTML="";
+
+
+  populateStageSelects();
+
+}
+
+
+/* =========================================================
+   TABLA AVANCES
+========================================================= */
+
+function renderAdvanceTable(){
+
+  const box =
+    document.getElementById(
+      "advanceTable"
+    );
+
+
+  if(!advances.length){
+
+    box.innerHTML = `
+
+      <div class="empty">
+
+        <strong>
+          Todavía no hay avances registrados.
+        </strong>
+
+        Selecciona una OT arriba y registra su movimiento.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  const list =
+    [...advances]
+      .sort(
+        (a,b)=>
+          new Date(b.date) -
+          new Date(a.date)
+      );
+
+
+  let html = `
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Fecha / Hora</th>
+            <th>Línea</th>
+            <th>OT</th>
+            <th>Desde</th>
+            <th>Hasta</th>
+            <th>Piezas</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+  `;
+
+
+  for(const a of list){
+
+    html += `
+
+      <tr>
+
+        <td>
+          ${new Date(a.date).toLocaleString("es-MX")}
+        </td>
+
+        <td>
+          Línea 20-${a.linea}
+        </td>
+
+        <td>
+          <strong>${esc(a.ot)}</strong>
+        </td>
+
+        <td>
+          <span class="badge gray">
+            ${a.from}
+          </span>
+        </td>
+
+        <td>
+          <span class="badge blue">
+            ${a.to}
+          </span>
+        </td>
+
+        <td>
+          <strong>${fmt(a.cantidad)}</strong>
+        </td>
+
+      </tr>
+
+    `;
+
+  }
+
+
+  html += `
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+
+  box.innerHTML=html;
+
+}
+
+
+/* =========================================================
+   WORKSHOP
+========================================================= */
+
+function renderWorkshop(){
+
+  const kpis =
+    document.getElementById(
+      "workshopKPIs"
+    );
+
+
+  const today =
+    programsForDate(
+      todayISO()
+    );
+
+
+  const totalProgram =
+    today.reduce(
+      (s,p)=>s+p.piezas,
+      0
+    );
+
+
+  const totalEmpaque =
+    today.reduce(
+      (s,p)=>s+outputEmpaque(p),
+      0
+    );
+
+
+  const totalAudit =
+    today.reduce(
+      (s,p)=>s+outputAuditoria(p),
+      0
+    );
+
+
+  const totalSalida =
+    today.reduce(
+      (s,p)=>s+outputPespunte(p),
+      0
+    );
+
+
+  kpis.innerHTML = `
+
+    <div class="kpi">
+
+      <div class="label">
+        Programado
+      </div>
+
+      <div class="value">
+        ${fmt(totalProgram)}
+      </div>
+
+      <div class="sub">
+        piezas
+      </div>
+
+    </div>
+
+
+    <div class="kpi">
+
+      <div class="label">
+        Salida Pespunte
+      </div>
+
+      <div class="value">
+        ${fmt(totalSalida)}
+      </div>
+
+      <div class="sub">
+        piezas
+      </div>
+
+    </div>
+
+
+    <div class="kpi">
+
+      <div class="label">
+        Empaque
+      </div>
+
+      <div class="value">
+        ${fmt(totalEmpaque)}
+      </div>
+
+      <div class="sub">
+        piezas
+      </div>
+
+    </div>
+
+
+    <div class="kpi">
+
+      <div class="label">
+        Auditoría
+      </div>
+
+      <div class="value">
+        ${fmt(totalAudit)}
+      </div>
+
+      <div class="sub">
+        piezas
+      </div>
+
+    </div>
+
+  `;
+
+
+  const box =
+    document.getElementById(
+      "workshopTable"
+    );
+
+
+  if(!programs.length){
+
+    box.innerHTML = `
+
+      <div class="empty">
+
+        <strong>
+          No hay OT en Workshop.
+        </strong>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  let html = `
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Línea</th>
+            <th>OT</th>
+            <th>Modelo</th>
+            <th>Programado</th>
+            <th>Ubicación</th>
+            <th>Inventario</th>
+            <th>Salida Pes</th>
+            <th>Empaque</th>
+            <th>Auditoría</th>
+            <th>Transcurrido</th>
+            <th>Lead Time</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+  `;
+
+
+  const sorted =
+    [...programs]
+      .sort(
+        (a,b)=>
+          a.linea.localeCompare(b.linea) ||
+          a.ot.localeCompare(b.ot)
+      );
+
+
+  for(const p of sorted){
+
+    const current =
+      getCurrentStage(p);
+
+
+    const outputPes =
+      outputPespunte(p);
+
+
+    const outputEmp =
+      outputEmpaque(p);
+
+
+    const outputAud =
+      outputAuditoria(p);
+
+
+    html += `
+
+      <tr>
+
+        <td>
+          <span class="badge blue">
+            20-${p.linea}
+          </span>
+        </td>
+
+        <td>
+          <strong>
+            ${esc(p.ot)}
+          </strong>
+        </td>
+
+        <td>
+          ${esc(p.modelo)}
+        </td>
+
+        <td>
+          ${fmt(p.piezas)}
+        </td>
+
+        <td>
+
+          <span class="badge ${
+            current.stage==="Auditoría"
+              ?"green"
+              :"yellow"
+          }">
+
+            ${current.stage}
+
+          </span>
+
+        </td>
+
+        <td>
+          <strong>
+            ${fmt(current.inventory)}
+          </strong>
+        </td>
+
+        <td>
+          ${fmt(outputPes)}
+        </td>
+
+        <td>
+          ${fmt(outputEmp)}
+        </td>
+
+        <td>
+          ${fmt(outputAud)}
+        </td>
+
+        <td>
+          ${elapsedFrom(p.createdAt)}
+        </td>
+
+        <td>
+          ${leadTimeEstimate(p)}
+        </td>
+
+      </tr>
+
+    `;
+
+  }
+
+
+  html += `
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+
+  box.innerHTML=html;
+
+}
+
+
+/* =========================================================
+   NÓMINA
+========================================================= */
+
+function payrollByLine(line){
+
+  const list =
+    programs.filter(
+      p=>p.linea===line
+    );
 
 
   let pieces=0;
@@ -1706,108 +5059,28 @@ function calculateActualDestajo(){
   let pre=0;
 
 
-  advances
-  .filter(
-    item=>{
+  for(const p of list){
 
-      const date=
-        item.fecha ??
-        item.fechaHora ??
-        item.date;
-
-      return (
-        localDateString(date)===today
-      );
-
-    }
-  )
-  .forEach(
-    item=>{
-
-      const destination=
-        normalize(
-
-          item.siguienteProceso ??
-
-          item.procesoNuevo ??
-
-          item.procesoDestino ??
-
-          item.destino ??
-
-          ""
-
-        );
+    const q =
+      outputEmpaque(p);
 
 
-      if(
-        destination!=="empaque" &&
-        destination!=="auditoria"
-      ){
-
-        return;
-
-      }
+    if(q<=0) continue;
 
 
-      const quantity=
-        num(
-
-          item.piezas ??
-
-          item.cantidad ??
-
-          item.qty
-
-        );
+    const c =
+      getCost(p.modelo);
 
 
-      if(quantity<=0){
-        return;
-      }
+    pieces += q;
 
+    pes +=
+      q*num(c.costoPes);
 
-      const model=
-        String(
+    pre +=
+      q*num(c.costoPre);
 
-          item.modelo ??
-
-          item.model ??
-
-          ""
-
-        ).trim();
-
-
-      const costName=
-        Object.keys(costs)
-        .find(
-          x=>
-            normalize(x)===
-            normalize(model)
-        );
-
-
-      const cost=
-        costName
-          ? costs[costName]
-          : null;
-
-
-      pieces+=quantity;
-
-
-      pes+=
-        quantity*
-        num(cost?.pes);
-
-
-      pre+=
-        quantity*
-        num(cost?.pre);
-
-    }
-  );
+  }
 
 
   return {
@@ -1818,1587 +5091,160 @@ function calculateActualDestajo(){
 
     pre,
 
-    total:
-      pes+
-      pre
+    total:pes+pre
 
   };
 
 }
 
 
-/* ================================================================
-   EFICIENCIA
-   ================================================================ */
+function renderPayroll(){
 
-function calculateEfficiency(){
-
-  const plan=
-    calculateTodayCapacity();
+  const A =
+    payrollByLine("A");
 
 
-  const actual=
-    getTodayActual();
+  const B =
+    payrollByLine("B");
 
 
-  const pes=
-    plan.availablePesMinutes>0
-
-      ? (
-          actual.standardMinutesPes/
-          plan.availablePesMinutes
-        )*100
-
-      : 0;
+  const allPrograms =
+    [...programs];
 
 
-  const pre=
-    plan.availablePreMinutes>0
+  let pesTotal=0;
 
-      ? (
-          actual.standardMinutesPre/
-          plan.availablePreMinutes
-        )*100
-
-      : 0;
+  let preTotal=0;
 
 
-  return {
+  for(const p of allPrograms){
 
-    pes,
+    const q =
+      outputEmpaque(p);
 
-    pre,
 
-    line:
-      Math.min(
-        pes,
-        pre
-      )
+    const c =
+      getCost(p.modelo);
 
-  };
+
+    pesTotal +=
+      q*num(c.costoPes);
+
+
+    preTotal +=
+      q*num(c.costoPre);
+
+  }
+
+
+  document.getElementById(
+    "nominaA"
+  ).textContent=
+    money(A.total);
+
+
+  document.getElementById(
+    "nominaAPiezas"
+  ).textContent=
+    fmt(A.pieces)+" piezas";
+
+
+  document.getElementById(
+    "nominaB"
+  ).textContent=
+    money(B.total);
+
+
+  document.getElementById(
+    "nominaBPiezas"
+  ).textContent=
+    fmt(B.pieces)+" piezas";
+
+
+  document.getElementById(
+    "nominaPes"
+  ).textContent=
+    money(pesTotal);
+
+
+  document.getElementById(
+    "nominaPre"
+  ).textContent=
+    money(preTotal);
+
+
+  renderPayrollTable();
+
+  renderCostTable();
 
 }
 
 
-/* ================================================================
-   ESTILOS
-   ================================================================ */
+/* =========================================================
+   DETALLE NÓMINA
+========================================================= */
 
-function installStyles(){
+function renderPayrollTable(){
 
-  if(
+  const box =
     document.getElementById(
-      "tsCompleteStyles"
-    )
-  ){
-    return;
-  }
-
-
-  const style=
-    document.createElement(
-      "style"
+      "payrollTable"
     );
 
 
-  style.id=
-    "tsCompleteStyles";
+  const rows=[];
 
 
-  style.textContent=`
+  for(const p of programs){
 
-body{
+    const q =
+      outputEmpaque(p);
 
-  background:#07111f!important;
 
-  color:#eef4fb!important;
+    if(q<=0) continue;
 
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
 
-}
+    const c =
+      getCost(p.modelo);
 
 
-#tsCapacityPanel,
-#tsTodayDetails,
-#tsCostRepair{
+    const pes =
+      q*num(c.costoPes);
 
-  width:
-    min(
-      1200px,
-      calc(100% - 24px)
-    );
 
-  margin:
-    12px auto;
+    const pre =
+      q*num(c.costoPre);
 
-  background:
-    linear-gradient(
-      145deg,
-      #0d1725,
-      #08111d
-    );
 
-  border:
-    1px solid #24364c;
+    rows.push({
 
-  border-radius:20px;
+      p,
 
-  padding:16px;
+      q,
 
-  color:#eef4fb;
+      pes,
 
-  box-shadow:
-    0 15px 50px
-    rgba(0,0,0,.25);
+      pre,
 
-}
+      total:pes+pre
 
-
-.tsCPHeader{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  gap:12px;
-
-  flex-wrap:wrap;
-
-}
-
-
-.tsCPTitle{
-
-  font-size:20px;
-
-  font-weight:950;
-
-}
-
-
-.tsCPSub{
-
-  color:#aebed2;
-
-  font-size:12px;
-
-  margin-top:3px;
-
-}
-
-
-.tsCPBadge{
-
-  background:#123d72;
-
-  border-radius:999px;
-
-  padding:8px 12px;
-
-  font-size:11px;
-
-  font-weight:900;
-
-}
-
-
-.tsCPGrid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(
-      6,
-      minmax(
-        0,
-        1fr
-      )
-    );
-
-  gap:8px;
-
-  margin-top:12px;
-
-}
-
-
-.tsCPCarD{
-
-  background:#111e2e;
-
-  border:
-    1px solid #24364c;
-
-  border-radius:14px;
-
-  padding:11px;
-
-}
-
-
-.tsCPCarD small{
-
-  display:block;
-
-  color:#aebed2;
-
-  font-size:10px;
-
-  font-weight:900;
-
-}
-
-
-.tsCPCarD strong{
-
-  display:block;
-
-  color:#4d9aff;
-
-  font-size:24px;
-
-  font-weight:950;
-
-  margin-top:3px;
-
-}
-
-
-.tsCPCarD span{
-
-  color:#73869e;
-
-  font-size:10px;
-
-}
-
-
-.tsCPSections{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(
-      3,
-      minmax(
-        0,
-        1fr
-      )
-    );
-
-  gap:8px;
-
-  margin-top:8px;
-
-}
-
-
-.tsCPSection{
-
-  background:#0b1624;
-
-  border:
-    1px solid #24364c;
-
-  border-radius:14px;
-
-  padding:12px;
-
-}
-
-
-.tsCPSectionTitle{
-
-  font-weight:950;
-
-  margin-bottom:5px;
-
-}
-
-
-.tsCPRow{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  gap:10px;
-
-  padding:7px 0;
-
-  border-bottom:
-    1px solid #24364c;
-
-  font-size:12px;
-
-}
-
-
-.tsCPRow:last-child{
-
-  border-bottom:0;
-
-}
-
-
-.tsCPRow span{
-
-  color:#aebed2;
-
-}
-
-
-.tsCPRow b{
-
-  text-align:right;
-
-}
-
-
-.tsCPAlert{
-
-  margin-top:9px;
-
-  padding:11px;
-
-  border-radius:12px;
-
-  background:#142337;
-
-  border:
-    1px solid #24364c;
-
-  font-weight:900;
-
-}
-
-
-.tsCPFoot{
-
-  margin-top:9px;
-
-  color:#73869e;
-
-  font-size:10px;
-
-  line-height:1.5;
-
-}
-
-
-#tsTodayDetailsContent{
-
-  overflow-x:auto;
-
-}
-
-
-.tsTodayTable{
-
-  width:100%;
-
-  border-collapse:collapse;
-
-}
-
-
-.tsTodayTable th,
-.tsTodayTable td{
-
-  padding:8px 6px;
-
-  border-bottom:
-    1px solid #24364c;
-
-  font-size:11px;
-
-  text-align:left;
-
-}
-
-
-.tsTodayTable th{
-
-  color:#aebed2;
-
-}
-
-
-.tsTodayRight{
-
-  text-align:right!important;
-
-}
-
-
-.tsCostGrid{
-
-  display:grid;
-
-  grid-template-columns:
-    minmax(150px,1.5fr)
-    repeat(
-      4,
-      minmax(80px,1fr)
-    )
-    70px;
-
-  gap:0;
-
-}
-
-
-.tsCostHead{
-
-  color:#aebed2;
-
-  font-size:10px;
-
-  font-weight:900;
-
-  padding:7px 5px;
-
-}
-
-
-.tsCostCell{
-
-  padding:9px 5px;
-
-  border-top:
-    1px solid #24364c;
-
-  font-size:11px;
-
-  overflow-wrap:anywhere;
-
-}
-
-
-.tsEditCost{
-
-  border:0;
-
-  background:#142d4d;
-
-  color:#4d9aff;
-
-  border-radius:9px;
-
-  padding:7px 9px;
-
-  font-size:16px;
-
-}
-
-
-.tsCostForm{
-
-  display:grid;
-
-  grid-template-columns:
-    1.4fr
-    1fr
-    1fr
-    1fr
-    1fr
-    auto;
-
-  gap:8px;
-
-  margin-top:12px;
-
-}
-
-
-#tsCostRepair input{
-
-  width:100%;
-
-  padding:10px;
-
-  border:
-    1px solid #24364c;
-
-  border-radius:9px;
-
-  background:#111e2e;
-
-  color:#eef4fb;
-
-}
-
-
-#tsCostRepair button{
-
-  border:0;
-
-  border-radius:9px;
-
-  padding:9px 12px;
-
-  background:#1769ff;
-
-  color:#fff;
-
-  font-weight:900;
-
-}
-
-
-#tsEfficiencyExtra{
-
-  margin-top:10px;
-
-  padding:11px;
-
-  border:
-    1px solid #24364c;
-
-  border-radius:13px;
-
-  background:#0b1624;
-
-}
-
-
-.tsEfficiencyGrid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(
-      4,
-      minmax(
-        0,
-        1fr
-      )
-    );
-
-  gap:8px;
-
-}
-
-
-.tsEfficiencyCard{
-
-  background:#111e2e;
-
-  border-radius:10px;
-
-  padding:9px;
-
-}
-
-
-.tsEfficiencyCard small{
-
-  color:#aebed2;
-
-  font-size:10px;
-
-}
-
-
-.tsEfficiencyCard strong{
-
-  display:block;
-
-  font-size:19px;
-
-  margin-top:3px;
-
-}
-
-
-@media(max-width:900px){
-
-  .tsCPGrid{
-
-    grid-template-columns:
-      repeat(
-        3,
-        minmax(
-          0,
-          1fr
-        )
-      );
+    });
 
   }
 
 
-  .tsCPSections{
+  if(!rows.length){
 
-    grid-template-columns:
-      1fr;
+    box.innerHTML = `
 
-  }
+      <div class="empty">
 
+        <strong>
+          Todavía no hay piezas en Empaque.
+        </strong>
 
-  .tsCostForm{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-}
-
-
-@media(max-width:600px){
-
-  #tsCapacityPanel,
-  #tsTodayDetails,
-  #tsCostRepair{
-
-    width:
-      calc(
-        100% - 12px
-      );
-
-    padding:12px;
-
-    border-radius:16px;
-
-  }
-
-
-  .tsCPGrid{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-
-  .tsEfficiencyGrid{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-
-  .tsCostGrid{
-
-    min-width:650px;
-
-  }
-
-
-  .tsCostForm{
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-}
-
-
-@media(max-width:400px){
-
-  .tsCPGrid{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-
-  .tsEfficiencyGrid{
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-}
-
-`;
-
-
-  document.head.appendChild(
-    style
-  );
-
-}
-
-
-/* ================================================================
-   PANEL PRINCIPAL DE CAPACIDAD
-   ================================================================ */
-
-function installCapacityPanel(){
-
-  if(
-    document.getElementById(
-      "tsCapacityPanel"
-    )
-  ){
-
-    refreshCapacityPanel();
-
-    return;
-
-  }
-
-
-  const panel=
-    document.createElement(
-      "section"
-    );
-
-
-  panel.id=
-    "tsCapacityPanel";
-
-
-  panel.innerHTML=`
-
-<div class="tsCPHeader">
-
-  <div>
-
-    <div class="tsCPTitle">
-      🎯 CONTROL DE CAPACIDAD · HOY
-    </div>
-
-    <div class="tsCPSub">
-      Jornada 8:00 a.m. → 1:00 p.m.
-    </div>
-
-  </div>
-
-
-  <div class="tsCPBadge">
-    300 MIN / PERSONA
-  </div>
-
-</div>
-
-
-<div class="tsCPGrid">
-
-  <div class="tsCPCarD">
-
-    <small>PESPUNTE</small>
-
-    <strong id="tsCPAvailablePes">
-      0
-    </strong>
-
-    <span>
-      min disponibles
-    </span>
-
-  </div>
-
-
-  <div class="tsCPCarD">
-
-    <small>PRELIMINAR</small>
-
-    <strong id="tsCPAvailablePre">
-      0
-    </strong>
-
-    <span>
-      min disponibles
-    </span>
-
-  </div>
-
-
-  <div class="tsCPCarD">
-
-    <small>PROGRAMADO</small>
-
-    <strong id="tsCPProgrammed">
-      0
-    </strong>
-
-    <span>
-      piezas
-    </span>
-
-  </div>
-
-
-  <div class="tsCPCarD">
-
-    <small>META REAL</small>
-
-    <strong id="tsCPTarget">
-      0
-    </strong>
-
-    <span>
-      piezas
-    </span>
-
-  </div>
-
-
-  <div class="tsCPCarD">
-
-    <small>META / HORA</small>
-
-    <strong id="tsCPTargetHour">
-      0
-    </strong>
-
-    <span>
-      piezas / hora
-    </span>
-
-  </div>
-
-
-  <div class="tsCPCarD">
-
-    <small>REAL</small>
-
-    <strong id="tsCPActual">
-      0
-    </strong>
-
-    <span>
-      piezas
-    </span>
-
-  </div>
-
-</div>
-
-
-<div class="tsCPSections">
-
-  <div class="tsCPSection">
-
-    <div class="tsCPSectionTitle">
-      ⏱️ MINUTOS
-    </div>
-
-
-    <div class="tsCPRow">
-
-      <span>
-        Pespunte ocupados
-      </span>
-
-      <b id="tsCPOccupiedPes">
-        0 min
-      </b>
-
-    </div>
-
-
-    <div class="tsCPRow">
-
-      <span>
-        Pespunte disponibles
-      </span>
-
-      <b id="tsCPFreePes">
-        0 min
-      </b>
-
-    </div>
-
-
-    <div class="tsCPRow">
-
-      <span>
-        Preliminar ocupados
-      </span>
-
-      <b id="tsCPOccupiedPre">
-        0 min
-      </b>
-
-    </div>
-
-
-    <div class="tsCPRow">
-
-      <span>
-        Preliminar disponibles
-      </span>
-
-      <b id="tsCPFreePre">
-        0 min
-      </b>
-
-    </div>
-
-  </div>
-
-
-  <div class="tsCPSection">
-
-    <div class="tsCPSectionTitle">
-      📊 PROGRAMACIÓN
-    </div>
-
-
-    <div class="tsCPRow">
-
-      <span>
-        Capacidad Pespunte
-      </span>
-
-      <b id="tsCPCapPes">
-        0
-      </b>
-
-    </div>
-
-
-    <div class="tsCPRow">
-
-      <span>
-        Capacidad Preliminar
-      </span>
-
-      <b id="tsCPCapPre">
-        0
-      </b>
-
-    </div>
-
-
-    <div class="tsCPRow">
-
-      <span>
-        Proceso limitante
-      </span>
-
-      <b id="tsCPLimit">
-        —
-      </b>
-
-    </div>
-
-
-    <div class="tsCPRow">
-
-      <span>
-        Diferencia programación
-      </span>
-
-      <b id="tsCPDifference">
-        0
-      </b>
-
-    </div>
-
-  </div>
-
-
-  <div class="tsCPSection">
-
-    <div class="tsCPSectionTitle">
-      💰 DINERO
-    </div>
-
-
-    <div class="tsCPRow">
-
-      <span>
-        Destajo producido
-      </span>
-
-      <b id="tsCPMoneyActual">
-        $0.00
-      </b>
-
-    </div>
-
-
-    <div class="tsCPRow">
-
-      <span>
-        Destajo programa
-      </span>
-
-      <b id="tsCPMoneyPlan">
-        $0.00
-      </b>
-
-    </div>
-
-
-    <div class="tsCPRow">
-
-      <span>
-        Proyección
-      </span>
-
-      <b id="tsCPMoneyProjection">
-        $0.00
-      </b>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<div
-  id="tsCPAlert"
-  class="tsCPAlert"
->
-  Esperando programación...
-</div>
-
-
-<div id="tsEfficiencyExtra">
-
-  <div
-    style="
-      font-weight:950;
-      margin-bottom:8px;
-    "
-  >
-    📊 EFICIENCIA DEL DÍA
-  </div>
-
-
-  <div class="tsEfficiencyGrid">
-
-    <div class="tsEfficiencyCard">
-
-      <small>
-        Eficiencia Pespunte
-      </small>
-
-      <strong id="tsEffPes">
-        0%
-      </strong>
-
-    </div>
-
-
-    <div class="tsEfficiencyCard">
-
-      <small>
-        Eficiencia Preliminar
-      </small>
-
-      <strong id="tsEffPre">
-        0%
-      </strong>
-
-    </div>
-
-
-    <div class="tsEfficiencyCard">
-
-      <small>
-        Eficiencia línea
-      </small>
-
-      <strong id="tsEffLine">
-        0%
-      </strong>
-
-    </div>
-
-
-    <div class="tsEfficiencyCard">
-
-      <small>
-        Piezas / programa
-      </small>
-
-      <strong id="tsEffPieces">
-        0%
-      </strong>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<div class="tsCPFoot">
-
-  La capacidad se calcula con los minutos
-  disponibles de los 5 pespuntadores y 6
-  preliminares. El TSTD de cada modelo
-  determina cuántos minutos consume cada pieza.
-
-</div>
-
-`;
-
-
-  const main=
-    document.querySelector("main");
-
-
-  if(main){
-
-    main.insertBefore(
-      panel,
-      main.firstChild
-    );
-
-  }
-  else{
-
-    document.body.insertBefore(
-      panel,
-      document.body.firstChild
-    );
-
-  }
-
-
-  refreshCapacityPanel();
-
-}
-
-
-/* ================================================================
-   REFRESH CAPACIDAD
-   ================================================================ */
-
-function refreshCapacityPanel(){
-
-  const plan=
-    calculateTodayCapacity();
-
-
-  const actual=
-    getTodayActual();
-
-
-  const efficiency=
-    calculateEfficiency();
-
-
-  const destajo=
-    calculateActualDestajo();
-
-
-  const freePes=
-    plan.availablePesMinutes-
-    plan.requiredPesMinutes;
-
-
-  const freePre=
-    plan.availablePreMinutes-
-    plan.requiredPreMinutes;
-
-
-  const difference=
-    plan.programmedPieces-
-    plan.capacityLine;
-
-
-  const projection=
-    actual.pieces>0
-
-      ? (
-          destajo.total/
-          actual.pieces
-        )*
-        Math.max(
-          plan.capacityLine,
-          actual.pieces
-        )
-
-      : 0;
-
-
-  function put(id,value){
-
-    const el=
-      document.getElementById(id);
-
-    if(el){
-
-      el.textContent=value;
-
-    }
-
-  }
-
-
-  put(
-    "tsCPAvailablePes",
-    numberMX(
-      plan.availablePesMinutes
-    )
-  );
-
-
-  put(
-    "tsCPAvailablePre",
-    numberMX(
-      plan.availablePreMinutes
-    )
-  );
-
-
-  put(
-    "tsCPProgrammed",
-    numberMX(
-      plan.programmedPieces
-    )
-  );
-
-
-  put(
-    "tsCPTarget",
-    numberMX(
-      plan.capacityLine
-    )
-  );
-
-
-  put(
-    "tsCPTargetHour",
-    numberMX(
-      plan.targetPerHour
-    )
-  );
-
-
-  put(
-    "tsCPActual",
-    numberMX(
-      actual.pieces
-    )
-  );
-
-
-  put(
-    "tsCPOccupiedPes",
-    numberMX(
-      plan.requiredPesMinutes
-    )+
-    " min"
-  );
-
-
-  put(
-    "tsCPFreePes",
-    numberMX(
-      Math.max(
-        0,
-        freePes
-      )
-    )+
-    " min"
-  );
-
-
-  put(
-    "tsCPOccupiedPre",
-    numberMX(
-      plan.requiredPreMinutes
-    )+
-    " min"
-  );
-
-
-  put(
-    "tsCPFreePre",
-    numberMX(
-      Math.max(
-        0,
-        freePre
-      )
-    )+
-    " min"
-  );
-
-
-  put(
-    "tsCPCapPes",
-    numberMX(
-      plan.capacityPes
-    )
-  );
-
-
-  put(
-    "tsCPCapPre",
-    numberMX(
-      plan.capacityPre
-    )
-  );
-
-
-  put(
-    "tsCPLimit",
-    plan.limitingProcess
-  );
-
-
-  put(
-    "tsCPDifference",
-
-    difference>0
-
-      ? "+"+
-        numberMX(
-          difference
-        )+
-        " sobre capacidad"
-
-      : numberMX(
-          Math.abs(
-            difference
-          )
-        )+
-        " de margen"
-
-  );
-
-
-  put(
-    "tsCPMoneyActual",
-    money(
-      destajo.total
-    )
-  );
-
-
-  put(
-    "tsCPMoneyPlan",
-    money(
-      plan.moneyTotal
-    )
-  );
-
-
-  put(
-    "tsCPMoneyProjection",
-    money(
-      projection
-    )
-  );
-
-
-  put(
-    "tsEffPes",
-    numberMX(
-      efficiency.pes
-    )+
-    "%"
-  );
-
-
-  put(
-    "tsEffPre",
-    numberMX(
-      efficiency.pre
-    )+
-    "%"
-  );
-
-
-  put(
-    "tsEffLine",
-    numberMX(
-      efficiency.line
-    )+
-    "%"
-  );
-
-
-  const piecesPercent=
-    plan.programmedPieces>0
-
-      ? (
-          actual.pieces/
-          plan.programmedPieces
-        )*100
-
-      : 0;
-
-
-  put(
-    "tsEffPieces",
-    numberMX(
-      piecesPercent
-    )+
-    "%"
-  );
-
-
-  const alert=
-    document.getElementById(
-      "tsCPAlert"
-    );
-
-
-  if(alert){
-
-    if(
-      plan.programmedPieces<=0
-    ){
-
-      alert.textContent=
-        "📋 No hay programación registrada para hoy.";
-
-    }
-    else
-    if(
-      plan.programmedPieces>
-      plan.capacityLine
-    ){
-
-      alert.textContent=
-        "⚠️ PROGRAMACIÓN POR ENCIMA DE CAPACIDAD · "+
-        numberMX(
-          plan.programmedPieces
-        )+
-        " programadas contra "+
-        numberMX(
-          plan.capacityLine
-        )+
-        " de capacidad.";
-
-    }
-    else{
-
-      alert.textContent=
-        "✅ PROGRAMACIÓN DENTRO DE CAPACIDAD · "+
-        numberMX(
-          plan.capacityLine-
-          plan.programmedPieces
-        )+
-        " piezas de margen.";
-
-    }
-
-  }
-
-}
-
-
-/* ================================================================
-   DETALLE DE PROGRAMACIÓN
-   ================================================================ */
-
-function installTodayDetails(){
-
-  if(
-    document.getElementById(
-      "tsTodayDetails"
-    )
-  ){
-
-    refreshTodayDetails();
-
-    return;
-
-  }
-
-
-  const panel=
-    document.createElement(
-      "section"
-    );
-
-
-  panel.id=
-    "tsTodayDetails";
-
-
-  panel.innerHTML=`
-
-    <div
-      style="
-        font-size:18px;
-        font-weight:950;
-        margin-bottom:10px;
-      "
-    >
-
-      📋 PROGRAMACIÓN DE HOY
-
-    </div>
-
-
-    <div id="tsTodayDetailsContent">
-    </div>
-
-  `;
-
-
-  const capacity=
-    document.getElementById(
-      "tsCapacityPanel"
-    );
-
-
-  if(capacity){
-
-    capacity.after(
-      panel
-    );
-
-  }
-  else{
-
-    document.body.appendChild(
-      panel
-    );
-
-  }
-
-
-  refreshTodayDetails();
-
-}
-
-
-function refreshTodayDetails(){
-
-  const box=
-    document.getElementById(
-      "tsTodayDetailsContent"
-    );
-
-
-  if(!box){
-    return;
-  }
-
-
-  const plan=
-    calculateTodayCapacity();
-
-
-  if(
-    !plan.details.length
-  ){
-
-    box.innerHTML=`
-
-      <div
-        style="
-          color:#aebed2;
-          padding:8px 0;
-        "
-      >
-
-        No hay modelos programados para hoy.
+        Cuando avances una OT hasta Empaque,
+        aquí aparecerá su nómina.
 
       </div>
 
@@ -3409,490 +5255,300 @@ function refreshTodayDetails(){
   }
 
 
-  box.innerHTML=`
+  let html = `
 
-    <table class="tsTodayTable">
+    <div class="table-wrap">
 
-      <thead>
+      <table>
 
-        <tr>
+        <thead>
 
-          <th>
-            MODELO
-          </th>
+          <tr>
 
-          <th class="tsTodayRight">
-            PIEZAS
-          </th>
+            <th>Línea</th>
+            <th>OT</th>
+            <th>Modelo</th>
+            <th>Empaque</th>
+            <th>Costo Pes</th>
+            <th>Costo Pre</th>
+            <th>Nómina Pes</th>
+            <th>Nómina Pre</th>
+            <th>Total</th>
 
-          <th class="tsTodayRight">
-            TSTD PES
-          </th>
+          </tr>
 
-          <th class="tsTodayRight">
-            TSTD PRE
-          </th>
+        </thead>
 
-          <th class="tsTodayRight">
-            MIN PES
-          </th>
-
-          <th class="tsTodayRight">
-            MIN PRE
-          </th>
-
-          <th class="tsTodayRight">
-            DESTAJO
-          </th>
-
-        </tr>
-
-      </thead>
-
-
-      <tbody>
-
-        ${
-          plan.details
-          .map(
-            row=>`
-
-              <tr>
-
-                <td>
-                  ${esc(row.model)}
-                </td>
-
-                <td class="tsTodayRight">
-                  ${numberMX(row.pieces)}
-                </td>
-
-                <td class="tsTodayRight">
-                  ${numberMX(row.tstdPes)}
-                </td>
-
-                <td class="tsTodayRight">
-                  ${numberMX(row.tstdPre)}
-                </td>
-
-                <td class="tsTodayRight">
-                  ${numberMX(row.pesMinutes)}
-                </td>
-
-                <td class="tsTodayRight">
-                  ${numberMX(row.preMinutes)}
-                </td>
-
-                <td class="tsTodayRight">
-                  ${money(row.money)}
-                </td>
-
-              </tr>
-
-            `
-          )
-          .join("")
-        }
-
-      </tbody>
-
-    </table>
+        <tbody>
 
   `;
 
+
+  for(const r of rows){
+
+    html += `
+
+      <tr>
+
+        <td>
+          Línea 20-${r.p.linea}
+        </td>
+
+        <td>
+          <strong>
+            ${esc(r.p.ot)}
+          </strong>
+        </td>
+
+        <td>
+          ${esc(r.p.modelo)}
+        </td>
+
+        <td>
+          ${fmt(r.q)}
+        </td>
+
+        <td>
+          ${money(getCost(r.p.modelo).costoPes)}
+        </td>
+
+        <td>
+          ${money(getCost(r.p.modelo).costoPre)}
+        </td>
+
+        <td>
+          ${money(r.pes)}
+        </td>
+
+        <td>
+          ${money(r.pre)}
+        </td>
+
+        <td>
+          <strong>
+            ${money(r.total)}
+          </strong>
+        </td>
+
+      </tr>
+
+    `;
+
+  }
+
+
+  html += `
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+
+  box.innerHTML=html;
+
 }
 
 
-/* ================================================================
-   COSTOS EN PANTALLA
-   ================================================================ */
+/* =========================================================
+   TABLA COSTOS
+========================================================= */
 
-function installCostRepair(){
+function renderCostTable(){
 
-  if(
+  const box =
     document.getElementById(
-      "tsCostRepair"
-    )
-  ){
-
-    renderCostRepair();
-
-    return;
-
-  }
-
-
-  const section=
-    document.createElement(
-      "section"
+      "costTable"
     );
 
 
-  section.id=
-    "tsCostRepair";
+  let html = `
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Modelo</th>
+            <th>Costo Pespunte</th>
+            <th>Costo Preliminar</th>
+            <th>TSTD Pes</th>
+            <th>TSTD Pre</th>
+            <th>Editar</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+  `;
 
 
-  const details=
-    document.getElementById(
-      "tsTodayDetails"
-    );
-
-
-  if(details){
-
-    details.after(
-      section
-    );
-
-  }
-  else{
-
-    document.body.appendChild(
-      section
-    );
-
-  }
-
-
-  renderCostRepair();
-
-}
-
-
-function renderCostRepair(){
-
-  const panel=
-    document.getElementById(
-      "tsCostRepair"
-    );
-
-
-  if(!panel){
-    return;
-  }
-
-
-  const costs=
-    getCosts();
-
-
-  const models=
-    Object.keys(costs)
-    .sort(
+  const sorted =
+    [...costs].sort(
       (a,b)=>
-        a.localeCompare(
-          b,
-          "es"
-        )
+        a.modelo.localeCompare(b.modelo)
     );
 
 
-  panel.innerHTML=`
+  for(const c of sorted){
 
-    <div>
+    html += `
 
-      <div
-        style="
-          font-size:20px;
-          font-weight:950;
-        "
-      >
+      <tr>
 
-        💰 COSTOS POR MODELO
+        <td>
+          <strong>
+            ${esc(c.modelo)}
+          </strong>
+        </td>
 
-      </div>
+        <td>
+          ${money(c.costoPes)}
+        </td>
 
+        <td>
+          ${money(c.costoPre)}
+        </td>
 
-      <div
-        style="
-          color:#aebed2;
-          font-size:12px;
-          margin-top:3px;
-        "
-      >
+        <td>
+          ${fmt(c.tstdPes)} min
+        </td>
 
-        Costos de pespunte y preliminar
-        + TSTD de cada proceso.
+        <td>
+          ${fmt(c.tstdPre)} min
+        </td>
 
-      </div>
+        <td>
 
-    </div>
+          <button
+            class="btn small"
+            onclick="openCostModal('${c.id}')">
 
+            ✏️ Editar
 
-    <div
-      style="
-        overflow-x:auto;
-        margin-top:12px;
-      "
-    >
+          </button>
 
-      <div class="tsCostGrid">
+        </td>
 
-        <div class="tsCostHead">
-          MODELO
-        </div>
+      </tr>
 
-        <div class="tsCostHead">
-          PESpunte
-        </div>
+    `;
 
-        <div class="tsCostHead">
-          PRELIMINAR
-        </div>
-
-        <div class="tsCostHead">
-          TSTD PES
-        </div>
-
-        <div class="tsCostHead">
-          TSTD PRE
-        </div>
-
-        <div class="tsCostHead">
-          ACCIÓN
-        </div>
+  }
 
 
-        ${
-          models.map(
-            model=>{
+  html += `
 
-              const item=
-                costs[model]||{};
+        </tbody>
 
-
-              const tstd=
-                getModelTSTD(
-                  model
-                );
-
-
-              return `
-
-                <div class="tsCostCell">
-                  ${esc(model)}
-                </div>
-
-                <div class="tsCostCell">
-                  ${money(item.pes)}
-                </div>
-
-                <div class="tsCostCell">
-                  ${money(item.pre)}
-                </div>
-
-                <div class="tsCostCell">
-                  ${numberMX(tstd.pes)}
-                </div>
-
-                <div class="tsCostCell">
-                  ${numberMX(tstd.pre)}
-                </div>
-
-                <div class="tsCostCell">
-
-                  <button
-                    class="tsEditCost"
-                    data-model="${esc(model)}"
-                    type="button"
-                  >
-
-                    ✏️
-
-                  </button>
-
-                </div>
-
-              `;
-
-            }
-          )
-          .join("")
-        }
-
-      </div>
-
-    </div>
-
-
-    <div
-      style="
-        margin-top:15px;
-        border-top:
-          1px solid #24364c;
-        padding-top:15px;
-      "
-    >
-
-      <div
-        style="
-          font-weight:950;
-          margin-bottom:9px;
-        "
-      >
-
-        Agregar / editar modelo
-
-      </div>
-
-
-      <div class="tsCostForm">
-
-        <input
-          id="tsCostModel"
-          placeholder="Modelo"
-        >
-
-
-        <input
-          id="tsCostPes"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="Costo pespunte"
-        >
-
-
-        <input
-          id="tsCostPre"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="Costo preliminar"
-        >
-
-
-        <input
-          id="tsCostTstdPes"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="TSTD pespunte"
-        >
-
-
-        <input
-          id="tsCostTstdPre"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="TSTD preliminar"
-        >
-
-
-        <button
-          id="tsSaveCost"
-          type="button"
-        >
-
-          Guardar
-
-        </button>
-
-      </div>
+      </table>
 
     </div>
 
   `;
 
 
-  panel
-  .querySelectorAll(
-    ".tsEditCost"
-  )
-  .forEach(
-    button=>{
+  box.innerHTML=html;
 
-      button.onclick=()=>{
-
-        const model=
-          button.dataset.model;
+}
 
 
-        const item=
-          costs[model]||{};
+/* =========================================================
+   EDITAR COSTO
+========================================================= */
+
+function openCostModal(id){
+
+  const c =
+    costs.find(
+      x=>x.id===id
+    );
 
 
-        const tstd=
-          getModelTSTD(
-            model
-          );
+  if(!c) return;
 
 
-        document
-        .getElementById(
-          "tsCostModel"
-        )
-        .value=model;
+  document.getElementById(
+    "costEditId"
+  ).value=id;
 
 
-        document
-        .getElementById(
-          "tsCostPes"
-        )
-        .value=num(item.pes);
+  document.getElementById(
+    "costEditModelo"
+  ).value=c.modelo;
 
 
-        document
-        .getElementById(
-          "tsCostPre"
-        )
-        .value=num(item.pre);
+  document.getElementById(
+    "costEditPes"
+  ).value=c.costoPes;
 
 
-        document
-        .getElementById(
-          "tsCostTstdPes"
-        )
-        .value=num(tstd.pes);
+  document.getElementById(
+    "costEditPre"
+  ).value=c.costoPre;
 
 
-        document
-        .getElementById(
-          "tsCostTstdPre"
-        )
-        .value=num(tstd.pre);
+  document.getElementById(
+    "costEditTstdPes"
+  ).value=c.tstdPes;
 
 
-        document
-        .getElementById(
-          "tsCostModel"
-        )
-        .focus();
+  document.getElementById(
+    "costEditTstdPre"
+  ).value=c.tstdPre;
 
-      };
 
-    }
-  );
+  document.getElementById(
+    "costModal"
+  ).classList.add("open");
 
+}
+
+
+function closeCostModal(){
 
   document
-  .getElementById(
-    "tsSaveCost"
-  )
-  ?.addEventListener(
-    "click",
-    saveCostFromPanel
-  );
+    .getElementById("costModal")
+    .classList.remove("open");
 
 }
 
 
-function saveCostFromPanel(){
+function saveCostEdit(){
 
-  const model=
-    document
-    .getElementById(
-      "tsCostModel"
-    )
-    .value
-    .trim();
+  const id =
+    document.getElementById(
+      "costEditId"
+    ).value;
 
 
-  if(!model){
+  const c =
+    costs.find(
+      x=>x.id===id
+    );
+
+
+  if(!c) return;
+
+
+  const modelo =
+    document.getElementById(
+      "costEditModelo"
+    ).value.trim();
+
+
+  if(!modelo){
 
     alert(
-      "Escribe el nombre del modelo."
+      "El modelo no puede quedar vacío."
     );
 
     return;
@@ -3900,677 +5556,727 @@ function saveCostFromPanel(){
   }
 
 
-  const current=
-    normalizeCostObject(
-      readJSON(
-        KCOST,
-        {}
-      )
+  c.modelo=modelo;
+
+  c.costoPes =
+    num(
+      document.getElementById(
+        "costEditPes"
+      ).value
     );
 
-
-  const existing=
-    Object.keys(current)
-    .find(
-      x=>
-        normalize(x)===
-        normalize(model)
+  c.costoPre =
+    num(
+      document.getElementById(
+        "costEditPre"
+      ).value
     );
 
+  c.tstdPes =
+    num(
+      document.getElementById(
+        "costEditTstdPes"
+      ).value
+    );
 
-  if(
-    existing &&
-    existing!==model
-  ){
-
-    delete current[existing];
-
-  }
-
-
-  current[model]={
-
-    pes:num(
-      document
-      .getElementById(
-        "tsCostPes"
-      )
-      .value
-    ),
-
-    pre:num(
-      document
-      .getElementById(
-        "tsCostPre"
-      )
-      .value
-    ),
-
-    min:num(
-      current[model]?.min
-    ),
-
-    tstdPes:num(
-      document
-      .getElementById(
-        "tsCostTstdPes"
-      )
-      .value
-    ),
-
-    tstdPre:num(
-      document
-      .getElementById(
-        "tsCostTstdPre"
-      )
-      .value
-    )
-
-  };
+  c.tstdPre =
+    num(
+      document.getElementById(
+        "costEditTstdPre"
+      ).value
+    );
 
 
   saveJSON(
     KCOST,
-    current
+    costs
   );
 
 
-  saveJSON(
-    "ts_costos_v1",
-    Object.keys(current).map(
-      x=>({
+  closeCostModal();
 
-        modelo:x,
+  populateModelSelects();
 
-        pespunte:
-          num(current[x].pes),
+  refreshAll();
 
-        preliminar:
-          num(current[x].pre),
 
-        min:
-          num(current[x].min),
-
-        tstdPes:
-          num(current[x].tstdPes),
-
-        tstdPre:
-          num(current[x].tstdPre)
-
-      })
-    )
+  alert(
+    "Costo y TSTD actualizados."
   );
-
-
-  renderCostRepair();
-
-  refreshCapacityPanel();
-
-  refreshTodayDetails();
 
 }
 
 
-/* ================================================================
-   RESUMEN SEMANAL
-   ================================================================ */
+/* =========================================================
+   CAPACIDAD
+========================================================= */
 
-function calculateWeek(reference){
+function renderCapacity(){
 
-  const prod=
-    getProduction();
-
-
-  const advances=
-    getAdvances();
+  const pesAvail =
+    availableMinutesPes();
 
 
-  const range=
-    weekRange(reference);
+  const preAvail =
+    availableMinutesPre();
 
 
-  const programmed=
-    prod.filter(
-      item=>
-        inWeek(
-          item.fecha ??
-          item.date,
-          reference
-        )
+  const pesUsedA =
+    programmedMinutes(
+      "A",
+      "pes"
     );
 
 
-  const programado=
-    programmed.reduce(
-      (
-        total,
-        item
-      )=>
-
-        total+
-        num(
-          item.programado ??
-          item.cantidadProgramada ??
-          item.cantidad ??
-          item.piezas
-        ),
-
-      0
+  const pesUsedB =
+    programmedMinutes(
+      "B",
+      "pes"
     );
 
 
-  const empaqueRecords=
-    advances.filter(
-      item=>{
-
-        const date=
-          item.fecha ??
-          item.fechaHora ??
-          item.date;
-
-
-        if(
-          !inWeek(
-            date,
-            reference
-          )
-        ){
-
-          return false;
-
-        }
-
-
-        return normalize(
-
-          item.siguienteProceso ??
-
-          item.procesoNuevo ??
-
-          item.procesoDestino ??
-
-          item.destino ??
-
-          ""
-
-        )==="empaque";
-
-      }
+  const preUsedA =
+    programmedMinutes(
+      "A",
+      "pre"
     );
 
 
-  const auditoriaRecords=
-    advances.filter(
-      item=>{
-
-        const date=
-          item.fecha ??
-          item.fechaHora ??
-          item.date;
-
-
-        if(
-          !inWeek(
-            date,
-            reference
-          )
-        ){
-
-          return false;
-
-        }
-
-
-        return normalize(
-
-          item.siguienteProceso ??
-
-          item.procesoNuevo ??
-
-          item.procesoDestino ??
-
-          item.destino ??
-
-          ""
-
-        )==="auditoria";
-
-      }
+  const preUsedB =
+    programmedMinutes(
+      "B",
+      "pre"
     );
 
 
-  const empaque=
-    empaqueRecords.reduce(
-      (
-        total,
-        item
-      )=>
+  const pesUsed =
+    pesUsedA+pesUsedB;
 
-        total+
-        num(
-          item.piezas ??
-          item.cantidad ??
-          item.qty
-        ),
+  const preUsed =
+    preUsedA+preUsedB;
 
-      0
+
+  document.getElementById(
+    "capPes"
+  ).textContent=
+    fmt(
+      Math.max(
+        0,
+        pesAvail*2-pesUsed
+      )
     );
 
 
-  const auditoria=
-    auditoriaRecords.reduce(
-      (
-        total,
-        item
-      )=>
-
-        total+
-        num(
-          item.piezas ??
-          item.cantidad ??
-          item.qty
-        ),
-
-      0
+  document.getElementById(
+    "capPre"
+  ).textContent=
+    fmt(
+      Math.max(
+        0,
+        preAvail*2-preUsed
+      )
     );
 
 
-  const ots=
-    new Set();
+  document.getElementById(
+    "capPesDetail"
+  ).textContent=
+    fmt(pesUsed)+
+    " min ocupados · "+
+    fmt(Math.max(0,pesAvail*2-pesUsed))+
+    " disponibles";
 
 
-  empaqueRecords.forEach(
-    item=>{
-
-      if(
-        item.ot!==undefined &&
-        item.ot!==null &&
-        String(item.ot).trim()
-      ){
-
-        ots.add(
-          String(
-            item.ot
-          ).trim()
-        );
-
-      }
-
-    }
-  );
+  document.getElementById(
+    "capPreDetail"
+  ).textContent=
+    fmt(preUsed)+
+    " min ocupados · "+
+    fmt(Math.max(0,preAvail*2-preUsed))+
+    " disponibles";
 
 
-  return {
-
-    start:range.start,
-
-    end:range.end,
-
-    programado,
-
-    empaque,
-
-    auditoria,
-
-    otsEmpaque:
-      ots.size
-
-  };
-
-}
+  document.getElementById(
+    "capPesBar"
+  ).style.width=
+    Math.min(
+      100,
+      pesAvail*2>0
+      ? pesUsed/(pesAvail*2)*100
+      : 0
+    )+"%";
 
 
-/* ================================================================
-   REFRESCAR TODO
-   ================================================================ */
+  document.getElementById(
+    "capPreBar"
+  ).style.width=
+    Math.min(
+      100,
+      preAvail*2>0
+      ? preUsed/(preAvail*2)*100
+      : 0
+    )+"%";
 
-function refreshStudio(){
 
-  try{
-
-    refreshCapacityPanel();
-
-    refreshTodayDetails();
-
-  }catch(error){
-
-    console.error(
-      "Error actualizando Studio:",
-      error
+  const box =
+    document.getElementById(
+      "capacityLines"
     );
 
-  }
 
-}
-
-
-/* ================================================================
-   EVENTOS
-   ================================================================ */
-
-function installListeners(){
-
-  if(
-    window.__TS_LISTENERS_INSTALLED__
-  ){
-    return;
-  }
+  let html="";
 
 
-  window.__TS_LISTENERS_INSTALLED__=
-    true;
+  for(const line of ["A","B"]){
 
-
-  document.addEventListener(
-    "change",
-    event=>{
-
-      if(
-        event.target.matches(
-          'input[type="date"]'
-        )
-      ){
-
-        setTimeout(
-          refreshStudio,
-          100
-        );
-
-      }
-
-    }
-  );
-
-
-  document.addEventListener(
-    "click",
-    event=>{
-
-      const button=
-        event.target.closest(
-          "button"
-        );
-
-
-      if(!button){
-        return;
-      }
-
-
-      setTimeout(
-        refreshStudio,
-        200
+    const list =
+      programsForLine(
+        line,
+        todayISO()
       );
 
-    }
-  );
 
-}
+    const pieces =
+      programmedPieces(
+        line
+      );
 
 
-/* ================================================================
-   OBSERVER SEGURO
-   ================================================================ */
+    const pes =
+      programmedMinutes(
+        line,
+        "pes"
+      );
 
-function installObserver(){
 
-  if(
-    window.__TS_OBSERVER__
-  ){
-    return;
+    const pre =
+      programmedMinutes(
+        line,
+        "pre"
+      );
+
+
+    const capacityPes =
+      theoreticalCapacity(
+        line,
+        "pes"
+      );
+
+
+    const capacityPre =
+      theoreticalCapacity(
+        line,
+        "pre"
+      );
+
+
+    const limiting =
+      capacityPes<=capacityPre
+      ? "Pespunte"
+      : "Preliminar";
+
+
+    const capacityPieces =
+      Math.min(
+        capacityPes || Infinity,
+        capacityPre || Infinity
+      );
+
+
+    const efficiency =
+      lineEfficiency(
+        line
+      );
+
+
+    html += `
+
+      <div
+        class="section"
+        style="
+          margin-bottom:12px;
+          background:#0b1b2b;
+        ">
+
+        <div class="section-title">
+
+          <div>
+
+            <h2>
+              Línea 20-${line}
+            </h2>
+
+            <p>
+              Jornada: 300 minutos por persona
+            </p>
+
+          </div>
+
+          <span class="badge ${
+            efficiency>=100
+            ?"green"
+            :efficiency>=80
+              ?"yellow"
+              :"blue"
+          }">
+
+            Eficiencia ${pct(efficiency)}
+
+          </span>
+
+        </div>
+
+
+        <div class="kpis">
+
+          <div class="kpi">
+
+            <div class="label">
+              Programado
+            </div>
+
+            <div class="value">
+              ${fmt(pieces)}
+            </div>
+
+            <div class="sub">
+              piezas
+            </div>
+
+          </div>
+
+
+          <div class="kpi">
+
+            <div class="label">
+              Capacidad Pespunte
+            </div>
+
+            <div class="value">
+              ${fmt(capacityPes)}
+            </div>
+
+            <div class="sub">
+              piezas teóricas
+            </div>
+
+          </div>
+
+
+          <div class="kpi">
+
+            <div class="label">
+              Capacidad Preliminar
+            </div>
+
+            <div class="value">
+              ${fmt(capacityPre)}
+            </div>
+
+            <div class="sub">
+              piezas teóricas
+            </div>
+
+          </div>
+
+
+          <div class="kpi">
+
+            <div class="label">
+              Proceso limitante
+            </div>
+
+            <div class="value"
+                 style="font-size:20px">
+
+              ${limiting}
+
+            </div>
+
+            <div class="sub">
+              capacidad ${fmt(capacityPieces)}
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="capacity-grid"
+          style="margin-top:12px">
+
+          <div class="capacity-card">
+
+            <h3>
+              Pespunte ocupado
+            </h3>
+
+            <div class="big">
+              ${fmt(pes)} min
+            </div>
+
+            <div class="muted">
+              ${fmt(Math.max(0,pesAvail-pes))}
+              min disponibles
+            </div>
+
+            <div class="progress">
+
+              <div
+                style="
+                  width:${Math.min(
+                    100,
+                    pesAvail>0
+                    ?pes/pesAvail*100
+                    :0
+                  )}%
+                ">
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="capacity-card">
+
+            <h3>
+              Preliminar ocupado
+            </h3>
+
+            <div class="big">
+              ${fmt(pre)} min
+            </div>
+
+            <div class="muted">
+              ${fmt(Math.max(0,preAvail-pre))}
+              min disponibles
+            </div>
+
+            <div class="progress">
+
+              <div
+                style="
+                  width:${Math.min(
+                    100,
+                    preAvail>0
+                    ?pre/preAvail*100
+                    :0
+                  )}%
+                ">
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div
+          style="
+            margin-top:14px;
+            color:#9eb1c6;
+            font-size:13px;
+          ">
+
+          <strong style="color:white">
+            ${list.length}
+          </strong>
+          OT programadas en esta línea.
+
+        </div>
+
+      </div>
+
+    `;
+
   }
 
 
-  let scheduled=false;
-
-
-  window.__TS_OBSERVER__=
-    new MutationObserver(
-      mutations=>{
-
-        if(scheduled){
-          return;
-        }
-
-
-        let relevant=false;
-
-
-        for(
-          const mutation
-          of mutations
-        ){
-
-          if(
-            mutation.type!=="childList"
-          ){
-            continue;
-          }
-
-
-          for(
-            const node
-            of mutation.addedNodes
-          ){
-
-            if(
-              node.nodeType!==1
-            ){
-              continue;
-            }
-
-
-            if(
-              node.id==="tsCapacityPanel" ||
-              node.id==="tsTodayDetails" ||
-              node.id==="tsCostRepair"
-            ){
-              continue;
-            }
-
-
-            relevant=true;
-
-          }
-
-        }
-
-
-        if(!relevant){
-          return;
-        }
-
-
-        scheduled=true;
-
-
-        setTimeout(
-          ()=>{
-
-            scheduled=false;
-
-            refreshStudio();
-
-          },
-          200
-        );
-
-      }
-    );
-
-
-  window.__TS_OBSERVER__.observe(
-    document.body,
-    {
-      childList:true,
-      subtree:true
-    }
-  );
+  box.innerHTML=html;
 
 }
 
 
-/* ================================================================
-   INICIO
-   ================================================================ */
+/* =========================================================
+   KPI PROGRAMACIÓN
+========================================================= */
+
+function renderProgrammingKPIs(){
+
+  const A =
+    programsForLine(
+      "A"
+    );
+
+
+  const B =
+    programsForLine(
+      "B"
+    );
+
+
+  const progA =
+    A.reduce(
+      (s,p)=>s+p.piezas,
+      0
+    );
+
+
+  const progB =
+    B.reduce(
+      (s,p)=>s+p.piezas,
+      0
+    );
+
+
+  const pesA =
+    A.reduce(
+      (s,p)=>s+outputPespunte(p),
+      0
+    );
+
+
+  const pesB =
+    B.reduce(
+      (s,p)=>s+outputPespunte(p),
+      0
+    );
+
+
+  const minA =
+    programmedMinutes(
+      "A",
+      "pes"
+    );
+
+
+  const minB =
+    programmedMinutes(
+      "B",
+      "pes"
+    );
+
+
+  document.getElementById(
+    "kpiProgA"
+  ).textContent=fmt(progA);
+
+
+  document.getElementById(
+    "kpiPesA"
+  ).textContent=fmt(pesA);
+
+
+  document.getElementById(
+    "kpiEffA"
+  ).textContent=
+    pct(
+      progA>0
+      ?pesA/progA*100
+      :0
+    );
+
+
+  document.getElementById(
+    "kpiMinA"
+  ).textContent=
+    fmt(minA);
+
+
+  document.getElementById(
+    "kpiProgB"
+  ).textContent=fmt(progB);
+
+
+  document.getElementById(
+    "kpiPesB"
+  ).textContent=fmt(pesB);
+
+
+  document.getElementById(
+    "kpiEffB"
+  ).textContent=
+    pct(
+      progB>0
+      ?pesB/progB*100
+      :0
+    );
+
+
+  document.getElementById(
+    "kpiMinB"
+  ).textContent=
+    fmt(minB);
+
+}
+
+
+/* =========================================================
+   FECHA HEADER
+========================================================= */
+
+function renderHeader(){
+
+  const d =
+    new Date();
+
+
+  document.getElementById(
+    "todayBadge"
+  ).textContent =
+    d.toLocaleDateString(
+      "es-MX",
+      {
+        weekday:"long",
+        day:"2-digit",
+        month:"long",
+        year:"numeric"
+      }
+    );
+
+}
+
+
+/* =========================================================
+   REFRESH GENERAL
+========================================================= */
+
+function refreshAll(){
+
+  renderHeader();
+
+  populateModelSelects();
+
+  populateAdvanceOT();
+
+  renderProgrammingKPIs();
+
+  renderProgramPreview();
+
+  renderProgramTable();
+
+  renderAdvanceTable();
+
+  renderWorkshop();
+
+  renderPayroll();
+
+  renderCapacity();
+
+  loadAdvanceOT();
+
+}
+
+
+/* =========================================================
+   INICIALIZACIÓN
+========================================================= */
 
 function startStudio(){
 
   try{
 
-    /*
-    --------------------------------------------------------------
-    PRIMERO RECUPERAMOS LOS COSTOS.
-    --------------------------------------------------------------
-    */
-
-    migrateAllCosts();
+    loadData();
 
 
     /*
-    --------------------------------------------------------------
-    ESTILOS
-    --------------------------------------------------------------
+      Fecha por defecto
     */
 
-    installStyles();
+    document.getElementById(
+      "pFecha"
+    ).value=
+      todayISO();
 
 
-    /*
-    --------------------------------------------------------------
-    PANELES
-    --------------------------------------------------------------
-    */
+    populateStageSelects();
 
-    installCapacityPanel();
+    populateModelSelects();
 
-    installTodayDetails();
-
-    installCostRepair();
-
-
-    /*
-    --------------------------------------------------------------
-    EVENTOS
-    --------------------------------------------------------------
-    */
-
-    installListeners();
-
-    installObserver();
-
-
-    /*
-    --------------------------------------------------------------
-    PRIMER CÁLCULO
-    --------------------------------------------------------------
-    */
-
-    refreshStudio();
+    refreshAll();
 
 
     console.log(
-      "THE STUDIO cargado correctamente."
+      "THE STUDIO iniciado correctamente."
     );
 
 
     console.log(
-      "Minutos Pespunte:",
-      getShift().pespunte
+      "Programaciones:",
+      programs.length
     );
 
 
     console.log(
-      "Minutos Preliminar:",
-      getShift().preliminar
+      "Avances:",
+      advances.length
     );
 
 
     console.log(
-      "Costos recuperados:",
-      Object.keys(
-        getCosts()
-      ).length
+      "Costos:",
+      costs.length
     );
-
 
   }catch(error){
 
     console.error(
-      "THE STUDIO ERROR:",
+      "Error iniciando THE STUDIO:",
       error
     );
 
 
-    document.body.innerHTML=`
-
-      <div
-        style="
-          min-height:100vh;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          padding:20px;
-          background:#07111f;
-          color:#eef4fb;
-          font-family:system-ui;
-        "
-      >
-
-        <div
-          style="
-            width:min(600px,100%);
-            padding:25px;
-            border:1px solid #24364c;
-            border-radius:20px;
-            background:#0d1725;
-          "
-        >
-
-          <h2>
-            The Studio
-          </h2>
-
-
-          <p
-            style="
-              color:#ffb4b4;
-              font-weight:800;
-            "
-          >
-
-            Ocurrió un error al cargar.
-
-          </p>
-
-
-          <p
-            style="
-              color:#aebed2;
-              word-break:break-word;
-            "
-          >
-
-            ${esc(
-              String(error)
-            )}
-
-          </p>
-
-        </div>
-
-      </div>
-
-    `;
+    alert(
+      "THE STUDIO encontró un error al iniciar. Revisa la consola."
+    );
 
   }
 
 }
 
 
-/* ================================================================
-   ARRANCAR
-   ================================================================ */
+/* =========================================================
+   CERRAR MODALES AL TOCAR FUERA
+========================================================= */
+
+document
+  .getElementById("editModal")
+  .addEventListener(
+    "click",
+    function(e){
+
+      if(e.target===this){
+
+        closeEditModal();
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById("costModal")
+  .addEventListener(
+    "click",
+    function(e){
+
+      if(e.target===this){
+
+        closeCostModal();
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   INICIAR
+========================================================= */
 
 startStudio();
 
