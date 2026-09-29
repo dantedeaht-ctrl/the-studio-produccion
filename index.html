@@ -28,7 +28,6 @@ content="width=device-width,initial-scale=1,viewport-fit=cover">
   --orange:#ff9b54;
   --red:#ff5f6d;
 
-  /* MORADO CAMBIADO POR CYAN */
   --purple:#45d6e8;
   --cyan:#45d6e8;
 
@@ -1351,6 +1350,28 @@ tbody tr:hover{
 }
 
 /* =========================================================
+   CAPTURA DEL DÍA
+   ========================================================= */
+
+.today-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+
+  padding:7px 10px;
+
+  border-radius:999px;
+
+  background:#10333a;
+  border:1px solid #287d8c;
+
+  color:#91edf5;
+
+  font-size:11px;
+  font-weight:900;
+}
+
+/* =========================================================
    RESPONSIVE
    ========================================================= */
 
@@ -1579,12 +1600,37 @@ tbody tr:hover{
   class="section active">
 
   <h1 class="page-title">
-    Captura de programación
+    Captura del día
   </h1>
 
   <p class="page-subtitle">
-    Programa OTs por línea y modelo. La unidad de producción es PIEZAS.
+    Aquí solo se muestran las OTs cargadas en el día actual.
   </p>
+
+
+  <div
+    style="
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:16px;
+      flex-wrap:wrap;
+    ">
+
+    <span class="today-badge">
+      ● HOY · <span id="capturaFechaTexto"></span>
+    </span>
+
+    <span
+      style="
+        color:#7f8aa0;
+        font-size:11px;
+      ">
+      Las OTs anteriores pasan al Historial de OTs.
+    </span>
+
+  </div>
 
 
   <div class="grid grid-4">
@@ -1642,7 +1688,7 @@ tbody tr:hover{
 
     <div class="card kpi cyan">
       <div class="kpi-label">
-        OTs activas
+        OTs de hoy
       </div>
 
       <div
@@ -1652,7 +1698,7 @@ tbody tr:hover{
       </div>
 
       <div class="kpi-bottom">
-        programación
+        cargadas
       </div>
     </div>
 
@@ -1792,11 +1838,11 @@ tbody tr:hover{
     <div class="card-title">
 
       <span>
-        Programación registrada
+        OTs cargadas hoy
       </span>
 
       <small>
-        Puedes editar cualquier OT
+        Solo programación del día actual
       </small>
 
     </div>
@@ -2029,8 +2075,6 @@ tbody tr:hover{
 
   <br>
 
-
-  <!-- INVENTARIO GENERAL POR LÍNEA -->
 
   <div class="card">
 
@@ -2447,8 +2491,6 @@ tbody tr:hover{
   <br>
 
 
-  <!-- ACUMULADO DE LAS DOS LÍNEAS -->
-
   <div class="grid grid-2">
 
     <div
@@ -2464,8 +2506,6 @@ tbody tr:hover{
 
   <br>
 
-
-  <!-- GRÁFICA -->
 
   <div class="chart-card">
 
@@ -2539,8 +2579,6 @@ tbody tr:hover{
   <br>
 
 
-  <!-- TABLA SEMANAL -->
-
   <div class="card">
 
     <div class="card-title">
@@ -2565,8 +2603,6 @@ tbody tr:hover{
 
   <br>
 
-
-  <!-- HISTORIAL DE EMPAQUES -->
 
   <div class="card">
 
@@ -2796,9 +2832,91 @@ tbody tr:hover{
   </h1>
 
   <p class="page-subtitle">
-    Cierres semanales guardados.
+    Historial de OTs y cierres semanales.
   </p>
 
+
+  <!-- ====================================================
+       NUEVO HISTORIAL DE OTs
+       ==================================================== -->
+
+  <div class="card">
+
+    <div class="card-title">
+
+      <span>
+        📚 Historial de OTs
+      </span>
+
+      <small>
+        Base histórica separada
+      </small>
+
+    </div>
+
+
+    <div class="toolbar">
+
+      <div class="toolbar-left">
+
+        <input
+          id="buscarHistOT"
+          type="search"
+          placeholder="Buscar OT o modelo..."
+          style="min-width:240px">
+
+
+        <select id="filtroHistLinea">
+
+          <option value="">
+            Todas las líneas
+          </option>
+
+          <option value="20-A">
+            Línea 20-A
+          </option>
+
+          <option value="20-B">
+            Línea 20-B
+          </option>
+
+        </select>
+
+
+        <input
+          id="filtroHistFecha"
+          type="date"
+          title="Filtrar por fecha">
+
+      </div>
+
+
+      <div class="toolbar-right">
+
+        <button
+          class="btn small"
+          onclick="limpiarFiltrosHistOT()">
+          Limpiar
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="tablaHistorialOTs">
+    </div>
+
+  </div>
+
+
+  <br>
+
+
+  <!-- ====================================================
+       CIERRE SEMANAL ORIGINAL
+       ==================================================== -->
 
   <div class="card">
 
@@ -3211,7 +3329,6 @@ tbody tr:hover{
 
 /* ================================================================
    THE STUDIO · CONTROL DE PRODUCCIÓN
-   VERSIÓN COMPLETA
    ================================================================ */
 
 
@@ -3223,12 +3340,13 @@ const KPROD = "theStudioProduccion_v4";
 const KCOST = "theStudioCostos_v4";
 const KHIST = "theStudioHistorial_v4";
 const KADV  = "theStudioAvances_v4";
+const KNOMINA = "theStudioNomina_v1";
 
 /*
-   NUEVA CLAVE EXCLUSIVA PARA NÓMINA.
-   NO TOCA LAS CLAVES EXISTENTES.
+   NUEVA BASE SEPARADA PARA EL HISTORIAL DE OTs.
+   NO CAMBIA LAS CLAVES EXISTENTES.
 */
-const KNOMINA = "theStudioNomina_v1";
+const KOTSHIST = "theStudioOTsHistorial_v1";
 
 
 /* ================================================================
@@ -3283,6 +3401,15 @@ let historial = cargarJSON(KHIST, []);
 let avances = cargarJSON(KADV, []);
 let nomina = cargarJSON(KNOMINA, []);
 
+/*
+   Base histórica separada de OTs.
+*/
+let historialOTs =
+  cargarJSON(
+    KOTSHIST,
+    []
+  );
+
 
 /* ================================================================
    UTILIDADES
@@ -3314,6 +3441,7 @@ function cargarJSON(clave, defecto){
 
     return defecto;
   }
+
 }
 
 
@@ -3901,6 +4029,11 @@ nomina =
     normalizarNomina
   );
 
+historialOTs =
+  historialOTs.map(
+    normalizarOT
+  );
+
 
 guardarJSON(
   KPROD,
@@ -3921,6 +4054,104 @@ guardarJSON(
   KNOMINA,
   nomina
 );
+
+guardarJSON(
+  KOTSHIST,
+  historialOTs
+);
+
+
+/* ================================================================
+   NUEVA FUNCIÓN:
+   ARCHIVAR OTs CUANDO PASAN LOS DÍAS
+   ================================================================ */
+
+function sincronizarHistorialOTs(){
+
+  const hoy =
+    hoyISO();
+
+
+  /*
+     Todas las OTs anteriores a hoy
+     pasan a la base histórica.
+  */
+
+  const pasadas =
+    produccion.filter(
+      o =>
+        String(o.fecha) < hoy
+    );
+
+
+  const mapa =
+    new Map();
+
+
+  historialOTs.forEach(
+    o=>{
+      mapa.set(
+        o.id,
+        o
+      );
+    }
+  );
+
+
+  pasadas.forEach(
+    o=>{
+
+      mapa.set(
+        o.id,
+        {
+          ...o
+        }
+      );
+
+    }
+  );
+
+
+  /*
+     Solo dejamos en historial
+     las OTs que realmente siguen
+     existiendo en la base principal.
+  */
+
+  const idsExistentes =
+    new Set(
+      produccion
+      .filter(
+        o =>
+          String(o.fecha)<hoy
+      )
+      .map(
+        o=>o.id
+      )
+    );
+
+
+  historialOTs =
+    Array.from(
+      mapa.values()
+    )
+    .filter(
+      o =>
+        idsExistentes.has(
+          o.id
+        )
+    )
+    .map(
+      normalizarOT
+    );
+
+
+  guardarJSON(
+    KOTSHIST,
+    historialOTs
+  );
+
+}
 
 
 /* ================================================================
@@ -4460,6 +4691,10 @@ function guardarModelo(){
       produccion
     );
 
+
+    sincronizarHistorialOTs();
+
+
     mostrarToast(
       "Modelo actualizado correctamente."
     );
@@ -4809,6 +5044,14 @@ function guardarOT(){
   );
 
 
+  /*
+     Si se captura una fecha pasada,
+     también queda archivada automáticamente.
+  */
+
+  sincronizarHistorialOTs();
+
+
   document.getElementById(
     "capOT"
   ).value="";
@@ -4843,7 +5086,7 @@ document
 
 
 /* ================================================================
-   TABLA OTS
+   TABLA OTs DEL DÍA
    ================================================================ */
 
 function renderOTs(){
@@ -4857,6 +5100,10 @@ function renderOTs(){
   if(!cont){
     return;
   }
+
+
+  const hoy =
+    hoyISO();
 
 
   const buscar =
@@ -4877,9 +5124,21 @@ function renderOTs(){
     "";
 
 
+  /*
+     CAMBIO PRINCIPAL:
+     Captura SOLO muestra las OTs de HOY.
+  */
+
   let lista =
     produccion.filter(
       o => {
+
+        if(
+          String(o.fecha)!==hoy
+        ){
+          return false;
+        }
+
 
         const texto =
           (
@@ -4907,11 +5166,6 @@ function renderOTs(){
 
   lista.sort(
     (a,b)=>
-      String(b.fecha)
-      .localeCompare(
-        String(a.fecha)
-      )
-      ||
       num(b.creado)-
       num(a.creado)
   );
@@ -4921,7 +5175,14 @@ function renderOTs(){
 
     cont.innerHTML =
       `<div class="empty">
-        No hay OTs para mostrar.
+
+        No hay OTs cargadas hoy.
+
+        <br><br>
+
+        Las OTs de días anteriores se encuentran
+        en <strong>Historial → Historial de OTs</strong>.
+
       </div>`;
 
     return;
@@ -4932,19 +5193,27 @@ function renderOTs(){
 
     <div class="table-wrap">
 
-      <table>
+      <table
+        style="min-width:720px">
 
         <thead>
 
           <tr>
 
-            <th>Fecha</th>
-            <th>OT</th>
-            <th>Línea</th>
-            <th>Modelo</th>
+            <th>
+              OT
+            </th>
+
+            <th>
+              Línea
+            </th>
+
+            <th>
+              Modelo
+            </th>
 
             <th class="num">
-              Programado
+              Piezas
             </th>
 
             <th class="num">
@@ -4955,7 +5224,9 @@ function renderOTs(){
               En proceso
             </th>
 
-            <th>Acciones</th>
+            <th>
+              Acciones
+            </th>
 
           </tr>
 
@@ -4993,15 +5264,10 @@ function renderOTs(){
                   <tr>
 
                     <td>
-                      ${esc(
-                        nombreDia(
-                          o.fecha
-                        )
-                      )}
-                    </td>
-
-                    <td>
-                      <strong>
+                      <strong
+                        style="
+                          font-size:14px;
+                        ">
                         ${esc(o.ot)}
                       </strong>
                     </td>
@@ -5021,7 +5287,11 @@ function renderOTs(){
                     </td>
 
                     <td class="num">
-                      ${pieces(o.piezas)}
+
+                      <strong>
+                        ${pieces(o.piezas)}
+                      </strong>
+
                     </td>
 
                     <td class="num">
@@ -5120,6 +5390,328 @@ document
 
 
 /* ================================================================
+   NUEVO:
+   HISTORIAL DE OTs
+   ================================================================ */
+
+function renderHistorialOTs(){
+
+  const cont =
+    document.getElementById(
+      "tablaHistorialOTs"
+    );
+
+
+  if(!cont){
+    return;
+  }
+
+
+  const buscar =
+    (
+      document.getElementById(
+        "buscarHistOT"
+      )?.value ||
+      ""
+    )
+    .trim()
+    .toLowerCase();
+
+
+  const linea =
+    document.getElementById(
+      "filtroHistLinea"
+    )?.value ||
+    "";
+
+
+  const fecha =
+    document.getElementById(
+      "filtroHistFecha"
+    )?.value ||
+    "";
+
+
+  let lista =
+    historialOTs.filter(
+      o=>{
+
+        const texto =
+          (
+            o.ot+
+            " "+
+            o.modelo
+          )
+          .toLowerCase();
+
+
+        return (
+
+          (
+            !buscar ||
+            texto.includes(
+              buscar
+            )
+          )
+
+          &&
+
+          (
+            !linea ||
+            normalizarLinea(
+              o.linea
+            )===linea
+          )
+
+          &&
+
+          (
+            !fecha ||
+            o.fecha===fecha
+          )
+
+        );
+
+      }
+    );
+
+
+  lista.sort(
+    (a,b)=>
+      String(b.fecha)
+      .localeCompare(
+        String(a.fecha)
+      )
+      ||
+      num(b.creado)-
+      num(a.creado)
+  );
+
+
+  if(!lista.length){
+
+    cont.innerHTML =
+      `<div class="empty">
+
+        No hay OTs históricas
+        con esos filtros.
+
+      </div>`;
+
+    return;
+  }
+
+
+  cont.innerHTML = `
+
+    <div
+      style="
+        margin-bottom:12px;
+        color:#7f8aa0;
+        font-size:11px;
+      ">
+
+      ${pieces(lista.length)}
+      OT${lista.length===1?"":"s"}
+      históricas
+
+    </div>
+
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Fecha
+            </th>
+
+            <th>
+              OT
+            </th>
+
+            <th>
+              Línea
+            </th>
+
+            <th>
+              Modelo
+            </th>
+
+            <th class="num">
+              Piezas
+            </th>
+
+            <th>
+              Acciones
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${
+            lista
+            .map(
+              o=>`
+
+                <tr>
+
+                  <td>
+
+                    <strong>
+                      ${esc(
+                        nombreDia(
+                          o.fecha
+                        )
+                      )}
+                    </strong>
+
+                  </td>
+
+
+                  <td>
+
+                    <strong
+                      style="
+                        font-size:14px;
+                      ">
+
+                      ${esc(o.ot)}
+
+                    </strong>
+
+                  </td>
+
+
+                  <td>
+
+                    <span class="badge ${
+                      normalizarLinea(o.linea)==="20-A"
+                        ? "cyan"
+                        : "blue"
+                    }">
+
+                      ${esc(
+                        normalizarLinea(
+                          o.linea
+                        )
+                      )}
+
+                    </span>
+
+                  </td>
+
+
+                  <td>
+                    ${esc(o.modelo)}
+                  </td>
+
+
+                  <td class="num">
+
+                    <strong>
+                      ${pieces(o.piezas)}
+                    </strong>
+
+                  </td>
+
+
+                  <td>
+
+                    <div class="actions">
+
+                      <button
+                        class="btn small"
+                        onclick="editarOT('${o.id}')">
+                        ✏️ Editar
+                      </button>
+
+
+                      <button
+                        class="btn small danger"
+                        onclick="eliminarOTDesdeHistorial('${o.id}')">
+                        🗑️ Borrar
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              `
+            )
+            .join("")
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+}
+
+
+function limpiarFiltrosHistOT(){
+
+  document.getElementById(
+    "buscarHistOT"
+  ).value="";
+
+  document.getElementById(
+    "filtroHistLinea"
+  ).value="";
+
+  document.getElementById(
+    "filtroHistFecha"
+  ).value="";
+
+  renderHistorialOTs();
+
+}
+
+
+document
+.getElementById(
+  "buscarHistOT"
+)
+.addEventListener(
+  "input",
+  renderHistorialOTs
+);
+
+
+document
+.getElementById(
+  "filtroHistLinea"
+)
+.addEventListener(
+  "change",
+  renderHistorialOTs
+);
+
+
+document
+.getElementById(
+  "filtroHistFecha"
+)
+.addEventListener(
+  "change",
+  renderHistorialOTs
+);
+
+
+/* ================================================================
    EDITAR OT
    ================================================================ */
 
@@ -5131,6 +5723,9 @@ function editarOT(id){
     );
 
   if(!o){
+    mostrarToast(
+      "No se encontró la OT."
+    );
     return;
   }
 
@@ -5345,6 +5940,14 @@ function guardarEdicionOT(){
   );
 
 
+  /*
+     Actualiza automáticamente
+     la base histórica.
+  */
+
+  sincronizarHistorialOTs();
+
+
   cerrarModalOT();
 
 
@@ -5366,6 +5969,28 @@ function eliminarOTDesdeModal(){
     ).value;
 
 
+  eliminarOTPorId(
+    id
+  );
+
+}
+
+
+function eliminarOTDesdeHistorial(
+  id
+){
+
+  eliminarOTPorId(
+    id
+  );
+
+}
+
+
+function eliminarOTPorId(
+  id
+){
+
   const o =
     produccion.find(
       x=>x.id===id
@@ -5373,6 +5998,9 @@ function eliminarOTDesdeModal(){
 
 
   if(!o){
+    mostrarToast(
+      "No se encontró la OT."
+    );
     return;
   }
 
@@ -5413,6 +6041,23 @@ function eliminarOTDesdeModal(){
   guardarJSON(
     KPROD,
     produccion
+  );
+
+
+  /*
+     También se elimina de la
+     base histórica separada.
+  */
+
+  historialOTs =
+    historialOTs.filter(
+      x=>x.id!==id
+    );
+
+
+  guardarJSON(
+    KOTSHIST,
+    historialOTs
   );
 
 
@@ -6466,9 +7111,7 @@ function datosCargaProgramada(
 
 
   let piezas=0;
-
   let minutosPespunte=0;
-
   let minutosPreliminar=0;
 
   const detalle=[];
@@ -6520,19 +7163,12 @@ function datosCargaProgramada(
       detalle.push({
 
         id:o.id,
-
         ot:o.ot,
-
         modelo:o.modelo,
-
         piezas:num(o.piezas),
-
         tstdPespunte,
-
         tstdPreliminar,
-
         minPespunte,
-
         minPreliminar
 
       });
@@ -6560,41 +7196,16 @@ function datosCargaProgramada(
   return {
 
     fecha,
-
     linea,
-
     ots,
-
     piezas,
-
     minutosPespunte,
-
     minutosPreliminar,
-
     cargaPespunte,
-
     cargaPreliminar,
-
     detalle
 
   };
-
-}
-
-
-function claseCarga(
-  valor
-){
-
-  if(valor>100){
-    return "red";
-  }
-
-  if(valor>=80){
-    return "yellow";
-  }
-
-  return "green";
 
 }
 
@@ -7377,7 +7988,6 @@ function objetivoSalidaPespunte(
 
 
   let piezasTotales=0;
-
   let minutosTotales=0;
 
 
@@ -8048,7 +8658,6 @@ function renderWorkshop(){
 
 
   let semanaProg=0;
-
   let semanaEmp=0;
 
 
@@ -8318,9 +8927,6 @@ function renderOTsProceso(
    NÓMINA
    ================================================================ */
 
-/*
-   Busca el modelo asociado a una OT.
-*/
 function modeloDeOT(otId){
 
   const ot =
@@ -8337,10 +8943,6 @@ function modeloDeOT(otId){
 }
 
 
-/*
-   Cuando se selecciona una OT,
-   el modelo y línea se cargan automáticamente.
-*/
 function actualizarNominaDesdeOT(){
 
   const otId =
@@ -8513,17 +9115,11 @@ function calcularNominaDatos(){
   return {
 
     modelo,
-
     piezas,
-
     costoPespunte,
-
     costoPreliminar,
-
     importePespunte,
-
     importePreliminar,
-
     total
 
   };
@@ -8838,18 +9434,6 @@ function guardarEmpaqueNomina(){
   );
 
 
-  /*
-     IMPORTANTE:
-     Si existe una OT, también registramos
-     el movimiento de Clasificación → Empaque
-     para que el inventario se actualice.
-     
-     Si ya existe suficiente inventario en
-     Clasificación, se descuenta normalmente.
-     Si no existe, el registro de nómina
-     se conserva sin inventario negativo.
-  */
-
   if(ot){
 
     const disponibleClasificacion =
@@ -9023,13 +9607,9 @@ function resumenNominaLinea(
   return {
 
     registros,
-
     piezas,
-
     pespunte,
-
     preliminar,
-
     total
 
   };
@@ -9488,7 +10068,6 @@ function renderGraficaDestajo(){
         ),
 
       a,
-
       b
 
     });
@@ -9851,9 +10430,7 @@ function datosSemana(){
 
 
   let programado=0;
-
   let empaque=0;
-
   let auditoria=0;
 
 
@@ -9914,13 +10491,6 @@ function datosSemana(){
   );
 
 
-  /*
-    También consideramos Empaque capturado
-    desde Nómina para que el resumen no se
-    quede en cero si el usuario trabaja desde
-    el nuevo Workshop de Nómina.
-  */
-
   const empaqueNomina =
     nomina
     .filter(
@@ -9952,9 +10522,7 @@ function datosSemana(){
     ...semana,
 
     programado,
-
     empaque,
-
     auditoria
 
   };
@@ -10244,10 +10812,6 @@ function renderDestajo(
   const mapa = {};
 
 
-  /*
-     Destajo clásico desde avances.
-  */
-
   avances
   .filter(
     a =>
@@ -10322,11 +10886,6 @@ function renderDestajo(
   );
 
 
-  /*
-     También incorporamos los registros
-     del nuevo Workshop de Nómina.
-  */
-
   nomina
   .filter(
     n =>
@@ -10375,13 +10934,6 @@ function renderDestajo(
 
       }
 
-
-      /*
-         No duplicamos si ya existen
-         avances de Empaque para el mismo
-         registro. Para el resumen de
-         Nómina usamos su propio importe.
-      */
 
       mapa[key].nominaPiezas =
         num(
@@ -10470,11 +11022,6 @@ function renderDestajo(
                 const piezasNomina =
                   num(x.nominaPiezas);
 
-
-                /*
-                   Si existe registro de Nómina,
-                   mostramos su importe real.
-                */
 
                 const importeP =
                   piezasNomina>0
@@ -10608,7 +11155,7 @@ function renderDestajo(
 
 
 /* ================================================================
-   HISTORIAL
+   HISTORIAL SEMANAL
    ================================================================ */
 
 function guardarCierre(){
@@ -10945,6 +11492,31 @@ function renderKPIs(){
       .length
     );
 
+
+  const fechaTexto =
+    document.getElementById(
+      "capturaFechaTexto"
+    );
+
+
+  if(fechaTexto){
+
+    fechaTexto.textContent =
+      new Date(
+        fecha+
+        "T12:00:00"
+      ).toLocaleDateString(
+        "es-MX",
+        {
+          weekday:"short",
+          day:"2-digit",
+          month:"2-digit",
+          year:"numeric"
+        }
+      );
+
+  }
+
 }
 
 
@@ -10954,6 +11526,14 @@ function renderKPIs(){
 
 function renderTodo(){
 
+  /*
+     Primero actualizamos la base histórica
+     de OTs anteriores al día actual.
+  */
+
+  sincronizarHistorialOTs();
+
+
   llenarSelectModelos();
 
   llenarSelectOTs();
@@ -10961,6 +11541,8 @@ function renderTodo(){
   renderModelos();
 
   renderOTs();
+
+  renderHistorialOTs();
 
   renderInventario();
 
