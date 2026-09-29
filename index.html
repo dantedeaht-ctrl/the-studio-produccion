@@ -38,8 +38,7 @@ content="width=device-width,initial-scale=1,viewport-fit=cover">
   box-sizing:border-box;
 }
 
-html,
-body{
+html,body{
   margin:0;
   padding:0;
   background:var(--bg);
@@ -56,10 +55,7 @@ body{
   min-height:100vh;
 }
 
-button,
-input,
-select,
-textarea{
+button,input,select,textarea{
   font:inherit;
 }
 
@@ -79,10 +75,8 @@ button{
   position:sticky;
   top:0;
   z-index:50;
-
-  background:rgba(8,11,22,.94);
+  background:rgba(8,11,22,.95);
   backdrop-filter:blur(18px);
-
   border-bottom:1px solid var(--line);
 }
 
@@ -90,7 +84,6 @@ button{
   max-width:1500px;
   margin:auto;
   padding:16px 20px;
-
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -107,25 +100,14 @@ button{
   width:46px;
   height:46px;
   border-radius:14px;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
-  background:
-    linear-gradient(
-      145deg,
-      #26344e,
-      #0f1421
-    );
-
+  background:linear-gradient(145deg,#26344e,#0f1421);
   border:1px solid #35435e;
-
   font-size:22px;
   font-weight:900;
-
-  box-shadow:
-    0 8px 25px rgba(0,0,0,.3);
+  box-shadow:0 8px 25px rgba(0,0,0,.3);
 }
 
 .brand-title{
@@ -140,6 +122,20 @@ button{
   margin-top:3px;
 }
 
+.bmw-line{
+  height:3px;
+  margin-top:5px;
+  background:
+    linear-gradient(
+      90deg,
+      #4b7db7 0 25%,
+      #f4f4f4 25% 50%,
+      #4b7db7 50% 75%,
+      #f4f4f4 75% 100%
+    );
+  border-radius:99px;
+}
+
 .header-badge{
   padding:9px 13px;
   border-radius:999px;
@@ -149,23 +145,6 @@ button{
   white-space:nowrap;
 }
 
-.bmw-line{
-  height:3px;
-
-  margin-top:5px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #4b7db7 0 25%,
-      #f4f4f4 25% 50%,
-      #4b7db7 50% 75%,
-      #f4f4f4 75% 100%
-    );
-
-  border-radius:99px;
-}
-
 /* =========================================================
    NAV
    ========================================================= */
@@ -173,12 +152,9 @@ button{
 .nav{
   max-width:1500px;
   margin:auto;
-
   display:flex;
   gap:7px;
-
   padding:0 20px 12px;
-
   overflow-x:auto;
 }
 
@@ -188,15 +164,11 @@ button{
 
 .nav button{
   flex:0 0 auto;
-
   border:1px solid var(--line);
   background:var(--panel);
-
   color:#aeb8cc;
-
   padding:10px 14px;
   border-radius:12px;
-
   font-weight:700;
   font-size:13px;
 }
@@ -274,12 +246,9 @@ main{
       rgba(28,35,53,.96),
       rgba(14,19,32,.96)
     );
-
   border:1px solid var(--line);
   border-radius:var(--radius);
-
   box-shadow:var(--shadow);
-
   padding:18px;
 }
 
@@ -288,9 +257,7 @@ main{
   align-items:center;
   justify-content:space-between;
   gap:10px;
-
   margin-bottom:15px;
-
   font-weight:900;
   font-size:15px;
 }
@@ -306,7 +273,6 @@ main{
 
 .kpi{
   min-height:130px;
-
   display:flex;
   flex-direction:column;
   justify-content:space-between;
@@ -332,29 +298,12 @@ main{
   font-size:12px;
 }
 
-.kpi.blue .kpi-value{
-  color:var(--blue);
-}
-
-.kpi.green .kpi-value{
-  color:var(--green);
-}
-
-.kpi.yellow .kpi-value{
-  color:var(--yellow);
-}
-
-.kpi.orange .kpi-value{
-  color:var(--orange);
-}
-
-.kpi.purple .kpi-value{
-  color:var(--purple);
-}
-
-.kpi.cyan .kpi-value{
-  color:var(--cyan);
-}
+.kpi.blue .kpi-value{color:var(--blue)}
+.kpi.green .kpi-value{color:var(--green)}
+.kpi.yellow .kpi-value{color:var(--yellow)}
+.kpi.orange .kpi-value{color:var(--orange)}
+.kpi.purple .kpi-value{color:var(--purple)}
+.kpi.cyan .kpi-value{color:var(--cyan)}
 
 /* =========================================================
    BUTTONS
@@ -364,14 +313,10 @@ main{
   border:1px solid var(--line);
   background:#1a2234;
   color:white;
-
   border-radius:12px;
-
   padding:10px 14px;
-
   font-weight:800;
   font-size:13px;
-
   transition:.15s ease;
 }
 
@@ -409,7 +354,6 @@ main{
   width:36px;
   height:36px;
   padding:0;
-
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -447,26 +391,17 @@ main{
   color:#aeb8cc;
 }
 
-input,
-select,
-textarea{
+input,select,textarea{
   width:100%;
-
   background:#0d1321;
   color:white;
-
   border:1px solid #303b53;
-
   border-radius:11px;
-
   padding:11px 12px;
-
   outline:none;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
+input:focus,select:focus,textarea:focus{
   border-color:#53759e;
   box-shadow:0 0 0 3px rgba(77,163,255,.09);
 }
@@ -486,12 +421,10 @@ textarea{
   align-items:center;
   justify-content:space-between;
   gap:12px;
-
   margin-bottom:16px;
 }
 
-.toolbar-left,
-.toolbar-right{
+.toolbar-left,.toolbar-right{
   display:flex;
   flex-wrap:wrap;
   align-items:center;
@@ -514,8 +447,7 @@ table{
   min-width:760px;
 }
 
-th,
-td{
+th,td{
   padding:12px 11px;
   border-bottom:1px solid #263047;
   text-align:left;
@@ -525,11 +457,9 @@ td{
 th{
   background:#121a2a;
   color:#aeb8cc;
-
   font-size:11px;
   text-transform:uppercase;
   letter-spacing:.5px;
-
   position:sticky;
   top:0;
   z-index:2;
@@ -543,13 +473,8 @@ tbody tr:hover{
   background:rgba(255,255,255,.025);
 }
 
-.num{
-  text-align:right;
-}
-
-.center{
-  text-align:center;
-}
+.num{text-align:right}
+.center{text-align:center}
 
 .actions{
   display:flex;
@@ -564,16 +489,11 @@ tbody tr:hover{
 .badge{
   display:inline-flex;
   align-items:center;
-
   padding:5px 8px;
-
   border-radius:999px;
-
   font-size:11px;
   font-weight:900;
-
   border:1px solid var(--line);
-
   white-space:nowrap;
 }
 
@@ -612,34 +532,9 @@ tbody tr:hover{
   background:#10333a;
 }
 
-/* =========================================================
-   PROGRESS
-   ========================================================= */
-
-.progress{
-  width:100%;
-  height:9px;
-
-  background:#0a0f1a;
-
-  border:1px solid #273249;
-
-  border-radius:99px;
-
-  overflow:hidden;
-}
-
-.progress > div{
-  height:100%;
-  width:0%;
-
-  background:linear-gradient(
-    90deg,
-    #3e91df,
-    #55d98a
-  );
-
-  transition:.3s ease;
+.badge.purple{
+  color:#d0b8ff;
+  background:#2b2042;
 }
 
 /* =========================================================
@@ -659,29 +554,15 @@ tbody tr:hover{
 
 .model-grid{
   display:grid;
-  grid-template-columns:
-    repeat(
-      auto-fill,
-      minmax(280px,1fr)
-    );
-
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
   gap:15px;
 }
 
 .model-card{
   position:relative;
-
-  background:
-    linear-gradient(
-      145deg,
-      #1a2233,
-      #101625
-    );
-
+  background:linear-gradient(145deg,#1a2233,#101625);
   border:1px solid var(--line);
-
   border-radius:17px;
-
   padding:17px;
 }
 
@@ -690,7 +571,6 @@ tbody tr:hover{
   justify-content:space-between;
   align-items:flex-start;
   gap:12px;
-
   margin-bottom:15px;
 }
 
@@ -735,11 +615,9 @@ tbody tr:hover{
   margin-top:13px;
   padding-top:12px;
   border-top:1px solid #273148;
-
   display:flex;
   justify-content:space-between;
   gap:8px;
-
   color:#9ca6bb;
   font-size:11px;
 }
@@ -750,18 +628,12 @@ tbody tr:hover{
 
 .modal-backdrop{
   display:none;
-
   position:fixed;
   inset:0;
-
   z-index:100;
-
   background:rgba(0,0,0,.68);
-
   backdrop-filter:blur(5px);
-
   padding:20px;
-
   overflow:auto;
 }
 
@@ -773,21 +645,10 @@ tbody tr:hover{
 
 .modal{
   width:min(680px,100%);
-
-  background:
-    linear-gradient(
-      145deg,
-      #192135,
-      #0d1321
-    );
-
+  background:linear-gradient(145deg,#192135,#0d1321);
   border:1px solid #35425d;
-
   border-radius:20px;
-
-  box-shadow:
-    0 30px 100px rgba(0,0,0,.55);
-
+  box-shadow:0 30px 100px rgba(0,0,0,.55);
   padding:20px;
 }
 
@@ -796,7 +657,6 @@ tbody tr:hover{
   justify-content:space-between;
   align-items:center;
   gap:12px;
-
   margin-bottom:20px;
 }
 
@@ -836,8 +696,7 @@ tbody tr:hover{
 
 .line-metrics{
   display:grid;
-  grid-template-columns:
-    repeat(5,minmax(0,1fr));
+  grid-template-columns:repeat(5,minmax(0,1fr));
   gap:8px;
 }
 
@@ -862,17 +721,11 @@ tbody tr:hover{
 }
 
 /* =========================================================
-   PROGRAMMED LOAD
+   LOAD
    ========================================================= */
 
 .load-card{
-  background:
-    linear-gradient(
-      145deg,
-      #18233a,
-      #0d1525
-    );
-
+  background:linear-gradient(145deg,#18233a,#0d1525);
   border:1px solid #354969;
   border-radius:17px;
   padding:16px;
@@ -899,8 +752,7 @@ tbody tr:hover{
 
 .load-kpis{
   display:grid;
-  grid-template-columns:
-    repeat(4,minmax(0,1fr));
+  grid-template-columns:repeat(4,minmax(0,1fr));
   gap:9px;
 }
 
@@ -948,41 +800,31 @@ tbody tr:hover{
 .load-progress-bar > div{
   height:100%;
   width:0%;
-  background:linear-gradient(
-    90deg,
-    #4da3ff,
-    #43d17a
-  );
+  background:linear-gradient(90deg,#4da3ff,#43d17a);
 }
 
 .load-progress-bar.over > div{
-  background:linear-gradient(
-    90deg,
-    #ff9b54,
-    #ff5f6d
-  );
+  background:linear-gradient(90deg,#ff9b54,#ff5f6d);
+}
+
+.load-warning,.load-ok{
+  margin-top:10px;
+  padding:9px 11px;
+  border-radius:10px;
+  font-size:11px;
+  font-weight:800;
 }
 
 .load-warning{
-  margin-top:10px;
-  padding:9px 11px;
-  border-radius:10px;
   background:#351b20;
   border:1px solid #67323a;
   color:#ffabb2;
-  font-size:11px;
-  font-weight:800;
 }
 
 .load-ok{
-  margin-top:10px;
-  padding:9px 11px;
-  border-radius:10px;
   background:#102e20;
   border:1px solid #286044;
   color:#91e9ad;
-  font-size:11px;
-  font-weight:800;
 }
 
 /* =========================================================
@@ -1008,10 +850,11 @@ tbody tr:hover{
 .hour-status{
   font-size:11px;
   color:#8f9ab0;
+  margin-top:4px;
 }
 
 .hour-table table{
-  min-width:650px;
+  min-width:760px;
 }
 
 .eff-good{
@@ -1030,7 +873,7 @@ tbody tr:hover{
 }
 
 /* =========================================================
-   OT LIST
+   OT
    ========================================================= */
 
 .ot-card{
@@ -1093,32 +936,19 @@ tbody tr:hover{
   position:fixed;
   right:18px;
   bottom:18px;
-
   z-index:200;
-
   max-width:360px;
-
   padding:13px 16px;
-
   border-radius:13px;
-
   background:#182136;
   border:1px solid #3b4965;
-
   box-shadow:0 15px 45px rgba(0,0,0,.4);
-
   color:white;
-
   font-size:13px;
   font-weight:800;
-
-  transform:
-    translateY(30px);
-
+  transform:translateY(30px);
   opacity:0;
-
   pointer-events:none;
-
   transition:.22s ease;
 }
 
@@ -1134,23 +964,19 @@ tbody tr:hover{
 @media(max-width:1000px){
 
   .grid-4{
-    grid-template-columns:
-      repeat(2,minmax(0,1fr));
+    grid-template-columns:repeat(2,minmax(0,1fr));
   }
 
   .grid-3{
-    grid-template-columns:
-      repeat(2,minmax(0,1fr));
+    grid-template-columns:repeat(2,minmax(0,1fr));
   }
 
   .line-metrics{
-    grid-template-columns:
-      repeat(3,minmax(0,1fr));
+    grid-template-columns:repeat(3,minmax(0,1fr));
   }
 
   .load-kpis{
-    grid-template-columns:
-      repeat(2,minmax(0,1fr));
+    grid-template-columns:repeat(2,minmax(0,1fr));
   }
 
 }
@@ -1198,17 +1024,11 @@ tbody tr:hover{
   }
 
   .line-metrics{
-    grid-template-columns:
-      repeat(2,minmax(0,1fr));
+    grid-template-columns:repeat(2,minmax(0,1fr));
   }
 
   .ot-values{
-    grid-template-columns:
-      repeat(2,minmax(0,1fr));
-  }
-
-  .load-kpis{
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(2,minmax(0,1fr));
   }
 
   .toolbar{
@@ -1226,25 +1046,24 @@ tbody tr:hover{
 
 }
 
-@media print{
+/* =========================================================
+   ERROR BOX
+   ========================================================= */
 
-  .header,
-  .nav,
-  .toolbar,
-  .btn{
-    display:none !important;
-  }
-
-  body{
-    background:white;
-    color:black;
-  }
-
-  .card{
-    box-shadow:none;
-    border:1px solid #ddd;
-  }
-
+#jsError{
+  display:none;
+  position:fixed;
+  left:10px;
+  right:10px;
+  bottom:10px;
+  z-index:9999;
+  background:#3b1118;
+  border:1px solid #ff5f6d;
+  color:#ffd8dc;
+  padding:15px;
+  border-radius:14px;
+  font-size:12px;
+  white-space:pre-wrap;
 }
 
 </style>
@@ -1288,39 +1107,27 @@ tbody tr:hover{
 
   <nav class="nav">
 
-    <button
-      class="nav-btn active"
-      data-section="captura">
+    <button class="nav-btn active" data-section="captura">
       Captura
     </button>
 
-    <button
-      class="nav-btn"
-      data-section="avances">
+    <button class="nav-btn" data-section="avances">
       Avances OT
     </button>
 
-    <button
-      class="nav-btn"
-      data-section="workshop">
+    <button class="nav-btn" data-section="workshop">
       Work Shop
     </button>
 
-    <button
-      class="nav-btn"
-      data-section="resumen">
+    <button class="nav-btn" data-section="resumen">
       Resumen
     </button>
 
-    <button
-      class="nav-btn"
-      data-section="costos">
+    <button class="nav-btn" data-section="costos">
       Costos / Modelos
     </button>
 
-    <button
-      class="nav-btn"
-      data-section="historial">
+    <button class="nav-btn" data-section="historial">
       Historial
     </button>
 
@@ -1331,14 +1138,11 @@ tbody tr:hover{
 
 <main>
 
-
 <!-- ======================================================
      CAPTURA
      ====================================================== -->
 
-<section
-  id="section-captura"
-  class="section active">
+<section id="section-captura" class="section active">
 
   <h1 class="page-title">
     Captura de programación
@@ -1348,196 +1152,83 @@ tbody tr:hover{
     Programa OTs por línea y modelo. La unidad de producción es PIEZAS.
   </p>
 
-
   <div class="grid grid-4">
 
     <div class="card kpi blue">
-      <div class="kpi-label">
-        Programado hoy
-      </div>
-
-      <div
-        id="kpiProgramadoHoy"
-        class="kpi-value">
-        0
-      </div>
-
-      <div class="kpi-bottom">
-        piezas
-      </div>
+      <div class="kpi-label">Programado hoy</div>
+      <div id="kpiProgramadoHoy" class="kpi-value">0</div>
+      <div class="kpi-bottom">piezas</div>
     </div>
-
 
     <div class="card kpi green">
-      <div class="kpi-label">
-        Empaque hoy
-      </div>
-
-      <div
-        id="kpiEmpaqueHoy"
-        class="kpi-value">
-        0
-      </div>
-
-      <div class="kpi-bottom">
-        piezas
-      </div>
+      <div class="kpi-label">Empaque hoy</div>
+      <div id="kpiEmpaqueHoy" class="kpi-value">0</div>
+      <div class="kpi-bottom">piezas</div>
     </div>
-
 
     <div class="card kpi yellow">
-      <div class="kpi-label">
-        Eficiencia
-      </div>
-
-      <div
-        id="kpiEficienciaHoy"
-        class="kpi-value">
-        0%
-      </div>
-
-      <div class="kpi-bottom">
-        Empaque ÷ Programado
-      </div>
+      <div class="kpi-label">Cumplimiento</div>
+      <div id="kpiEficienciaHoy" class="kpi-value">0%</div>
+      <div class="kpi-bottom">Empaque ÷ Programado</div>
     </div>
 
-
     <div class="card kpi purple">
-      <div class="kpi-label">
-        OTs activas
-      </div>
-
-      <div
-        id="kpiOTs"
-        class="kpi-value">
-        0
-      </div>
-
-      <div class="kpi-bottom">
-        programación
-      </div>
+      <div class="kpi-label">OTs activas</div>
+      <div id="kpiOTs" class="kpi-value">0</div>
+      <div class="kpi-bottom">programación</div>
     </div>
 
   </div>
 
-
   <br>
-
 
   <div class="card">
 
     <div class="card-title">
-
-      <span>
-        Nueva OT
-      </span>
-
-      <small>
-        Captura de programación
-      </small>
-
+      <span>Nueva OT</span>
+      <small>Captura de programación</small>
     </div>
-
 
     <div class="form-grid-3">
 
       <div class="field">
-
-        <label>
-          Fecha
-        </label>
-
-        <input
-          id="capFecha"
-          type="date">
-
+        <label>Fecha</label>
+        <input id="capFecha" type="date">
       </div>
 
-
       <div class="field">
-
-        <label>
-          OT
-        </label>
-
-        <input
-          id="capOT"
-          type="text"
-          placeholder="Ej. OT-1001">
-
+        <label>OT</label>
+        <input id="capOT" type="text" placeholder="Ej. OT-1001">
       </div>
 
-
       <div class="field">
-
-        <label>
-          Línea
-        </label>
-
+        <label>Línea</label>
         <select id="capLinea">
-
-          <option value="A">
-            Línea A
-          </option>
-
-          <option value="B">
-            Línea B
-          </option>
-
+          <option value="A">Línea A</option>
+          <option value="B">Línea B</option>
         </select>
-
       </div>
 
-
       <div class="field">
-
-        <label>
-          Modelo
-        </label>
-
-        <select id="capModelo">
-        </select>
-
+        <label>Modelo</label>
+        <select id="capModelo"></select>
       </div>
 
-
       <div class="field">
-
-        <label>
-          Piezas programadas
-        </label>
-
-        <input
-          id="capPiezas"
-          type="number"
-          min="1"
-          step="1"
-          placeholder="0">
-
+        <label>Piezas programadas</label>
+        <input id="capPiezas" type="number" min="1" step="1">
       </div>
 
-
       <div class="field">
-
-        <label>
-          Observaciones
-        </label>
-
-        <input
-          id="capObs"
-          type="text"
-          placeholder="Opcional">
-
+        <label>Observaciones</label>
+        <input id="capObs" type="text" placeholder="Opcional">
       </div>
 
     </div>
 
-
     <div class="modal-actions">
 
-      <button
-        id="btnGuardarOT"
-        class="btn primary">
+      <button id="btnGuardarOT" class="btn primary">
         + Guardar programación
       </button>
 
@@ -1545,24 +1236,14 @@ tbody tr:hover{
 
   </div>
 
-
   <br>
-
 
   <div class="card">
 
     <div class="card-title">
-
-      <span>
-        Programación registrada
-      </span>
-
-      <small>
-        Puedes editar cualquier OT
-      </small>
-
+      <span>Programación registrada</span>
+      <small>Puedes editar cualquier OT</small>
     </div>
-
 
     <div class="toolbar">
 
@@ -1576,28 +1257,17 @@ tbody tr:hover{
 
         <select id="filtroLinea">
 
-          <option value="">
-            Todas las líneas
-          </option>
-
-          <option value="A">
-            Línea A
-          </option>
-
-          <option value="B">
-            Línea B
-          </option>
+          <option value="">Todas las líneas</option>
+          <option value="A">Línea A</option>
+          <option value="B">Línea B</option>
 
         </select>
 
       </div>
 
-
       <div class="toolbar-right">
 
-        <button
-          class="btn small"
-          onclick="limpiarFiltrosOT()">
+        <button class="btn small" id="btnLimpiarFiltros">
           Limpiar
         </button>
 
@@ -1605,182 +1275,71 @@ tbody tr:hover{
 
     </div>
 
-
-    <div
-      id="tablaOTs">
-    </div>
+    <div id="tablaOTs"></div>
 
   </div>
 
 </section>
 
 
-
 <!-- ======================================================
      AVANCES
      ====================================================== -->
 
-<section
-  id="section-avances"
-  class="section">
+<section id="section-avances" class="section">
 
   <h1 class="page-title">
     Avances OT
   </h1>
 
   <p class="page-subtitle">
-    Mueve piezas de un proceso a otro. Si avanzas varios procesos, el sistema registra automáticamente los pasos intermedios.
+    Mueve piezas de un proceso a otro. Los pasos intermedios se registran automáticamente.
   </p>
-
 
   <div class="card">
 
     <div class="card-title">
-
-      <span>
-        Mover piezas
-      </span>
-
-      <small>
-        Inventario dinámico
-      </small>
-
+      <span>Mover piezas</span>
+      <small>Inventario dinámico</small>
     </div>
-
 
     <div class="form-grid-3">
 
       <div class="field">
-
-        <label>
-          OT
-        </label>
-
-        <select id="avOT">
-        </select>
-
+        <label>OT</label>
+        <select id="avOT"></select>
       </div>
 
-
       <div class="field">
-
-        <label>
-          Desde
-        </label>
-
-        <select id="avDesde">
-
-          <option value="Programado">
-            Programado
-          </option>
-
-          <option value="Armado">
-            Armado
-          </option>
-
-          <option value="Salida pespunte">
-            Salida pespunte
-          </option>
-
-          <option value="Clasificación">
-            Clasificación
-          </option>
-
-          <option value="Empaque">
-            Empaque
-          </option>
-
-          <option value="Auditoría">
-            Auditoría
-          </option>
-
-        </select>
-
+        <label>Desde</label>
+        <select id="avDesde"></select>
       </div>
 
-
       <div class="field">
-
-        <label>
-          Hasta
-        </label>
-
-        <select id="avHasta">
-
-          <option value="Armado">
-            Armado
-          </option>
-
-          <option value="Salida pespunte">
-            Salida pespunte
-          </option>
-
-          <option value="Clasificación">
-            Clasificación
-          </option>
-
-          <option value="Empaque">
-            Empaque
-          </option>
-
-          <option value="Auditoría">
-            Auditoría
-          </option>
-
-        </select>
-
+        <label>Hasta</label>
+        <select id="avHasta"></select>
       </div>
 
-
       <div class="field">
-
-        <label>
-          Piezas
-        </label>
-
-        <input
-          id="avPiezas"
-          type="number"
-          min="1"
-          step="1"
-          placeholder="0">
-
+        <label>Piezas</label>
+        <input id="avPiezas" type="number" min="1" step="1">
       </div>
 
-
       <div class="field">
-
-        <label>
-          Fecha
-        </label>
-
-        <input
-          id="avFecha"
-          type="date">
-
+        <label>Fecha</label>
+        <input id="avFecha" type="date">
       </div>
 
-
       <div class="field">
-
-        <label>
-          Hora
-        </label>
-
-        <input
-          id="avHora"
-          type="time">
-
+        <label>Hora</label>
+        <input id="avHora" type="time">
       </div>
 
     </div>
 
-
     <div class="modal-actions">
 
-      <button
-        class="btn primary"
-        onclick="registrarAvance()">
+      <button id="btnRegistrarAvance" class="btn primary">
         Registrar avance
       </button>
 
@@ -1788,9 +1347,7 @@ tbody tr:hover{
 
   </div>
 
-
   <br>
-
 
   <div class="grid grid-3">
 
@@ -1800,29 +1357,18 @@ tbody tr:hover{
         Inventario por proceso
       </div>
 
-      <div id="inventarioGeneral">
-      </div>
+      <div id="inventarioGeneral"></div>
 
     </div>
 
-
-    <div class="card"
-         style="grid-column:span 2">
+    <div class="card" style="grid-column:span 2">
 
       <div class="card-title">
-
-        <span>
-          Historial de movimientos
-        </span>
-
-        <small>
-          Más recientes primero
-        </small>
-
+        <span>Historial de movimientos</span>
+        <small>Más recientes primero</small>
       </div>
 
-      <div id="tablaAvances">
-      </div>
+      <div id="tablaAvances"></div>
 
     </div>
 
@@ -1831,14 +1377,11 @@ tbody tr:hover{
 </section>
 
 
-
 <!-- ======================================================
      WORKSHOP
      ====================================================== -->
 
-<section
-  id="section-workshop"
-  class="section">
+<section id="section-workshop" class="section">
 
   <h1 class="page-title">
     Work Shop
@@ -1848,16 +1391,13 @@ tbody tr:hover{
     Producción del día, carga programada y tablero hora por hora por línea.
   </p>
 
-
   <div class="grid grid-2">
 
     <div class="card">
 
       <div class="card-title">
 
-        <span>
-          Producción del día
-        </span>
+        <span>Producción del día</span>
 
         <input
           id="wsFecha"
@@ -1866,13 +1406,9 @@ tbody tr:hover{
 
       </div>
 
-
-      <div
-        id="workshopLineas">
-      </div>
+      <div id="workshopLineas"></div>
 
     </div>
-
 
     <div class="card">
 
@@ -1883,53 +1419,21 @@ tbody tr:hover{
       <div class="grid grid-3">
 
         <div class="kpi">
-          <div class="kpi-label">
-            Programado
-          </div>
-
-          <div
-            id="wsSemanaProgramado"
-            class="kpi-value">
-            0
-          </div>
-
-          <div class="kpi-bottom">
-            lunes–sábado
-          </div>
+          <div class="kpi-label">Programado</div>
+          <div id="wsSemanaProgramado" class="kpi-value">0</div>
+          <div class="kpi-bottom">lunes–sábado</div>
         </div>
 
-
         <div class="kpi">
-          <div class="kpi-label">
-            Empaque
-          </div>
-
-          <div
-            id="wsSemanaEmpaque"
-            class="kpi-value">
-            0
-          </div>
-
-          <div class="kpi-bottom">
-            lunes–sábado
-          </div>
+          <div class="kpi-label">Empaque</div>
+          <div id="wsSemanaEmpaque" class="kpi-value">0</div>
+          <div class="kpi-bottom">lunes–sábado</div>
         </div>
 
-
         <div class="kpi">
-          <div class="kpi-label">
-            Eficiencia
-          </div>
-
-          <div
-            id="wsSemanaEficiencia"
-            class="kpi-value">
-            0%
-          </div>
-
-          <div class="kpi-bottom">
-            Empaque ÷ Programado
-          </div>
+          <div class="kpi-label">Cumplimiento</div>
+          <div id="wsSemanaEficiencia" class="kpi-value">0%</div>
+          <div class="kpi-bottom">Empaque ÷ Programado</div>
         </div>
 
       </div>
@@ -1938,21 +1442,13 @@ tbody tr:hover{
 
   </div>
 
-
   <br>
-
-
-  <!-- ====================================================
-       NUEVO TABLERO DE CARGA PROGRAMADA
-       ==================================================== -->
 
   <div class="card">
 
     <div class="card-title">
 
-      <span>
-        📊 Carga programada por línea
-      </span>
+      <span>📊 Carga programada por línea</span>
 
       <small>
         Piezas × TSTD ÷ minutos disponibles
@@ -1960,14 +1456,7 @@ tbody tr:hover{
 
     </div>
 
-
-    <div
-      style="
-        display:flex;
-        flex-wrap:wrap;
-        gap:8px;
-        margin-bottom:14px;
-      ">
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">
 
       <span class="badge blue">
         Pespunte: 5 × 570 = 2,850 min
@@ -1979,67 +1468,41 @@ tbody tr:hover{
 
     </div>
 
-
-    <div
-      id="cargaProgramada">
-    </div>
+    <div id="cargaProgramada"></div>
 
   </div>
 
-
   <br>
-
 
   <div class="grid grid-2">
 
-    <div
-      id="hourBoardA"
-      class="card hour-card">
-    </div>
+    <div id="hourBoardA" class="card hour-card"></div>
 
-
-    <div
-      id="hourBoardB"
-      class="card hour-card">
-    </div>
+    <div id="hourBoardB" class="card hour-card"></div>
 
   </div>
 
-
   <br>
-
 
   <div class="card">
 
     <div class="card-title">
-
-      <span>
-        OTs en proceso
-      </span>
-
-      <small>
-        Armado + Salida pespunte
-      </small>
-
+      <span>OTs en proceso</span>
+      <small>Armado + Salida pespunte</small>
     </div>
 
-    <div
-      id="otsProceso">
-    </div>
+    <div id="otsProceso"></div>
 
   </div>
 
 </section>
 
 
-
 <!-- ======================================================
      RESUMEN
      ====================================================== -->
 
-<section
-  id="section-resumen"
-  class="section">
+<section id="section-resumen" class="section">
 
   <h1 class="page-title">
     Resumen semanal
@@ -2049,89 +1512,35 @@ tbody tr:hover{
     Cierre de lunes a sábado. Domingo no participa.
   </p>
 
-
   <div class="grid grid-4">
 
     <div class="card kpi blue">
-
-      <div class="kpi-label">
-        Programado
-      </div>
-
-      <div
-        id="resProgramado"
-        class="kpi-value">
-        0
-      </div>
-
-      <div class="kpi-bottom">
-        piezas
-      </div>
-
+      <div class="kpi-label">Programado</div>
+      <div id="resProgramado" class="kpi-value">0</div>
+      <div class="kpi-bottom">piezas</div>
     </div>
-
 
     <div class="card kpi green">
-
-      <div class="kpi-label">
-        Empaque
-      </div>
-
-      <div
-        id="resEmpaque"
-        class="kpi-value">
-        0
-      </div>
-
-      <div class="kpi-bottom">
-        piezas
-      </div>
-
+      <div class="kpi-label">Empaque</div>
+      <div id="resEmpaque" class="kpi-value">0</div>
+      <div class="kpi-bottom">piezas</div>
     </div>
-
 
     <div class="card kpi yellow">
-
-      <div class="kpi-label">
-        Auditoría
-      </div>
-
-      <div
-        id="resAuditoria"
-        class="kpi-value">
-        0
-      </div>
-
-      <div class="kpi-bottom">
-        piezas
-      </div>
-
+      <div class="kpi-label">Auditoría</div>
+      <div id="resAuditoria" class="kpi-value">0</div>
+      <div class="kpi-bottom">piezas</div>
     </div>
 
-
     <div class="card kpi purple">
-
-      <div class="kpi-label">
-        Eficiencia
-      </div>
-
-      <div
-        id="resEficiencia"
-        class="kpi-value">
-        0%
-      </div>
-
-      <div class="kpi-bottom">
-        Empaque ÷ Programado
-      </div>
-
+      <div class="kpi-label">Cumplimiento</div>
+      <div id="resEficiencia" class="kpi-value">0%</div>
+      <div class="kpi-bottom">Empaque ÷ Programado</div>
     </div>
 
   </div>
 
-
   <br>
-
 
   <div class="card">
 
@@ -2139,22 +1548,17 @@ tbody tr:hover{
       Resumen por línea
     </div>
 
-    <div id="resumenLineas">
-    </div>
+    <div id="resumenLineas"></div>
 
   </div>
 
-
   <br>
-
 
   <div class="card">
 
     <div class="card-title">
 
-      <span>
-        Destajo semanal
-      </span>
+      <span>Destajo semanal</span>
 
       <small>
         Solo piezas que entraron a Empaque
@@ -2162,31 +1566,26 @@ tbody tr:hover{
 
     </div>
 
-    <div id="tablaDestajo">
-    </div>
+    <div id="tablaDestajo"></div>
 
   </div>
 
 </section>
 
 
-
 <!-- ======================================================
-     COSTOS / MODELOS
+     COSTOS
      ====================================================== -->
 
-<section
-  id="section-costos"
-  class="section">
+<section id="section-costos" class="section">
 
   <h1 class="page-title">
     Costos / Modelos
   </h1>
 
   <p class="page-subtitle">
-    Catálogo de modelos. Aquí se capturan y modifican costo pespunte, costo preliminar y TSTD.
+    Catálogo de modelos. Costos y tiempos estándar.
   </p>
-
 
   <div class="toolbar">
 
@@ -2200,12 +1599,9 @@ tbody tr:hover{
 
     </div>
 
-
     <div class="toolbar-right">
 
-      <button
-        class="btn primary"
-        onclick="abrirModalModelo()">
+      <button id="btnNuevoModelo" class="btn primary">
         + Nuevo modelo
       </button>
 
@@ -2213,23 +1609,16 @@ tbody tr:hover{
 
   </div>
 
-
-  <div
-    id="modelGrid"
-    class="model-grid">
-  </div>
+  <div id="modelGrid" class="model-grid"></div>
 
 </section>
-
 
 
 <!-- ======================================================
      HISTORIAL
      ====================================================== -->
 
-<section
-  id="section-historial"
-  class="section">
+<section id="section-historial" class="section">
 
   <h1 class="page-title">
     Historial
@@ -2239,29 +1628,21 @@ tbody tr:hover{
     Cierres semanales guardados.
   </p>
 
-
   <div class="card">
 
     <div class="card-title">
 
-      <span>
-        Cierre semanal
-      </span>
+      <span>Cierre semanal</span>
 
-      <small>
-        Lunes–sábado
-      </small>
+      <small>Lunes–sábado</small>
 
     </div>
-
 
     <div class="form-grid">
 
       <div class="field">
 
-        <label>
-          Semana
-        </label>
+        <label>Semana</label>
 
         <input
           id="histSemana"
@@ -2269,12 +1650,9 @@ tbody tr:hover{
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Nombre del cierre
-        </label>
+        <label>Nombre del cierre</label>
 
         <input
           id="histNombre"
@@ -2285,12 +1663,9 @@ tbody tr:hover{
 
     </div>
 
-
     <div class="modal-actions">
 
-      <button
-        class="btn primary"
-        onclick="guardarCierre()">
+      <button id="btnGuardarCierre" class="btn primary">
         Guardar cierre
       </button>
 
@@ -2298,9 +1673,7 @@ tbody tr:hover{
 
   </div>
 
-
   <br>
-
 
   <div class="card">
 
@@ -2308,8 +1681,7 @@ tbody tr:hover{
       Cierres guardados
     </div>
 
-    <div id="tablaHistorial">
-    </div>
+    <div id="tablaHistorial"></div>
 
   </div>
 
@@ -2320,14 +1692,11 @@ tbody tr:hover{
 </div>
 
 
-
 <!-- ======================================================
      MODAL MODELO
      ====================================================== -->
 
-<div
-  id="modeloModal"
-  class="modal-backdrop">
+<div id="modeloModal" class="modal-backdrop">
 
   <div class="modal">
 
@@ -2335,41 +1704,29 @@ tbody tr:hover{
 
       <div>
 
-        <div
-          id="modeloModalTitulo"
-          class="modal-title">
+        <div id="modeloModalTitulo" class="modal-title">
           Nuevo modelo
         </div>
 
-        <div
-          style="color:#8f9ab0;font-size:12px;margin-top:4px">
-          Captura o modifica los costos del modelo.
+        <div style="color:#8f9ab0;font-size:12px;margin-top:4px">
+          Captura o modifica los datos del modelo.
         </div>
 
       </div>
 
-
-      <button
-        class="btn icon"
-        onclick="cerrarModalModelo()">
+      <button id="btnCerrarModelo" class="btn icon">
         ×
       </button>
 
     </div>
 
-
-    <input
-      id="modeloEditId"
-      type="hidden">
-
+    <input id="modeloEditId" type="hidden">
 
     <div class="form-grid">
 
       <div class="field full">
 
-        <label>
-          Nombre del modelo
-        </label>
+        <label>Nombre del modelo</label>
 
         <input
           id="modeloNombre"
@@ -2378,12 +1735,9 @@ tbody tr:hover{
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Código / referencia
-        </label>
+        <label>Código / referencia</label>
 
         <input
           id="modeloCodigo"
@@ -2392,84 +1746,63 @@ tbody tr:hover{
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Costo pieza pespunte
-        </label>
+        <label>Costo pieza pespunte</label>
 
         <input
           id="modeloCostoPespunte"
           type="number"
           min="0"
-          step="0.01"
-          placeholder="0.00">
+          step="0.01">
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Costo pieza preliminar
-        </label>
+        <label>Costo pieza preliminar</label>
 
         <input
           id="modeloCostoPreliminar"
           type="number"
           min="0"
-          step="0.01"
-          placeholder="0.00">
+          step="0.01">
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          TSTD pespunte (minutos)
-        </label>
+        <label>TSTD pespunte (minutos)</label>
 
         <input
           id="modeloTstdPespunte"
           type="number"
           min="0"
-          step="0.01"
-          placeholder="0.00">
+          step="0.01">
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          TSTD preliminar (minutos)
-        </label>
+        <label>TSTD preliminar (minutos)</label>
 
         <input
           id="modeloTstdPreliminar"
           type="number"
           min="0"
-          step="0.01"
-          placeholder="0.00">
+          step="0.01">
 
       </div>
 
     </div>
 
-
     <div class="modal-actions">
 
-      <button
-        class="btn"
-        onclick="cerrarModalModelo()">
+      <button id="btnCancelarModelo" class="btn">
         Cancelar
       </button>
 
-      <button
-        class="btn primary"
-        onclick="guardarModelo()">
+      <button id="btnGuardarModelo" class="btn primary">
         Guardar modelo
       </button>
 
@@ -2480,14 +1813,11 @@ tbody tr:hover{
 </div>
 
 
-
 <!-- ======================================================
-     MODAL EDITAR OT
+     MODAL OT
      ====================================================== -->
 
-<div
-  id="otModal"
-  class="modal-backdrop">
+<div id="otModal" class="modal-backdrop">
 
   <div class="modal">
 
@@ -2499,94 +1829,62 @@ tbody tr:hover{
           Editar OT
         </div>
 
-        <div
-          style="color:#8f9ab0;font-size:12px;margin-top:4px">
+        <div style="color:#8f9ab0;font-size:12px;margin-top:4px">
           Modifica la programación sin perder sus avances.
         </div>
 
       </div>
 
-
-      <button
-        class="btn icon"
-        onclick="cerrarModalOT()">
+      <button id="btnCerrarOT" class="btn icon">
         ×
       </button>
 
     </div>
 
-
-    <input
-      id="editOTId"
-      type="hidden">
-
+    <input id="editOTId" type="hidden">
 
     <div class="form-grid">
 
       <div class="field">
 
-        <label>
-          Fecha
-        </label>
+        <label>Fecha</label>
 
-        <input
-          id="editOTFecha"
-          type="date">
+        <input id="editOTFecha" type="date">
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          OT
-        </label>
+        <label>OT</label>
 
-        <input
-          id="editOTNumero"
-          type="text">
+        <input id="editOTNumero" type="text">
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Línea
-        </label>
+        <label>Línea</label>
 
         <select id="editOTLinea">
 
-          <option value="A">
-            Línea A
-          </option>
-
-          <option value="B">
-            Línea B
-          </option>
+          <option value="A">Línea A</option>
+          <option value="B">Línea B</option>
 
         </select>
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Modelo
-        </label>
+        <label>Modelo</label>
 
-        <select id="editOTModelo">
-        </select>
+        <select id="editOTModelo"></select>
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Piezas programadas
-        </label>
+        <label>Piezas programadas</label>
 
         <input
           id="editOTPiezas"
@@ -2596,39 +1894,27 @@ tbody tr:hover{
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Observaciones
-        </label>
+        <label>Observaciones</label>
 
-        <input
-          id="editOTObs"
-          type="text">
+        <input id="editOTObs" type="text">
 
       </div>
 
     </div>
 
-
     <div class="modal-actions">
 
-      <button
-        class="btn danger"
-        onclick="eliminarOTDesdeModal()">
+      <button id="btnEliminarOT" class="btn danger">
         Eliminar OT
       </button>
 
-      <button
-        class="btn"
-        onclick="cerrarModalOT()">
+      <button id="btnCancelarOT" class="btn">
         Cancelar
       </button>
 
-      <button
-        class="btn primary"
-        onclick="guardarEdicionOT()">
+      <button id="btnGuardarOTEditado" class="btn primary">
         Guardar cambios
       </button>
 
@@ -2639,25 +1925,22 @@ tbody tr:hover{
 </div>
 
 
+<div id="toast" class="toast"></div>
 
-<div
-  id="toast"
-  class="toast">
-</div>
-
+<div id="jsError"></div>
 
 
 <script>
 
 /* ================================================================
-   THE STUDIO · CONTROL DE PRODUCCIÓN
-   VERSIÓN COMPLETA
+   THE STUDIO
+   CONTROL DE PRODUCCIÓN
+   VERSIÓN FUNCIONAL COMPLETA
    ================================================================ */
 
 
 /* ================================================================
-   CLAVES PRINCIPALES
-   NO CAMBIAR
+   CLAVES — NO CAMBIAR
    ================================================================ */
 
 const KPROD = "theStudioProduccion_v4";
@@ -2667,21 +1950,7 @@ const KADV  = "theStudioAvances_v4";
 
 
 /* ================================================================
-   CAPACIDAD DE LA PLANTA
-   ================================================================
-
-   IMPORTANTE:
-
-   Estos valores controlan exclusivamente el cálculo de
-   CARGA PROGRAMADA.
-
-   Pespunte:
-   5 pespuntadores × 570 minutos = 2,850 minutos.
-
-   Preliminar:
-   6 preliminares × 570 minutos = 3,420 minutos.
-
-   No se modifican tus datos guardados.
+   CONFIGURACIÓN DE PRODUCCIÓN
    ================================================================ */
 
 const PESPUNTADORES = 5;
@@ -2713,7 +1982,7 @@ const PROCESOS = [
 
 
 /* ================================================================
-   ESTADO
+   DATOS
    ================================================================ */
 
 let produccion = cargarJSON(KPROD, []);
@@ -2730,28 +1999,32 @@ function cargarJSON(clave, defecto){
 
   try{
 
-    const valor =
+    const raw =
       localStorage.getItem(clave);
 
-    if(!valor){
+    if(!raw){
       return defecto;
     }
 
-    const parsed =
-      JSON.parse(valor);
+    const data =
+      JSON.parse(raw);
 
-    return parsed ?? defecto;
+    return Array.isArray(data)
+      ? data
+      : defecto;
 
-  }catch(error){
+  }catch(e){
 
     console.error(
       "Error cargando",
       clave,
-      error
+      e
     );
 
     return defecto;
+
   }
+
 }
 
 
@@ -2761,132 +2034,134 @@ function guardarJSON(clave, valor){
     clave,
     JSON.stringify(valor)
   );
+
 }
 
 
 function hoyISO(){
 
-  const d =
-    new Date();
+  const d = new Date();
 
-  const y =
-    d.getFullYear();
+  return (
+    d.getFullYear()+
+    "-"+
+    String(d.getMonth()+1).padStart(2,"0")+
+    "-"+
+    String(d.getDate()).padStart(2,"0")
+  );
 
-  const m =
-    String(
-      d.getMonth()+1
-    ).padStart(2,"0");
-
-  const day =
-    String(
-      d.getDate()
-    ).padStart(2,"0");
-
-  return `${y}-${m}-${day}`;
 }
 
 
 function ahoraHora(){
 
-  const d =
-    new Date();
+  const d = new Date();
 
-  return String(
-    d.getHours()
-  ).padStart(2,"0")
-  + ":" +
-  String(
-    d.getMinutes()
-  ).padStart(2,"0");
+  return (
+    String(d.getHours()).padStart(2,"0")+
+    ":"+
+    String(d.getMinutes()).padStart(2,"0")
+  );
+
 }
 
 
-function num(valor){
+function num(v){
 
-  const n =
-    Number(valor);
+  const n = Number(v);
 
   return Number.isFinite(n)
     ? n
     : 0;
+
 }
 
 
-function money(valor){
+function pieces(v){
 
-  return "$" +
-    num(valor).toLocaleString(
+  return Math.round(num(v))
+    .toLocaleString("es-MX");
+
+}
+
+
+function money(v){
+
+  return "$"+
+    num(v).toLocaleString(
       "es-MX",
       {
         minimumFractionDigits:2,
         maximumFractionDigits:2
       }
     );
+
 }
 
 
-function pieces(valor){
+function pct(v){
 
-  return Math.round(
-    num(valor)
-  ).toLocaleString(
-    "es-MX"
-  );
-}
-
-
-function pct(valor){
-
-  return (
-    num(valor)
-  ).toLocaleString(
+  return num(v).toLocaleString(
     "es-MX",
     {
       minimumFractionDigits:0,
       maximumFractionDigits:1
     }
-  ) + "%";
+  )+"%";
+
 }
 
 
-function pct1(valor){
+function pct1(v){
 
-  return (
-    num(valor)
-  ).toLocaleString(
+  return num(v).toLocaleString(
     "es-MX",
     {
       minimumFractionDigits:1,
       maximumFractionDigits:1
     }
-  ) + "%";
+  )+"%";
+
 }
 
 
-function esc(valor){
+function esc(v){
 
-  return String(
-    valor ?? ""
-  )
-  .replaceAll("&","&amp;")
-  .replaceAll("<","&lt;")
-  .replaceAll(">","&gt;")
-  .replaceAll('"',"&quot;")
-  .replaceAll("'","&#039;");
+  return String(v ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
 }
 
 
-function uid(prefijo="id"){
+function uid(prefijo){
 
   return (
-    prefijo +
-    "_" +
-    Date.now().toString(36) +
-    "_" +
+    prefijo+
+    "_"+
+    Date.now().toString(36)+
+    "_"+
     Math.random()
       .toString(36)
-      .slice(2,8)
+      .slice(2,9)
   );
+
+}
+
+
+function dateToISO(d){
+
+  return (
+    d.getFullYear()+
+    "-"+
+    String(d.getMonth()+1).padStart(2,"0")+
+    "-"+
+    String(d.getDate()).padStart(2,"0")
+  );
+
 }
 
 
@@ -2897,14 +2172,10 @@ function fechaValidaLaboral(fecha){
   }
 
   const d =
-    new Date(
-      fecha+"T12:00:00"
-    );
+    new Date(fecha+"T12:00:00");
 
-  const day =
-    d.getDay();
+  return d.getDay()!==0;
 
-  return day !== 0;
 }
 
 
@@ -2919,76 +2190,52 @@ function lunesDeSemana(fecha){
   const day =
     d.getDay();
 
-  const diff =
+  const diferencia =
     day===0
       ? -6
       : 1-day;
 
   d.setDate(
-    d.getDate()+diff
+    d.getDate()+diferencia
   );
 
   return dateToISO(d);
+
 }
 
 
 function sabadoDeSemana(fecha){
 
-  const lunes =
+  const d =
     new Date(
       lunesDeSemana(fecha)+
       "T12:00:00"
     );
 
-  lunes.setDate(
-    lunes.getDate()+5
+  d.setDate(
+    d.getDate()+5
   );
 
-  return dateToISO(lunes);
-}
+  return dateToISO(d);
 
-
-function dateToISO(d){
-
-  return d.getFullYear()
-    + "-" +
-    String(
-      d.getMonth()+1
-    ).padStart(2,"0")
-    + "-" +
-    String(
-      d.getDate()
-    ).padStart(2,"0");
 }
 
 
 function semanaActual(){
 
   return {
-
-    lunes:
-      lunesDeSemana(
-        hoyISO()
-      ),
-
-    sabado:
-      sabadoDeSemana(
-        hoyISO()
-      )
-
+    lunes: lunesDeSemana(hoyISO()),
+    sabado: sabadoDeSemana(hoyISO())
   };
 
 }
 
 
-function fechaEnSemana(
-  fecha,
-  semana
-){
+function fechaEnSemana(fecha,semana){
 
   return (
-    fecha >= semana.lunes &&
-    fecha <= semana.sabado
+    fecha>=semana.lunes &&
+    fecha<=semana.sabado
   );
 
 }
@@ -2996,11 +2243,12 @@ function fechaEnSemana(
 
 function nombreDia(fecha){
 
+  if(!fecha){
+    return "";
+  }
+
   const d =
-    new Date(
-      fecha+
-      "T12:00:00"
-    );
+    new Date(fecha+"T12:00:00");
 
   return d.toLocaleDateString(
     "es-MX",
@@ -3014,19 +2262,19 @@ function nombreDia(fecha){
 }
 
 
-function mostrarToast(mensaje){
+function mostrarToast(texto){
 
   const el =
-    document.getElementById(
-      "toast"
-    );
+    document.getElementById("toast");
+
+  if(!el){
+    return;
+  }
 
   el.textContent =
-    mensaje;
+    texto;
 
-  el.classList.add(
-    "show"
-  );
+  el.classList.add("show");
 
   clearTimeout(
     mostrarToast.timer
@@ -3035,14 +2283,39 @@ function mostrarToast(mensaje){
   mostrarToast.timer =
     setTimeout(
       ()=>{
-        el.classList.remove(
-          "show"
-        );
+        el.classList.remove("show");
       },
-      2500
+      2600
     );
 
 }
+
+
+/* ================================================================
+   ERROR GLOBAL
+   ================================================================ */
+
+window.addEventListener(
+  "error",
+  function(e){
+
+    console.error(e.error || e.message);
+
+    const box =
+      document.getElementById("jsError");
+
+    if(box){
+
+      box.style.display="block";
+
+      box.textContent =
+        "Se detectó un error en THE STUDIO:\n\n"+
+        (e.error?.message || e.message || "Error desconocido");
+
+    }
+
+  }
+);
 
 
 /* ================================================================
@@ -3190,120 +2463,96 @@ function normalizarAvance(a){
 }
 
 
-/* ================================================================
-   MIGRACIÓN DE DATOS
-   ================================================================ */
-
 produccion =
-  produccion.map(
-    normalizarOT
-  );
+  produccion.map(normalizarOT);
 
 costos =
-  costos.map(
-    normalizarModelo
-  );
+  costos.map(normalizarModelo);
 
 avances =
-  avances.map(
-    normalizarAvance
-  );
+  avances.map(normalizarAvance);
 
-guardarJSON(
-  KPROD,
-  produccion
-);
-
-guardarJSON(
-  KCOST,
-  costos
-);
-
-guardarJSON(
-  KADV,
-  avances
-);
-
-
-/* ================================================================
-   NAVEGACIÓN
-   ================================================================ */
-
-document
-.querySelectorAll(".nav-btn")
-.forEach(
-  btn=>{
-
-    btn.addEventListener(
-      "click",
-      ()=>{
-
-        document
-        .querySelectorAll(
-          ".nav-btn"
-        )
-        .forEach(
-          b=>
-            b.classList.remove(
-              "active"
-            )
-        );
-
-        btn.classList.add(
-          "active"
-        );
-
-        document
-        .querySelectorAll(
-          ".section"
-        )
-        .forEach(
-          s=>
-            s.classList.remove(
-              "active"
-            )
-        );
-
-        const section =
-          document.getElementById(
-            "section-"+
-            btn.dataset.section
-          );
-
-        if(section){
-
-          section.classList.add(
-            "active"
-          );
-
-        }
-
-        renderTodo();
-
-      }
-    );
-
-  }
-);
+guardarJSON(KPROD,produccion);
+guardarJSON(KCOST,costos);
+guardarJSON(KADV,avances);
 
 
 /* ================================================================
    MODELOS
    ================================================================ */
 
-function buscarModeloPorNombre(
-  nombre
-){
+function buscarModeloPorNombre(nombre){
+
+  const objetivo =
+    String(nombre || "")
+      .trim()
+      .toLowerCase();
 
   return costos.find(
     m =>
-      String(m.nombre)
-      .trim()
-      .toLowerCase()
-      ===
-      String(nombre)
-      .trim()
-      .toLowerCase()
+      String(m.nombre || "")
+        .trim()
+        .toLowerCase()===objetivo
+  );
+
+}
+
+
+function llenarSelectModelos(){
+
+  const ids=[
+    "capModelo",
+    "editOTModelo"
+  ];
+
+  ids.forEach(
+    id=>{
+
+      const select =
+        document.getElementById(id);
+
+      if(!select){
+        return;
+      }
+
+      const anterior =
+        select.value;
+
+      const lista =
+        costos
+          .slice()
+          .sort(
+            (a,b)=>
+              String(a.nombre)
+              .localeCompare(
+                String(b.nombre),
+                "es"
+              )
+          );
+
+      select.innerHTML =
+        `<option value="">
+          Seleccionar modelo...
+        </option>`+
+        lista
+          .map(
+            m=>
+              `<option value="${esc(m.nombre)}">
+                ${esc(m.nombre)}
+                ${m.codigo ? " · "+esc(m.codigo) : ""}
+              </option>`
+          )
+          .join("");
+
+      if(
+        lista.some(
+          m=>m.nombre===anterior
+        )
+      ){
+        select.value=anterior;
+      }
+
+    }
   );
 
 }
@@ -3312,9 +2561,7 @@ function buscarModeloPorNombre(
 function renderModelos(){
 
   const cont =
-    document.getElementById(
-      "modelGrid"
-    );
+    document.getElementById("modelGrid");
 
   if(!cont){
     return;
@@ -3322,205 +2569,179 @@ function renderModelos(){
 
   const filtro =
     (
-      document.getElementById(
-        "buscarModelo"
-      )?.value ||
-      ""
+      document.getElementById("buscarModelo")
+        ?.value || ""
     )
-    .trim()
-    .toLowerCase();
+      .trim()
+      .toLowerCase();
 
-  let lista =
-    costos.filter(
-      m =>
-        !filtro ||
-        String(m.nombre)
-          .toLowerCase()
-          .includes(filtro) ||
-        String(m.codigo)
-          .toLowerCase()
-          .includes(filtro)
-    );
-
-  lista.sort(
-    (a,b)=>
-      String(a.nombre)
-      .localeCompare(
-        String(b.nombre),
-        "es"
+  const lista =
+    costos
+      .filter(
+        m =>
+          !filtro ||
+          String(m.nombre)
+            .toLowerCase()
+            .includes(filtro) ||
+          String(m.codigo)
+            .toLowerCase()
+            .includes(filtro)
       )
-  );
+      .sort(
+        (a,b)=>
+          String(a.nombre)
+          .localeCompare(
+            String(b.nombre),
+            "es"
+          )
+      );
 
   if(!lista.length){
 
-    cont.innerHTML = `
-
-      <div
-        class="card"
-        style="grid-column:1/-1">
-
+    cont.innerHTML=`
+      <div class="card" style="grid-column:1/-1">
         <div class="empty">
-
           No hay modelos registrados.
-
           <br><br>
-
-          <button
-            class="btn primary"
-            onclick="abrirModalModelo()">
+          <button class="btn primary" id="btnCrearPrimerModelo">
             + Crear primer modelo
           </button>
-
         </div>
-
       </div>
-
     `;
 
-    return;
-  }
+    document
+      .getElementById("btnCrearPrimerModelo")
+      ?.addEventListener(
+        "click",
+        ()=>abrirModalModelo()
+      );
 
+    return;
+
+  }
 
   cont.innerHTML =
     lista
-    .map(
-      m=>{
+      .map(
+        m=>{
 
-        const usado =
-          produccion.some(
-            o =>
-              String(o.modelo)
-              .toLowerCase()
-              ===
-              String(m.nombre)
-              .toLowerCase()
-          );
+          const usado =
+            produccion.some(
+              o =>
+                String(o.modelo)
+                  .toLowerCase()===
+                String(m.nombre)
+                  .toLowerCase()
+            );
 
-        return `
+          return `
+            <div class="model-card">
 
-          <div class="model-card">
+              <div class="model-head">
 
-            <div class="model-head">
+                <div>
 
-              <div>
+                  <div class="model-name">
+                    ${esc(m.nombre)}
+                  </div>
 
-                <div class="model-name">
-                  ${esc(m.nombre)}
+                  <div class="model-code">
+                    ${
+                      m.codigo
+                        ? "Código: "+esc(m.codigo)
+                        : "Sin código"
+                    }
+                  </div>
+
                 </div>
 
-                <div class="model-code">
+                <button
+                  class="btn icon"
+                  data-action="editar-modelo"
+                  data-id="${esc(m.id)}">
+                  ✏️
+                </button>
 
-                  ${
-                    m.codigo
-                      ? "Código: "+esc(m.codigo)
-                      : "Sin código"
-                  }
+              </div>
 
+              <div class="model-costs">
+
+                <div class="cost-box">
+                  <div class="cost-label">
+                    Costo pespunte
+                  </div>
+                  <div class="cost-value">
+                    ${money(m.costoPespunte)}
+                  </div>
+                </div>
+
+                <div class="cost-box">
+                  <div class="cost-label">
+                    Costo preliminar
+                  </div>
+                  <div class="cost-value">
+                    ${money(m.costoPreliminar)}
+                  </div>
                 </div>
 
               </div>
 
+              <div class="model-footer">
 
-              <button
-                class="btn icon small"
-                title="Editar modelo"
-                onclick="editarModelo('${m.id}')">
-                ✏️
-              </button>
+                <span>
+                  TSTD pespunte:
+                  <strong>
+                    ${num(m.tstdPespunte).toFixed(2)}
+                  </strong>
+                  min
+                </span>
 
-            </div>
-
-
-            <div class="model-costs">
-
-              <div class="cost-box">
-
-                <div class="cost-label">
-                  Costo pespunte
-                </div>
-
-                <div class="cost-value">
-                  ${money(m.costoPespunte)}
-                </div>
+                <span>
+                  TSTD preliminar:
+                  <strong>
+                    ${num(m.tstdPreliminar).toFixed(2)}
+                  </strong>
+                  min
+                </span>
 
               </div>
 
+              <div
+                style="
+                  display:flex;
+                  justify-content:flex-end;
+                  margin-top:12px;
+                ">
 
-              <div class="cost-box">
-
-                <div class="cost-label">
-                  Costo preliminar
-                </div>
-
-                <div class="cost-value">
-                  ${money(m.costoPreliminar)}
-                </div>
+                <button
+                  class="btn small danger"
+                  data-action="eliminar-modelo"
+                  data-id="${esc(m.id)}"
+                  ${usado ? "disabled" : ""}>
+                  Eliminar
+                </button>
 
               </div>
 
             </div>
+          `;
 
-
-            <div class="model-footer">
-
-              <span>
-                TSTD pespunte:
-                <strong>
-                  ${num(m.tstdPespunte).toFixed(2)}
-                </strong>
-                min
-              </span>
-
-              <span>
-                TSTD preliminar:
-                <strong>
-                  ${num(m.tstdPreliminar).toFixed(2)}
-                </strong>
-                min
-              </span>
-
-            </div>
-
-
-            <div
-              style="
-                display:flex;
-                justify-content:flex-end;
-                margin-top:12px;
-              ">
-
-              <button
-                class="btn small danger"
-                onclick="eliminarModelo('${m.id}')"
-                ${
-                  usado
-                    ? "disabled title='No se puede eliminar porque el modelo está usado en una OT'"
-                    : ""
-                }>
-                Eliminar
-              </button>
-
-            </div>
-
-          </div>
-
-        `;
-
-      }
-    )
-    .join("");
+        }
+      )
+      .join("");
 
 }
 
 
-function abrirModalModelo(
-  id=null
-){
+function abrirModalModelo(id=null){
 
   const modal =
-    document.getElementById(
-      "modeloModal"
-    );
+    document.getElementById("modeloModal");
+
+  if(!modal){
+    return;
+  }
 
   document.getElementById(
     "modeloEditId"
@@ -3545,33 +2766,27 @@ function abrirModalModelo(
 
     document.getElementById(
       "modeloNombre"
-    ).value =
-      m.nombre;
+    ).value=m.nombre;
 
     document.getElementById(
       "modeloCodigo"
-    ).value =
-      m.codigo;
+    ).value=m.codigo;
 
     document.getElementById(
       "modeloCostoPespunte"
-    ).value =
-      m.costoPespunte;
+    ).value=m.costoPespunte;
 
     document.getElementById(
       "modeloCostoPreliminar"
-    ).value =
-      m.costoPreliminar;
+    ).value=m.costoPreliminar;
 
     document.getElementById(
       "modeloTstdPespunte"
-    ).value =
-      m.tstdPespunte;
+    ).value=m.tstdPespunte;
 
     document.getElementById(
       "modeloTstdPreliminar"
-    ).value =
-      m.tstdPreliminar;
+    ).value=m.tstdPreliminar;
 
   }else{
 
@@ -3580,41 +2795,22 @@ function abrirModalModelo(
     ).textContent =
       "Nuevo modelo";
 
-    document.getElementById(
-      "modeloNombre"
-    ).value =
-      "";
-
-    document.getElementById(
-      "modeloCodigo"
-    ).value =
-      "";
-
-    document.getElementById(
-      "modeloCostoPespunte"
-    ).value =
-      "";
-
-    document.getElementById(
-      "modeloCostoPreliminar"
-    ).value =
-      "";
-
-    document.getElementById(
-      "modeloTstdPespunte"
-    ).value =
-      "";
-
-    document.getElementById(
+    [
+      "modeloNombre",
+      "modeloCodigo",
+      "modeloCostoPespunte",
+      "modeloCostoPreliminar",
+      "modeloTstdPespunte",
       "modeloTstdPreliminar"
-    ).value =
-      "";
+    ].forEach(
+      id=>{
+        document.getElementById(id).value="";
+      }
+    );
 
   }
 
-  modal.classList.add(
-    "open"
-  );
+  modal.classList.add("open");
 
 }
 
@@ -3622,12 +2818,8 @@ function abrirModalModelo(
 function cerrarModalModelo(){
 
   document
-  .getElementById(
-    "modeloModal"
-  )
-  .classList.remove(
-    "open"
-  );
+    .getElementById("modeloModal")
+    ?.classList.remove("open");
 
 }
 
@@ -3639,13 +2831,10 @@ function guardarModelo(){
       "modeloEditId"
     ).value;
 
-
   const nombre =
     document.getElementById(
       "modeloNombre"
-    ).value
-    .trim();
-
+    ).value.trim();
 
   if(!nombre){
 
@@ -3656,21 +2845,17 @@ function guardarModelo(){
     return;
   }
 
-
-  const existente =
-    costos.find(
+  const duplicado =
+    costos.some(
       m =>
+        m.id!==id &&
         String(m.nombre)
-        .trim()
-        .toLowerCase()
-        ===
+          .trim()
+          .toLowerCase()===
         nombre.toLowerCase()
-        &&
-        m.id!==id
     );
 
-
-  if(existente){
+  if(duplicado){
 
     mostrarToast(
       "Ese modelo ya existe."
@@ -3679,8 +2864,7 @@ function guardarModelo(){
     return;
   }
 
-
-  const datos = {
+  const datos={
 
     nombre,
 
@@ -3719,7 +2903,6 @@ function guardarModelo(){
 
   };
 
-
   if(id){
 
     const index =
@@ -3731,31 +2914,27 @@ function guardarModelo(){
       return;
     }
 
-    const nombreAnterior =
+    const anterior =
       costos[index].nombre;
 
-    costos[index] = {
+    costos[index]={
       ...costos[index],
       ...datos
     };
-
 
     produccion =
       produccion.map(
         o =>
           String(o.modelo)
-          .toLowerCase()
-          ===
-          String(nombreAnterior)
-          .toLowerCase()
+            .toLowerCase()===
+          String(anterior)
+            .toLowerCase()
             ? {
                 ...o,
-                modelo:
-                  datos.nombre
+                modelo:datos.nombre
               }
             : o
       );
-
 
     guardarJSON(
       KPROD,
@@ -3769,14 +2948,9 @@ function guardarModelo(){
   }else{
 
     costos.push({
-
-      id:
-        uid("mod"),
-
+      id:uid("mod"),
       ...datos
-
     });
-
 
     mostrarToast(
       "Modelo creado correctamente."
@@ -3784,12 +2958,10 @@ function guardarModelo(){
 
   }
 
-
   guardarJSON(
     KCOST,
     costos
   );
-
 
   cerrarModalModelo();
 
@@ -3800,9 +2972,7 @@ function guardarModelo(){
 
 function editarModelo(id){
 
-  abrirModalModelo(
-    id
-  );
+  abrirModalModelo(id);
 
 }
 
@@ -3818,50 +2988,43 @@ function eliminarModelo(id){
     return;
   }
 
-
   const usado =
     produccion.some(
       o =>
         String(o.modelo)
-        .toLowerCase()
-        ===
+          .toLowerCase()===
         String(modelo.nombre)
-        .toLowerCase()
+          .toLowerCase()
     );
-
 
   if(usado){
 
     mostrarToast(
-      "No se puede eliminar: el modelo ya está usado en una OT."
+      "No se puede eliminar: el modelo está usado en una OT."
     );
 
     return;
   }
 
-
   if(
     !confirm(
-      "¿Eliminar el modelo \""+
+      '¿Eliminar el modelo "'+
       modelo.nombre+
-      "\"?"
+      '"?'
     )
   ){
     return;
   }
-
 
   costos =
     costos.filter(
       m=>m.id!==id
     );
 
-
   guardarJSON(
     KCOST,
     costos
   );
-
 
   mostrarToast(
     "Modelo eliminado."
@@ -3873,137 +3036,34 @@ function eliminarModelo(id){
 
 
 /* ================================================================
-   SELECTS DE MODELOS
-   ================================================================ */
-
-function llenarSelectModelos(){
-
-  const selects = [
-
-    document.getElementById(
-      "capModelo"
-    ),
-
-    document.getElementById(
-      "editOTModelo"
-    )
-
-  ];
-
-
-  selects.forEach(
-    select=>{
-
-      if(!select){
-        return;
-      }
-
-      const actual =
-        select.value;
-
-
-      select.innerHTML = `
-
-        <option value="">
-          Seleccionar modelo...
-        </option>
-
-        ${
-          costos
-          .slice()
-          .sort(
-            (a,b)=>
-              String(a.nombre)
-              .localeCompare(
-                String(b.nombre),
-                "es"
-              )
-          )
-          .map(
-            m=>`
-
-              <option
-                value="${esc(m.nombre)}">
-
-                ${esc(m.nombre)}
-
-                ${
-                  m.codigo
-                    ? " · "+esc(m.codigo)
-                    : ""
-                }
-
-              </option>
-
-            `
-          )
-          .join("")
-        }
-
-      `;
-
-
-      if(
-        [...select.options]
-        .some(
-          o=>o.value===actual
-        )
-      ){
-
-        select.value =
-          actual;
-
-      }
-
-    }
-  );
-
-}
-
-
-/* ================================================================
    CAPTURA OT
    ================================================================ */
 
 function guardarOT(){
 
   const fecha =
-    document.getElementById(
-      "capFecha"
-    ).value;
-
+    document.getElementById("capFecha").value;
 
   const ot =
-    document.getElementById(
-      "capOT"
-    ).value.trim();
-
+    document.getElementById("capOT")
+      .value
+      .trim();
 
   const linea =
-    document.getElementById(
-      "capLinea"
-    ).value;
-
+    document.getElementById("capLinea").value;
 
   const modelo =
-    document.getElementById(
-      "capModelo"
-    ).value;
-
+    document.getElementById("capModelo").value;
 
   const piezas =
     num(
-      document.getElementById(
-        "capPiezas"
-      ).value
+      document.getElementById("capPiezas").value
     );
 
-
   const observaciones =
-    document.getElementById(
-      "capObs"
-    ).value.trim();
-
+    document.getElementById("capObs")
+      .value
+      .trim();
 
   if(!fecha){
 
@@ -4014,16 +3074,14 @@ function guardarOT(){
     return;
   }
 
-
   if(!fechaValidaLaboral(fecha)){
 
     mostrarToast(
-      "Domingo no participa en la programación."
+      "Domingo no participa."
     );
 
     return;
   }
-
 
   if(!ot){
 
@@ -4034,7 +3092,6 @@ function guardarOT(){
     return;
   }
 
-
   if(!modelo){
 
     mostrarToast(
@@ -4043,7 +3100,6 @@ function guardarOT(){
 
     return;
   }
-
 
   if(piezas<=0){
 
@@ -4054,19 +3110,16 @@ function guardarOT(){
     return;
   }
 
-
-  const repetida =
+  const existe =
     produccion.some(
       o =>
         String(o.ot)
-        .trim()
-        .toLowerCase()
-        ===
+          .trim()
+          .toLowerCase()===
         ot.toLowerCase()
     );
 
-
-  if(repetida){
+  if(existe){
 
     mostrarToast(
       "Esa OT ya existe."
@@ -4075,11 +3128,9 @@ function guardarOT(){
     return;
   }
 
-
   produccion.push({
 
-    id:
-      uid("ot"),
+    id:uid("ot"),
 
     fecha,
 
@@ -4093,17 +3144,14 @@ function guardarOT(){
 
     observaciones,
 
-    creado:
-      Date.now()
+    creado:Date.now()
 
   });
-
 
   guardarJSON(
     KPROD,
     produccion
   );
-
 
   document.getElementById(
     "capOT"
@@ -4117,25 +3165,13 @@ function guardarOT(){
     "capObs"
   ).value="";
 
-
   mostrarToast(
     "OT programada correctamente."
   );
 
-
   renderTodo();
 
 }
-
-
-document
-.getElementById(
-  "btnGuardarOT"
-)
-.addEventListener(
-  "click",
-  guardarOT
-);
 
 
 /* ================================================================
@@ -4145,75 +3181,61 @@ document
 function renderOTs(){
 
   const cont =
-    document.getElementById(
-      "tablaOTs"
-    );
-
+    document.getElementById("tablaOTs");
 
   if(!cont){
     return;
   }
 
-
   const buscar =
     (
-      document.getElementById(
-        "buscarOT"
-      )?.value ||
-      ""
+      document.getElementById("buscarOT")
+        ?.value || ""
     )
-    .trim()
-    .toLowerCase();
-
+      .trim()
+      .toLowerCase();
 
   const linea =
     document.getElementById(
       "filtroLinea"
-    )?.value ||
-    "";
+    )?.value || "";
 
+  const lista =
+    produccion
+      .filter(
+        o=>{
 
-  let lista =
-    produccion.filter(
-      o => {
+          const texto =
+            (
+              String(o.ot)+
+              " "+
+              String(o.modelo)
+            )
+              .toLowerCase();
 
-        const texto =
-          (
-            o.ot+
-            " "+
-            o.modelo
-          )
-          .toLowerCase();
+          return (
+            (!buscar ||
+              texto.includes(buscar))
+            &&
+            (!linea ||
+              o.linea===linea)
+          );
 
-        return (
-          (!buscar ||
-            texto.includes(
-              buscar
-            ))
-          &&
-          (!linea ||
-            o.linea===linea)
-        );
-
-      }
-    );
-
-
-  lista.sort(
-    (a,b)=>
-      String(b.fecha)
-      .localeCompare(
-        String(a.fecha)
+        }
       )
-      ||
-      num(b.creado)-
-      num(a.creado)
-  );
-
+      .sort(
+        (a,b)=>
+          String(b.fecha)
+            .localeCompare(
+              String(a.fecha)
+            ) ||
+          num(b.creado)-
+          num(a.creado)
+      );
 
   if(!lista.length){
 
-    cont.innerHTML =
+    cont.innerHTML=
       `<div class="empty">
         No hay OTs para mostrar.
       </div>`;
@@ -4221,8 +3243,7 @@ function renderOTs(){
     return;
   }
 
-
-  cont.innerHTML = `
+  cont.innerHTML=`
 
     <div class="table-wrap">
 
@@ -4236,19 +3257,9 @@ function renderOTs(){
             <th>OT</th>
             <th>Línea</th>
             <th>Modelo</th>
-
-            <th class="num">
-              Programado
-            </th>
-
-            <th class="num">
-              Empaque
-            </th>
-
-            <th class="num">
-              En proceso
-            </th>
-
+            <th class="num">Programado</th>
+            <th class="num">Empaque</th>
+            <th class="num">En proceso</th>
             <th>Acciones</th>
 
           </tr>
@@ -4258,109 +3269,97 @@ function renderOTs(){
         <tbody>
 
           ${
-            lista.map(
-              o=>{
+            lista
+              .map(
+                o=>{
 
-                const emp =
-                  piezasEnProceso(
-                    o.id,
-                    "Empaque"
-                  );
+                  const emp =
+                    piezasEnProceso(
+                      o.id,
+                      "Empaque"
+                    );
 
+                  const armado =
+                    piezasEnProceso(
+                      o.id,
+                      "Armado"
+                    );
 
-                const armado =
-                  piezasEnProceso(
-                    o.id,
-                    "Armado"
-                  );
+                  const salida =
+                    piezasEnProceso(
+                      o.id,
+                      "Salida pespunte"
+                    );
 
+                  return `
 
-                const salida =
-                  piezasEnProceso(
-                    o.id,
-                    "Salida pespunte"
-                  );
+                    <tr>
 
+                      <td>
+                        ${esc(nombreDia(o.fecha))}
+                      </td>
 
-                return `
+                      <td>
+                        <strong>
+                          ${esc(o.ot)}
+                        </strong>
+                      </td>
 
-                  <tr>
+                      <td>
+                        <span class="badge blue">
+                          Línea ${esc(o.linea)}
+                        </span>
+                      </td>
 
-                    <td>
-                      ${esc(
-                        nombreDia(
-                          o.fecha
-                        )
-                      )}
-                    </td>
+                      <td>
+                        ${esc(o.modelo)}
+                      </td>
 
-                    <td>
-                      <strong>
-                        ${esc(o.ot)}
-                      </strong>
-                    </td>
+                      <td class="num">
+                        ${pieces(o.piezas)}
+                      </td>
 
-                    <td>
-                      <span class="badge blue">
-                        Línea ${esc(o.linea)}
-                      </span>
-                    </td>
+                      <td class="num">
+                        <span class="badge green">
+                          ${pieces(emp)}
+                        </span>
+                      </td>
 
-                    <td>
-                      ${esc(o.modelo)}
-                    </td>
+                      <td class="num">
+                        <span class="badge orange">
+                          ${pieces(armado+salida)}
+                        </span>
+                      </td>
 
-                    <td class="num">
-                      ${pieces(o.piezas)}
-                    </td>
+                      <td>
 
-                    <td class="num">
-                      <span class="badge green">
-                        ${pieces(emp)}
-                      </span>
-                    </td>
+                        <div class="actions">
 
-                    <td class="num">
+                          <button
+                            class="btn small"
+                            data-action="editar-ot"
+                            data-id="${esc(o.id)}">
+                            ✏️ Editar
+                          </button>
 
-                      <span class="badge orange">
+                          <button
+                            class="btn small primary"
+                            data-action="avanzar-ot"
+                            data-id="${esc(o.id)}">
+                            Avanzar
+                          </button>
 
-                        ${
-                          pieces(
-                            armado+
-                            salida
-                          )
-                        }
+                        </div>
 
-                      </span>
+                      </td>
 
-                    </td>
+                    </tr>
 
-                    <td>
+                  `;
 
-                      <div class="actions">
-
-                        <button
-                          class="btn small"
-                          onclick="editarOT('${o.id}')">
-                          ✏️ Editar
-                        </button>
-
-                        <button
-                          class="btn small primary"
-                          onclick="seleccionarOTParaAvance('${o.id}')">
-                          Avanzar
-                        </button>
-
-                      </div>
-
-                    </td>
-
-                  </tr>
-
-                `;
-
-              }
-            ).join("")
+                }
+              )
+              .join("")
           }
 
         </tbody>
@@ -4372,41 +3371,6 @@ function renderOTs(){
   `;
 
 }
-
-
-function limpiarFiltrosOT(){
-
-  document.getElementById(
-    "buscarOT"
-  ).value="";
-
-  document.getElementById(
-    "filtroLinea"
-  ).value="";
-
-  renderOTs();
-
-}
-
-
-document
-.getElementById(
-  "buscarOT"
-)
-.addEventListener(
-  "input",
-  renderOTs
-);
-
-
-document
-.getElementById(
-  "filtroLinea"
-)
-.addEventListener(
-  "change",
-  renderOTs
-);
 
 
 /* ================================================================
@@ -4424,6 +3388,7 @@ function editarOT(id){
     return;
   }
 
+  llenarSelectModelos();
 
   document.getElementById(
     "editOTId"
@@ -4441,8 +3406,6 @@ function editarOT(id){
     "editOTLinea"
   ).value=o.linea;
 
-  llenarSelectModelos();
-
   document.getElementById(
     "editOTModelo"
   ).value=o.modelo;
@@ -4455,14 +3418,9 @@ function editarOT(id){
     "editOTObs"
   ).value=o.observaciones;
 
-
   document
-  .getElementById(
-    "otModal"
-  )
-  .classList.add(
-    "open"
-  );
+    .getElementById("otModal")
+    .classList.add("open");
 
 }
 
@@ -4470,12 +3428,8 @@ function editarOT(id){
 function cerrarModalOT(){
 
   document
-  .getElementById(
-    "otModal"
-  )
-  .classList.remove(
-    "open"
-  );
+    .getElementById("otModal")
+    ?.classList.remove("open");
 
 }
 
@@ -4483,69 +3437,54 @@ function cerrarModalOT(){
 function guardarEdicionOT(){
 
   const id =
-    document.getElementById(
-      "editOTId"
-    ).value;
-
+    document.getElementById("editOTId").value;
 
   const index =
     produccion.findIndex(
       o=>o.id===id
     );
 
-
   if(index<0){
     return;
   }
 
-
   const fecha =
-    document.getElementById(
-      "editOTFecha"
-    ).value;
-
+    document.getElementById("editOTFecha").value;
 
   const ot =
-    document.getElementById(
-      "editOTNumero"
-    ).value.trim();
-
+    document.getElementById("editOTNumero")
+      .value
+      .trim();
 
   const linea =
-    document.getElementById(
-      "editOTLinea"
-    ).value;
-
+    document.getElementById("editOTLinea").value;
 
   const modelo =
-    document.getElementById(
-      "editOTModelo"
-    ).value;
-
+    document.getElementById("editOTModelo").value;
 
   const piezas =
     num(
-      document.getElementById(
-        "editOTPiezas"
-      ).value
+      document.getElementById("editOTPiezas").value
     );
 
-
   const observaciones =
-    document.getElementById(
-      "editOTObs"
-    ).value.trim();
+    document.getElementById("editOTObs")
+      .value
+      .trim();
 
-
-  if(!fecha || !ot || !modelo){
+  if(
+    !fecha ||
+    !ot ||
+    !modelo ||
+    piezas<=0
+  ){
 
     mostrarToast(
-      "Completa todos los campos obligatorios."
+      "Completa correctamente todos los campos."
     );
 
     return;
   }
-
 
   if(!fechaValidaLaboral(fecha)){
 
@@ -4556,27 +3495,14 @@ function guardarEdicionOT(){
     return;
   }
 
-
-  if(piezas<=0){
-
-    mostrarToast(
-      "Las piezas deben ser mayores a cero."
-    );
-
-    return;
-  }
-
-
   const duplicada =
     produccion.some(
       o =>
         o.id!==id &&
         String(o.ot)
-        .toLowerCase()
-        ===
+          .toLowerCase()===
         ot.toLowerCase()
     );
-
 
   if(duplicada){
 
@@ -4587,25 +3513,15 @@ function guardarEdicionOT(){
     return;
   }
 
-
-  produccion[index] = {
-
+  produccion[index]={
     ...produccion[index],
-
     fecha,
-
     ot,
-
     linea,
-
     modelo,
-
     piezas,
-
     observaciones
-
   };
-
 
   avances =
     avances.map(
@@ -4618,25 +3534,14 @@ function guardarEdicionOT(){
           : a
     );
 
-
-  guardarJSON(
-    KPROD,
-    produccion
-  );
-
-  guardarJSON(
-    KADV,
-    avances
-  );
-
+  guardarJSON(KPROD,produccion);
+  guardarJSON(KADV,avances);
 
   cerrarModalOT();
-
 
   mostrarToast(
     "OT actualizada correctamente."
   );
-
 
   renderTodo();
 
@@ -4646,27 +3551,21 @@ function guardarEdicionOT(){
 function eliminarOTDesdeModal(){
 
   const id =
-    document.getElementById(
-      "editOTId"
-    ).value;
-
+    document.getElementById("editOTId").value;
 
   const o =
     produccion.find(
       x=>x.id===id
     );
 
-
   if(!o){
     return;
   }
-
 
   const tieneAvances =
     avances.some(
       a=>a.otId===id
     );
-
 
   if(tieneAvances){
 
@@ -4677,37 +3576,29 @@ function eliminarOTDesdeModal(){
     return;
   }
 
-
   if(
     !confirm(
-      "¿Eliminar la OT "+
-      o.ot+
-      "?"
+      "¿Eliminar la OT "+o.ot+"?"
     )
   ){
     return;
   }
-
 
   produccion =
     produccion.filter(
       x=>x.id!==id
     );
 
-
   guardarJSON(
     KPROD,
     produccion
   );
 
-
   cerrarModalOT();
-
 
   mostrarToast(
     "OT eliminada."
   );
-
 
   renderTodo();
 
@@ -4727,61 +3618,10 @@ function obtenerOT(id){
 }
 
 
-function seleccionarOTParaAvance(id){
-
-  document
-  .querySelectorAll(
-    ".nav-btn"
-  )
-  .forEach(
-    b=>{
-      b.classList.toggle(
-        "active",
-        b.dataset.section===
-        "avances"
-      );
-    }
-  );
-
-
-  document
-  .querySelectorAll(
-    ".section"
-  )
-  .forEach(
-    s=>{
-      s.classList.toggle(
-        "active",
-        s.id===
-        "section-avances"
-      );
-    }
-  );
-
-
-  const select =
-    document.getElementById(
-      "avOT"
-    );
-
-
-  select.value=id;
-
-  actualizarDesdeAvance();
-
-  mostrarToast(
-    "OT seleccionada para avanzar."
-  );
-
-}
-
-
 function llenarSelectOTs(){
 
   const select =
-    document.getElementById(
-      "avOT"
-    );
+    document.getElementById("avOT");
 
   if(!select){
     return;
@@ -4790,67 +3630,62 @@ function llenarSelectOTs(){
   const actual =
     select.value;
 
-
-  select.innerHTML = `
-
-    <option value="">
+  select.innerHTML =
+    `<option value="">
       Seleccionar OT...
-    </option>
-
-    ${
-      produccion
+    </option>`+
+    produccion
       .slice()
       .sort(
         (a,b)=>
           String(a.ot)
-          .localeCompare(
-            String(b.ot),
-            "es"
-          )
+            .localeCompare(
+              String(b.ot),
+              "es"
+            )
       )
       .map(
-        o=>`
-
-          <option value="${o.id}">
-
+        o=>
+          `<option value="${esc(o.id)}">
             ${esc(o.ot)}
             · Línea ${esc(o.linea)}
             · ${esc(o.modelo)}
             · ${pieces(o.piezas)} pzas
-
-          </option>
-
-        `
+          </option>`
       )
-      .join("")
-    }
-
-  `;
-
+      .join("");
 
   if(
-    [...select.options]
-    .some(
-      x=>x.value===actual
+    produccion.some(
+      o=>o.id===actual
     )
   ){
-
-    select.value=
-      actual;
-
+    select.value=actual;
   }
 
 }
 
 
-document
-.getElementById(
-  "avOT"
-)
-.addEventListener(
-  "change",
-  actualizarDesdeAvance
-);
+function seleccionarOTParaAvance(id){
+
+  cambiarSeccion("avances");
+
+  const select =
+    document.getElementById("avOT");
+
+  if(select){
+
+    select.value=id;
+
+    actualizarDesdeAvance();
+
+  }
+
+  mostrarToast(
+    "OT seleccionada para avanzar."
+  );
+
+}
 
 
 function piezasEnProceso(
@@ -4859,31 +3694,26 @@ function piezasEnProceso(
 ){
 
   const ot =
-    obtenerOT(
-      otId
-    );
+    obtenerOT(otId);
 
   if(!ot){
     return 0;
   }
 
-
-  if(
-    proceso==="Programado"
-  ){
+  if(proceso==="Programado"){
 
     const salidas =
       avances
-      .filter(
-        a =>
-          a.otId===otId &&
-          a.desde==="Programado"
-      )
-      .reduce(
-        (s,a)=>
-          s+num(a.piezas),
-        0
-      );
+        .filter(
+          a =>
+            a.otId===otId &&
+            a.desde==="Programado"
+        )
+        .reduce(
+          (s,a)=>
+            s+num(a.piezas),
+          0
+        );
 
     return Math.max(
       0,
@@ -4892,34 +3722,31 @@ function piezasEnProceso(
 
   }
 
-
   const entradas =
     avances
-    .filter(
-      a =>
-        a.otId===otId &&
-        a.hasta===proceso
-    )
-    .reduce(
-      (s,a)=>
-        s+num(a.piezas),
-      0
-    );
-
+      .filter(
+        a =>
+          a.otId===otId &&
+          a.hasta===proceso
+      )
+      .reduce(
+        (s,a)=>
+          s+num(a.piezas),
+        0
+      );
 
   const salidas =
     avances
-    .filter(
-      a =>
-        a.otId===otId &&
-        a.desde===proceso
-    )
-    .reduce(
-      (s,a)=>
-        s+num(a.piezas),
-      0
-    );
-
+      .filter(
+        a =>
+          a.otId===otId &&
+          a.desde===proceso
+      )
+      .reduce(
+        (s,a)=>
+          s+num(a.piezas),
+        0
+      );
 
   return Math.max(
     0,
@@ -4932,143 +3759,107 @@ function piezasEnProceso(
 function actualizarDesdeAvance(){
 
   const id =
-    document.getElementById(
-      "avOT"
-    ).value;
+    document.getElementById("avOT").value;
 
+  const desde =
+    document.getElementById("avDesde");
 
   if(!id){
+
+    desde.innerHTML=
+      `<option value="">
+        Selecciona una OT primero
+      </option>`;
+
+    actualizarHasta();
+
     return;
   }
 
-
   const disponibles =
     PROCESOS
-    .map(
-      proceso=>({
-
-        proceso,
-
-        piezas:
-          piezasEnProceso(
+      .map(
+        proceso=>({
+          proceso,
+          piezas:piezasEnProceso(
             id,
             proceso
           )
+        })
+      )
+      .filter(
+        x=>x.piezas>0
+      );
 
-      })
-    )
-    .filter(
-      x=>x.piezas>0
-    );
+  const anterior =
+    desde.value;
 
-
-  const select =
-    document.getElementById(
-      "avDesde"
-    );
-
-
-  const actual =
-    select.value;
-
-
-  select.innerHTML =
+  desde.innerHTML =
     disponibles
-    .map(
-      x=>`
-
-        <option
-          value="${esc(x.proceso)}">
-
-          ${esc(x.proceso)}
-          · ${pieces(x.piezas)}
-
-        </option>
-
-      `
-    )
-    .join("");
-
+      .map(
+        x=>
+          `<option value="${esc(x.proceso)}">
+            ${esc(x.proceso)}
+            · ${pieces(x.piezas)}
+          </option>`
+      )
+      .join("");
 
   if(
     disponibles.some(
-      x=>x.proceso===actual
+      x=>x.proceso===anterior
     )
   ){
-
-    select.value=
-      actual;
-
+    desde.value=anterior;
   }
-
 
   actualizarHasta();
 
 }
 
 
-document
-.getElementById(
-  "avDesde"
-)
-.addEventListener(
-  "change",
-  actualizarHasta
-);
-
-
 function actualizarHasta(){
 
   const desde =
-    document.getElementById(
-      "avDesde"
-    ).value;
-
+    document.getElementById("avDesde").value;
 
   const hasta =
-    document.getElementById(
-      "avHasta"
-    );
-
+    document.getElementById("avHasta");
 
   const index =
-    PROCESOS.indexOf(
-      desde
-    );
+    PROCESOS.indexOf(desde);
 
+  if(index<0){
 
-  const opciones =
-    PROCESOS
-    .slice(index+1)
-    .filter(
-      p=>p!=="Programado"
-    );
+    hasta.innerHTML=
+      `<option value="">
+        Seleccionar...
+      </option>`;
 
+    return;
 
-  const actual =
+  }
+
+  const anterior =
     hasta.value;
 
+  const opciones =
+    PROCESOS.slice(index+1);
 
   hasta.innerHTML =
     opciones
-    .map(
-      p=>
-        `<option value="${esc(p)}">
-          ${esc(p)}
-        </option>`
-    )
-    .join("");
-
+      .map(
+        p=>
+          `<option value="${esc(p)}">
+            ${esc(p)}
+          </option>`
+      )
+      .join("");
 
   if(
-    opciones.includes(
-      actual
-    )
+    opciones.includes(anterior)
   ){
-
-    hasta.value=
-      actual;
-
+    hasta.value=anterior;
   }
 
 }
@@ -5077,50 +3868,29 @@ function actualizarHasta(){
 function registrarAvance(){
 
   const otId =
-    document.getElementById(
-      "avOT"
-    ).value;
-
+    document.getElementById("avOT").value;
 
   const desde =
-    document.getElementById(
-      "avDesde"
-    ).value;
-
+    document.getElementById("avDesde").value;
 
   const hasta =
-    document.getElementById(
-      "avHasta"
-    ).value;
-
+    document.getElementById("avHasta").value;
 
   const piezas =
     num(
-      document.getElementById(
-        "avPiezas"
-      ).value
+      document.getElementById("avPiezas").value
     );
-
 
   const fecha =
-    document.getElementById(
-      "avFecha"
-    ).value ||
+    document.getElementById("avFecha").value ||
     hoyISO();
 
-
   const hora =
-    document.getElementById(
-      "avHora"
-    ).value ||
+    document.getElementById("avHora").value ||
     ahoraHora();
 
-
   const ot =
-    obtenerOT(
-      otId
-    );
-
+    obtenerOT(otId);
 
   if(!ot){
 
@@ -5131,34 +3901,32 @@ function registrarAvance(){
     return;
   }
 
-
   if(!desde || !hasta){
 
     mostrarToast(
-      "Selecciona el proceso inicial y final."
+      "Selecciona desde y hasta."
     );
 
     return;
   }
 
+  const iDesde =
+    PROCESOS.indexOf(desde);
+
+  const iHasta =
+    PROCESOS.indexOf(hasta);
 
   if(
-    PROCESOS.indexOf(
-      hasta
-    )
-    <=
-    PROCESOS.indexOf(
-      desde
-    )
+    iDesde<0 ||
+    iHasta<=iDesde
   ){
 
     mostrarToast(
-      "El proceso final debe ser posterior al inicial."
+      "El proceso final debe ser posterior."
     );
 
     return;
   }
-
 
   if(piezas<=0){
 
@@ -5169,17 +3937,13 @@ function registrarAvance(){
     return;
   }
 
-
   const disponible =
     piezasEnProceso(
       otId,
       desde
     );
 
-
-  if(
-    piezas>disponible
-  ){
+  if(piezas>disponible){
 
     mostrarToast(
       "No hay suficientes piezas en "+
@@ -5191,18 +3955,14 @@ function registrarAvance(){
     return;
   }
 
+  if(!fechaValidaLaboral(fecha)){
 
-  const iDesde =
-    PROCESOS.indexOf(
-      desde
+    mostrarToast(
+      "Domingo no participa."
     );
 
-
-  const iHasta =
-    PROCESOS.indexOf(
-      hasta
-    );
-
+    return;
+  }
 
   for(
     let i=iDesde;
@@ -5212,124 +3972,103 @@ function registrarAvance(){
 
     avances.push({
 
-      id:
-        uid("av"),
+      id:uid("av"),
 
       otId,
 
-      ot:
-        ot.ot,
+      ot:ot.ot,
 
       fecha,
 
       hora,
 
-      desde:
-        PROCESOS[i],
+      desde:PROCESOS[i],
 
-      hasta:
-        PROCESOS[i+1],
+      hasta:PROCESOS[i+1],
 
       piezas,
 
-      creado:
-        Date.now()+i
+      creado:Date.now()+i
 
     });
 
   }
-
 
   guardarJSON(
     KADV,
     avances
   );
 
-
   document.getElementById(
     "avPiezas"
   ).value="";
 
-
   mostrarToast(
     "Movimiento registrado correctamente."
   );
-
 
   renderTodo();
 
 }
 
 
+/* ================================================================
+   INVENTARIO
+   ================================================================ */
+
 function renderInventario(){
 
   const cont =
-    document.getElementById(
-      "inventarioGeneral"
-    );
-
+    document.getElementById("inventarioGeneral");
 
   if(!cont){
     return;
   }
 
-
-  const total = {};
-
+  const total={};
 
   PROCESOS.forEach(
-    p=>{
-      total[p]=0;
-    }
+    p=>total[p]=0
   );
-
 
   produccion.forEach(
     o=>{
-
       PROCESOS.forEach(
         p=>{
-
-          total[p] +=
+          total[p]+=
             piezasEnProceso(
               o.id,
               p
             );
-
         }
       );
-
     }
   );
 
-
   cont.innerHTML =
     PROCESOS
-    .map(
-      p=>`
+      .map(
+        p=>
+          `<div
+            style="
+              display:flex;
+              justify-content:space-between;
+              align-items:center;
+              padding:10px 0;
+              border-bottom:1px solid #273148;
+            ">
 
-        <div
-          style="
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:10px 0;
-            border-bottom:1px solid #273148;
-          ">
+            <span>
+              ${esc(p)}
+            </span>
 
-          <span>
-            ${esc(p)}
-          </span>
+            <strong>
+              ${pieces(total[p])}
+            </strong>
 
-          <strong>
-            ${pieces(total[p])}
-          </strong>
-
-        </div>
-
-      `
-    )
-    .join("");
+          </div>`
+      )
+      .join("");
 
 }
 
@@ -5337,42 +4076,34 @@ function renderInventario(){
 function renderAvances(){
 
   const cont =
-    document.getElementById(
-      "tablaAvances"
-    );
-
+    document.getElementById("tablaAvances");
 
   if(!cont){
     return;
   }
 
-
   const lista =
     avances
-    .slice()
-    .sort(
-      (a,b)=>
-        num(b.creado)-
-        num(a.creado)
-    )
-    .slice(
-      0,
-      100
-    );
-
+      .slice()
+      .sort(
+        (a,b)=>
+          num(b.creado)-
+          num(a.creado)
+      )
+      .slice(0,150);
 
   if(!lista.length){
 
-    cont.innerHTML =
+    cont.innerHTML=
       `<div class="empty">
         Todavía no hay movimientos.
       </div>`;
 
     return;
+
   }
 
-
-  cont.innerHTML = `
+  cont.innerHTML=`
 
     <div class="table-wrap">
 
@@ -5387,10 +4118,7 @@ function renderAvances(){
             <th>OT</th>
             <th>Desde</th>
             <th>Hasta</th>
-
-            <th class="num">
-              Piezas
-            </th>
+            <th class="num">Piezas</th>
 
           </tr>
 
@@ -5399,45 +4127,40 @@ function renderAvances(){
         <tbody>
 
           ${
-            lista.map(
-              a=>`
+            lista
+              .map(
+                a=>
+                  `<tr>
 
-                <tr>
+                    <td>${esc(a.fecha)}</td>
 
-                  <td>
-                    ${esc(a.fecha)}
-                  </td>
+                    <td>${esc(a.hora)}</td>
 
-                  <td>
-                    ${esc(a.hora)}
-                  </td>
+                    <td>
+                      <strong>
+                        ${esc(a.ot)}
+                      </strong>
+                    </td>
 
-                  <td>
-                    <strong>
-                      ${esc(a.ot)}
-                    </strong>
-                  </td>
+                    <td>
+                      <span class="badge gray">
+                        ${esc(a.desde)}
+                      </span>
+                    </td>
 
-                  <td>
-                    <span class="badge gray">
-                      ${esc(a.desde)}
-                    </span>
-                  </td>
+                    <td>
+                      <span class="badge green">
+                        ${esc(a.hasta)}
+                      </span>
+                    </td>
 
-                  <td>
-                    <span class="badge green">
-                      ${esc(a.hasta)}
-                    </span>
-                  </td>
+                    <td class="num">
+                      ${pieces(a.piezas)}
+                    </td>
 
-                  <td class="num">
-                    ${pieces(a.piezas)}
-                  </td>
-
-                </tr>
-
-              `
-            ).join("")
+                  </tr>`
+              )
+              .join("")
           }
 
         </tbody>
@@ -5455,27 +4178,17 @@ function renderAvances(){
    WORKSHOP
    ================================================================ */
 
-function piezasEmpaqueDia(
-  fecha,
-  linea=null
-){
+function programadoDia(fecha,linea=null){
 
   return produccion
     .filter(
       o =>
         o.fecha===fecha &&
-        (
-          !linea ||
-          o.linea===linea
-        )
+        (!linea || o.linea===linea)
     )
     .reduce(
       (s,o)=>
-        s+
-        piezasQueEntraronEmpaque(
-          o.id,
-          fecha
-        ),
+        s+num(o.piezas),
       0
     );
 
@@ -5492,10 +4205,7 @@ function piezasQueEntraronEmpaque(
       a =>
         a.otId===otId &&
         a.hasta==="Empaque" &&
-        (
-          !fecha ||
-          a.fecha===fecha
-        )
+        (!fecha || a.fecha===fecha)
     )
     .reduce(
       (s,a)=>
@@ -5506,7 +4216,7 @@ function piezasQueEntraronEmpaque(
 }
 
 
-function programadoDia(
+function piezasEmpaqueDia(
   fecha,
   linea=null
 ){
@@ -5515,14 +4225,15 @@ function programadoDia(
     .filter(
       o =>
         o.fecha===fecha &&
-        (
-          !linea ||
-          o.linea===linea
-        )
+        (!linea || o.linea===linea)
     )
     .reduce(
       (s,o)=>
-        s+num(o.piezas),
+        s+
+        piezasQueEntraronEmpaque(
+          o.id,
+          fecha
+        ),
       0
     );
 
@@ -5538,11 +4249,8 @@ function inventarioProcesoDia(
   return produccion
     .filter(
       o =>
-        (
-          !linea ||
-          o.linea===linea
-        ) &&
-        o.fecha<=fecha
+        o.fecha<=fecha &&
+        (!linea || o.linea===linea)
     )
     .reduce(
       (s,o)=>
@@ -5558,8 +4266,7 @@ function inventarioProcesoDia(
 
 
 /* ================================================================
-   NUEVO:
-   CARGA PROGRAMADA POR LÍNEA
+   CARGA PROGRAMADA
    ================================================================ */
 
 function datosCargaProgramada(
@@ -5574,15 +4281,11 @@ function datosCargaProgramada(
         o.linea===linea
     );
 
-
   let piezas=0;
-
   let minutosPespunte=0;
-
   let minutosPreliminar=0;
 
   const detalle=[];
-
 
   ots.forEach(
     o=>{
@@ -5592,123 +4295,95 @@ function datosCargaProgramada(
           o.modelo
         );
 
+      const tP =
+        num(modelo?.tstdPespunte);
 
-      const tstdPespunte =
-        num(
-          modelo?.tstdPespunte
-        );
+      const tPr =
+        num(modelo?.tstdPreliminar);
 
+      const mp =
+        num(o.piezas)*tP;
 
-      const tstdPreliminar =
-        num(
-          modelo?.tstdPreliminar
-        );
+      const mpr =
+        num(o.piezas)*tPr;
 
-
-      const minPespunte =
-        num(o.piezas)*
-        tstdPespunte;
-
-
-      const minPreliminar =
-        num(o.piezas)*
-        tstdPreliminar;
-
-
-      piezas +=
-        num(o.piezas);
-
-
-      minutosPespunte +=
-        minPespunte;
-
-
-      minutosPreliminar +=
-        minPreliminar;
-
+      piezas+=num(o.piezas);
+      minutosPespunte+=mp;
+      minutosPreliminar+=mpr;
 
       detalle.push({
 
-        id:
-          o.id,
+        ot:o.ot,
+        modelo:o.modelo,
+        piezas:num(o.piezas),
 
-        ot:
-          o.ot,
+        tstdPespunte:tP,
+        tstdPreliminar:tPr,
 
-        modelo:
-          o.modelo,
-
-        piezas:
-          num(o.piezas),
-
-        tstdPespunte,
-
-        tstdPreliminar,
-
-        minPespunte,
-
-        minPreliminar
+        minPespunte:mp,
+        minPreliminar:mpr
 
       });
 
     }
   );
 
-
-  const cargaPespunte =
+  const cargaP =
     MINUTOS_DISP_PESPUNTE>0
       ? minutosPespunte/
         MINUTOS_DISP_PESPUNTE*
         100
       : 0;
 
-
-  const cargaPreliminar =
+  const cargaPr =
     MINUTOS_DISP_PRELIMINAR>0
       ? minutosPreliminar/
         MINUTOS_DISP_PRELIMINAR*
         100
       : 0;
 
+  const tstdPromP =
+    piezas>0
+      ? minutosPespunte/piezas
+      : 0;
+
+  const tstdPromPr =
+    piezas>0
+      ? minutosPreliminar/piezas
+      : 0;
+
+  const capacidadP =
+    tstdPromP>0
+      ? MINUTOS_DISP_PESPUNTE/tstdPromP
+      : 0;
+
+  const capacidadPr =
+    tstdPromPr>0
+      ? MINUTOS_DISP_PRELIMINAR/tstdPromPr
+      : 0;
 
   return {
 
     fecha,
-
     linea,
-
     ots,
-
     piezas,
 
     minutosPespunte,
-
     minutosPreliminar,
 
-    cargaPespunte,
+    cargaPespunte:cargaP,
+    cargaPreliminar:cargaPr,
 
-    cargaPreliminar,
+    tstdPromP,
+    tstdPromPr,
+
+    capacidadP,
+    capacidadPr,
 
     detalle
 
   };
-
-}
-
-
-function claseCarga(
-  valor
-){
-
-  if(valor>100){
-    return "red";
-  }
-
-  if(valor>=80){
-    return "yellow";
-  }
-
-  return "green";
 
 }
 
@@ -5720,11 +4395,9 @@ function renderCargaProgramada(){
       "cargaProgramada"
     );
 
-
   if(!cont){
     return;
   }
-
 
   const fecha =
     document.getElementById(
@@ -5732,10 +4405,8 @@ function renderCargaProgramada(){
     )?.value ||
     hoyISO();
 
-
   const datos =
-    ["A","B"]
-    .map(
+    ["A","B"].map(
       linea =>
         datosCargaProgramada(
           fecha,
@@ -5743,495 +4414,395 @@ function renderCargaProgramada(){
         )
     );
 
-
   cont.innerHTML =
     datos
-    .map(
-      d=>{
+      .map(
+        d=>{
 
-        const sobrePespunte =
-          d.cargaPespunte>100;
+          const sobreP =
+            d.cargaPespunte>100;
 
+          const sobrePr =
+            d.cargaPreliminar>100;
 
-        const sobrePreliminar =
-          d.cargaPreliminar>100;
-
-
-        const colorP =
-          claseCarga(
-            d.cargaPespunte
-          );
-
-
-        const colorPr =
-          claseCarga(
-            d.cargaPreliminar
-          );
-
-
-        const detalle =
-          d.detalle;
-
-
-        return `
-
-          <div
-            class="load-card"
-            style="margin-bottom:14px">
-
-            <div class="load-head">
-
-              <div>
-
-                <div class="load-title">
-                  Línea ${d.linea}
-                </div>
-
-                <div class="load-sub">
-
-                  ${
-                    d.ots.length
-                      ? d.ots.length+
-                        " OT"+
-                        (
-                          d.ots.length===1
-                            ? ""
-                            : "s"
-                        )+
-                        " programadas"
-                      : "Sin programación"
-                  }
-
-                </div>
-
-              </div>
-
-
-              <span class="badge blue">
-                ${pieces(d.piezas)} piezas
-              </span>
-
-            </div>
-
-
-            <div class="load-kpis">
-
-              <div class="load-kpi">
-
-                <div class="load-kpi-label">
-                  Min. disponibles pespunte
-                </div>
-
-                <div class="load-kpi-value">
-                  ${pieces(
-                    MINUTOS_DISP_PESPUNTE
-                  )}
-                </div>
-
-              </div>
-
-
-              <div class="load-kpi">
-
-                <div class="load-kpi-label">
-                  Min. estándar pespunte
-                </div>
-
-                <div class="load-kpi-value">
-                  ${num(
-                    d.minutosPespunte
-                  ).toLocaleString(
-                    "es-MX",
-                    {
-                      maximumFractionDigits:1
-                    }
-                  )}
-                </div>
-
-              </div>
-
-
-              <div class="load-kpi">
-
-                <div class="load-kpi-label">
-                  Min. disponibles preliminar
-                </div>
-
-                <div class="load-kpi-value">
-                  ${pieces(
-                    MINUTOS_DISP_PRELIMINAR
-                  )}
-                </div>
-
-              </div>
-
-
-              <div class="load-kpi">
-
-                <div class="load-kpi-label">
-                  Min. estándar preliminar
-                </div>
-
-                <div class="load-kpi-value">
-                  ${num(
-                    d.minutosPreliminar
-                  ).toLocaleString(
-                    "es-MX",
-                    {
-                      maximumFractionDigits:1
-                    }
-                  )}
-                </div>
-
-              </div>
-
-            </div>
-
+          return `
 
             <div
-              class="load-kpis"
-              style="margin-top:9px">
+              class="load-card"
+              style="margin-bottom:14px">
 
-              <div class="load-kpi">
+              <div class="load-head">
 
-                <div class="load-kpi-label">
-                  Carga Pespunte
-                </div>
+                <div>
 
-                <div
-                  class="load-kpi-value"
-                  style="color:var(--${
-                    colorP==="red"
-                      ? "red"
-                      : colorP==="yellow"
-                        ? "yellow"
-                        : "green"
-                  })">
+                  <div class="load-title">
+                    Línea ${d.linea}
+                  </div>
 
-                  ${pct1(
-                    d.cargaPespunte
-                  )}
+                  <div class="load-sub">
 
-                </div>
+                    ${
+                      d.ots.length
+                        ? d.ots.length+
+                          " OT"+
+                          (
+                            d.ots.length===1
+                              ? ""
+                              : "s"
+                          )+
+                          " programadas"
+                        : "Sin programación"
+                    }
 
-              </div>
-
-
-              <div class="load-kpi">
-
-                <div class="load-kpi-label">
-                  Carga Preliminar
-                </div>
-
-                <div
-                  class="load-kpi-value"
-                  style="color:var(--${
-                    colorPr==="red"
-                      ? "red"
-                      : colorPr==="yellow"
-                        ? "yellow"
-                        : "green"
-                  })">
-
-                  ${pct1(
-                    d.cargaPreliminar
-                  )}
+                  </div>
 
                 </div>
 
-              </div>
-
-
-              <div
-                class="load-kpi"
-                style="grid-column:span 2">
-
-                <div class="load-kpi-label">
-                  Fórmula
-                </div>
-
-                <div
-                  style="
-                    color:#b8c4d8;
-                    font-size:12px;
-                    line-height:1.5;
-                    margin-top:5px;
-                  ">
-
-                  Piezas × TSTD =
-                  minutos estándar
-                  <br>
-                  Minutos estándar ÷ minutos disponibles × 100
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div class="load-progress">
-
-              <div class="load-progress-label">
-
-                <span>
-                  Pespunte
+                <span class="badge blue">
+                  ${pieces(d.piezas)} piezas
                 </span>
 
-                <strong>
-                  ${pct1(
-                    d.cargaPespunte
-                  )}
-                </strong>
+              </div>
+
+
+              <div class="load-kpis">
+
+                <div class="load-kpi">
+
+                  <div class="load-kpi-label">
+                    Min disponibles pespunte
+                  </div>
+
+                  <div class="load-kpi-value">
+                    ${pieces(MINUTOS_DISP_PESPUNTE)}
+                  </div>
+
+                </div>
+
+                <div class="load-kpi">
+
+                  <div class="load-kpi-label">
+                    Min estándar pespunte
+                  </div>
+
+                  <div class="load-kpi-value">
+                    ${num(d.minutosPespunte).toFixed(1)}
+                  </div>
+
+                </div>
+
+                <div class="load-kpi">
+
+                  <div class="load-kpi-label">
+                    Min disponibles preliminar
+                  </div>
+
+                  <div class="load-kpi-value">
+                    ${pieces(MINUTOS_DISP_PRELIMINAR)}
+                  </div>
+
+                </div>
+
+                <div class="load-kpi">
+
+                  <div class="load-kpi-label">
+                    Min estándar preliminar
+                  </div>
+
+                  <div class="load-kpi-value">
+                    ${num(d.minutosPreliminar).toFixed(1)}
+                  </div>
+
+                </div>
 
               </div>
 
 
               <div
-                class="
-                  load-progress-bar
-                  ${
-                    sobrePespunte
-                      ? "over"
-                      : ""
-                  }
-                ">
+                class="load-kpis"
+                style="margin-top:9px">
 
-                <div
-                  style="
-                    width:${
-                      Math.min(
-                        100,
-                        Math.max(
-                          0,
-                          d.cargaPespunte
-                        )
-                      )
-                    }%;
-                  ">
+                <div class="load-kpi">
+
+                  <div class="load-kpi-label">
+                    Carga pespunte
+                  </div>
+
+                  <div
+                    class="load-kpi-value"
+                    style="
+                      color:${
+                        d.cargaPespunte>100
+                          ? "var(--red)"
+                          : d.cargaPespunte>=80
+                            ? "var(--yellow)"
+                            : "var(--green)"
+                      }
+                    ">
+
+                    ${pct1(d.cargaPespunte)}
+
+                  </div>
+
+                </div>
+
+
+                <div class="load-kpi">
+
+                  <div class="load-kpi-label">
+                    Carga preliminar
+                  </div>
+
+                  <div
+                    class="load-kpi-value"
+                    style="
+                      color:${
+                        d.cargaPreliminar>100
+                          ? "var(--red)"
+                          : d.cargaPreliminar>=80
+                            ? "var(--yellow)"
+                            : "var(--green)"
+                      }
+                    ">
+
+                    ${pct1(d.cargaPreliminar)}
+
+                  </div>
+
+                </div>
+
+
+                <div class="load-kpi">
+
+                  <div class="load-kpi-label">
+                    Capacidad pespunte
+                  </div>
+
+                  <div class="load-kpi-value">
+                    ${pieces(d.capacidadP)}
+                  </div>
+
+                  <div style="font-size:9px;color:#7f8aa0">
+                    piezas equivalentes
+                  </div>
+
+                </div>
+
+
+                <div class="load-kpi">
+
+                  <div class="load-kpi-label">
+                    Capacidad preliminar
+                  </div>
+
+                  <div class="load-kpi-value">
+                    ${pieces(d.capacidadPr)}
+                  </div>
+
+                  <div style="font-size:9px;color:#7f8aa0">
+                    piezas equivalentes
+                  </div>
+
                 </div>
 
               </div>
 
-            </div>
 
+              <div class="load-progress">
 
-            ${
-              sobrePespunte
-                ? `
-                  <div class="load-warning">
-                    ⚠️ La programación de esta línea supera la capacidad disponible de Pespunte.
-                  </div>
-                `
-                : `
-                  <div class="load-ok">
-                    ✓ La carga programada de Pespunte está dentro de los minutos disponibles.
-                  </div>
-                `
-            }
+                <div class="load-progress-label">
 
+                  <span>
+                    Carga Pespunte
+                  </span>
 
-            <div class="load-progress">
+                  <strong>
+                    ${pct1(d.cargaPespunte)}
+                  </strong>
 
-              <div class="load-progress-label">
-
-                <span>
-                  Preliminar
-                </span>
-
-                <strong>
-                  ${pct1(
-                    d.cargaPreliminar
-                  )}
-                </strong>
-
-              </div>
-
-
-              <div
-                class="
-                  load-progress-bar
-                  ${
-                    sobrePreliminar
-                      ? "over"
-                      : ""
-                  }
-                ">
+                </div>
 
                 <div
-                  style="
-                    width:${
-                      Math.min(
-                        100,
-                        Math.max(
-                          0,
-                          d.cargaPreliminar
-                        )
-                      )
-                    }%;
-                  ">
+                  class="load-progress-bar ${sobreP ? "over" : ""}">
+
+                  <div
+                    style="
+                      width:${Math.min(100,Math.max(0,d.cargaPespunte))}%;
+                    ">
+                  </div>
+
                 </div>
 
               </div>
 
+
+              ${
+                sobreP
+                  ? `
+                    <div class="load-warning">
+                      ⚠️ La programación supera la capacidad de Pespunte.
+                    </div>
+                  `
+                  : `
+                    <div class="load-ok">
+                      ✓ La carga de Pespunte está dentro de la capacidad.
+                    </div>
+                  `
+              }
+
+
+              <div class="load-progress">
+
+                <div class="load-progress-label">
+
+                  <span>
+                    Carga Preliminar
+                  </span>
+
+                  <strong>
+                    ${pct1(d.cargaPreliminar)}
+                  </strong>
+
+                </div>
+
+                <div
+                  class="load-progress-bar ${sobrePr ? "over" : ""}">
+
+                  <div
+                    style="
+                      width:${Math.min(100,Math.max(0,d.cargaPreliminar))}%;
+                    ">
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              ${
+                sobrePr
+                  ? `
+                    <div class="load-warning">
+                      ⚠️ La programación supera la capacidad de Preliminar.
+                    </div>
+                  `
+                  : `
+                    <div class="load-ok">
+                      ✓ La carga de Preliminar está dentro de la capacidad.
+                    </div>
+                  `
+              }
+
+
+              <br>
+
+
+              <div class="table-wrap">
+
+                <table style="min-width:850px">
+
+                  <thead>
+
+                    <tr>
+
+                      <th>OT</th>
+                      <th>Modelo</th>
+                      <th class="num">Piezas</th>
+                      <th class="num">TSTD Pespunte</th>
+                      <th class="num">Min estándar</th>
+                      <th class="num">TSTD Preliminar</th>
+                      <th class="num">Min estándar</th>
+
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+
+                    ${
+                      d.detalle.length
+                        ? d.detalle
+                            .map(
+                              x=>
+                                `<tr>
+
+                                  <td>
+                                    <strong>
+                                      ${esc(x.ot)}
+                                    </strong>
+                                  </td>
+
+                                  <td>
+                                    ${esc(x.modelo)}
+                                  </td>
+
+                                  <td class="num">
+                                    ${pieces(x.piezas)}
+                                  </td>
+
+                                  <td class="num">
+                                    ${
+                                      x.tstdPespunte>0
+                                        ? x.tstdPespunte.toFixed(2)
+                                        : "—"
+                                    }
+                                  </td>
+
+                                  <td class="num">
+                                    ${
+                                      x.tstdPespunte>0
+                                        ? x.minPespunte.toFixed(1)
+                                        : "—"
+                                    }
+                                  </td>
+
+                                  <td class="num">
+                                    ${
+                                      x.tstdPreliminar>0
+                                        ? x.tstdPreliminar.toFixed(2)
+                                        : "—"
+                                    }
+                                  </td>
+
+                                  <td class="num">
+                                    ${
+                                      x.tstdPreliminar>0
+                                        ? x.minPreliminar.toFixed(1)
+                                        : "—"
+                                    }
+                                  </td>
+
+                                </tr>`
+                            )
+                            .join("")
+                        : `
+                          <tr>
+                            <td colspan="7" class="center">
+                              No hay OTs programadas para esta línea.
+                            </td>
+                          </tr>
+                        `
+                    }
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
             </div>
 
+          `;
 
-            ${
-              sobrePreliminar
-                ? `
-                  <div class="load-warning">
-                    ⚠️ La programación de esta línea supera la capacidad disponible de Preliminar.
-                  </div>
-                `
-                : `
-                  <div class="load-ok">
-                    ✓ La carga programada de Preliminar está dentro de los minutos disponibles.
-                  </div>
-                `
-            }
-
-
-            <br>
-
-
-            <div class="table-wrap">
-
-              <table
-                style="min-width:900px">
-
-                <thead>
-
-                  <tr>
-
-                    <th>
-                      OT
-                    </th>
-
-                    <th>
-                      Modelo
-                    </th>
-
-                    <th class="num">
-                      Piezas
-                    </th>
-
-                    <th class="num">
-                      TSTD Pespunte
-                    </th>
-
-                    <th class="num">
-                      Min. estándar Pespunte
-                    </th>
-
-                    <th class="num">
-                      TSTD Preliminar
-                    </th>
-
-                    <th class="num">
-                      Min. estándar Preliminar
-                    </th>
-
-                  </tr>
-
-                </thead>
-
-                <tbody>
-
-                  ${
-                    detalle.length
-                      ? detalle
-                        .map(
-                          x=>`
-
-                            <tr>
-
-                              <td>
-                                <strong>
-                                  ${esc(x.ot)}
-                                </strong>
-                              </td>
-
-                              <td>
-                                ${esc(x.modelo)}
-                              </td>
-
-                              <td class="num">
-                                ${pieces(x.piezas)}
-                              </td>
-
-                              <td class="num">
-                                ${
-                                  x.tstdPespunte>0
-                                    ? x.tstdPespunte.toFixed(2)
-                                    : "—"
-                                }
-                              </td>
-
-                              <td class="num">
-                                ${
-                                  x.tstdPespunte>0
-                                    ? x.minPespunte.toFixed(2)
-                                    : "—"
-                                }
-                              </td>
-
-                              <td class="num">
-                                ${
-                                  x.tstdPreliminar>0
-                                    ? x.tstdPreliminar.toFixed(2)
-                                    : "—"
-                                }
-                              </td>
-
-                              <td class="num">
-                                ${
-                                  x.tstdPreliminar>0
-                                    ? x.minPreliminar.toFixed(2)
-                                    : "—"
-                                }
-                              </td>
-
-                            </tr>
-
-                          `
-                        )
-                        .join("")
-                      : `
-                        <tr>
-
-                          <td
-                            colspan="7"
-                            class="center">
-
-                            No hay OTs programadas
-                            para esta línea en esta fecha.
-
-                          </td>
-
-                        </tr>
-                      `
-                  }
-
-                </tbody>
-
-              </table>
-
-            </div>
-
-          </div>
-
-        `;
-
-      }
-    )
-    .join("");
+        }
+      )
+      .join("");
 
 }
 
 
 /* ================================================================
-   WORKSHOP PRINCIPAL
+   PRODUCCIÓN DEL DÍA
    ================================================================ */
 
 function renderWorkshop(){
@@ -6242,291 +4813,223 @@ function renderWorkshop(){
     )?.value ||
     hoyISO();
 
-
   const cont =
     document.getElementById(
       "workshopLineas"
     );
 
-
   if(!cont){
     return;
   }
 
-
   cont.innerHTML =
     ["A","B"]
-    .map(
-      linea=>{
+      .map(
+        linea=>{
 
-        const prog =
-          programadoDia(
-            fecha,
-            linea
-          );
+          const prog =
+            programadoDia(
+              fecha,
+              linea
+            );
 
+          const emp =
+            piezasEmpaqueDia(
+              fecha,
+              linea
+            );
 
-        const emp =
-          piezasEmpaqueDia(
-            fecha,
-            linea
-          );
+          const enProceso =
+            inventarioProcesoDia(
+              "Armado",
+              fecha,
+              linea
+            )+
+            inventarioProcesoDia(
+              "Salida pespunte",
+              fecha,
+              linea
+            );
 
+          const clasif =
+            inventarioProcesoDia(
+              "Clasificación",
+              fecha,
+              linea
+            );
 
-        const enProceso =
-          inventarioProcesoDia(
-            "Armado",
-            fecha,
-            linea
-          )
-          +
-          inventarioProcesoDia(
-            "Salida pespunte",
-            fecha,
-            linea
-          );
+          const cumplimiento =
+            prog>0
+              ? emp/prog*100
+              : 0;
 
+          return `
 
-        const clasif =
-          inventarioProcesoDia(
-            "Clasificación",
-            fecha,
-            linea
-          );
+            <div
+              class="line-card"
+              style="margin-bottom:12px">
 
+              <div class="line-title">
 
-        const eficiencia =
-          prog>0
-            ? emp/prog*100
-            : 0;
+                <strong>
+                  Línea ${linea}
+                </strong>
 
+                <span class="badge ${
+                  cumplimiento>=100
+                    ? "green"
+                    : cumplimiento>=80
+                      ? "yellow"
+                      : "red"
+                }">
 
-        return `
+                  ${pct(cumplimiento)}
 
-          <div
-            class="line-card"
-            style="margin-bottom:12px">
-
-            <div class="line-title">
-
-              <strong>
-                Línea ${linea}
-              </strong>
-
-              <span class="badge blue">
-                ${pct(eficiencia)}
-              </span>
-
-            </div>
-
-
-            <div class="line-metrics">
-
-              <div class="metric">
-
-                <div class="metric-label">
-                  Programado
-                </div>
-
-                <div class="metric-value">
-                  ${pieces(prog)}
-                </div>
+                </span>
 
               </div>
 
 
-              <div class="metric">
+              <div class="line-metrics">
 
-                <div class="metric-label">
-                  En proceso
+                <div class="metric">
+                  <div class="metric-label">
+                    Programado
+                  </div>
+                  <div class="metric-value">
+                    ${pieces(prog)}
+                  </div>
                 </div>
 
-                <div class="metric-value">
-                  ${pieces(enProceso)}
+                <div class="metric">
+                  <div class="metric-label">
+                    En proceso
+                  </div>
+                  <div class="metric-value">
+                    ${pieces(enProceso)}
+                  </div>
                 </div>
 
-              </div>
-
-
-              <div class="metric">
-
-                <div class="metric-label">
-                  Clasificación
+                <div class="metric">
+                  <div class="metric-label">
+                    Clasificación
+                  </div>
+                  <div class="metric-value">
+                    ${pieces(clasif)}
+                  </div>
                 </div>
 
-                <div class="metric-value">
-                  ${pieces(clasif)}
+                <div class="metric">
+                  <div class="metric-label">
+                    Empaque
+                  </div>
+                  <div class="metric-value">
+                    ${pieces(emp)}
+                  </div>
                 </div>
 
-              </div>
-
-
-              <div class="metric">
-
-                <div class="metric-label">
-                  Empaque
-                </div>
-
-                <div class="metric-value">
-                  ${pieces(emp)}
-                </div>
-
-              </div>
-
-
-              <div class="metric">
-
-                <div class="metric-label">
-                  Eficiencia
-                </div>
-
-                <div class="metric-value">
-                  ${pct(eficiencia)}
+                <div class="metric">
+                  <div class="metric-label">
+                    Cumplimiento
+                  </div>
+                  <div class="metric-value">
+                    ${pct(cumplimiento)}
+                  </div>
                 </div>
 
               </div>
 
             </div>
 
-          </div>
+          `;
 
-        `;
-
-      }
-    )
-    .join("");
-
+        }
+      )
+      .join("");
 
   const semana =
     semanaActual();
 
+  let progSemana=0;
+  let empSemana=0;
 
-  let semanaProg=0;
+  const d =
+    new Date(
+      semana.lunes+
+      "T12:00:00"
+    );
 
-  let semanaEmp=0;
+  for(let i=0;i<6;i++){
 
+    const fechaDia =
+      dateToISO(d);
 
-  for(
-    let d=
-      new Date(
-        semana.lunes+
-        "T12:00:00"
-      );
+    progSemana +=
+      programadoDia(fechaDia);
 
-    dateToISO(d)<=
-      semana.sabado;
+    empSemana +=
+      piezasEmpaqueDia(fechaDia);
 
     d.setDate(
       d.getDate()+1
-    )
-  ){
-
-    const f =
-      dateToISO(d);
-
-    semanaProg +=
-      programadoDia(
-        f
-      );
-
-    semanaEmp +=
-      piezasEmpaqueDia(
-        f
-      );
+    );
 
   }
 
-
-  const semanaEff =
-    semanaProg>0
-      ? semanaEmp/
-        semanaProg*
-        100
+  const eficiencia =
+    progSemana>0
+      ? empSemana/progSemana*100
       : 0;
-
 
   document.getElementById(
     "wsSemanaProgramado"
-  ).textContent =
-    pieces(semanaProg);
-
+  ).textContent=
+    pieces(progSemana);
 
   document.getElementById(
     "wsSemanaEmpaque"
-  ).textContent =
-    pieces(semanaEmp);
-
+  ).textContent=
+    pieces(empSemana);
 
   document.getElementById(
     "wsSemanaEficiencia"
-  ).textContent =
-    pct(semanaEff);
-
+  ).textContent=
+    pct(eficiencia);
 
   renderCargaProgramada();
 
-  renderOTsProceso(
-    fecha
-  );
+  renderOTsProceso(fecha);
 
-  renderHourBoards(
-    fecha
-  );
+  renderHourBoards(fecha);
 
 }
 
 
-document
-.getElementById(
-  "wsFecha"
-)
-.addEventListener(
-  "change",
-  renderWorkshop
-);
-
-
-/* ================================================================
-   OTs EN PROCESO
-   ================================================================ */
-
-function renderOTsProceso(
-  fecha
-){
+function renderOTsProceso(fecha){
 
   const cont =
     document.getElementById(
       "otsProceso"
     );
 
-
   if(!cont){
     return;
   }
 
-
   const lista =
-    produccion
-    .filter(
+    produccion.filter(
       o =>
         o.fecha<=fecha &&
         (
-          piezasEnProceso(
-            o.id,
-            "Armado"
-          )>0
-          ||
-          piezasEnProceso(
-            o.id,
-            "Salida pespunte"
-          )>0
+          piezasEnProceso(o.id,"Armado")>0 ||
+          piezasEnProceso(o.id,"Salida pespunte")>0 ||
+          piezasEnProceso(o.id,"Clasificación")>0
         )
     );
 
-
   if(!lista.length){
 
-    cont.innerHTML =
+    cont.innerHTML=
       `<div class="empty">
         No hay OTs en proceso.
       </div>`;
@@ -6534,127 +5037,105 @@ function renderOTsProceso(
     return;
   }
 
+  cont.innerHTML=`
 
-  cont.innerHTML = `
-
-    <div
-      class="grid grid-3">
+    <div class="grid grid-3">
 
       ${
-        lista.map(
-          o=>`
+        lista
+          .map(
+            o=>
+              `<div class="ot-card">
 
-            <div class="ot-card">
+                <div class="ot-head">
 
-              <div class="ot-head">
+                  <div>
 
-                <div>
+                    <div class="ot-title">
+                      ${esc(o.ot)}
+                    </div>
 
-                  <div class="ot-title">
-                    ${esc(o.ot)}
+                    <div class="ot-info">
+                      Línea ${esc(o.linea)}
+                      · ${esc(o.modelo)}
+                    </div>
+
                   </div>
 
-                  <div class="ot-info">
-                    Línea ${esc(o.linea)}
-                    · ${esc(o.modelo)}
-                  </div>
+                  <span class="badge orange">
+                    EN PROCESO
+                  </span>
 
                 </div>
 
-                <span class="badge orange">
-                  EN PROCESO
-                </span>
 
-              </div>
+                <div class="ot-values">
 
+                  <div class="ot-value">
 
-              <div class="ot-values">
+                    <span>Armado</span>
 
-                <div class="ot-value">
-
-                  <span>
-                    Armado
-                  </span>
-
-                  <strong>
-                    ${
-                      pieces(
+                    <strong>
+                      ${pieces(
                         piezasEnProceso(
                           o.id,
                           "Armado"
                         )
-                      )
-                    }
-                  </strong>
+                      )}
+                    </strong>
 
-                </div>
+                  </div>
 
+                  <div class="ot-value">
 
-                <div class="ot-value">
+                    <span>Salida pespunte</span>
 
-                  <span>
-                    Salida pespunte
-                  </span>
-
-                  <strong>
-                    ${
-                      pieces(
+                    <strong>
+                      ${pieces(
                         piezasEnProceso(
                           o.id,
                           "Salida pespunte"
                         )
-                      )
-                    }
-                  </strong>
+                      )}
+                    </strong>
 
-                </div>
+                  </div>
 
+                  <div class="ot-value">
 
-                <div class="ot-value">
+                    <span>Clasificación</span>
 
-                  <span>
-                    Clasificación
-                  </span>
-
-                  <strong>
-                    ${
-                      pieces(
+                    <strong>
+                      ${pieces(
                         piezasEnProceso(
                           o.id,
                           "Clasificación"
                         )
-                      )
-                    }
-                  </strong>
+                      )}
+                    </strong>
 
-                </div>
+                  </div>
 
+                  <div class="ot-value">
 
-                <div class="ot-value">
+                    <span>Empaque</span>
 
-                  <span>
-                    Empaque
-                  </span>
-
-                  <strong>
-                    ${
-                      pieces(
+                    <strong>
+                      ${pieces(
                         piezasEnProceso(
                           o.id,
                           "Empaque"
                         )
-                      )
-                    }
-                  </strong>
+                      )}
+                    </strong>
+
+                  </div>
 
                 </div>
 
-              </div>
-
-            </div>
-
-          `
-        ).join("")
+              </div>`
+          )
+          .join("")
       }
 
     </div>
@@ -6668,7 +5149,7 @@ function renderOTsProceso(
    TABLERO HORA POR HORA
    ================================================================ */
 
-const HORAS_LV = [
+const HORAS_LV=[
 
   {
     inicio:"08:00",
@@ -6723,208 +5204,26 @@ const HORAS_LV = [
 ];
 
 
-function minutosEntre(
-  inicio,
-  fin
-){
+function minutosEntre(inicio,fin){
 
-  const [h1,m1] =
-    inicio
-    .split(":")
-    .map(Number);
+  const a =
+    inicio.split(":").map(Number);
 
-
-  const [h2,m2] =
-    fin
-    .split(":")
-    .map(Number);
-
+  const b =
+    fin.split(":").map(Number);
 
   return (
-    h2*60+m2
-  )
-  -
+    b[0]*60+b[1]
+  )-
   (
-    h1*60+m1
+    a[0]*60+a[1]
   );
 
 }
 
 
 /* ================================================================
-   MINUTOS DE TRABAJO DEL DÍA
-   ================================================================
-
-   Para el cálculo de capacidad programada usamos los
-   570 minutos por persona establecidos para los 2,850.
-
-   El tablero horario conserva el horario visual:
-   08:00 a 18:20 con pausa 13:00–13:40.
-
-   Esto evita mezclar la capacidad de la línea con el
-   formato visual del tablero.
-   ================================================================ */
-
-function minutosTrabajoDia(
-  fecha
-){
-
-  const d =
-    new Date(
-      fecha+
-      "T12:00:00"
-    );
-
-  const day =
-    d.getDay();
-
-
-  if(
-    day>=1 &&
-    day<=5
-  ){
-
-    /*
-      Capacidad configurada:
-      570 min por persona.
-    */
-
-    return MINUTOS_PERSONA_DIA;
-
-  }
-
-
-  if(day===6){
-
-    return 300;
-
-  }
-
-
-  return 0;
-
-}
-
-
-function minutosRestantesDia(
-  fecha,
-  horaActual=null
-){
-
-  const total =
-    minutosTrabajoDia(
-      fecha
-    );
-
-
-  if(!horaActual){
-    return total;
-  }
-
-
-  const d =
-    new Date(
-      fecha+
-      "T12:00:00"
-    );
-
-
-  const day =
-    d.getDay();
-
-
-  if(day===0){
-    return 0;
-  }
-
-
-  const [
-    hh,
-    mm
-  ] =
-    horaActual
-    .split(":")
-    .map(Number);
-
-
-  let trabajado=0;
-
-
-  if(
-    day>=1 &&
-    day<=5
-  ){
-
-    const minutosDesde8 =
-      hh*60+
-      mm-
-      8*60;
-
-
-    if(
-      minutosDesde8<=0
-    ){
-
-      return total;
-
-    }
-
-
-    /*
-      Visualmente la comida es
-      13:00–13:40.
-    */
-
-    if(
-      minutosDesde8>300
-    ){
-
-      trabajado =
-        Math.min(
-          total,
-          minutosDesde8-40
-        );
-
-    }else{
-
-      trabajado =
-        Math.min(
-          total,
-          minutosDesde8
-        );
-
-    }
-
-  }else if(day===6){
-
-    const inicio =
-      8*60;
-
-
-    trabajado =
-      Math.max(
-        0,
-        Math.min(
-          300,
-          hh*60+
-          mm-
-          inicio
-        )
-      );
-
-  }
-
-
-  return Math.max(
-    0,
-    total-trabajado
-  );
-
-}
-
-
-/* ================================================================
-   OBJETIVO HORA POR HORA
+   META POR HORA
    ================================================================ */
 
 function objetivoSalidaPespunte(
@@ -6939,71 +5238,29 @@ function objetivoSalidaPespunte(
         o.linea===linea
     );
 
-
   if(!ots.length){
-
-    return HORAS_LV.map(
-      h=>({
-
-        ...h,
-
-        objetivo:0
-
-      })
-    );
-
+    return [];
   }
 
-
-  /*
-    Calculamos TSTD promedio ponderado
-    por las piezas programadas.
-
-    Ejemplo:
-
-    Modelo A:
-    85 piezas × 16.38
-
-    Modelo B:
-    75 piezas × 16.11
-
-    Todo se convierte en minutos estándar.
-
-    Después:
-
-    minutos disponibles de la hora
-    ÷ TSTD promedio ponderado
-    = capacidad objetivo de piezas por hora.
-  */
-
-  let piezasTotales=0;
-
-  let minutosTotales=0;
-
+  let piezas=0;
+  let minutos=0;
 
   ots.forEach(
     o=>{
 
-      const m =
+      const modelo =
         buscarModeloPorNombre(
           o.modelo
         );
 
-
       const tstd =
-        num(
-          m?.tstdPespunte
-        );
+        num(modelo?.tstdPespunte);
 
+      if(tstd>0){
 
-      if(
-        tstd>0
-      ){
+        piezas+=num(o.piezas);
 
-        piezasTotales +=
-          num(o.piezas);
-
-        minutosTotales +=
+        minutos+=
           num(o.piezas)*
           tstd;
 
@@ -7012,29 +5269,45 @@ function objetivoSalidaPespunte(
     }
   );
 
-
-  if(
-    piezasTotales<=0 ||
-    minutosTotales<=0
-  ){
+  if(piezas<=0 || minutos<=0){
 
     return HORAS_LV.map(
       h=>({
-
         ...h,
-
-        objetivo:0
-
+        minutos:minutosEntre(
+          h.inicio,
+          h.fin
+        ),
+        meta:0,
+        capacidad:0
       })
     );
 
   }
 
-
   const tstdMedio =
-    minutosTotales/
-    piezasTotales;
+    minutos/piezas;
 
+  /*
+    Meta para cumplir la programación:
+
+    Piezas programadas
+    distribuidas según el tiempo disponible.
+
+    También se muestra capacidad teórica
+    de la línea para esa hora.
+  */
+
+  const minutosDia =
+    HORAS_LV.reduce(
+      (s,h)=>
+        s+
+        minutosEntre(
+          h.inicio,
+          h.fin
+        ),
+      0
+    );
 
   return HORAS_LV.map(
     h=>{
@@ -7045,22 +5318,32 @@ function objetivoSalidaPespunte(
           h.fin
         );
 
-
-      const piezasHora =
-        tstdMedio>0
-          ? min/
-            tstdMedio
+      const proporcion =
+        minutosDia>0
+          ? min/minutosDia
           : 0;
 
+      const meta =
+        piezas*proporcion;
+
+      const capacidad =
+        tstdMedio>0
+          ? (
+              min*
+              PESPUNTADORES
+            )/
+            tstdMedio
+          : 0;
 
       return {
 
         ...h,
 
-        objetivo:
-          Math.round(
-            piezasHora
-          )
+        minutos:min,
+
+        meta,
+
+        capacidad
 
       };
 
@@ -7085,27 +5368,18 @@ function realPorHora(
           a.fecha!==fecha ||
           a.hasta!=="Salida pespunte"
         ){
-
           return false;
-
         }
 
-
         const ot =
-          obtenerOT(
-            a.otId
-          );
-
+          obtenerOT(a.otId);
 
         if(
           !ot ||
           ot.linea!==linea
         ){
-
           return false;
-
         }
-
 
         return (
           a.hora>=inicio &&
@@ -7132,23 +5406,12 @@ function realPorHoraTotal(
     .filter(
       a=>{
 
-        if(
-          a.fecha!==fecha ||
-          a.hasta!=="Salida pespunte"
-        ){
-
-          return false;
-
-        }
-
-
         const ot =
-          obtenerOT(
-            a.otId
-          );
-
+          obtenerOT(a.otId);
 
         return (
+          a.fecha===fecha &&
+          a.hasta==="Salida pespunte" &&
           ot &&
           ot.linea===linea
         );
@@ -7174,24 +5437,12 @@ function renderHourBoardLinea(
       ? "hourBoardA"
       : "hourBoardB";
 
-
   const cont =
-    document.getElementById(
-      id
-    );
-
+    document.getElementById(id);
 
   if(!cont){
     return;
   }
-
-
-  const objetivos =
-    objetivoSalidaPespunte(
-      fecha,
-      linea
-    );
-
 
   const ots =
     produccion.filter(
@@ -7200,18 +5451,9 @@ function renderHourBoardLinea(
         o.linea===linea
     );
 
-
-  const piezasProg =
-    ots.reduce(
-      (s,o)=>
-        s+num(o.piezas),
-      0
-    );
-
-
   if(!ots.length){
 
-    cont.innerHTML = `
+    cont.innerHTML=`
 
       <div class="hour-title">
 
@@ -7228,102 +5470,91 @@ function renderHourBoardLinea(
     `;
 
     return;
+
   }
 
+  const objetivos =
+    objetivoSalidaPespunte(
+      fecha,
+      linea
+    );
 
-  let acumulado=0;
-
-
-  const rows =
-    objetivos.map(
-      h=>{
-
-        const real =
-          realPorHora(
-            fecha,
-            linea,
-            h.inicio,
-            h.fin
-          );
-
-
-        acumulado +=
-          real;
-
-
-        const eficiencia =
-          h.objetivo>0
-            ? real/
-              h.objetivo*
-              100
-            : 0;
-
-
-        let cls =
-          "eff-low";
-
-
-        if(
-          eficiencia>=100
-        ){
-
-          cls=
-            "eff-good";
-
-        }else if(
-          eficiencia>=80
-        ){
-
-          cls=
-            "eff-mid";
-
-        }
-
-
-        return `
-
-          <tr>
-
-            <td>
-              <strong>
-                ${h.inicio}
-                –
-                ${h.fin}
-              </strong>
-            </td>
-
-            <td class="num">
-              ${pieces(h.objetivo)}
-            </td>
-
-            <td class="num">
-              ${pieces(real)}
-            </td>
-
-            <td class="num">
-              ${pieces(acumulado)}
-            </td>
-
-            <td class="num ${cls}">
-              ${pct(eficiencia)}
-            </td>
-
-          </tr>
-
-        `;
-
-      }
-    )
-    .join("");
-
-
-  const objetivoTotal =
-    objetivos.reduce(
-      (s,h)=>
-        s+num(h.objetivo),
+  const programado =
+    ots.reduce(
+      (s,o)=>
+        s+num(o.piezas),
       0
     );
 
+  let acumulado=0;
+  let metaAcumulada=0;
+
+  const rows =
+    objetivos
+      .map(
+        h=>{
+
+          const real =
+            realPorHora(
+              fecha,
+              linea,
+              h.inicio,
+              h.fin
+            );
+
+          acumulado+=real;
+
+          metaAcumulada+=h.meta;
+
+          const cumplimiento =
+            h.meta>0
+              ? real/h.meta*100
+              : 0;
+
+          const eficiencia =
+            cumplimiento>=100
+              ? "eff-good"
+              : cumplimiento>=80
+                ? "eff-mid"
+                : "eff-low";
+
+          return `
+
+            <tr>
+
+              <td>
+                <strong>
+                  ${h.inicio} – ${h.fin}
+                </strong>
+              </td>
+
+              <td class="num">
+                ${pieces(h.meta)}
+              </td>
+
+              <td class="num">
+                ${pieces(h.capacidad)}
+              </td>
+
+              <td class="num">
+                ${pieces(real)}
+              </td>
+
+              <td class="num">
+                ${pieces(acumulado)}
+              </td>
+
+              <td class="num ${eficiencia}">
+                ${pct(cumplimiento)}
+              </td>
+
+            </tr>
+
+          `;
+
+        }
+      )
+      .join("");
 
   const realTotal =
     realPorHoraTotal(
@@ -7331,16 +5562,12 @@ function renderHourBoardLinea(
       linea
     );
 
-
-  const effTotal =
-    objetivoTotal>0
-      ? realTotal/
-        objetivoTotal*
-        100
+  const cumplimientoTotal =
+    programado>0
+      ? realTotal/programado*100
       : 0;
 
-
-  cont.innerHTML = `
+  cont.innerHTML=`
 
     <div class="hour-title">
 
@@ -7354,24 +5581,30 @@ function renderHourBoardLinea(
 
           Programado:
           <strong>
-            ${pieces(piezasProg)}
+            ${pieces(programado)}
           </strong>
           piezas
+
+          ·
+
+          Meta diaria:
+          <strong>
+            ${pieces(programado)}
+          </strong>
 
         </div>
 
       </div>
 
-
       <span class="badge ${
-        effTotal>=100
+        cumplimientoTotal>=100
           ? "green"
-          : effTotal>=80
+          : cumplimientoTotal>=80
             ? "yellow"
             : "red"
       }">
 
-        ${pct(effTotal)}
+        ${pct(cumplimientoTotal)}
 
       </span>
 
@@ -7386,12 +5619,14 @@ function renderHourBoardLinea(
 
           <tr>
 
-            <th>
-              Hora
-            </th>
+            <th>Hora</th>
 
             <th class="num">
               Meta / hora
+            </th>
+
+            <th class="num">
+              Capacidad TSTD
             </th>
 
             <th class="num">
@@ -7420,12 +5655,20 @@ function renderHourBoardLinea(
 
           <tr>
 
-            <th>
-              TOTAL
+            <th>TOTAL</th>
+
+            <th class="num">
+              ${pieces(programado)}
             </th>
 
             <th class="num">
-              ${pieces(objetivoTotal)}
+              ${pieces(
+                objetivos.reduce(
+                  (s,h)=>
+                    s+num(h.capacidad),
+                  0
+                )
+              )}
             </th>
 
             <th class="num">
@@ -7437,7 +5680,7 @@ function renderHourBoardLinea(
             </th>
 
             <th class="num">
-              ${pct(effTotal)}
+              ${pct(cumplimientoTotal)}
             </th>
 
           </tr>
@@ -7448,14 +5691,35 @@ function renderHourBoardLinea(
 
     </div>
 
+
+    <div
+      style="
+        margin-top:12px;
+        color:#8f9ab0;
+        font-size:11px;
+        line-height:1.5;
+      ">
+
+      <strong style="color:#cbd5e7">
+        Cómo leer este tablero:
+      </strong>
+
+      La <strong>Meta / hora</strong> reparte la programación
+      del día entre las horas disponibles.
+      La <strong>Capacidad TSTD</strong> indica cuántas piezas
+      podría producir la línea según los TSTD y los
+      ${PESPUNTADORES} pespuntadores.
+      El <strong>Real / hora</strong> toma las piezas registradas
+      en Salida pespunte.
+
+    </div>
+
   `;
 
 }
 
 
-function renderHourBoards(
-  fecha
-){
+function renderHourBoards(fecha){
 
   renderHourBoardLinea(
     fecha,
@@ -7471,7 +5735,7 @@ function renderHourBoards(
 
 
 /* ================================================================
-   RESUMEN
+   RESUMEN SEMANAL
    ================================================================ */
 
 function datosSemana(){
@@ -7479,13 +5743,9 @@ function datosSemana(){
   const semana =
     semanaActual();
 
-
   let programado=0;
-
   let empaque=0;
-
   let auditoria=0;
-
 
   produccion.forEach(
     o=>{
@@ -7497,14 +5757,13 @@ function datosSemana(){
         )
       ){
 
-        programado +=
+        programado+=
           num(o.piezas);
 
       }
 
     }
   );
-
 
   avances.forEach(
     a=>{
@@ -7515,34 +5774,29 @@ function datosSemana(){
           semana
         )
       ){
-
         return;
-
       }
-
 
       if(
         a.hasta==="Empaque"
       ){
 
-        empaque +=
+        empaque+=
           num(a.piezas);
 
       }
-
 
       if(
         a.hasta==="Auditoría"
       ){
 
-        auditoria +=
+        auditoria+=
           num(a.piezas);
 
       }
 
     }
   );
-
 
   return {
 
@@ -7564,61 +5818,49 @@ function renderResumen(){
   const d =
     datosSemana();
 
-
   document.getElementById(
     "resProgramado"
-  ).textContent =
+  ).textContent=
     pieces(d.programado);
-
 
   document.getElementById(
     "resEmpaque"
-  ).textContent =
+  ).textContent=
     pieces(d.empaque);
-
 
   document.getElementById(
     "resAuditoria"
-  ).textContent =
+  ).textContent=
     pieces(d.auditoria);
 
-
-  const eficiencia =
+  const ef =
     d.programado>0
-      ? d.empaque/
-        d.programado*
-        100
+      ? d.empaque/d.programado*100
       : 0;
-
 
   document.getElementById(
     "resEficiencia"
-  ).textContent =
-    pct(eficiencia);
+  ).textContent=
+    pct(ef);
 
-
-  renderResumenLineas(
-    d
-  );
-
-  renderDestajo(
-    d
-  );
+  renderResumenLineas(d);
+  renderDestajo(d);
 
 }
 
 
-function renderResumenLineas(
-  d
-){
+function renderResumenLineas(d){
 
   const cont =
     document.getElementById(
       "resumenLineas"
     );
 
+  if(!cont){
+    return;
+  }
 
-  cont.innerHTML = `
+  cont.innerHTML=`
 
     <div class="table-wrap">
 
@@ -7628,25 +5870,11 @@ function renderResumenLineas(
 
           <tr>
 
-            <th>
-              Línea
-            </th>
-
-            <th class="num">
-              Programado
-            </th>
-
-            <th class="num">
-              Empaque
-            </th>
-
-            <th class="num">
-              Auditoría
-            </th>
-
-            <th class="num">
-              Eficiencia
-            </th>
+            <th>Línea</th>
+            <th class="num">Programado</th>
+            <th class="num">Empaque</th>
+            <th class="num">Auditoría</th>
+            <th class="num">Cumplimiento</th>
 
           </tr>
 
@@ -7656,129 +5884,117 @@ function renderResumenLineas(
 
           ${
             ["A","B"]
-            .map(
-              linea=>{
+              .map(
+                linea=>{
 
-                const prog =
-                  produccion
-                  .filter(
-                    o =>
-                      o.linea===linea &&
-                      fechaEnSemana(
-                        o.fecha,
-                        d
+                  const prog =
+                    produccion
+                      .filter(
+                        o =>
+                          o.linea===linea &&
+                          fechaEnSemana(
+                            o.fecha,
+                            d
+                          )
                       )
-                  )
-                  .reduce(
-                    (s,o)=>
-                      s+num(o.piezas),
-                    0
-                  );
-
-
-                const emp =
-                  avances
-                  .filter(
-                    a=>{
-
-                      const o =
-                        obtenerOT(
-                          a.otId
-                        );
-
-                      return (
-                        o &&
-                        o.linea===linea &&
-                        a.hasta==="Empaque" &&
-                        fechaEnSemana(
-                          a.fecha,
-                          d
-                        )
+                      .reduce(
+                        (s,o)=>
+                          s+num(o.piezas),
+                        0
                       );
 
-                    }
-                  )
-                  .reduce(
-                    (s,a)=>
-                      s+num(a.piezas),
-                    0
-                  );
+                  const emp =
+                    avances
+                      .filter(
+                        a=>{
 
+                          const o =
+                            obtenerOT(a.otId);
 
-                const aud =
-                  avances
-                  .filter(
-                    a=>{
+                          return (
+                            o &&
+                            o.linea===linea &&
+                            a.hasta==="Empaque" &&
+                            fechaEnSemana(
+                              a.fecha,
+                              d
+                            )
+                          );
 
-                      const o =
-                        obtenerOT(
-                          a.otId
-                        );
-
-                      return (
-                        o &&
-                        o.linea===linea &&
-                        a.hasta==="Auditoría" &&
-                        fechaEnSemana(
-                          a.fecha,
-                          d
-                        )
+                        }
+                      )
+                      .reduce(
+                        (s,a)=>
+                          s+num(a.piezas),
+                        0
                       );
 
-                    }
-                  )
-                  .reduce(
-                    (s,a)=>
-                      s+num(a.piezas),
-                    0
-                  );
+                  const aud =
+                    avances
+                      .filter(
+                        a=>{
 
+                          const o =
+                            obtenerOT(a.otId);
 
-                const ef =
-                  prog>0
-                    ? emp/
-                      prog*
-                      100
-                    : 0;
+                          return (
+                            o &&
+                            o.linea===linea &&
+                            a.hasta==="Auditoría" &&
+                            fechaEnSemana(
+                              a.fecha,
+                              d
+                            )
+                          );
 
+                        }
+                      )
+                      .reduce(
+                        (s,a)=>
+                          s+num(a.piezas),
+                        0
+                      );
 
-                return `
+                  const ef =
+                    prog>0
+                      ? emp/prog*100
+                      : 0;
 
-                  <tr>
+                  return `
 
-                    <td>
-                      <span class="badge blue">
-                        Línea ${linea}
-                      </span>
-                    </td>
+                    <tr>
 
-                    <td class="num">
-                      ${pieces(prog)}
-                    </td>
+                      <td>
+                        <span class="badge blue">
+                          Línea ${linea}
+                        </span>
+                      </td>
 
-                    <td class="num">
-                      ${pieces(emp)}
-                    </td>
+                      <td class="num">
+                        ${pieces(prog)}
+                      </td>
 
-                    <td class="num">
-                      ${pieces(aud)}
-                    </td>
+                      <td class="num">
+                        ${pieces(emp)}
+                      </td>
 
-                    <td class="num">
+                      <td class="num">
+                        ${pieces(aud)}
+                      </td>
 
-                      <strong>
-                        ${pct(ef)}
-                      </strong>
+                      <td class="num">
+                        <strong>
+                          ${pct(ef)}
+                        </strong>
+                      </td>
 
-                    </td>
+                    </tr>
 
-                  </tr>
+                  `;
 
-                `;
-
-              }
-            )
-            .join("")
+                }
+              )
+              .join("")
           }
 
         </tbody>
@@ -7792,98 +6008,88 @@ function renderResumenLineas(
 }
 
 
-function renderDestajo(
-  d
-){
+/* ================================================================
+   DESTAJO
+   ================================================================ */
+
+function renderDestajo(d){
 
   const cont =
     document.getElementById(
       "tablaDestajo"
     );
 
+  if(!cont){
+    return;
+  }
 
-  const mapa = {};
-
+  const mapa={};
 
   avances
-  .filter(
-    a =>
-      a.hasta==="Empaque" &&
-      fechaEnSemana(
-        a.fecha,
-        d
-      )
-  )
-  .forEach(
-    a=>{
+    .filter(
+      a =>
+        a.hasta==="Empaque" &&
+        fechaEnSemana(
+          a.fecha,
+          d
+        )
+    )
+    .forEach(
+      a=>{
 
-      const o =
-        obtenerOT(
-          a.otId
-        );
+        const o =
+          obtenerOT(a.otId);
 
+        if(!o){
+          return;
+        }
 
-      if(!o){
-        return;
-      }
+        const modelo =
+          buscarModeloPorNombre(
+            o.modelo
+          );
 
+        const key =
+          o.linea+
+          "|"+
+          o.modelo;
 
-      const modelo =
-        buscarModeloPorNombre(
-          o.modelo
-        );
+        if(!mapa[key]){
 
+          mapa[key]={
 
-      const key =
-        o.linea+
-        "|"+
-        o.modelo;
+            linea:o.linea,
 
+            modelo:o.modelo,
 
-      if(!mapa[key]){
+            piezas:0,
 
-        mapa[key] = {
+            costoPespunte:
+              num(
+                modelo?.costoPespunte
+              ),
 
-          linea:
-            o.linea,
+            costoPreliminar:
+              num(
+                modelo?.costoPreliminar
+              )
 
-          modelo:
-            o.modelo,
+          };
 
-          piezas:
-            0,
+        }
 
-          costoPespunte:
-            num(
-              modelo?.costoPespunte
-            ),
-
-          costoPreliminar:
-            num(
-              modelo?.costoPreliminar
-            )
-
-        };
+        mapa[key].piezas +=
+          num(a.piezas);
 
       }
-
-
-      mapa[key].piezas +=
-        num(a.piezas);
-
-    }
-  );
-
-
-  const lista =
-    Object.values(
-      mapa
     );
 
+  const lista =
+    Object.values(mapa);
 
   if(!lista.length){
 
-    cont.innerHTML =
+    cont.innerHTML=
       `<div class="empty">
         Todavía no hay piezas de Empaque en esta semana.
       </div>`;
@@ -7891,8 +6097,25 @@ function renderDestajo(
     return;
   }
 
+  const totalPespunte =
+    lista.reduce(
+      (s,x)=>
+        s+
+        x.piezas*
+        x.costoPespunte,
+      0
+    );
 
-  cont.innerHTML = `
+  const totalPreliminar =
+    lista.reduce(
+      (s,x)=>
+        s+
+        x.piezas*
+        x.costoPreliminar,
+      0
+    );
+
+  cont.innerHTML=`
 
     <div class="table-wrap">
 
@@ -7902,33 +6125,13 @@ function renderDestajo(
 
           <tr>
 
-            <th>
-              Línea
-            </th>
-
-            <th>
-              Modelo
-            </th>
-
-            <th class="num">
-              Piezas Empaque
-            </th>
-
-            <th class="num">
-              Costo Pespunte
-            </th>
-
-            <th class="num">
-              Importe Pespunte
-            </th>
-
-            <th class="num">
-              Costo Preliminar
-            </th>
-
-            <th class="num">
-              Importe Preliminar
-            </th>
+            <th>Línea</th>
+            <th>Modelo</th>
+            <th class="num">Piezas Empaque</th>
+            <th class="num">Costo Pespunte</th>
+            <th class="num">Importe Pespunte</th>
+            <th class="num">Costo Preliminar</th>
+            <th class="num">Importe Preliminar</th>
 
           </tr>
 
@@ -7938,57 +6141,72 @@ function renderDestajo(
 
           ${
             lista
-            .map(
-              x=>`
+              .map(
+                x=>
+                  `<tr>
 
-                <tr>
+                    <td>
+                      Línea ${esc(x.linea)}
+                    </td>
 
-                  <td>
-                    Línea ${esc(x.linea)}
-                  </td>
+                    <td>
+                      ${esc(x.modelo)}
+                    </td>
 
-                  <td>
-                    ${esc(x.modelo)}
-                  </td>
+                    <td class="num">
+                      ${pieces(x.piezas)}
+                    </td>
 
-                  <td class="num">
-                    ${pieces(x.piezas)}
-                  </td>
+                    <td class="num">
+                      ${money(x.costoPespunte)}
+                    </td>
 
-                  <td class="num">
-                    ${money(
-                      x.costoPespunte
-                    )}
-                  </td>
+                    <td class="num">
+                      ${money(
+                        x.piezas*
+                        x.costoPespunte
+                      )}
+                    </td>
 
-                  <td class="num">
-                    ${money(
-                      x.piezas*
-                      x.costoPespunte
-                    )}
-                  </td>
+                    <td class="num">
+                      ${money(x.costoPreliminar)}
+                    </td>
 
-                  <td class="num">
-                    ${money(
-                      x.costoPreliminar
-                    )}
-                  </td>
+                    <td class="num">
+                      ${money(
+                        x.piezas*
+                        x.costoPreliminar
+                      )}
+                    </td>
 
-                  <td class="num">
-                    ${money(
-                      x.piezas*
-                      x.costoPreliminar
-                    )}
-                  </td>
-
-                </tr>
-
-              `
-            )
-            .join("")
+                  </tr>`
+              )
+              .join("")
           }
 
         </tbody>
+
+        <tfoot>
+
+          <tr>
+
+            <th colspan="4">
+              TOTAL
+            </th>
+
+            <th class="num">
+              ${money(totalPespunte)}
+            </th>
+
+            <th></th>
+
+            <th class="num">
+              ${money(totalPreliminar)}
+            </th>
+
+          </tr>
+
+        </tfoot>
 
       </table>
 
@@ -8011,67 +6229,50 @@ function guardarCierre(){
     ).value ||
     hoyISO();
 
-
   const nombre =
     document.getElementById(
       "histNombre"
     ).value.trim()
     ||
-    (
-      "Semana "+
-      fecha
-    );
-
+    "Semana "+fecha;
 
   const d =
     datosSemana();
 
-
   historial.push({
 
-    id:
-      uid("hist"),
+    id:uid("hist"),
 
     fecha,
 
     nombre,
 
-    semanaInicio:
-      d.lunes,
+    semanaInicio:d.lunes,
 
-    semanaFin:
-      d.sabado,
+    semanaFin:d.sabado,
 
-    programado:
-      d.programado,
+    programado:d.programado,
 
-    empaque:
-      d.empaque,
+    empaque:d.empaque,
 
-    auditoria:
-      d.auditoria,
+    auditoria:d.auditoria,
 
-    creado:
-      Date.now()
+    creado:Date.now()
 
   });
-
 
   guardarJSON(
     KHIST,
     historial
   );
 
-
   document.getElementById(
     "histNombre"
   ).value="";
 
-
   mostrarToast(
-    "Cierre guardado."
+    "Cierre guardado correctamente."
   );
-
 
   renderHistorial();
 
@@ -8085,25 +6286,22 @@ function renderHistorial(){
       "tablaHistorial"
     );
 
-
   if(!cont){
     return;
   }
 
-
   const lista =
     historial
-    .slice()
-    .sort(
-      (a,b)=>
-        num(b.creado)-
-        num(a.creado)
-    );
-
+      .slice()
+      .sort(
+        (a,b)=>
+          num(b.creado)-
+          num(a.creado)
+      );
 
   if(!lista.length){
 
-    cont.innerHTML =
+    cont.innerHTML=
       `<div class="empty">
         No hay cierres guardados.
       </div>`;
@@ -8111,8 +6309,7 @@ function renderHistorial(){
     return;
   }
 
-
-  cont.innerHTML = `
+  cont.innerHTML=`
 
     <div class="table-wrap">
 
@@ -8122,29 +6319,12 @@ function renderHistorial(){
 
           <tr>
 
-            <th>
-              Cierre
-            </th>
-
-            <th>
-              Periodo
-            </th>
-
-            <th class="num">
-              Programado
-            </th>
-
-            <th class="num">
-              Empaque
-            </th>
-
-            <th class="num">
-              Auditoría
-            </th>
-
-            <th class="num">
-              Eficiencia
-            </th>
+            <th>Cierre</th>
+            <th>Periodo</th>
+            <th class="num">Programado</th>
+            <th class="num">Empaque</th>
+            <th class="num">Auditoría</th>
+            <th class="num">Cumplimiento</th>
 
           </tr>
 
@@ -8154,56 +6334,55 @@ function renderHistorial(){
 
           ${
             lista
-            .map(
-              h=>{
+              .map(
+                h=>{
 
-                const ef =
-                  num(h.programado)>0
-                    ? num(h.empaque)/
-                      num(h.programado)*
-                      100
-                    : 0;
+                  const ef =
+                    num(h.programado)>0
+                      ? num(h.empaque)/
+                        num(h.programado)*
+                        100
+                      : 0;
 
+                  return `
 
-                return `
+                    <tr>
 
-                  <tr>
+                      <td>
+                        <strong>
+                          ${esc(h.nombre)}
+                        </strong>
+                      </td>
 
-                    <td>
-                      <strong>
-                        ${esc(h.nombre)}
-                      </strong>
-                    </td>
+                      <td>
+                        ${esc(h.semanaInicio)}
+                        →
+                        ${esc(h.semanaFin)}
+                      </td>
 
-                    <td>
-                      ${esc(h.semanaInicio)}
-                      →
-                      ${esc(h.semanaFin)}
-                    </td>
+                      <td class="num">
+                        ${pieces(h.programado)}
+                      </td>
 
-                    <td class="num">
-                      ${pieces(h.programado)}
-                    </td>
+                      <td class="num">
+                        ${pieces(h.empaque)}
+                      </td>
 
-                    <td class="num">
-                      ${pieces(h.empaque)}
-                    </td>
+                      <td class="num">
+                        ${pieces(h.auditoria)}
+                      </td>
 
-                    <td class="num">
-                      ${pieces(h.auditoria)}
-                    </td>
+                      <td class="num">
+                        ${pct(ef)}
+                      </td>
 
-                    <td class="num">
-                      ${pct(ef)}
-                    </td>
+                    </tr>
 
-                  </tr>
+                  `;
 
-                `;
-
-              }
-            )
-            .join("")
+                }
+              )
+              .join("")
           }
 
         </tbody>
@@ -8218,7 +6397,7 @@ function renderHistorial(){
 
 
 /* ================================================================
-   KPI CAPTURA
+   KPIs
    ================================================================ */
 
 function renderKPIs(){
@@ -8226,61 +6405,79 @@ function renderKPIs(){
   const fecha =
     hoyISO();
 
+  const prog =
+    programadoDia(fecha);
 
-  const programado =
-    programadoDia(
-      fecha
-    );
+  const emp =
+    piezasEmpaqueDia(fecha);
 
-
-  const empaque =
-    piezasEmpaqueDia(
-      fecha
-    );
-
-
-  const eficiencia =
-    programado>0
-      ? empaque/
-        programado*
-        100
+  const ef =
+    prog>0
+      ? emp/prog*100
       : 0;
-
 
   document.getElementById(
     "kpiProgramadoHoy"
-  ).textContent =
-    pieces(programado);
-
+  ).textContent=
+    pieces(prog);
 
   document.getElementById(
     "kpiEmpaqueHoy"
-  ).textContent =
-    pieces(empaque);
-
+  ).textContent=
+    pieces(emp);
 
   document.getElementById(
     "kpiEficienciaHoy"
-  ).textContent =
-    pct(eficiencia);
-
+  ).textContent=
+    pct(ef);
 
   document.getElementById(
     "kpiOTs"
-  ).textContent =
+  ).textContent=
     pieces(
-      produccion
-      .filter(
+      produccion.filter(
         o=>o.fecha===fecha
-      )
-      .length
+      ).length
     );
 
 }
 
 
 /* ================================================================
-   RENDER GENERAL
+   NAVEGACIÓN
+   ================================================================ */
+
+function cambiarSeccion(nombre){
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(
+      b=>{
+        b.classList.toggle(
+          "active",
+          b.dataset.section===nombre
+        );
+      }
+    );
+
+  document
+    .querySelectorAll(".section")
+    .forEach(
+      s=>{
+        s.classList.toggle(
+          "active",
+          s.id==="section-"+nombre
+        );
+      }
+    );
+
+  renderTodo();
+
+}
+
+
+/* ================================================================
+   RENDER TODO
    ================================================================ */
 
 function renderTodo(){
@@ -8309,107 +6506,312 @@ function renderTodo(){
 
 
 /* ================================================================
-   FECHAS INICIALES
+   EVENTOS
    ================================================================ */
 
-document.getElementById(
-  "capFecha"
-).value =
-  hoyISO();
 
+/* Navegación */
 
-document.getElementById(
-  "avFecha"
-).value =
-  hoyISO();
-
-
-document.getElementById(
-  "avHora"
-).value =
-  ahoraHora();
-
-
-document.getElementById(
-  "wsFecha"
-).value =
-  hoyISO();
-
-
-document.getElementById(
-  "histSemana"
-).value =
-  hoyISO();
-
-
-/* ================================================================
-   BUSCADOR MODELOS
-   ================================================================ */
-
-document.getElementById(
-  "buscarModelo"
-)
-.addEventListener(
-  "input",
-  renderModelos
-);
-
-
-/* ================================================================
-   CERRAR MODALES AL TOCAR FONDO
-   ================================================================ */
-
-document.getElementById(
-  "modeloModal"
-)
-.addEventListener(
-  "click",
-  e=>{
-
-    if(
-      e.target.id===
-      "modeloModal"
-    ){
-
-      cerrarModalModelo();
-
+document
+  .querySelectorAll(".nav-btn")
+  .forEach(
+    btn=>{
+      btn.addEventListener(
+        "click",
+        ()=>{
+          cambiarSeccion(
+            btn.dataset.section
+          );
+        }
+      );
     }
-
-  }
-);
+  );
 
 
-document.getElementById(
-  "otModal"
-)
-.addEventListener(
-  "click",
-  e=>{
+/* Guardar OT */
 
-    if(
-      e.target.id===
-      "otModal"
-    ){
+document
+  .getElementById("btnGuardarOT")
+  .addEventListener(
+    "click",
+    guardarOT
+  );
 
-      cerrarModalOT();
 
+/* Buscar OT */
+
+document
+  .getElementById("buscarOT")
+  .addEventListener(
+    "input",
+    renderOTs
+  );
+
+
+/* Filtro línea */
+
+document
+  .getElementById("filtroLinea")
+  .addEventListener(
+    "change",
+    renderOTs
+  );
+
+
+/* Limpiar filtros */
+
+document
+  .getElementById("btnLimpiarFiltros")
+  .addEventListener(
+    "click",
+    ()=>{
+      document.getElementById(
+        "buscarOT"
+      ).value="";
+
+      document.getElementById(
+        "filtroLinea"
+      ).value="";
+
+      renderOTs();
     }
+  );
 
-  }
-);
+
+/* OT avance */
+
+document
+  .getElementById("avOT")
+  .addEventListener(
+    "change",
+    actualizarDesdeAvance
+  );
+
+
+/* Desde */
+
+document
+  .getElementById("avDesde")
+  .addEventListener(
+    "change",
+    actualizarHasta
+  );
+
+
+/* Registrar avance */
+
+document
+  .getElementById("btnRegistrarAvance")
+  .addEventListener(
+    "click",
+    registrarAvance
+  );
+
+
+/* Fecha Workshop */
+
+document
+  .getElementById("wsFecha")
+  .addEventListener(
+    "change",
+    renderWorkshop
+  );
+
+
+/* Buscar modelo */
+
+document
+  .getElementById("buscarModelo")
+  .addEventListener(
+    "input",
+    renderModelos
+  );
+
+
+/* Nuevo modelo */
+
+document
+  .getElementById("btnNuevoModelo")
+  .addEventListener(
+    "click",
+    ()=>{
+      abrirModalModelo();
+    }
+  );
+
+
+/* Guardar modelo */
+
+document
+  .getElementById("btnGuardarModelo")
+  .addEventListener(
+    "click",
+    guardarModelo
+  );
+
+
+/* Cancelar modelo */
+
+document
+  .getElementById("btnCancelarModelo")
+  .addEventListener(
+    "click",
+    cerrarModalModelo
+  );
+
+
+/* Cerrar modelo */
+
+document
+  .getElementById("btnCerrarModelo")
+  .addEventListener(
+    "click",
+    cerrarModalModelo
+  );
+
+
+/* Guardar edición OT */
+
+document
+  .getElementById("btnGuardarOTEditado")
+  .addEventListener(
+    "click",
+    guardarEdicionOT
+  );
+
+
+/* Cancelar OT */
+
+document
+  .getElementById("btnCancelarOT")
+  .addEventListener(
+    "click",
+    cerrarModalOT
+  );
+
+
+/* Cerrar OT */
+
+document
+  .getElementById("btnCerrarOT")
+  .addEventListener(
+    "click",
+    cerrarModalOT
+  );
+
+
+/* Eliminar OT */
+
+document
+  .getElementById("btnEliminarOT")
+  .addEventListener(
+    "click",
+    eliminarOTDesdeModal
+  );
+
+
+/* Guardar cierre */
+
+document
+  .getElementById("btnGuardarCierre")
+  .addEventListener(
+    "click",
+    guardarCierre
+  );
 
 
 /* ================================================================
-   ESCAPE
+   EVENTOS DINÁMICOS
    ================================================================ */
 
 document.addEventListener(
-  "keydown",
-  e=>{
+  "click",
+  function(e){
 
-    if(
-      e.key==="Escape"
-    ){
+    const btn =
+      e.target.closest(
+        "[data-action]"
+      );
+
+    if(!btn){
+      return;
+    }
+
+    const action =
+      btn.dataset.action;
+
+    const id =
+      btn.dataset.id;
+
+    if(action==="editar-modelo"){
+
+      editarModelo(id);
+
+    }
+
+    else if(action==="eliminar-modelo"){
+
+      eliminarModelo(id);
+
+    }
+
+    else if(action==="editar-ot"){
+
+      editarOT(id);
+
+    }
+
+    else if(action==="avanzar-ot"){
+
+      seleccionarOTParaAvance(id);
+
+    }
+
+  }
+);
+
+
+/* ================================================================
+   MODALES
+   ================================================================ */
+
+document
+  .getElementById("modeloModal")
+  .addEventListener(
+    "click",
+    function(e){
+
+      if(
+        e.target===this
+      ){
+        cerrarModalModelo();
+      }
+
+    }
+  );
+
+
+document
+  .getElementById("otModal")
+  .addEventListener(
+    "click",
+    function(e){
+
+      if(
+        e.target===this
+      ){
+        cerrarModalOT();
+      }
+
+    }
+  );
+
+
+document.addEventListener(
+  "keydown",
+  function(e){
+
+    if(e.key==="Escape"){
 
       cerrarModalModelo();
 
@@ -8419,6 +6821,39 @@ document.addEventListener(
 
   }
 );
+
+
+/* ================================================================
+   FECHAS INICIALES
+   ================================================================ */
+
+const fechaInicial =
+  hoyISO();
+
+document.getElementById(
+  "capFecha"
+).value=
+  fechaInicial;
+
+document.getElementById(
+  "avFecha"
+).value=
+  fechaInicial;
+
+document.getElementById(
+  "avHora"
+).value=
+  ahoraHora();
+
+document.getElementById(
+  "wsFecha"
+).value=
+  fechaInicial;
+
+document.getElementById(
+  "histSemana"
+).value=
+  fechaInicial;
 
 
 /* ================================================================
@@ -8426,7 +6861,6 @@ document.addEventListener(
    ================================================================ */
 
 renderTodo();
-
 
 </script>
 
