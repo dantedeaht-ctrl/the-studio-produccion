@@ -28,6 +28,7 @@ content="width=device-width,initial-scale=1,viewport-fit=cover">
   --orange:#ff9b54;
   --red:#ff5f6d;
   --purple:#a879ff;
+  --cyan:#45d6e8;
 
   --shadow:0 18px 45px rgba(0,0,0,.28);
   --radius:18px;
@@ -146,6 +147,23 @@ button{
   color:#cdd5e5;
   font-size:12px;
   white-space:nowrap;
+}
+
+.bmw-line{
+  height:3px;
+
+  margin-top:5px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #4b7db7 0 25%,
+      #f4f4f4 25% 50%,
+      #4b7db7 50% 75%,
+      #f4f4f4 75% 100%
+    );
+
+  border-radius:99px;
 }
 
 /* =========================================================
@@ -332,6 +350,10 @@ main{
 
 .kpi.purple .kpi-value{
   color:var(--purple);
+}
+
+.kpi.cyan .kpi-value{
+  color:var(--cyan);
 }
 
 /* =========================================================
@@ -585,6 +607,11 @@ tbody tr:hover{
   background:#202838;
 }
 
+.badge.cyan{
+  color:#91edf5;
+  background:#10333a;
+}
+
 /* =========================================================
    PROGRESS
    ========================================================= */
@@ -835,6 +862,130 @@ tbody tr:hover{
 }
 
 /* =========================================================
+   PROGRAMMED LOAD
+   ========================================================= */
+
+.load-card{
+  background:
+    linear-gradient(
+      145deg,
+      #18233a,
+      #0d1525
+    );
+
+  border:1px solid #354969;
+  border-radius:17px;
+  padding:16px;
+}
+
+.load-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+.load-title{
+  font-size:17px;
+  font-weight:950;
+}
+
+.load-sub{
+  color:#8f9ab0;
+  font-size:11px;
+  margin-top:4px;
+}
+
+.load-kpis{
+  display:grid;
+  grid-template-columns:
+    repeat(4,minmax(0,1fr));
+  gap:9px;
+}
+
+.load-kpi{
+  background:#0b111e;
+  border:1px solid #293750;
+  border-radius:12px;
+  padding:11px;
+}
+
+.load-kpi-label{
+  color:#7f8aa0;
+  font-size:9px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+
+.load-kpi-value{
+  margin-top:5px;
+  font-size:22px;
+  font-weight:950;
+}
+
+.load-progress{
+  margin-top:14px;
+}
+
+.load-progress-label{
+  display:flex;
+  justify-content:space-between;
+  color:#8f9ab0;
+  font-size:10px;
+  margin-bottom:6px;
+}
+
+.load-progress-bar{
+  width:100%;
+  height:10px;
+  border-radius:99px;
+  background:#080d18;
+  border:1px solid #273148;
+  overflow:hidden;
+}
+
+.load-progress-bar > div{
+  height:100%;
+  width:0%;
+  background:linear-gradient(
+    90deg,
+    #4da3ff,
+    #43d17a
+  );
+}
+
+.load-progress-bar.over > div{
+  background:linear-gradient(
+    90deg,
+    #ff9b54,
+    #ff5f6d
+  );
+}
+
+.load-warning{
+  margin-top:10px;
+  padding:9px 11px;
+  border-radius:10px;
+  background:#351b20;
+  border:1px solid #67323a;
+  color:#ffabb2;
+  font-size:11px;
+  font-weight:800;
+}
+
+.load-ok{
+  margin-top:10px;
+  padding:9px 11px;
+  border-radius:10px;
+  background:#102e20;
+  border:1px solid #286044;
+  color:#91e9ad;
+  font-size:11px;
+  font-weight:800;
+}
+
+/* =========================================================
    HOUR BOARD
    ========================================================= */
 
@@ -997,6 +1148,11 @@ tbody tr:hover{
       repeat(3,minmax(0,1fr));
   }
 
+  .load-kpis{
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+  }
+
 }
 
 @media(max-width:700px){
@@ -1051,6 +1207,10 @@ tbody tr:hover{
       repeat(2,minmax(0,1fr));
   }
 
+  .load-kpis{
+    grid-template-columns:1fr 1fr;
+  }
+
   .toolbar{
     align-items:stretch;
   }
@@ -1065,10 +1225,6 @@ tbody tr:hover{
   }
 
 }
-
-/* =========================================================
-   PRINT
-   ========================================================= */
 
 @media print{
 
@@ -1089,27 +1245,6 @@ tbody tr:hover{
     border:1px solid #ddd;
   }
 
-}
-
-/* =========================================================
-   BMW THEME DETAIL
-   ========================================================= */
-
-.bmw-line{
-  height:3px;
-
-  margin-top:5px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #4b7db7 0 25%,
-      #f4f4f4 25% 50%,
-      #4b7db7 50% 75%,
-      #f4f4f4 75% 100%
-    );
-
-  border-radius:99px;
 }
 
 </style>
@@ -1710,7 +1845,7 @@ tbody tr:hover{
   </h1>
 
   <p class="page-subtitle">
-    Producción del día y tablero hora por hora por línea.
+    Producción del día, carga programada y tablero hora por hora por línea.
   </p>
 
 
@@ -1799,6 +1934,54 @@ tbody tr:hover{
 
       </div>
 
+    </div>
+
+  </div>
+
+
+  <br>
+
+
+  <!-- ====================================================
+       NUEVO TABLERO DE CARGA PROGRAMADA
+       ==================================================== -->
+
+  <div class="card">
+
+    <div class="card-title">
+
+      <span>
+        📊 Carga programada por línea
+      </span>
+
+      <small>
+        Piezas × TSTD ÷ minutos disponibles
+      </small>
+
+    </div>
+
+
+    <div
+      style="
+        display:flex;
+        flex-wrap:wrap;
+        gap:8px;
+        margin-bottom:14px;
+      ">
+
+      <span class="badge blue">
+        Pespunte: 5 × 570 = 2,850 min
+      </span>
+
+      <span class="badge purple">
+        Preliminar: 6 × 570 = 3,420 min
+      </span>
+
+    </div>
+
+
+    <div
+      id="cargaProgramada">
     </div>
 
   </div>
@@ -2484,6 +2667,38 @@ const KADV  = "theStudioAvances_v4";
 
 
 /* ================================================================
+   CAPACIDAD DE LA PLANTA
+   ================================================================
+
+   IMPORTANTE:
+
+   Estos valores controlan exclusivamente el cálculo de
+   CARGA PROGRAMADA.
+
+   Pespunte:
+   5 pespuntadores × 570 minutos = 2,850 minutos.
+
+   Preliminar:
+   6 preliminares × 570 minutos = 3,420 minutos.
+
+   No se modifican tus datos guardados.
+   ================================================================ */
+
+const PESPUNTADORES = 5;
+const PRELIMINARES = 6;
+
+const MINUTOS_PERSONA_DIA = 570;
+
+const MINUTOS_DISP_PESPUNTE =
+  PESPUNTADORES *
+  MINUTOS_PERSONA_DIA;
+
+const MINUTOS_DISP_PRELIMINAR =
+  PRELIMINARES *
+  MINUTOS_PERSONA_DIA;
+
+
+/* ================================================================
    PROCESOS
    ================================================================ */
 
@@ -2515,13 +2730,15 @@ function cargarJSON(clave, defecto){
 
   try{
 
-    const valor = localStorage.getItem(clave);
+    const valor =
+      localStorage.getItem(clave);
 
     if(!valor){
       return defecto;
     }
 
-    const parsed = JSON.parse(valor);
+    const parsed =
+      JSON.parse(valor);
 
     return parsed ?? defecto;
 
@@ -2549,17 +2766,21 @@ function guardarJSON(clave, valor){
 
 function hoyISO(){
 
-  const d = new Date();
+  const d =
+    new Date();
 
-  const y = d.getFullYear();
+  const y =
+    d.getFullYear();
 
-  const m = String(
-    d.getMonth()+1
-  ).padStart(2,"0");
+  const m =
+    String(
+      d.getMonth()+1
+    ).padStart(2,"0");
 
-  const day = String(
-    d.getDate()
-  ).padStart(2,"0");
+  const day =
+    String(
+      d.getDate()
+    ).padStart(2,"0");
 
   return `${y}-${m}-${day}`;
 }
@@ -2567,7 +2788,8 @@ function hoyISO(){
 
 function ahoraHora(){
 
-  const d = new Date();
+  const d =
+    new Date();
 
   return String(
     d.getHours()
@@ -2581,7 +2803,8 @@ function ahoraHora(){
 
 function num(valor){
 
-  const n = Number(valor);
+  const n =
+    Number(valor);
 
   return Number.isFinite(n)
     ? n
@@ -2626,6 +2849,20 @@ function pct(valor){
 }
 
 
+function pct1(valor){
+
+  return (
+    num(valor)
+  ).toLocaleString(
+    "es-MX",
+    {
+      minimumFractionDigits:1,
+      maximumFractionDigits:1
+    }
+  ) + "%";
+}
+
+
 function esc(valor){
 
   return String(
@@ -2659,11 +2896,13 @@ function fechaValidaLaboral(fecha){
     return false;
   }
 
-  const d = new Date(
-    fecha + "T12:00:00"
-  );
+  const d =
+    new Date(
+      fecha+"T12:00:00"
+    );
 
-  const day = d.getDay();
+  const day =
+    d.getDay();
 
   return day !== 0;
 }
@@ -2671,17 +2910,19 @@ function fechaValidaLaboral(fecha){
 
 function lunesDeSemana(fecha){
 
-  const d = new Date(
-    (fecha || hoyISO()) +
-    "T12:00:00"
-  );
+  const d =
+    new Date(
+      (fecha || hoyISO())+
+      "T12:00:00"
+    );
 
-  const day = d.getDay();
+  const day =
+    d.getDay();
 
   const diff =
-    day === 0
+    day===0
       ? -6
-      : 1 - day;
+      : 1-day;
 
   d.setDate(
     d.getDate()+diff
@@ -2695,8 +2936,8 @@ function sabadoDeSemana(fecha){
 
   const lunes =
     new Date(
-      lunesDeSemana(fecha)
-      + "T12:00:00"
+      lunesDeSemana(fecha)+
+      "T12:00:00"
     );
 
   lunes.setDate(
@@ -2724,29 +2965,42 @@ function dateToISO(d){
 function semanaActual(){
 
   return {
-    lunes: lunesDeSemana(
-      hoyISO()
-    ),
 
-    sabado: sabadoDeSemana(
-      hoyISO()
-    )
+    lunes:
+      lunesDeSemana(
+        hoyISO()
+      ),
+
+    sabado:
+      sabadoDeSemana(
+        hoyISO()
+      )
+
   };
+
 }
 
 
-function fechaEnSemana(fecha, semana){
+function fechaEnSemana(
+  fecha,
+  semana
+){
 
-  return fecha >= semana.lunes &&
-         fecha <= semana.sabado;
+  return (
+    fecha >= semana.lunes &&
+    fecha <= semana.sabado
+  );
+
 }
 
 
 function nombreDia(fecha){
 
-  const d = new Date(
-    fecha+"T12:00:00"
-  );
+  const d =
+    new Date(
+      fecha+
+      "T12:00:00"
+    );
 
   return d.toLocaleDateString(
     "es-MX",
@@ -2756,6 +3010,7 @@ function nombreDia(fecha){
       month:"2-digit"
     }
   );
+
 }
 
 
@@ -2786,6 +3041,7 @@ function mostrarToast(mensaje){
       },
       2500
     );
+
 }
 
 
@@ -2838,6 +3094,7 @@ function normalizarModelo(m){
       )
 
   };
+
 }
 
 
@@ -2884,6 +3141,7 @@ function normalizarOT(o){
       Date.now()
 
   };
+
 }
 
 
@@ -2928,6 +3186,7 @@ function normalizarAvance(a){
       Date.now()
 
   };
+
 }
 
 
@@ -2972,61 +3231,69 @@ guardarJSON(
 
 document
 .querySelectorAll(".nav-btn")
-.forEach(btn=>{
+.forEach(
+  btn=>{
 
-  btn.addEventListener(
-    "click",
-    ()=>{
+    btn.addEventListener(
+      "click",
+      ()=>{
 
-      document
-      .querySelectorAll(
-        ".nav-btn"
-      )
-      .forEach(
-        b=>b.classList.remove(
-          "active"
+        document
+        .querySelectorAll(
+          ".nav-btn"
         )
-      );
-
-      btn.classList.add(
-        "active"
-      );
-
-      document
-      .querySelectorAll(
-        ".section"
-      )
-      .forEach(
-        s=>s.classList.remove(
-          "active"
-        )
-      );
-
-      const section =
-        document.getElementById(
-          "section-" +
-          btn.dataset.section
+        .forEach(
+          b=>
+            b.classList.remove(
+              "active"
+            )
         );
 
-      if(section){
-        section.classList.add(
+        btn.classList.add(
           "active"
         );
+
+        document
+        .querySelectorAll(
+          ".section"
+        )
+        .forEach(
+          s=>
+            s.classList.remove(
+              "active"
+            )
+        );
+
+        const section =
+          document.getElementById(
+            "section-"+
+            btn.dataset.section
+          );
+
+        if(section){
+
+          section.classList.add(
+            "active"
+          );
+
+        }
+
+        renderTodo();
+
       }
+    );
 
-      renderTodo();
-
-    }
-  );
-
-});
+  }
+);
 
 
 /* ================================================================
    MODELOS
    ================================================================ */
 
-function buscarModeloPorNombre(nombre){
+function buscarModeloPorNombre(
+  nombre
+){
 
   return costos.find(
     m =>
@@ -3038,6 +3305,7 @@ function buscarModeloPorNombre(nombre){
       .trim()
       .toLowerCase()
   );
+
 }
 
 
@@ -3062,7 +3330,6 @@ function renderModelos(){
     .trim()
     .toLowerCase();
 
-
   let lista =
     costos.filter(
       m =>
@@ -3075,7 +3342,6 @@ function renderModelos(){
           .includes(filtro)
     );
 
-
   lista.sort(
     (a,b)=>
       String(a.nombre)
@@ -3085,12 +3351,13 @@ function renderModelos(){
       )
   );
 
-
   if(!lista.length){
 
     cont.innerHTML = `
-      <div class="card"
-           style="grid-column:1/-1">
+
+      <div
+        class="card"
+        style="grid-column:1/-1">
 
         <div class="empty">
 
@@ -3107,6 +3374,7 @@ function renderModelos(){
         </div>
 
       </div>
+
     `;
 
     return;
@@ -3114,8 +3382,9 @@ function renderModelos(){
 
 
   cont.innerHTML =
-    lista.map(
-      m => {
+    lista
+    .map(
+      m=>{
 
         const usado =
           produccion.some(
@@ -3126,7 +3395,6 @@ function renderModelos(){
               String(m.nombre)
               .toLowerCase()
           );
-
 
         return `
 
@@ -3193,21 +3461,22 @@ function renderModelos(){
             </div>
 
 
-            <div
-              class="model-footer">
+            <div class="model-footer">
 
               <span>
                 TSTD pespunte:
                 <strong>
                   ${num(m.tstdPespunte).toFixed(2)}
-                </strong> min
+                </strong>
+                min
               </span>
 
               <span>
                 TSTD preliminar:
                 <strong>
                   ${num(m.tstdPreliminar).toFixed(2)}
-                </strong> min
+                </strong>
+                min
               </span>
 
             </div>
@@ -3223,7 +3492,11 @@ function renderModelos(){
               <button
                 class="btn small danger"
                 onclick="eliminarModelo('${m.id}')"
-                ${usado ? "disabled title='No se puede eliminar porque el modelo está usado en una OT'" : ""}>
+                ${
+                  usado
+                    ? "disabled title='No se puede eliminar porque el modelo está usado en una OT'"
+                    : ""
+                }>
                 Eliminar
               </button>
 
@@ -3240,7 +3513,9 @@ function renderModelos(){
 }
 
 
-function abrirModalModelo(id=null){
+function abrirModalModelo(
+  id=null
+){
 
   const modal =
     document.getElementById(
@@ -3368,7 +3643,8 @@ function guardarModelo(){
   const nombre =
     document.getElementById(
       "modeloNombre"
-    ).value.trim();
+    ).value
+    .trim();
 
 
   if(!nombre){
@@ -3390,7 +3666,7 @@ function guardarModelo(){
         ===
         nombre.toLowerCase()
         &&
-        m.id !== id
+        m.id!==id
     );
 
 
@@ -3463,12 +3739,6 @@ function guardarModelo(){
       ...datos
     };
 
-
-    /*
-      Si se cambia el nombre,
-      actualizamos también las OTs
-      que usan ese modelo.
-    */
 
     produccion =
       produccion.map(
@@ -3628,7 +3898,6 @@ function llenarSelectModelos(){
         return;
       }
 
-
       const actual =
         select.value;
 
@@ -3652,15 +3921,20 @@ function llenarSelectModelos(){
           )
           .map(
             m=>`
+
               <option
                 value="${esc(m.nombre)}">
+
                 ${esc(m.nombre)}
+
                 ${
                   m.codigo
                     ? " · "+esc(m.codigo)
                     : ""
                 }
+
               </option>
+
             `
           )
           .join("")
@@ -3675,8 +3949,10 @@ function llenarSelectModelos(){
           o=>o.value===actual
         )
       ){
+
         select.value =
           actual;
+
       }
 
     }
@@ -3903,8 +4179,8 @@ function renderOTs(){
 
         const texto =
           (
-            o.ot +
-            " " +
+            o.ot+
+            " "+
             o.modelo
           )
           .toLowerCase();
@@ -3960,15 +4236,19 @@ function renderOTs(){
             <th>OT</th>
             <th>Línea</th>
             <th>Modelo</th>
+
             <th class="num">
               Programado
             </th>
+
             <th class="num">
               Empaque
             </th>
+
             <th class="num">
               En proceso
             </th>
+
             <th>Acciones</th>
 
           </tr>
@@ -4327,11 +4607,6 @@ function guardarEdicionOT(){
   };
 
 
-  /*
-    Mantener la referencia de la OT
-    en los avances.
-  */
-
   avances =
     avances.map(
       a =>
@@ -4448,6 +4723,7 @@ function obtenerOT(id){
   return produccion.find(
     o=>o.id===id
   );
+
 }
 
 
@@ -4491,7 +4767,6 @@ function seleccionarOTParaAvance(id){
 
   select.value=id;
 
-
   actualizarDesdeAvance();
 
   mostrarToast(
@@ -4508,11 +4783,9 @@ function llenarSelectOTs(){
       "avOT"
     );
 
-
   if(!select){
     return;
   }
-
 
   const actual =
     select.value;
@@ -4539,10 +4812,12 @@ function llenarSelectOTs(){
         o=>`
 
           <option value="${o.id}">
+
             ${esc(o.ot)}
             · Línea ${esc(o.linea)}
             · ${esc(o.modelo)}
             · ${pieces(o.piezas)} pzas
+
           </option>
 
         `
@@ -4559,7 +4834,10 @@ function llenarSelectOTs(){
       x=>x.value===actual
     )
   ){
-    select.value=actual;
+
+    select.value=
+      actual;
+
   }
 
 }
@@ -4581,23 +4859,18 @@ function piezasEnProceso(
 ){
 
   const ot =
-    obtenerOT(otId);
-
+    obtenerOT(
+      otId
+    );
 
   if(!ot){
     return 0;
   }
 
 
-  /*
-    Programado:
-    cantidad programada
-    menos todos los movimientos
-    que salieron de Programado.
-  */
-
-
-  if(proceso==="Programado"){
+  if(
+    proceso==="Programado"
+  ){
 
     const salidas =
       avances
@@ -4619,11 +4892,6 @@ function piezasEnProceso(
 
   }
 
-
-  /*
-    Para cada proceso:
-    entradas - salidas.
-  */
 
   const entradas =
     avances
@@ -4677,13 +4945,16 @@ function actualizarDesdeAvance(){
   const disponibles =
     PROCESOS
     .map(
-      proceso => ({
+      proceso=>({
+
         proceso,
+
         piezas:
           piezasEnProceso(
             id,
             proceso
           )
+
       })
     )
     .filter(
@@ -4724,7 +4995,10 @@ function actualizarDesdeAvance(){
       x=>x.proceso===actual
     )
   ){
-    select.value=actual;
+
+    select.value=
+      actual;
+
   }
 
 
@@ -4787,11 +5061,15 @@ function actualizarHasta(){
 
 
   if(
-    opciones.includes(actual)
+    opciones.includes(
+      actual
+    )
   ){
-    hasta.value=actual;
-  }
 
+    hasta.value=
+      actual;
+
+  }
 
 }
 
@@ -4899,37 +5177,26 @@ function registrarAvance(){
     );
 
 
-  if(piezas>disponible){
+  if(
+    piezas>disponible
+  ){
 
     mostrarToast(
-      "No hay suficientes piezas en "+desde+". Disponibles: "+pieces(disponible)
+      "No hay suficientes piezas en "+
+      desde+
+      ". Disponibles: "+
+      pieces(disponible)
     );
 
     return;
   }
 
 
-  /*
-    Registrar cada paso intermedio.
-
-    Ejemplo:
-
-    Armado → Empaque
-
-    genera:
-
-    Armado → Salida pespunte
-    Salida pespunte → Clasificación
-    Clasificación → Empaque
-
-    Así el inventario queda
-    correctamente reconciliado.
-  */
-
   const iDesde =
     PROCESOS.indexOf(
       desde
     );
+
 
   const iHasta =
     PROCESOS.indexOf(
@@ -5022,11 +5289,13 @@ function renderInventario(){
 
       PROCESOS.forEach(
         p=>{
+
           total[p] +=
             piezasEnProceso(
               o.id,
               p
             );
+
         }
       );
 
@@ -5062,7 +5331,6 @@ function renderInventario(){
     )
     .join("");
 
-
 }
 
 
@@ -5087,7 +5355,10 @@ function renderAvances(){
         num(b.creado)-
         num(a.creado)
     )
-    .slice(0,100);
+    .slice(
+      0,
+      100
+    );
 
 
   if(!lista.length){
@@ -5116,6 +5387,7 @@ function renderAvances(){
             <th>OT</th>
             <th>Desde</th>
             <th>Hasta</th>
+
             <th class="num">
               Piezas
             </th>
@@ -5192,8 +5464,10 @@ function piezasEmpaqueDia(
     .filter(
       o =>
         o.fecha===fecha &&
-        (!linea ||
-          o.linea===linea)
+        (
+          !linea ||
+          o.linea===linea
+        )
     )
     .reduce(
       (s,o)=>
@@ -5218,8 +5492,10 @@ function piezasQueEntraronEmpaque(
       a =>
         a.otId===otId &&
         a.hasta==="Empaque" &&
-        (!fecha ||
-          a.fecha===fecha)
+        (
+          !fecha ||
+          a.fecha===fecha
+        )
     )
     .reduce(
       (s,a)=>
@@ -5239,8 +5515,10 @@ function programadoDia(
     .filter(
       o =>
         o.fecha===fecha &&
-        (!linea ||
-          o.linea===linea)
+        (
+          !linea ||
+          o.linea===linea
+        )
     )
     .reduce(
       (s,o)=>
@@ -5260,8 +5538,10 @@ function inventarioProcesoDia(
   return produccion
     .filter(
       o =>
-        (!linea ||
-          o.linea===linea) &&
+        (
+          !linea ||
+          o.linea===linea
+        ) &&
         o.fecha<=fecha
     )
     .reduce(
@@ -5276,6 +5556,683 @@ function inventarioProcesoDia(
 
 }
 
+
+/* ================================================================
+   NUEVO:
+   CARGA PROGRAMADA POR LÍNEA
+   ================================================================ */
+
+function datosCargaProgramada(
+  fecha,
+  linea
+){
+
+  const ots =
+    produccion.filter(
+      o =>
+        o.fecha===fecha &&
+        o.linea===linea
+    );
+
+
+  let piezas=0;
+
+  let minutosPespunte=0;
+
+  let minutosPreliminar=0;
+
+  const detalle=[];
+
+
+  ots.forEach(
+    o=>{
+
+      const modelo =
+        buscarModeloPorNombre(
+          o.modelo
+        );
+
+
+      const tstdPespunte =
+        num(
+          modelo?.tstdPespunte
+        );
+
+
+      const tstdPreliminar =
+        num(
+          modelo?.tstdPreliminar
+        );
+
+
+      const minPespunte =
+        num(o.piezas)*
+        tstdPespunte;
+
+
+      const minPreliminar =
+        num(o.piezas)*
+        tstdPreliminar;
+
+
+      piezas +=
+        num(o.piezas);
+
+
+      minutosPespunte +=
+        minPespunte;
+
+
+      minutosPreliminar +=
+        minPreliminar;
+
+
+      detalle.push({
+
+        id:
+          o.id,
+
+        ot:
+          o.ot,
+
+        modelo:
+          o.modelo,
+
+        piezas:
+          num(o.piezas),
+
+        tstdPespunte,
+
+        tstdPreliminar,
+
+        minPespunte,
+
+        minPreliminar
+
+      });
+
+    }
+  );
+
+
+  const cargaPespunte =
+    MINUTOS_DISP_PESPUNTE>0
+      ? minutosPespunte/
+        MINUTOS_DISP_PESPUNTE*
+        100
+      : 0;
+
+
+  const cargaPreliminar =
+    MINUTOS_DISP_PRELIMINAR>0
+      ? minutosPreliminar/
+        MINUTOS_DISP_PRELIMINAR*
+        100
+      : 0;
+
+
+  return {
+
+    fecha,
+
+    linea,
+
+    ots,
+
+    piezas,
+
+    minutosPespunte,
+
+    minutosPreliminar,
+
+    cargaPespunte,
+
+    cargaPreliminar,
+
+    detalle
+
+  };
+
+}
+
+
+function claseCarga(
+  valor
+){
+
+  if(valor>100){
+    return "red";
+  }
+
+  if(valor>=80){
+    return "yellow";
+  }
+
+  return "green";
+
+}
+
+
+function renderCargaProgramada(){
+
+  const cont =
+    document.getElementById(
+      "cargaProgramada"
+    );
+
+
+  if(!cont){
+    return;
+  }
+
+
+  const fecha =
+    document.getElementById(
+      "wsFecha"
+    )?.value ||
+    hoyISO();
+
+
+  const datos =
+    ["A","B"]
+    .map(
+      linea =>
+        datosCargaProgramada(
+          fecha,
+          linea
+        )
+    );
+
+
+  cont.innerHTML =
+    datos
+    .map(
+      d=>{
+
+        const sobrePespunte =
+          d.cargaPespunte>100;
+
+
+        const sobrePreliminar =
+          d.cargaPreliminar>100;
+
+
+        const colorP =
+          claseCarga(
+            d.cargaPespunte
+          );
+
+
+        const colorPr =
+          claseCarga(
+            d.cargaPreliminar
+          );
+
+
+        const detalle =
+          d.detalle;
+
+
+        return `
+
+          <div
+            class="load-card"
+            style="margin-bottom:14px">
+
+            <div class="load-head">
+
+              <div>
+
+                <div class="load-title">
+                  Línea ${d.linea}
+                </div>
+
+                <div class="load-sub">
+
+                  ${
+                    d.ots.length
+                      ? d.ots.length+
+                        " OT"+
+                        (
+                          d.ots.length===1
+                            ? ""
+                            : "s"
+                        )+
+                        " programadas"
+                      : "Sin programación"
+                  }
+
+                </div>
+
+              </div>
+
+
+              <span class="badge blue">
+                ${pieces(d.piezas)} piezas
+              </span>
+
+            </div>
+
+
+            <div class="load-kpis">
+
+              <div class="load-kpi">
+
+                <div class="load-kpi-label">
+                  Min. disponibles pespunte
+                </div>
+
+                <div class="load-kpi-value">
+                  ${pieces(
+                    MINUTOS_DISP_PESPUNTE
+                  )}
+                </div>
+
+              </div>
+
+
+              <div class="load-kpi">
+
+                <div class="load-kpi-label">
+                  Min. estándar pespunte
+                </div>
+
+                <div class="load-kpi-value">
+                  ${num(
+                    d.minutosPespunte
+                  ).toLocaleString(
+                    "es-MX",
+                    {
+                      maximumFractionDigits:1
+                    }
+                  )}
+                </div>
+
+              </div>
+
+
+              <div class="load-kpi">
+
+                <div class="load-kpi-label">
+                  Min. disponibles preliminar
+                </div>
+
+                <div class="load-kpi-value">
+                  ${pieces(
+                    MINUTOS_DISP_PRELIMINAR
+                  )}
+                </div>
+
+              </div>
+
+
+              <div class="load-kpi">
+
+                <div class="load-kpi-label">
+                  Min. estándar preliminar
+                </div>
+
+                <div class="load-kpi-value">
+                  ${num(
+                    d.minutosPreliminar
+                  ).toLocaleString(
+                    "es-MX",
+                    {
+                      maximumFractionDigits:1
+                    }
+                  )}
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="load-kpis"
+              style="margin-top:9px">
+
+              <div class="load-kpi">
+
+                <div class="load-kpi-label">
+                  Carga Pespunte
+                </div>
+
+                <div
+                  class="load-kpi-value"
+                  style="color:var(--${
+                    colorP==="red"
+                      ? "red"
+                      : colorP==="yellow"
+                        ? "yellow"
+                        : "green"
+                  })">
+
+                  ${pct1(
+                    d.cargaPespunte
+                  )}
+
+                </div>
+
+              </div>
+
+
+              <div class="load-kpi">
+
+                <div class="load-kpi-label">
+                  Carga Preliminar
+                </div>
+
+                <div
+                  class="load-kpi-value"
+                  style="color:var(--${
+                    colorPr==="red"
+                      ? "red"
+                      : colorPr==="yellow"
+                        ? "yellow"
+                        : "green"
+                  })">
+
+                  ${pct1(
+                    d.cargaPreliminar
+                  )}
+
+                </div>
+
+              </div>
+
+
+              <div
+                class="load-kpi"
+                style="grid-column:span 2">
+
+                <div class="load-kpi-label">
+                  Fórmula
+                </div>
+
+                <div
+                  style="
+                    color:#b8c4d8;
+                    font-size:12px;
+                    line-height:1.5;
+                    margin-top:5px;
+                  ">
+
+                  Piezas × TSTD =
+                  minutos estándar
+                  <br>
+                  Minutos estándar ÷ minutos disponibles × 100
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="load-progress">
+
+              <div class="load-progress-label">
+
+                <span>
+                  Pespunte
+                </span>
+
+                <strong>
+                  ${pct1(
+                    d.cargaPespunte
+                  )}
+                </strong>
+
+              </div>
+
+
+              <div
+                class="
+                  load-progress-bar
+                  ${
+                    sobrePespunte
+                      ? "over"
+                      : ""
+                  }
+                ">
+
+                <div
+                  style="
+                    width:${
+                      Math.min(
+                        100,
+                        Math.max(
+                          0,
+                          d.cargaPespunte
+                        )
+                      )
+                    }%;
+                  ">
+                </div>
+
+              </div>
+
+            </div>
+
+
+            ${
+              sobrePespunte
+                ? `
+                  <div class="load-warning">
+                    ⚠️ La programación de esta línea supera la capacidad disponible de Pespunte.
+                  </div>
+                `
+                : `
+                  <div class="load-ok">
+                    ✓ La carga programada de Pespunte está dentro de los minutos disponibles.
+                  </div>
+                `
+            }
+
+
+            <div class="load-progress">
+
+              <div class="load-progress-label">
+
+                <span>
+                  Preliminar
+                </span>
+
+                <strong>
+                  ${pct1(
+                    d.cargaPreliminar
+                  )}
+                </strong>
+
+              </div>
+
+
+              <div
+                class="
+                  load-progress-bar
+                  ${
+                    sobrePreliminar
+                      ? "over"
+                      : ""
+                  }
+                ">
+
+                <div
+                  style="
+                    width:${
+                      Math.min(
+                        100,
+                        Math.max(
+                          0,
+                          d.cargaPreliminar
+                        )
+                      )
+                    }%;
+                  ">
+                </div>
+
+              </div>
+
+            </div>
+
+
+            ${
+              sobrePreliminar
+                ? `
+                  <div class="load-warning">
+                    ⚠️ La programación de esta línea supera la capacidad disponible de Preliminar.
+                  </div>
+                `
+                : `
+                  <div class="load-ok">
+                    ✓ La carga programada de Preliminar está dentro de los minutos disponibles.
+                  </div>
+                `
+            }
+
+
+            <br>
+
+
+            <div class="table-wrap">
+
+              <table
+                style="min-width:900px">
+
+                <thead>
+
+                  <tr>
+
+                    <th>
+                      OT
+                    </th>
+
+                    <th>
+                      Modelo
+                    </th>
+
+                    <th class="num">
+                      Piezas
+                    </th>
+
+                    <th class="num">
+                      TSTD Pespunte
+                    </th>
+
+                    <th class="num">
+                      Min. estándar Pespunte
+                    </th>
+
+                    <th class="num">
+                      TSTD Preliminar
+                    </th>
+
+                    <th class="num">
+                      Min. estándar Preliminar
+                    </th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  ${
+                    detalle.length
+                      ? detalle
+                        .map(
+                          x=>`
+
+                            <tr>
+
+                              <td>
+                                <strong>
+                                  ${esc(x.ot)}
+                                </strong>
+                              </td>
+
+                              <td>
+                                ${esc(x.modelo)}
+                              </td>
+
+                              <td class="num">
+                                ${pieces(x.piezas)}
+                              </td>
+
+                              <td class="num">
+                                ${
+                                  x.tstdPespunte>0
+                                    ? x.tstdPespunte.toFixed(2)
+                                    : "—"
+                                }
+                              </td>
+
+                              <td class="num">
+                                ${
+                                  x.tstdPespunte>0
+                                    ? x.minPespunte.toFixed(2)
+                                    : "—"
+                                }
+                              </td>
+
+                              <td class="num">
+                                ${
+                                  x.tstdPreliminar>0
+                                    ? x.tstdPreliminar.toFixed(2)
+                                    : "—"
+                                }
+                              </td>
+
+                              <td class="num">
+                                ${
+                                  x.tstdPreliminar>0
+                                    ? x.minPreliminar.toFixed(2)
+                                    : "—"
+                                }
+                              </td>
+
+                            </tr>
+
+                          `
+                        )
+                        .join("")
+                      : `
+                        <tr>
+
+                          <td
+                            colspan="7"
+                            class="center">
+
+                            No hay OTs programadas
+                            para esta línea en esta fecha.
+
+                          </td>
+
+                        </tr>
+                      `
+                  }
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* ================================================================
+   WORKSHOP PRINCIPAL
+   ================================================================ */
 
 function renderWorkshop(){
 
@@ -5445,6 +6402,7 @@ function renderWorkshop(){
 
 
   let semanaProg=0;
+
   let semanaEmp=0;
 
 
@@ -5467,10 +6425,14 @@ function renderWorkshop(){
       dateToISO(d);
 
     semanaProg +=
-      programadoDia(f);
+      programadoDia(
+        f
+      );
 
     semanaEmp +=
-      piezasEmpaqueDia(f);
+      piezasEmpaqueDia(
+        f
+      );
 
   }
 
@@ -5478,7 +6440,8 @@ function renderWorkshop(){
   const semanaEff =
     semanaProg>0
       ? semanaEmp/
-        semanaProg*100
+        semanaProg*
+        100
       : 0;
 
 
@@ -5499,6 +6462,8 @@ function renderWorkshop(){
   ).textContent =
     pct(semanaEff);
 
+
+  renderCargaProgramada();
 
   renderOTsProceso(
     fecha
@@ -5521,6 +6486,10 @@ document
 );
 
 
+/* ================================================================
+   OTs EN PROCESO
+   ================================================================ */
+
 function renderOTsProceso(
   fecha
 ){
@@ -5529,6 +6498,11 @@ function renderOTsProceso(
     document.getElementById(
       "otsProceso"
     );
+
+
+  if(!cont){
+    return;
+  }
 
 
   const lista =
@@ -5695,46 +6669,57 @@ function renderOTsProceso(
    ================================================================ */
 
 const HORAS_LV = [
+
   {
     inicio:"08:00",
     fin:"09:00"
   },
+
   {
     inicio:"09:00",
     fin:"10:00"
   },
+
   {
     inicio:"10:00",
     fin:"11:00"
   },
+
   {
     inicio:"11:00",
     fin:"12:00"
   },
+
   {
     inicio:"12:00",
     fin:"13:00"
   },
+
   {
     inicio:"13:40",
     fin:"14:40"
   },
+
   {
     inicio:"14:40",
     fin:"15:40"
   },
+
   {
     inicio:"15:40",
     fin:"16:40"
   },
+
   {
     inicio:"16:40",
     fin:"17:40"
   },
+
   {
     inicio:"17:40",
     fin:"18:20"
   }
+
 ];
 
 
@@ -5748,20 +6733,37 @@ function minutosEntre(
     .split(":")
     .map(Number);
 
+
   const [h2,m2] =
     fin
     .split(":")
     .map(Number);
 
+
   return (
     h2*60+m2
-  ) -
+  )
+  -
   (
     h1*60+m1
   );
 
 }
 
+
+/* ================================================================
+   MINUTOS DE TRABAJO DEL DÍA
+   ================================================================
+
+   Para el cálculo de capacidad programada usamos los
+   570 minutos por persona establecidos para los 2,850.
+
+   El tablero horario conserva el horario visual:
+   08:00 a 18:20 con pausa 13:00–13:40.
+
+   Esto evita mezclar la capacidad de la línea con el
+   formato visual del tablero.
+   ================================================================ */
 
 function minutosTrabajoDia(
   fecha
@@ -5777,26 +6779,20 @@ function minutosTrabajoDia(
     d.getDay();
 
 
-  /*
-    Lunes a viernes:
-    8:00 a 18:20
-    menos comida 13:00-13:40.
-  */
-
   if(
     day>=1 &&
     day<=5
   ){
 
-    return 580;
+    /*
+      Capacidad configurada:
+      570 min por persona.
+    */
+
+    return MINUTOS_PERSONA_DIA;
 
   }
 
-
-  /*
-    Sábado:
-    5 horas.
-  */
 
   if(day===6){
 
@@ -5865,10 +6861,19 @@ function minutosRestantesDia(
       8*60;
 
 
-    if(minutosDesde8<=0){
+    if(
+      minutosDesde8<=0
+    ){
+
       return total;
+
     }
 
+
+    /*
+      Visualmente la comida es
+      13:00–13:40.
+    */
 
     if(
       minutosDesde8>300
@@ -5895,12 +6900,15 @@ function minutosRestantesDia(
     const inicio =
       8*60;
 
+
     trabajado =
       Math.max(
         0,
         Math.min(
           300,
-          hh*60+mm-inicio
+          hh*60+
+          mm-
+          inicio
         )
       );
 
@@ -5915,27 +6923,14 @@ function minutosRestantesDia(
 }
 
 
+/* ================================================================
+   OBJETIVO HORA POR HORA
+   ================================================================ */
+
 function objetivoSalidaPespunte(
   fecha,
   linea
 ){
-
-  /*
-    El objetivo se calcula
-    usando los modelos programados
-    y sus TSTD de pespunte.
-
-    Capacidad por hora =
-    minutos disponibles / TSTD
-    ponderado por piezas/modelos.
-
-    Para la programación diaria,
-    se toma el tiempo total requerido
-    de los modelos de la línea
-    y se reparte proporcionalmente
-    entre las horas disponibles.
-  */
-
 
   const ots =
     produccion.filter(
@@ -5946,12 +6941,44 @@ function objetivoSalidaPespunte(
 
 
   if(!ots.length){
-    return [];
+
+    return HORAS_LV.map(
+      h=>({
+
+        ...h,
+
+        objetivo:0
+
+      })
+    );
+
   }
 
 
-  let minutosTotales=0;
+  /*
+    Calculamos TSTD promedio ponderado
+    por las piezas programadas.
+
+    Ejemplo:
+
+    Modelo A:
+    85 piezas × 16.38
+
+    Modelo B:
+    75 piezas × 16.11
+
+    Todo se convierte en minutos estándar.
+
+    Después:
+
+    minutos disponibles de la hora
+    ÷ TSTD promedio ponderado
+    = capacidad objetivo de piezas por hora.
+  */
+
   let piezasTotales=0;
+
+  let minutosTotales=0;
 
 
   ots.forEach(
@@ -5969,7 +6996,12 @@ function objetivoSalidaPespunte(
         );
 
 
-      if(tstd>0){
+      if(
+        tstd>0
+      ){
+
+        piezasTotales +=
+          num(o.piezas);
 
         minutosTotales +=
           num(o.piezas)*
@@ -5977,30 +7009,31 @@ function objetivoSalidaPespunte(
 
       }
 
-      piezasTotales +=
-        num(o.piezas);
-
     }
   );
 
 
   if(
-    minutosTotales<=0 ||
-    piezasTotales<=0
+    piezasTotales<=0 ||
+    minutosTotales<=0
   ){
 
     return HORAS_LV.map(
       h=>({
+
         ...h,
+
         objetivo:0
+
       })
     );
 
   }
 
 
-  const horas =
-    HORAS_LV.length;
+  const tstdMedio =
+    minutosTotales/
+    piezasTotales;
 
 
   return HORAS_LV.map(
@@ -6011,34 +7044,6 @@ function objetivoSalidaPespunte(
           h.inicio,
           h.fin
         );
-
-
-      /*
-        La hora 13:40-14:40
-        continúa después de comida.
-      */
-
-      const objetivo =
-        min/
-        (
-          minutosTrabajoDia(
-            fecha
-          )
-          /
-          piezasTotales
-        );
-
-
-      /*
-        Forma equivalente:
-        piezas totales / minutos totales
-        × minutos disponibles,
-        ajustado por TSTD medio.
-      */
-
-      const tstdMedio =
-        minutosTotales/
-        piezasTotales;
 
 
       const piezasHora =
@@ -6074,13 +7079,15 @@ function realPorHora(
 
   return avances
     .filter(
-      a => {
+      a=>{
 
         if(
           a.fecha!==fecha ||
           a.hasta!=="Salida pespunte"
         ){
+
           return false;
+
         }
 
 
@@ -6094,13 +7101,56 @@ function realPorHora(
           !ot ||
           ot.linea!==linea
         ){
+
           return false;
+
         }
 
 
         return (
           a.hora>=inicio &&
           a.hora<fin
+        );
+
+      }
+    )
+    .reduce(
+      (s,a)=>
+        s+num(a.piezas),
+      0
+    );
+
+}
+
+
+function realPorHoraTotal(
+  fecha,
+  linea
+){
+
+  return avances
+    .filter(
+      a=>{
+
+        if(
+          a.fecha!==fecha ||
+          a.hasta!=="Salida pespunte"
+        ){
+
+          return false;
+
+        }
+
+
+        const ot =
+          obtenerOT(
+            a.otId
+          );
+
+
+        return (
+          ot &&
+          ot.linea===linea
         );
 
       }
@@ -6204,7 +7254,8 @@ function renderHourBoardLinea(
         const eficiencia =
           h.objetivo>0
             ? real/
-              h.objetivo*100
+              h.objetivo*
+              100
             : 0;
 
 
@@ -6215,11 +7266,17 @@ function renderHourBoardLinea(
         if(
           eficiencia>=100
         ){
-          cls="eff-good";
+
+          cls=
+            "eff-good";
+
         }else if(
           eficiencia>=80
         ){
-          cls="eff-mid";
+
+          cls=
+            "eff-mid";
+
         }
 
 
@@ -6278,7 +7335,8 @@ function renderHourBoardLinea(
   const effTotal =
     objetivoTotal>0
       ? realTotal/
-        objetivoTotal*100
+        objetivoTotal*
+        100
       : 0;
 
 
@@ -6293,14 +7351,17 @@ function renderHourBoardLinea(
         </strong>
 
         <div class="hour-status">
+
           Programado:
           <strong>
             ${pieces(piezasProg)}
           </strong>
           piezas
+
         </div>
 
       </div>
+
 
       <span class="badge ${
         effTotal>=100
@@ -6325,7 +7386,9 @@ function renderHourBoardLinea(
 
           <tr>
 
-            <th>Hora</th>
+            <th>
+              Hora
+            </th>
 
             <th class="num">
               Meta / hora
@@ -6390,45 +7453,6 @@ function renderHourBoardLinea(
 }
 
 
-function realPorHoraTotal(
-  fecha,
-  linea
-){
-
-  return avances
-    .filter(
-      a => {
-
-        if(
-          a.fecha!==fecha ||
-          a.hasta!=="Salida pespunte"
-        ){
-          return false;
-        }
-
-
-        const ot =
-          obtenerOT(
-            a.otId
-          );
-
-
-        return (
-          ot &&
-          ot.linea===linea
-        );
-
-      }
-    )
-    .reduce(
-      (s,a)=>
-        s+num(a.piezas),
-      0
-    );
-
-}
-
-
 function renderHourBoards(
   fecha
 ){
@@ -6457,7 +7481,9 @@ function datosSemana(){
 
 
   let programado=0;
+
   let empaque=0;
+
   let auditoria=0;
 
 
@@ -6489,7 +7515,9 @@ function datosSemana(){
           semana
         )
       ){
+
         return;
+
       }
 
 
@@ -6558,7 +7586,8 @@ function renderResumen(){
   const eficiencia =
     d.programado>0
       ? d.empaque/
-        d.programado*100
+        d.programado*
+        100
       : 0;
 
 
@@ -6650,7 +7679,7 @@ function renderResumenLineas(
                 const emp =
                   avances
                   .filter(
-                    a => {
+                    a=>{
 
                       const o =
                         obtenerOT(
@@ -6679,7 +7708,7 @@ function renderResumenLineas(
                 const aud =
                   avances
                   .filter(
-                    a => {
+                    a=>{
 
                       const o =
                         obtenerOT(
@@ -6707,7 +7736,9 @@ function renderResumenLineas(
 
                 const ef =
                   prog>0
-                    ? emp/prog*100
+                    ? emp/
+                      prog*
+                      100
                     : 0;
 
 
@@ -6734,9 +7765,11 @@ function renderResumenLineas(
                     </td>
 
                     <td class="num">
+
                       <strong>
                         ${pct(ef)}
                       </strong>
+
                     </td>
 
                   </tr>
@@ -6744,7 +7777,8 @@ function renderResumenLineas(
                 `;
 
               }
-            ).join("")
+            )
+            .join("")
           }
 
         </tbody>
@@ -6766,14 +7800,6 @@ function renderDestajo(
     document.getElementById(
       "tablaDestajo"
     );
-
-
-  /*
-    El destajo se calcula
-    únicamente con las piezas
-    que entraron a Empaque
-    durante lunes-sábado.
-  */
 
 
   const mapa = {};
@@ -6809,8 +7835,8 @@ function renderDestajo(
 
 
       const key =
-        o.linea +
-        "|" +
+        o.linea+
+        "|"+
         o.modelo;
 
 
@@ -6818,11 +7844,14 @@ function renderDestajo(
 
         mapa[key] = {
 
-          linea:o.linea,
+          linea:
+            o.linea,
 
-          modelo:o.modelo,
+          modelo:
+            o.modelo,
 
-          piezas:0,
+          piezas:
+            0,
 
           costoPespunte:
             num(
@@ -6908,7 +7937,8 @@ function renderDestajo(
         <tbody>
 
           ${
-            lista.map(
+            lista
+            .map(
               x=>`
 
                 <tr>
@@ -6926,7 +7956,9 @@ function renderDestajo(
                   </td>
 
                   <td class="num">
-                    ${money(x.costoPespunte)}
+                    ${money(
+                      x.costoPespunte
+                    )}
                   </td>
 
                   <td class="num">
@@ -6937,7 +7969,9 @@ function renderDestajo(
                   </td>
 
                   <td class="num">
-                    ${money(x.costoPreliminar)}
+                    ${money(
+                      x.costoPreliminar
+                    )}
                   </td>
 
                   <td class="num">
@@ -6950,7 +7984,8 @@ function renderDestajo(
                 </tr>
 
               `
-            ).join("")
+            )
+            .join("")
           }
 
         </tbody>
@@ -6983,7 +8018,7 @@ function guardarCierre(){
     ).value.trim()
     ||
     (
-      "Semana " +
+      "Semana "+
       fecha
     );
 
@@ -7118,7 +8153,8 @@ function renderHistorial(){
         <tbody>
 
           ${
-            lista.map(
+            lista
+            .map(
               h=>{
 
                 const ef =
@@ -7166,7 +8202,8 @@ function renderHistorial(){
                 `;
 
               }
-            ).join("")
+            )
+            .join("")
           }
 
         </tbody>
@@ -7205,7 +8242,8 @@ function renderKPIs(){
   const eficiencia =
     programado>0
       ? empaque/
-        programado*100
+        programado*
+        100
       : 0;
 
 
